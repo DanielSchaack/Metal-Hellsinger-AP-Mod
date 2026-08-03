@@ -486,6 +486,17 @@ namespace Randomizer
             { WeaponType.Lost, "Lost Vulcan" },
         };
 
+        public static readonly Dictionary<PlayerWeaponType, List<string>> WeaponTypeToAllWeaponNames = new (){
+            {PlayerWeaponType.AssaultRifle,  ["The Red Right Hand"]},
+            {PlayerWeaponType.Bow,  ["Telos"]},
+            {PlayerWeaponType.RhythmWeapon,  ["Paz"]},
+            {PlayerWeaponType.Falx,  ["Terminus"]},
+            {PlayerWeaponType.Boomerang,  ["Hellcrow"]},
+            {PlayerWeaponType.Shotgun,  PersephoneNames},
+            {PlayerWeaponType.Pistols,  HoundsNames},
+            {PlayerWeaponType.Vulcan,  VulcanNames},
+        };
+
         public static readonly List<string> HoundsNames = new List<string>()
         {
             "The Hounds",

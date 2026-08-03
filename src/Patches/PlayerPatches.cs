@@ -44,11 +44,22 @@ namespace Randomizer
 
                 if (!availableWeaponTypes.Contains(fav1) && fav2 == PlayerWeaponType.None)
                 {
-                    int randomIndex = UnityEngine.Random.Range(0, availableWeaponTypes.Count);
+                    if(Randomizer.Configuration.weaponExcludePazFromLoadout.Value)
+                        availableWeaponTypes.Remove(PlayerWeaponType.RhythmWeapon);
+                    if(Randomizer.Configuration.weaponExcludeTerminusFromLoadout.Value)
+                        availableWeaponTypes.Remove(PlayerWeaponType.RhythmWeapon);
+
+                    var randomWeapon = PlayerWeaponType.None;
+                    var uncheckedWeapons = Randomizer.LocationTracker.GetUncheckedWeapons(availableWeaponTypes);
+                    if(uncheckedWeapons.Count > 0)
+                        randomWeapon = uncheckedWeapons[UnityEngine.Random.Range(0, uncheckedWeapons.Count)];
+                    else
+                        randomWeapon = availableWeaponTypes[UnityEngine.Random.Range(0, availableWeaponTypes.Count)];
+
                     Logger.LogInfo(
-                        $"Primary weapon 1 ({fav1}) is unavailable. Resetting to {availableWeaponTypes[randomIndex]}."
+                        $"Primary weapon 1 ({fav1}) is unavailable. Resetting to {randomWeapon}."
                     );
-                    fav1 = availableWeaponTypes[randomIndex];
+                    fav1 = randomWeapon;
                 }
 
                 if (!availableWeaponTypes.Contains(fav2))

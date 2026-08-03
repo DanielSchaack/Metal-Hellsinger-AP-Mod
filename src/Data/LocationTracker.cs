@@ -1310,6 +1310,28 @@ namespace Randomizer
                 );
         }
 
+        internal List<PlayerWeaponType> GetUncheckedWeapons(List<PlayerWeaponType> availableWeapons)
+        {
+            List<PlayerWeaponType> uncheckedWeapons = new() { };
+
+            if (!Randomizer.Settings.HellsRandomizedWeaponsEnabled)
+                return uncheckedWeapons;
+
+            foreach (var weapon in availableWeapons)
+            {
+                foreach (var name in Lookup.WeaponTypeToAllWeaponNames[weapon])
+                {
+                    var locationName = $"Section Cleared with: {name}";
+                    if (
+                        !CheckedLocations.ContainsKey(locationName)
+                        && LocationAccessibility.CanReach(locationName)
+                    )
+                        uncheckedWeapons.Add(weapon);
+                }
+            }
+            return uncheckedWeapons;
+        }
+
         private List<Location> getUncheckedLocationsByType(ELocationType type)
         {
             return Locations
@@ -1420,18 +1442,12 @@ namespace Randomizer
             return LocationAccessibility.CanReach(locationName);
         }
 
-        // TODO: Integrate with Lost/Manifested
         internal bool IsWeaponUnchecked(PlayerWeaponType weaponType)
         {
             if(!Randomizer.ItemTracker.IsWeaponUnlocked(weaponType))
                 return false;
 
-            string weaponName = Randomizer.ItemTracker.GetWeaponNameByType(weaponType);
-            string locationName = $"Section Cleared with: {weaponName}";
-            if(CheckedLocations.ContainsKey(locationName))
-                return false;
-
-            return LocationAccessibility.CanReach(locationName);
+            return GetUncheckedWeapons(new (){weaponType}).Count > 0;
         }
 
         internal List<ExtendedWeaponType> GetUncheckedPersephoneLocations(List<ExtendedWeaponType> availablePersephoneTypes)
