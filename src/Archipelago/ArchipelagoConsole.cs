@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using System.Text;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
 using BepInEx;
@@ -222,6 +223,15 @@ namespace Randomizer
                     }
                 }
             }
+        }
+
+        internal void LogDeathlink(DeathLink deathLinkObject)
+        {
+            string DeathLinkMessage =
+                deathLinkObject.Cause == null
+                    ? $"\"<b><color=#FF0000>{deathLinkObject.Source}</color></b> died and took you with them.\""
+                    : $"\"{deathLinkObject.Cause}\"";
+            LogMessage(DeathLinkMessage);
         }
     }
 }

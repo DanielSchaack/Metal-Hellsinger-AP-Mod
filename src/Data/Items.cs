@@ -474,21 +474,17 @@ namespace Randomizer
             { 545, new ItemData(545, "Personal Jesus", filler, ALL, EssentialHits, Song, 1) },
 
             // Battle
-            { 550, new ItemData(550, "Ammo Refill", filler, ALL, Combat, 0) },
-            { 551, new ItemData(551, "Health Drop", filler, ALL, Combat, 0) },
-            { 552, new ItemData(552, "Next Multiplier", filler, ALL, Combat, 0) },
-            { 553, new ItemData(553, "Max Multiplier", filler, ALL, Combat, 0) },
-            { 554, new ItemData(554, "Ultimate Refill", filler, ALL, Combat, 0) },
-            { 555, new ItemData(555, "Always on Beat", filler, ALL, Combat, 0) },
+            { 550, new ItemData(550, "Next Multiplier", filler, ALL, Combat, 0) },
+            { 551, new ItemData(551, "Max Multiplier", filler, ALL, Combat, 0) },
+            { 552, new ItemData(552, "Ultimate Trigger", filler, ALL, Combat, 0) },
+            { 553, new ItemData(553, "Always on Beat", filler, ALL, Combat, 0) },
 
+            { 560, new ItemData(560, "Reset Multiplier", trap, ALL, Combat, 0) },
             { 561, new ItemData(561, "Double Time", trap, ALL, Combat, 0) },
             { 562, new ItemData(562, "Half Time", trap, ALL, Combat, 0) },
-            { 563, new ItemData(563, "Invisible World", trap, ALL, Combat, 0) },
-
-            { 301, new ItemData(301, "Void Echo x10", useful, LEVIATHAN, Global, 0) },
-            { 302, new ItemData(302, "Void Echo x20", useful, LEVIATHAN, Global, 0) },
-            { 303, new ItemData(303, "Void Echo x50", useful, LEVIATHAN, Global, 0) },
-            { 304, new ItemData(304, "Void Echo x100", useful, LEVIATHAN, Global, 0) },
+            { 563, new ItemData(563, "Invisible Weapons", trap, ALL, Combat, 0) },
+            { 564, new ItemData(564, "Weapon Trickery", trap, ALL, Combat, 0) },
+            { 565, new ItemData(565, "Death", trap, ALL, Combat, 0) },
 
             { 666, new ItemData(666, "Filler", filler, ALL, Global, 0) },
         };

@@ -459,7 +459,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(ProgressionSaveData.GetBossSongIDForLevel))]
         static void GetBossSongIDForLevelPostfix(string levelId, ref string __result)
         {
-            Logger.LogError(
+            Logger.LogDebug(
                 $"Is loading songs: {Randomizer.IsLoadingSongs}, randomize boss songs: {Randomizer.Configuration.songsRandomizeBossSongs.Value}"
             );
             if (

@@ -17,9 +17,12 @@ namespace Randomizer
         public ConfigEntry<bool> archipelagoConsoleEnabled;
         public ConfigEntry<DeathLinkType> archipelagoDeathlinkType;
 
-        internal ConfigEntry<bool> gameplayLoadAllAvailableWeapons;
+        internal ConfigEntry<bool> gameplayInvisibleWeaponsActive;
         internal ConfigEntry<bool> gameplayWeaponTrickeryModeActive;
+        internal ConfigEntry<bool> gameplayDoubletimeActive;
+        internal ConfigEntry<bool> gameplayHalftimeActive;
 
+        internal ConfigEntry<bool> weaponLoadAllAvailableWeapons;
         internal ConfigEntry<bool> weaponExcludePazFromLoadout;
         internal ConfigEntry<bool> weaponExcludeTerminusFromLoadout;
         internal ConfigEntry<bool> weaponRandomizePersephoneType;
@@ -98,7 +101,7 @@ namespace Randomizer
                 "Archipelago.Override",
                 "ArchipelagoDeathlinkType",
                 DeathLinkType.Death,
-                "Overrides the slot's deathlink settings for deathlink type."
+                "Overrides the slot's deathlink settings for deathlink type.\n'Death' applies immediately.\n'Trap' queues the death as a trap"
             );
             archipelagoDeathlinkType.SettingChanged += (sender, args) =>
             {
@@ -108,13 +111,13 @@ namespace Randomizer
 
             // ---
 
-            gameplayLoadAllAvailableWeapons = config.Bind(
+            gameplayInvisibleWeaponsActive = config.Bind(
                 "Hellsinger.Gameplay",
-                "LoadAllAvailableWeapons",
+                "InvisibleWeaponsActive",
                 false,
-                "Load all unlocked weapons beyond the visibly shown ones.\nUse Next/Previous Weapon to scroll through them all!\nAll loaded weapons will be used for the Weapon Trickery toggle/trap."
+                "Turns most weapons invisble."
             );
-            gameplayLoadAllAvailableWeapons.SettingChanged += addOnChangeSave(config);
+            gameplayInvisibleWeaponsActive.SettingChanged += addOnChangeSave(config);
 
             gameplayWeaponTrickeryModeActive = config.Bind(
                 "Hellsinger.Gameplay",
@@ -124,13 +127,37 @@ namespace Randomizer
             );
             gameplayWeaponTrickeryModeActive.SettingChanged += addOnChangeSave(config);
 
+            gameplayDoubletimeActive = config.Bind(
+                "Hellsinger.Gameplay",
+                "DoubletimeActive",
+                false,
+                "Increases gamespeed without increasing the speed of the music.\nSee the trap settings to adjust the speed.\nThis takes precedence over Halftime."
+            );
+            gameplayDoubletimeActive.SettingChanged += addOnChangeSave(config);
+
+            gameplayHalftimeActive = config.Bind(
+                "Hellsinger.Gameplay",
+                "HalftimeActive",
+                false,
+                "Decreases gamespeed without decreasing the speed of the music.\nSee the trap settings to adjust the speed.\nThis is ignored while Doubletime is active."
+            );
+            gameplayHalftimeActive.SettingChanged += addOnChangeSave(config);
+
             // ---
+
+            weaponLoadAllAvailableWeapons = config.Bind(
+                "Hellsinger.Weapons",
+                "LoadAllAvailableWeapons",
+                false,
+                "Load all unlocked weapons beyond the visibly shown ones.\nUse Next/Previous Weapon to scroll through them all!\nAll loaded weapons will be used for the Weapon Trickery toggle/trap."
+            );
+            weaponLoadAllAvailableWeapons.SettingChanged += addOnChangeSave(config);
 
             weaponExcludePazFromLoadout = config.Bind(
                 "Hellsinger.Weapons",
                 "ExcludePazFromLoadout",
                 false,
-                "Excludes Paz from the loadout.\nThis is skipped if Paz is selected as the primary/secondary Weapon."
+                "Excludes Paz from the loadout.\nThis option is ignored if Paz is selected as the primary/secondary Weapon."
             );
             weaponExcludePazFromLoadout.SettingChanged += addOnChangeSave(config);
 
@@ -138,7 +165,7 @@ namespace Randomizer
                 "Hellsinger.Weapons",
                 "ExcludeTerminusFromLoadout",
                 false,
-                "Excludes Terminus from the loadout.\nThis is skipped if Terminus is selected as the primary/secondary Weapon."
+                "Excludes Terminus from the loadout.\nThis option is ignored if Terminus is selected as the primary/secondary Weapon."
             );
             weaponExcludeTerminusFromLoadout.SettingChanged += addOnChangeSave(config);
 

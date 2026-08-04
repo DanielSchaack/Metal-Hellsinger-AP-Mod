@@ -433,7 +433,7 @@ namespace Randomizer
 
         public static string GetCurrentWeaponName(PlayerWeaponType weapon)
         {
-            return weapon switch
+            string weaponName = weapon switch
             {
                 PlayerWeaponType.AssaultRifle => Lookup.WeaponTypeToName[weapon],
                 PlayerWeaponType.Bow => Lookup.WeaponTypeToName[weapon],
@@ -445,6 +445,8 @@ namespace Randomizer
                 PlayerWeaponType.Boomerang => Lookup.WeaponTypeToName[weapon],
                 _ => "",
             };
+            Logger.LogDebug($"Returning for {weapon} the current weapon {weaponName}");
+            return weaponName;
         }
 
         public enum WeaponType
@@ -459,13 +461,6 @@ namespace Randomizer
             Lost,
             Manifested
         }
-
-        public static readonly List<string> PersephoneNames = new List<string>()
-        {
-            "Persephone",
-            "Lost Persephone",
-            "Manifested Persephone",
-        };
 
         public static readonly Dictionary<ExtendedWeaponType, string> PersephoneTypeToName = new()
         {
@@ -486,15 +481,11 @@ namespace Randomizer
             { WeaponType.Lost, "Lost Vulcan" },
         };
 
-        public static readonly Dictionary<PlayerWeaponType, List<string>> WeaponTypeToAllWeaponNames = new (){
-            {PlayerWeaponType.AssaultRifle,  ["The Red Right Hand"]},
-            {PlayerWeaponType.Bow,  ["Telos"]},
-            {PlayerWeaponType.RhythmWeapon,  ["Paz"]},
-            {PlayerWeaponType.Falx,  ["Terminus"]},
-            {PlayerWeaponType.Boomerang,  ["Hellcrow"]},
-            {PlayerWeaponType.Shotgun,  PersephoneNames},
-            {PlayerWeaponType.Pistols,  HoundsNames},
-            {PlayerWeaponType.Vulcan,  VulcanNames},
+        public static readonly List<string> PersephoneNames = new List<string>()
+        {
+            "Persephone",
+            "Lost Persephone",
+            "Manifested Persephone",
         };
 
         public static readonly List<string> HoundsNames = new List<string>()
@@ -509,6 +500,17 @@ namespace Randomizer
             "Lost Vulcan",
         };
 
+        public static readonly Dictionary<PlayerWeaponType, List<string>> WeaponTypeToAllWeaponNames = new (){
+            {PlayerWeaponType.AssaultRifle,  ["The Red Right Hand"]},
+            {PlayerWeaponType.Bow,  ["Telos"]},
+            {PlayerWeaponType.RhythmWeapon,  ["Paz"]},
+            {PlayerWeaponType.Falx,  ["Terminus"]},
+            {PlayerWeaponType.Boomerang,  ["Hellcrow"]},
+            {PlayerWeaponType.Shotgun,  PersephoneNames},
+            {PlayerWeaponType.Pistols,  HoundsNames},
+            {PlayerWeaponType.Vulcan,  VulcanNames},
+            {PlayerWeaponType.None,  []},
+        };
 
         public static readonly Dictionary<SkinTargetType, PlayerWeaponType> SkinTypeToWeaponType =
             new()

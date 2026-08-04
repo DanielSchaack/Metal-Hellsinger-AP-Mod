@@ -19,6 +19,7 @@ namespace Randomizer
         public enum DeathLinkType
         {
             Death,
+            Trap,
             Off,
         }
 
@@ -95,8 +96,8 @@ namespace Randomizer
                 }
                 catch (Exception e)
                 {
-                    Logger.LogError("Failed to create archipelago session!");
-                    Logger.LogError(e.Message);
+                    Logger.LogError($"Failed to create archipelago session!\n{e.Message}");
+                    ArchipelagoConsole.instance.LogMessage($"Failed to create archipelago session! {e.Message}");
                 }
             }
 
@@ -161,14 +162,8 @@ namespace Randomizer
         {
             return (deathLinkObject) =>
             {
-                Logger.LogInfo("Death link received.");
-                // TODO: ?
-                // PlayerCharacterPatches.DeathLinkMessage =
-                //     deathLinkObject.Cause == null
-                //         ? $"\"{deathLinkObject.Source} died and took you with them.\""
-                //         : $"\"{deathLinkObject.Cause}\"";
-                // PlayerCharacterPatches.DiedToDeathLink = true;
-                Randomizer.IngameDispenser.QueueDeathLink();
+                ArchipelagoConsole.instance.LogDeathlink(deathLinkObject);
+                Randomizer.IngameDispenser.QueueDeathLink(deathLinkObject.Source);
             };
         }
 
@@ -176,7 +171,7 @@ namespace Randomizer
         {
             if (connected)
             {
-                if (Randomizer.Configuration.archipelagoDeathlinkType.Value == DeathLinkType.Death)
+                if (Randomizer.Configuration.archipelagoDeathlinkType.Value != DeathLinkType.Off)
                 {
                     EnableDeathLink();
                 }
@@ -237,8 +232,7 @@ namespace Randomizer
             }
             catch (Exception e)
             {
-                Logger.LogError("Encountered an error disconnecting from Archipelago!");
-                Logger.LogError(e.Message);
+                Logger.LogError($"Encountered an error disconnecting from Archipelago!\n{e.Message}");
             }
         }
 
@@ -280,6 +274,7 @@ namespace Randomizer
                 var itemInfo = pendingItem.ItemInfo;
                 var itemName = itemInfo.ItemDisplayName;
                 var itemId = itemInfo.ItemId;
+                var itemSender = itemInfo.Player.Alias;
 
                 if (Randomizer.ItemTracker.HasItemByIndex(pendingItem.index))
                 {
@@ -304,7 +299,7 @@ namespace Randomizer
                 //     yield return true;
                 // }
 
-                Randomizer.ItemTracker.SetCollectedItem(itemId, pendingItem.index, true, false);
+                Randomizer.ItemTracker.SetCollectedItem(itemId, pendingItem.index, true, false, itemSender);
                 incomingItems.TryDequeue(out _);
 
                 // Delay item processing

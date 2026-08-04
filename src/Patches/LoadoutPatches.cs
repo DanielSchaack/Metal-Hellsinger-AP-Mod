@@ -2,6 +2,7 @@ using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
 using Outsiders.GUI;
 using Il2CppSystem;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 namespace Randomizer
 {
@@ -230,6 +231,7 @@ namespace Randomizer
 
             if (data.IsWeaponAvailable)
             {
+                Logger.LogDebug($"Checking if {data.WeaponType} is unchecked");
                 data.IsWeaponViewed = !Randomizer.LocationTracker.IsWeaponUnchecked(
                     data.WeaponType
                 );
@@ -565,6 +567,90 @@ namespace Randomizer
             );
             if(__instance.m_text == "ARSENAL" && Randomizer.LocationTracker.HasUncheckedWeapons())
                 __instance.SetNewIconVisible(true);
+        }
+    }
+
+    [HarmonyPatch(typeof(LoadoutSigilItem))]
+    public class LoadoutSigilItemPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(LoadoutSigilItem.SetData))]
+        static bool SetDataPrefix(LoadoutSigilItem __instance, LoadoutSigilData data, int index)
+        {
+            Logger.LogInfo(
+                $"LoadoutSigilItem SetData Prefix for {data.SigilType} on level {data.Level} called"
+            );
+            int sigilLevel = Randomizer.ItemTracker.GetSigilLevelByType(data.SigilType);
+
+            Logger.LogInfo($"Setting sigil {data.SigilType} to level: {sigilLevel}");
+
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(LoadoutSigilItem.SetData))]
+        static void SetDataPostfix(LoadoutSigilItem __instance, LoadoutSigilData data, int index)
+        {
+            Logger.LogInfo(
+                $"Loadout index {index}, sigil: {data.SigilType}, unlocked: {data.Unlocked}, level: {data.Level}"
+            );
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(LoadoutSigilItem.Select))]
+        static bool SelectPrefix(LoadoutSigilItem __instance)
+        {
+            Logger.LogInfo("LoadoutSigilItem Select Prefix called");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(LoadoutSigilItem.Select))]
+        static void SelectPostfix(LoadoutSigilItem __instance)
+        {
+            Logger.LogInfo("LoadoutSigilItem Select Postfix called");
+        }
+    }
+
+    [HarmonyPatch(typeof(LoadoutWeaponList))]
+    public class LoadoutWeaponListPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(LoadoutWeaponList.SetData))]
+        static bool SetDataPrefix(
+            LoadoutWeaponList __instance,
+            Il2CppReferenceArray<LoadoutWeaponData> data,
+            bool isInCosmeticsMode
+        )
+        {
+            Logger.LogInfo($"LoadoutWeaponList SetData Prefix for {data.Count} weapons called and is in cosmestics mode: {isInCosmeticsMode} ");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(LoadoutWeaponList.SetData))]
+        static void SetDataPostfix(
+            LoadoutWeaponList __instance,
+            Il2CppReferenceArray<LoadoutWeaponData> data,
+            bool isInCosmeticsMode
+        )
+        {
+            Logger.LogInfo($"LoadoutWeaponList SetData Postfix for {data.Count} weapons called and is in cosmestics mode: {isInCosmeticsMode} ");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(LoadoutWeaponList.Select))]
+        static bool SelectPrefix(LoadoutWeaponList __instance)
+        {
+            Logger.LogInfo("LoadoutWeaponList Select Prefix called");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(LoadoutWeaponList.Select))]
+        static void SelectPostfix(LoadoutWeaponList __instance)
+        {
+            Logger.LogInfo("LoadoutWeaponList Select Postfix called");
         }
     }
 }

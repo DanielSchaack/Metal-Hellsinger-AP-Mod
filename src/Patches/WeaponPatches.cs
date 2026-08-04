@@ -259,9 +259,7 @@ namespace Randomizer
             WeaponDataConfiguration config
         )
         {
-            Logger.LogDebug(
-                $"WeaponAbilityController ChangeWeaponDataConfiguration Prefix called for {config.WeaponType}"
-            );
+            Logger.LogDebug($"WeaponAbilityController ChangeWeaponDataConfiguration Prefix called");
             return true;
         }
 
@@ -272,9 +270,7 @@ namespace Randomizer
             WeaponDataConfiguration config
         )
         {
-            Logger.LogInfo(
-                $"WeaponAbilityController ChangeWeaponDataConfiguration Postfix called for {config.WeaponType}"
-            );
+            Logger.LogInfo($"WeaponAbilityController ChangeWeaponDataConfiguration Postfix called");
         }
 
         [HarmonyPrefix]
@@ -321,16 +317,13 @@ namespace Randomizer
             // Logger.LogInfo(
             //     $"WeaponAbilityController GetActiveWeaponAbility Postfix called for {__result.m_weaponConfig.WeaponType}"
             // );
-            if (
-                __result.Weapon != null
-                && Randomizer.IngameDispenser.InvisibleWeaponTrapActive
-                && __result.Weapon.Active
+            bool invisibleWeaponActive =
+                Randomizer.IngameDispenser.InvisibleWeaponTrapActive
+                || Randomizer.Configuration.gameplayInvisibleWeaponsActive.Value;
+            if (__result.Weapon != null && invisibleWeaponActive
             )
-                __result.Weapon.SetVisible(!Randomizer.IngameDispenser.InvisibleWeaponTrapActive);
-            else if (
-                __result.Weapon != null
-                && !Randomizer.IngameDispenser.InvisibleWeaponTrapActive
-                && !__result.Weapon.Active
+                __result.Weapon.SetVisible(!invisibleWeaponActive);
+            else if (__result.Weapon != null && !invisibleWeaponActive
             )
                 __result.Weapon.SetVisible(true);
         }
@@ -528,46 +521,70 @@ namespace Randomizer
             {
                 List<ExtendedWeaponType> availablePersephoneTypes =
                     Randomizer.ItemTracker.GetAvailablePersephoneTypes();
+                Logger.LogDebug(
+                    $"Available Persephone types: {string.Join(",", availablePersephoneTypes)}"
+                );
+
                 List<ExtendedWeaponType> uncheckedTypes =
                     Randomizer.LocationTracker.GetUncheckedPersephoneLocations(
                         availablePersephoneTypes
                     );
+                Logger.LogDebug($"Unchecked Persephone types: {string.Join(",", uncheckedTypes)}");
+
                 if (uncheckedTypes.Count > 0)
                     availablePersephoneTypes = uncheckedTypes;
+
                 int randomIndex = UnityEngine.Random.Range(0, availablePersephoneTypes.Count);
                 ExtendedWeaponType extendedWeaponType = availablePersephoneTypes[randomIndex];
                 Randomizer.CurrentPersephoneConfig = extendedWeaponType;
+                Logger.LogInfo($"Returning randomized config {extendedWeaponType} for Persephone");
                 return WeaponDataConfigurationCache.Get(
                     Lookup.WeaponNameToConfig[Lookup.PersephoneTypeToName[extendedWeaponType]]
                 );
             }
 
             Randomizer.CurrentPersephoneConfig = wantedConfig;
-            return WeaponDataConfigurationCache.Get(
-                Lookup.WeaponNameToConfig[Lookup.PersephoneTypeToName[wantedConfig]]
-            );
+            Logger.LogInfo($"Returning wanted config {wantedConfig} for Persephone");
+            string weaponName = Lookup.PersephoneTypeToName[wantedConfig];
+            Logger.LogInfo($"Returning wanted weapon name {weaponName} for Persephone");
+            string configName = Lookup.WeaponNameToConfig[weaponName];
+            Logger.LogInfo($"Returning wanted weapon config {configName} for Persephone");
+            return WeaponDataConfigurationCache.Get(configName);
         }
 
         private static WeaponDataConfiguration getHoundsConfig()
         {
+            Logger.LogDebug($"Getting weapon config for the Hounds");
             var wantedConfig = Randomizer.Configuration.weaponHoundsType.Value;
             if (Randomizer.Configuration.weaponRandomizeHoundsType.Value)
             {
                 List<WeaponType> availableHoundsTypes =
                     Randomizer.ItemTracker.GetAvailableHoundsTypes();
+                Logger.LogDebug(
+                    $"Available Hounds types: {string.Join(",", availableHoundsTypes)}"
+                );
+
                 List<WeaponType> uncheckedTypes =
                     Randomizer.LocationTracker.GetUncheckedHoundsLocations(availableHoundsTypes);
+                Logger.LogDebug($"Unchecked Hounds types: {string.Join(",", uncheckedTypes)}");
                 if (uncheckedTypes.Count > 0)
                     availableHoundsTypes = uncheckedTypes;
                 int randomIndex = UnityEngine.Random.Range(0, availableHoundsTypes.Count);
                 WeaponType weaponType = availableHoundsTypes[randomIndex];
                 Randomizer.CurrentHoundsConfig = weaponType;
+                Logger.LogInfo($"Returning randomized config {weaponType} for the Hounds");
                 return WeaponDataConfigurationCache.Get(
                     Lookup.WeaponNameToConfig[Lookup.HoundsTypeToName[weaponType]]
                 );
             }
+
             Randomizer.CurrentHoundsConfig = wantedConfig;
-            return WeaponDataConfigurationCache.Get(Lookup.HoundsTypeToName[wantedConfig]);
+            Logger.LogInfo($"Returning wanted config {wantedConfig} for the Hounds");
+            string weaponName = Lookup.HoundsTypeToName[wantedConfig];
+            Logger.LogInfo($"Returning wanted weapon name {weaponName} for Hounds");
+            string configName = Lookup.WeaponNameToConfig[weaponName];
+            Logger.LogInfo($"Returning wanted weapon config {configName} for Hounds");
+            return WeaponDataConfigurationCache.Get(configName);
         }
 
         private static WeaponDataConfiguration getVulcanConfig()
@@ -577,19 +594,32 @@ namespace Randomizer
             {
                 List<WeaponType> availableVulcanTypes =
                     Randomizer.ItemTracker.GetAvailableVulcanTypes();
+                Logger.LogDebug(
+                    $"Available Vulcan types: {string.Join(",", availableVulcanTypes)}"
+                );
+
                 List<WeaponType> uncheckedTypes =
                     Randomizer.LocationTracker.GetUncheckedVulcanLocations(availableVulcanTypes);
+                Logger.LogDebug($"Unchecked Vulcan types: {string.Join(",", uncheckedTypes)}");
+
                 if (uncheckedTypes.Count > 0)
                     availableVulcanTypes = uncheckedTypes;
                 int randomIndex = UnityEngine.Random.Range(0, availableVulcanTypes.Count);
                 WeaponType weaponType = availableVulcanTypes[randomIndex];
                 Randomizer.CurrentVulcanConfig = weaponType;
+                Logger.LogInfo($"Returning randomized config {weaponType} for Vulcan");
                 return WeaponDataConfigurationCache.Get(
                     Lookup.WeaponNameToConfig[Lookup.VulcanTypeToName[weaponType]]
                 );
             }
+
             Randomizer.CurrentVulcanConfig = wantedConfig;
-            return WeaponDataConfigurationCache.Get(Lookup.VulcanTypeToName[wantedConfig]);
+            Logger.LogInfo($"Returning wanted config {wantedConfig} for Vulcan");
+            string weaponName = Lookup.VulcanTypeToName[wantedConfig];
+            Logger.LogInfo($"Returning wanted weapon name {weaponName} for Vulcan");
+            string configName = Lookup.WeaponNameToConfig[weaponName];
+            Logger.LogInfo($"Returning wanted weapon config {configName} for Vulcan");
+            return WeaponDataConfigurationCache.Get(configName);
         }
     }
 

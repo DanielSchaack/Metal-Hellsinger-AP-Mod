@@ -132,7 +132,10 @@ namespace Randomizer
             Logger.LogDebug(
                 $"DestructibleObjectSystem OnHit Postfix called for {combatant.Destructible.name}"
             );
-            Randomizer.LocationTracker.CheckDestructible(Randomizer.CurrentLevel, combatant.Destructible);
+            Randomizer.LocationTracker.CheckDestructible(
+                Randomizer.CurrentLevel,
+                combatant.Destructible
+            );
         }
     }
 
@@ -160,6 +163,88 @@ namespace Randomizer
         {
             Logger.LogDebug($"HUDView OnMultiplierBoostEvent Postfix for {eventType}");
             Randomizer.LocationTracker.CheckMultiplierPickups();
+        }
+    }
+
+    [HarmonyPatch(typeof(MultiplierBoostPickup))]
+    public class MultiplierBoostPickupPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(MultiplierBoostPickup.OnTriggerEnter))]
+        static bool OnTriggerEnterPrefix(MultiplierBoostPickup __instance)
+        {
+            Logger.LogDebug(
+                $"MultiplierBoostPickup OnTriggerEnter Prefix for {__instance.BoostType}"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(MultiplierBoostPickup.OnTriggerEnter))]
+        static void OnTriggerEnterPostfix(MultiplierBoostPickup __instance)
+        {
+            Logger.LogDebug(
+                $"MultiplierBoostPickup OnTriggerEnter Postfix for {__instance.BoostType}"
+            );
+        }
+    }
+
+    [HarmonyPatch(typeof(MultiplierBoostSystem))]
+    public class MultiplierBoostSystemPatches
+    {
+        // Used in Hells
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(MultiplierBoostSystem.SetupMultiplierBoost))]
+        static bool SetupMultiplierBoostPrefix(
+            MultiplierBoostSystem __instance,
+            MultiplierBoostPickup multiplierBoostPickup,
+            ref Il2CppSystem.Action multiplierPickedupCallback
+        )
+        {
+            Logger.LogDebug(
+                $"MultiplierBoostSystem SetupMultiplierBoost Prefix for {multiplierBoostPickup.BoostType}"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(MultiplierBoostSystem.SetupMultiplierBoost))]
+        static void SetupMultiplierBoostPostfix(
+            MultiplierBoostSystem __instance,
+            MultiplierBoostPickup multiplierBoostPickup
+        )
+        {
+            Logger.LogDebug(
+                $"MultiplierBoostSystem SetupMultiplierBoost Postfix for {multiplierBoostPickup.BoostType}"
+            );
+        }
+
+        // Used in Leviathan
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(MultiplierBoostSystem.SpawnMultiplierBoost))]
+        static bool SpawnMultiplierBoostPrefix(
+            MultiplierBoostSystem __instance,
+            MultiplierBoostType boostType,
+            UnityEngine.Vector3 position,
+            UnityEngine.Quaternion rotation,
+            ref Il2CppSystem.Action multiplierPickedupCallback
+        )
+        {
+            Logger.LogDebug($"MultiplierBoostSystem SpawnMultiplierBoost Prefix for {boostType}");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(MultiplierBoostSystem.SpawnMultiplierBoost))]
+        static void SpawnMultiplierBoostPostfix(
+            MultiplierBoostSystem __instance,
+            MultiplierBoostType boostType,
+            UnityEngine.Vector3 position,
+            UnityEngine.Quaternion rotation,
+            Il2CppSystem.Action multiplierPickedupCallback
+        )
+        {
+            Logger.LogDebug($"MultiplierBoostSystem SpawnMultiplierBoost Postfix for {boostType}");
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Randomizer
         public static bool IsLoadingHells = false; //Flag for in title loading
         public static bool IsLoadingSongs = false; // Flag for Hells/Torment loading
         public static bool IsFinalLevel = false; // Flag for Sheol
+        public static bool IsPaused = false; // Flag for ingame menu open
         public static float SceneActiveTime = 0f; // Time since scene has been loaded
         public static float LevelActiveTime = 0f; // Time since when loading screen play button has been pressed
 

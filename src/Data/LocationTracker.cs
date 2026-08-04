@@ -20,6 +20,12 @@ namespace Randomizer
             Reset();
         }
 
+        public void Reset()
+        {
+            LocationsCollected.Clear();
+            CheckedLocations.Clear();
+        }
+
         private static readonly Dictionary<string, EZone> LevelIdToZoneDictionary = new Dictionary<
             string,
             EZone
@@ -1224,12 +1230,6 @@ namespace Randomizer
             }
         }
 
-        public void Reset()
-        {
-            LocationsCollected.Clear();
-            CheckedLocations.Clear();
-        }
-
         internal void CheckSkinUnlocks(int coatOfArmsCount)
         {
             int skinLocationCount = GetSkinLocationAmount();
@@ -1254,8 +1254,6 @@ namespace Randomizer
             CollectLocation(location, IsLocationTypeRandomized(location.LocationType), true);
         }
 
-
-
         internal void CheckMisc(string itemName)
         {
             var locationId = $"First Miscellaneous: {itemName}";
@@ -1265,9 +1263,11 @@ namespace Randomizer
 
         internal int GetSkinLocationAmount()
         {
-            return Randomizer.ItemTracker.GetCollectedCoatOfArms() >= 2
+            int skinLocationCount = Randomizer.ItemTracker.GetCollectedCoatOfArms() >= 2
                 ? 1
                 : 0 + Randomizer.ItemTracker.GetCollectedCoatOfArms() / 6;
+            Logger.LogInfo($"Returning skin location amount: {skinLocationCount}");
+            return skinLocationCount;
         }
 
         internal List<string> GetItemsWithMissingChecks(List<string> unlockedItems)
@@ -1287,31 +1287,38 @@ namespace Randomizer
 
         internal bool HasUncheckedSongs()
         {
-            return Randomizer.Settings.RandomizedSongsEnabled
+            bool isUnchecked = Randomizer.Settings.RandomizedSongsEnabled
                 && (
                     LocationAccessibility.CanReachAny(getUncheckedLocationsByType(ELocationType.SectionClearMainSong))
                     || LocationAccessibility.CanReachAny(getUncheckedLocationsByType(ELocationType.SectionClearBossSong))
                 );
+            Logger.LogInfo($"Has unchecked songs: {isUnchecked}");
+            return isUnchecked;
         }
 
         internal bool HasUncheckedOutfits()
         {
-            return Randomizer.Settings.RandomizedOutfitsEnabled
+            bool isUnchecked = Randomizer.Settings.RandomizedOutfitsEnabled
                 && (
                     LocationAccessibility.CanReachAny(getUncheckedLocationsByType(ELocationType.SectionClearOutfit))
                 );
+            Logger.LogInfo($"Has unchecked outfits: {isUnchecked}");
+            return isUnchecked;
         }
 
         internal bool HasUncheckedWeapons()
         {
-            return Randomizer.Settings.HellsRandomizedWeaponsEnabled
+            bool isUnchecked = Randomizer.Settings.HellsRandomizedWeaponsEnabled
                 && (
                     LocationAccessibility.CanReachAny(getUncheckedLocationsByType(ELocationType.SectionClearWeapon))
                 );
+            Logger.LogInfo($"Has unchecked weapons: {isUnchecked}");
+            return isUnchecked;
         }
 
         internal List<PlayerWeaponType> GetUncheckedWeapons(List<PlayerWeaponType> availableWeapons)
         {
+            Logger.LogDebug($"Checking if {availableWeapons.Count} are unchecked");
             List<PlayerWeaponType> uncheckedWeapons = new() { };
 
             if (!Randomizer.Settings.HellsRandomizedWeaponsEnabled)
@@ -1319,9 +1326,11 @@ namespace Randomizer
 
             foreach (var weapon in availableWeapons)
             {
+                Logger.LogDebug($"Currently checking weapon {weapon}");
                 foreach (var name in Lookup.WeaponTypeToAllWeaponNames[weapon])
                 {
                     var locationName = $"Section Cleared with: {name}";
+                    Logger.LogDebug(locationName);
                     if (
                         !CheckedLocations.ContainsKey(locationName)
                         && LocationAccessibility.CanReach(locationName)
@@ -1329,6 +1338,7 @@ namespace Randomizer
                         uncheckedWeapons.Add(weapon);
                 }
             }
+            Logger.LogDebug($"Returning unchecked weapons: {string.Join(", ", uncheckedWeapons)}");
             return uncheckedWeapons;
         }
 
@@ -1439,15 +1449,20 @@ namespace Randomizer
             if(CheckedLocations.ContainsKey(locationName))
                 return false;
 
-            return LocationAccessibility.CanReach(locationName);
+            bool v = LocationAccessibility.CanReach(locationName);
+            Logger.LogInfo($"Is outfit {outfitName} unchecked: {v}");
+            return v;
         }
 
         internal bool IsWeaponUnchecked(PlayerWeaponType weaponType)
         {
+            Logger.LogDebug($"Checking if {weaponType} is unchecked");
             if(!Randomizer.ItemTracker.IsWeaponUnlocked(weaponType))
                 return false;
 
-            return GetUncheckedWeapons(new (){weaponType}).Count > 0;
+            bool v = GetUncheckedWeapons(new() { weaponType }).Count > 0;
+            Logger.LogInfo($"Is weapon {weaponType} unchecked: {v}");
+            return v;
         }
 
         internal List<ExtendedWeaponType> GetUncheckedPersephoneLocations(List<ExtendedWeaponType> availablePersephoneTypes)

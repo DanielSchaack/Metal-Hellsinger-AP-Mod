@@ -10,7 +10,7 @@ namespace Randomizer
     {
         public static Player Instance;
 
-        public static void KillPlayer()
+        public static void KillPlayer(string sender)
         {
             if (Instance == null)
                 return;
@@ -44,17 +44,23 @@ namespace Randomizer
 
                 if (!availableWeaponTypes.Contains(fav1) && fav2 == PlayerWeaponType.None)
                 {
-                    if(Randomizer.Configuration.weaponExcludePazFromLoadout.Value)
+                    if (Randomizer.Configuration.weaponExcludePazFromLoadout.Value)
                         availableWeaponTypes.Remove(PlayerWeaponType.RhythmWeapon);
-                    if(Randomizer.Configuration.weaponExcludeTerminusFromLoadout.Value)
+                    if (Randomizer.Configuration.weaponExcludeTerminusFromLoadout.Value)
                         availableWeaponTypes.Remove(PlayerWeaponType.RhythmWeapon);
 
                     var randomWeapon = PlayerWeaponType.None;
-                    var uncheckedWeapons = Randomizer.LocationTracker.GetUncheckedWeapons(availableWeaponTypes);
-                    if(uncheckedWeapons.Count > 0)
-                        randomWeapon = uncheckedWeapons[UnityEngine.Random.Range(0, uncheckedWeapons.Count)];
+                    var uncheckedWeapons = Randomizer.LocationTracker.GetUncheckedWeapons(
+                        availableWeaponTypes
+                    );
+                    if (uncheckedWeapons.Count > 0)
+                        randomWeapon = uncheckedWeapons[
+                            UnityEngine.Random.Range(0, uncheckedWeapons.Count)
+                        ];
                     else
-                        randomWeapon = availableWeaponTypes[UnityEngine.Random.Range(0, availableWeaponTypes.Count)];
+                        randomWeapon = availableWeaponTypes[
+                            UnityEngine.Random.Range(0, availableWeaponTypes.Count)
+                        ];
 
                     Logger.LogInfo(
                         $"Primary weapon 1 ({fav1}) is unavailable. Resetting to {randomWeapon}."
@@ -70,7 +76,21 @@ namespace Randomizer
                     fav2 = PlayerWeaponType.None;
                 }
 
-                if(Randomizer.Configuration.gameplayLoadAllAvailableWeapons.Value)
+                if (
+                    Randomizer.Configuration.weaponExcludePazFromLoadout.Value
+                    && fav1 != PlayerWeaponType.RhythmWeapon
+                    && fav2 != PlayerWeaponType.RhythmWeapon
+                )
+                    availableWeaponTypes.Remove(PlayerWeaponType.RhythmWeapon);
+
+                if (
+                    Randomizer.Configuration.weaponExcludeTerminusFromLoadout.Value
+                    && fav1 != PlayerWeaponType.Falx
+                    && fav2 != PlayerWeaponType.Falx
+                )
+                    availableWeaponTypes.Remove(PlayerWeaponType.Falx);
+
+                if (Randomizer.Configuration.weaponLoadAllAvailableWeapons.Value)
                     weapons = ToIL2CPPArray(availableWeaponTypes);
                 else
                     weapons = GetAvailableWeapons(availableWeaponTypes, fav1, fav2);
@@ -106,24 +126,10 @@ namespace Randomizer
                 availableWeaponsList.Add(PlayerWeaponType.RhythmWeapon);
 
             if (
-                Randomizer.Configuration.weaponExcludePazFromLoadout.Value
-                && fav1 != PlayerWeaponType.RhythmWeapon
-                && fav2 != PlayerWeaponType.RhythmWeapon
-            )
-                availableWeaponsList.Remove(PlayerWeaponType.RhythmWeapon);
-
-            if (
                 !availableWeaponsList.Contains(PlayerWeaponType.Falx)
                 && availableWeaponTypes.Contains(PlayerWeaponType.Falx)
             )
                 availableWeaponsList.Add(PlayerWeaponType.Falx);
-
-            if (
-                Randomizer.Configuration.weaponExcludeTerminusFromLoadout.Value
-                && fav1 != PlayerWeaponType.Falx
-                && fav2 != PlayerWeaponType.Falx
-            )
-                availableWeaponsList.Remove(PlayerWeaponType.Falx);
 
             Il2CppStructArray<PlayerWeaponType> availableWeapons = ToIL2CPPArray(
                 availableWeaponsList
@@ -132,7 +138,9 @@ namespace Randomizer
             return availableWeapons;
         }
 
-        private static Il2CppStructArray<PlayerWeaponType> ToIL2CPPArray(List<PlayerWeaponType> availableWeaponsList)
+        private static Il2CppStructArray<PlayerWeaponType> ToIL2CPPArray(
+            List<PlayerWeaponType> availableWeaponsList
+        )
         {
             Il2CppStructArray<PlayerWeaponType> availableWeapons =
                 new Il2CppStructArray<PlayerWeaponType>(availableWeaponsList.Count);
@@ -237,10 +245,7 @@ namespace Randomizer
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Player.EquipWeapon))]
-        static bool EquipWeaponPrefix(
-            ref Player __instance,
-            PlayerWeaponType weaponType
-        )
+        static bool EquipWeaponPrefix(ref Player __instance, PlayerWeaponType weaponType)
         {
             Logger.LogDebug($"Player EquipWeapon Prefix for {weaponType} called");
             return true;
@@ -248,31 +253,24 @@ namespace Randomizer
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(Player.EquipWeapon))]
-        static void EquipWeaponPostfix(
-            ref Player __instance,
-            PlayerWeaponType weaponType
-        )
+        static void EquipWeaponPostfix(ref Player __instance, PlayerWeaponType weaponType)
         {
             Logger.LogDebug($"Player EquipWeapon Postfix for {weaponType} called");
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Player.SetOutfitType))]
-        static bool SetOutfitTypePrefix(
-            ref Player __instance,
-            ref SkinType outfitType
-        )
+        static bool SetOutfitTypePrefix(ref Player __instance, ref SkinType outfitType)
         {
-            Logger.LogInfo($"Player SetOutfitType Prefix for {outfitType} called, and is randomized: {Randomizer.Configuration.skinsRandomizeOutfits.Value}");
+            Logger.LogInfo(
+                $"Player SetOutfitType Prefix for {outfitType} called, and is randomized: {Randomizer.Configuration.skinsRandomizeOutfits.Value}"
+            );
             return true;
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(Player.SetOutfitType))]
-        static void SetOutfitTypePostfix(
-            ref Player __instance,
-            SkinType outfitType
-        )
+        static void SetOutfitTypePostfix(ref Player __instance, SkinType outfitType)
         {
             Logger.LogInfo($"Player SetOutfitType Postfix for {outfitType} called");
         }
@@ -283,10 +281,7 @@ namespace Randomizer
     {
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Enemy.KillWithAttack))]
-        static bool KillWithAttackPrefix(
-            Enemy __instance,
-            AttackInfo attack
-        )
+        static bool KillWithAttackPrefix(Enemy __instance, AttackInfo attack)
         {
             Logger.LogDebug(
                 $"Enemy KillWithAttack Prefix called for {__instance.Config.ID} for {attack.Attack.AttackID}"
@@ -298,7 +293,9 @@ namespace Randomizer
                 ) && !Randomizer.CurrentLevel.StartsWith("CH_Marbas")
             )
             {
-                Logger.LogInfo($"An enemy has been killed while Weapon Trickery is active, switching weapons");
+                Logger.LogInfo(
+                    $"An enemy has been killed while Weapon Trickery is active, switching weapons"
+                );
                 WeaponAbilityControllerPatches.Instance.SwitchToNextWeapon();
             }
             return true;
@@ -306,12 +303,11 @@ namespace Randomizer
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(Enemy.KillWithAttack))]
-        static void KillWithAttackPostfix(
-            Enemy __instance,
-            AttackInfo attack
-        )
+        static void KillWithAttackPostfix(Enemy __instance, AttackInfo attack)
         {
-            Logger.LogDebug($"Enemy KillWithAttack Postfix called for {__instance.Config.ID} for {attack.Attack.AttackID}");
+            Logger.LogDebug(
+                $"Enemy KillWithAttack Postfix called for {__instance.Config.ID} for {attack.Attack.AttackID}"
+            );
         }
     }
 }

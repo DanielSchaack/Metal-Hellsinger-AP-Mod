@@ -489,22 +489,19 @@ namespace Randomizer
             163, 167,
         ];
 
-        private readonly List<long> WeaponIds =
+        private readonly List<long> WeaponIdsWithUltimates =
         [
-            130, 132, 134, 136, 138, 140,
-            140, 142, 144, 146, 148, 150,
-            152,
+            130, 132, 134, 138, 141, 144, 146, 148,
         ];
 
         private readonly List<long> DispensibleProgressiveItems =
         [
-            130, 132, 134, 136, 138, 140,
-            140, 142, 144, 146, 148, 150,
-            152, 301, 302, 303, 304,
+            130, 132, 134, 136, 137, 138,
+            140, 141, 143, 144, 146, 148,
         ];
 
         // TODO:
-        public void SetCollectedItem(long itemId, int? itemIndex, bool rewardFiller, bool isResync)
+        public void SetCollectedItem(long itemId, int? itemIndex, bool rewardFiller, bool isResync, string sender = "")
         {
             ItemData item = Items.ItemDataById[itemId];
             Logger.LogInfo("Granting item " + item.Name);
@@ -528,7 +525,7 @@ namespace Randomizer
 
                 if (
                     Randomizer.Settings.WeaponUnlockMode == Settings.WeaponMode.WeaponAsOnePackage
-                    && WeaponIds.Contains(item.ArchipelagoId)
+                    && WeaponIdsWithUltimates.Contains(item.ArchipelagoId)
                 )
                 {
                     var weaponUltimateUnlock = Items.ItemDataById[itemId + 1];
@@ -563,13 +560,13 @@ namespace Randomizer
             )
             {
                 Logger.LogInfo("Queueing item " + item.Name + " for ingame dispension");
-                Randomizer.IngameDispenser.QueueItem(item);
+                Randomizer.IngameDispenser.QueueItem(item, sender);
             }
 
             if (!isResync && DispensibleProgressiveItems.Contains(itemId))
             {
                 Logger.LogInfo("Queueing item " + item.Name + " for ingame dispension");
-                Randomizer.IngameDispenser.QueueItem(item);
+                Randomizer.IngameDispenser.QueueItem(item, sender);
             }
         }
 
@@ -683,7 +680,7 @@ namespace Randomizer
             List<PlayerWeaponType> availableWeapons = new List<PlayerWeaponType>();
             foreach (var (itemName, weaponType) in Lookup.WeaponNameToType)
             {
-                if (hasWeapon(weaponType))
+                if (IsWeaponUnlocked(weaponType))
                 {
                     // Respect DLCs
                     if (

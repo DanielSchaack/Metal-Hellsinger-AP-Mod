@@ -269,10 +269,6 @@ namespace Randomizer
         static void CreateSystemsPostfix(InGameState __instance)
         {
             Logger.LogDebug($"InGameState CreateSystems Postfix called");
-            if(__instance.m_endlessController != null)
-                Logger.LogError( $"InGameState has EndlessController");
-
-
         }
 
         [HarmonyPrefix]
@@ -385,6 +381,7 @@ namespace Randomizer
         {
             Logger.LogDebug($"InGameState IGameState_LoadingCompleted Postfix called");
             Randomizer.SceneTracker.ResetLevelActiveTime();
+            Randomizer.IsPaused = false;
         }
     }
 
@@ -851,14 +848,18 @@ namespace Randomizer
             GameObject scenarioGo = levelScenario.gameObject;
             string scenarioName = scenarioGo.name;
 
-            Logger.LogError($"LevelScenarioSystem StartScenario Prefix called for scenario {scenarioName}");
+            Logger.LogDebug($"LevelScenarioSystem StartScenario Prefix called for scenario {scenarioName}");
 
             if (scenarioName == "Phase1_Damage Boss")
                 Randomizer.LocationTracker.ResetUpCollections();
-            else if(Lookup.BossStartScenarioNames.Contains(scenarioName))
+            else if(Lookup.BossStartScenarioNames.Contains(scenarioName)){
                 Randomizer.LocationTracker.CheckSectionCompletion(Randomizer.CurrentPrimary, Randomizer.CurrentSecondary, Randomizer.CurrentOutfit, Randomizer.CurrentMainSong);
-            else if(Lookup.BossEndScenarioNames.Contains(scenarioName))
+                Randomizer.SceneTracker.ResetLevelActiveTime();
+            }
+            else if(Lookup.BossEndScenarioNames.Contains(scenarioName)){
                 Randomizer.LocationTracker.CheckSectionCompletion(Randomizer.CurrentPrimary, Randomizer.CurrentSecondary, Randomizer.CurrentOutfit, Randomizer.CurrentBossSong);
+                Randomizer.IsPaused = true;
+            }
         }
     }
 }
