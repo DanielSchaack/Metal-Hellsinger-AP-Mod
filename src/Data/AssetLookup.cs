@@ -127,4 +127,74 @@ namespace Randomizer
             return asset;
         }
     }
+
+    public static class RandomVoDataCache
+    {
+        private static readonly Dictionary<string, RandomVoData> Cache = new();
+
+        public static void RefreshCache()
+        {
+            Cache.Clear();
+            var assets = Resources.FindObjectsOfTypeAll<RandomVoData>();
+
+            foreach (var asset in assets)
+            {
+                if (asset != null && !Cache.ContainsKey(asset.name))
+                {
+                    Cache[asset.name] = asset;
+                }
+            }
+        }
+
+        public static RandomVoData Get(string name)
+        {
+            if (Cache.TryGetValue(name, out var asset) && asset != null)
+            {
+                return asset;
+            }
+
+            asset = AssetUtil.GetAssetByName<RandomVoData>(name);
+            if (asset != null)
+            {
+                Cache[name] = asset;
+            }
+
+            return asset;
+        }
+    }
+
+    public static class ChallengeVoDataCache
+    {
+        private static readonly Dictionary<string, ChallengeVoData> Cache = new();
+
+        public static void RefreshCache()
+        {
+            Cache.Clear();
+            var assets = Resources.FindObjectsOfTypeAll<ChallengeVoData>();
+
+            foreach (var asset in assets)
+            {
+                if (asset != null && !Cache.ContainsKey(asset.name))
+                {
+                    Cache[asset.name] = asset;
+                }
+            }
+        }
+
+        public static ChallengeVoData Get(string name)
+        {
+            if (Cache.TryGetValue(name, out var asset) && asset != null)
+            {
+                return asset;
+            }
+
+            asset = AssetUtil.GetAssetByName<ChallengeVoData>(name);
+            if (asset != null)
+            {
+                Cache[name] = asset;
+            }
+
+            return asset;
+        }
+    }
 }

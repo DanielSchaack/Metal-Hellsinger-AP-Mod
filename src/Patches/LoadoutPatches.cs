@@ -493,10 +493,10 @@ namespace Randomizer
             Logger.LogDebug(
                 $"SongSelectionController GetSongLoadoutForLevel Postfix for {levelID}"
             );
-            if (Randomizer.IsLoadingHells && __result.Item1 != null)
+            if (Randomizer.IsLoadingHellsSelection && __result.Item1 != null)
                 SaveStateManager.SaveData.SetMainSongForLevel(levelID, __result.Item1);
 
-            if (Randomizer.IsLoadingHells && __result.Item2 != null)
+            if (Randomizer.IsLoadingHellsSelection && __result.Item2 != null)
                 SaveStateManager.SaveData.SetBossSongForLevel(levelID, __result.Item2);
         }
     }

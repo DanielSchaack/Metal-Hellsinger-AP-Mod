@@ -506,6 +506,8 @@ namespace Randomizer
             ItemData item = Items.ItemDataById[itemId];
             Logger.LogInfo("Granting item " + item.Name);
 
+            IngameMessagesPatches.DisplayItemReceived(item, sender);
+
             if (itemIndex.HasValue)
                 CollectedItemsByIndex.Add(itemIndex.Value, item);
 
@@ -897,7 +899,6 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedSlaughterEnabled)
                 canPerform = Has("Slaughter");
 
-            Logger.LogDebug($"Can perform Slaughter: {canPerform}");
             return canPerform;
         }
 

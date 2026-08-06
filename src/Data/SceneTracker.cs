@@ -9,7 +9,10 @@ namespace Randomizer
         public void Update()
         {
             Randomizer.SceneActiveTime += Time.unscaledDeltaTime;
-            Randomizer.LevelActiveTime += Time.unscaledDeltaTime;
+
+            if(!Randomizer.IsPaused)
+                Randomizer.LevelActiveTime += Time.unscaledDeltaTime;
+
             if (!LoadedLevel.Equals(Randomizer.CurrentLevel))
             {
                 Randomizer.SceneActiveTime = 0f;
@@ -19,6 +22,7 @@ namespace Randomizer
 
         public void ResetLevelActiveTime(){
             Randomizer.SceneActiveTime = 0f;
+            Randomizer.LevelActiveTime = 0f;
         }
     }
 }

@@ -1,5 +1,4 @@
 using BepInEx.Configuration;
-using UnityEngine;
 using static Randomizer.Lookup;
 using static Randomizer.Lookup.OutfitId;
 using static Randomizer.Lookup.SongId;
@@ -11,11 +10,28 @@ namespace Randomizer
     {
         public ConfigFile config;
 
-        public ConfigEntry<string> archipelagoUri;
-        public ConfigEntry<string> archipelagoUsername;
-        public ConfigEntry<string> archipelagoPassword;
-        public ConfigEntry<bool> archipelagoConsoleEnabled;
-        public ConfigEntry<DeathLinkType> archipelagoDeathlinkType;
+        internal ConfigEntry<string> archipelagoUri;
+        internal ConfigEntry<string> archipelagoUsername;
+        internal ConfigEntry<string> archipelagoPassword;
+        internal ConfigEntry<bool> archipelagoConsoleEnabled;
+        internal ConfigEntry<DeathLinkType> archipelagoDeathlinkType;
+        internal ConfigEntry<ItemClassification> archipelagoPopupForClassification;
+
+        internal ConfigEntry<bool> fillerRandomizedFillerDispensionActive;
+        internal ConfigEntry<FillerId> fillerRandomizedFillerBag;
+        internal ConfigEntry<int> fillerRandomizedFillerRate;
+
+        internal ConfigEntry<bool> trapShowActiveItemBox;
+        internal ConfigEntry<float> trapItemboxHorizontalPositioning;
+        internal ConfigEntry<float> trapItemboxVerticalPositioning;
+        internal ConfigEntry<float> trapChanceToTrigger;
+        internal ConfigEntry<int> trapDoubleTimeActiveTime;
+        internal ConfigEntry<float> trapDoubleTimeScale;
+        internal ConfigEntry<int> trapHalfTimeActiveTime;
+        internal ConfigEntry<float> trapHalfTimeScale;
+        internal ConfigEntry<int> trapAlwaysOnBeatActiveTime;
+        internal ConfigEntry<int> trapInvisibleWeaponActiveTime;
+        internal ConfigEntry<int> trapWeaponTrickeryActiveTime;
 
         internal ConfigEntry<bool> gameplayInvisibleWeaponsActive;
         internal ConfigEntry<bool> gameplayWeaponTrickeryModeActive;
@@ -47,8 +63,6 @@ namespace Randomizer
         internal ConfigEntry<bool> songsPrioritizeNewSongs;
         internal ConfigEntry<SongId> songsMainSongsToInclude;
         internal ConfigEntry<SongId> songsBossSongsToInclude;
-
-        public ConfigEntry<bool> hellsingerPauseGameOutOfFocused;
 
         public Configuration(ConfigFile config)
         {
@@ -82,7 +96,7 @@ namespace Randomizer
                 "Archipelago",
                 "ArchipelagoRoomPassword",
                 "",
-                "Archipelago room password."
+                "Archipelago room password.\nIf for whatever reason you want to set a default password that is visible in plain text.\nPLAIN TEXT - CAREFUL\nThis field isn't updated when using the ingame connection popup"
             );
             archipelagoPassword.SettingChanged += (sender, args) =>
             {
@@ -90,24 +104,192 @@ namespace Randomizer
             };
 
             archipelagoConsoleEnabled = config.Bind(
-                "Archipelago.Console",
+                "Archipelago",
                 "ArchipelagoConsoleEnabled",
                 true,
                 "En/Disable the archipelago itemfeed."
             );
             archipelagoConsoleEnabled.SettingChanged += addOnChangeSave(config);
 
+            archipelagoPopupForClassification = config.Bind(
+                "Archipelago",
+                "PopupForClassification",
+                ItemClassification.useful | ItemClassification.progression,
+                "Filter to show which messages get a popup during gameplay."
+            );
+            archipelagoPopupForClassification .SettingChanged += addOnChangeSave(config);
+
             archipelagoDeathlinkType = config.Bind(
-                "Archipelago.Override",
+                "Archipelago",
                 "ArchipelagoDeathlinkType",
                 DeathLinkType.Death,
-                "Overrides the slot's deathlink settings for deathlink type.\n'Death' applies immediately.\n'Trap' queues the death as a trap"
+                "Overrides the slot's deathlink settings for deathlink type.\n'Death' applies immediately.\n'DeathTrap' queues the death as a trap.\n'RandomTrap' queues any of the available trap items, including the Death item."
             );
             archipelagoDeathlinkType.SettingChanged += (sender, args) =>
             {
-                Randomizer.Archipelago.CheckDeathlink();
                 addOnChangeSave(config);
+                Randomizer.Archipelago.CheckDeathlink();
             };
+
+            // ---
+
+            fillerRandomizedFillerDispensionActive = config.Bind(
+                "Hellsinger.Filler",
+                "RandomizedFillerDispensionActive",
+                false,
+                "When enabled adds random filler items to the item queue.\nThose items are chosen from the random item bag, see RandomizedFillerBag."
+            );
+            fillerRandomizedFillerDispensionActive.SettingChanged += addOnChangeSave(config);
+
+            fillerRandomizedFillerRate = config.Bind( //<- line 152
+                "Hellsinger.Filler",
+                "RandomizedFillerDispension",
+                30,
+                new ConfigDescription(
+                    "Rate in seconds as in how often to add a random item to the queue.",
+                    new AcceptableValueRange<int>(1, 100)
+                )
+            );
+            fillerRandomizedFillerRate.SettingChanged += addOnChangeSave(config);
+
+            fillerRandomizedFillerBag = config.Bind(
+                "Hellsinger.Filler",
+                "RandomizedFillerBag",
+                FillerId.AlwaysOnBeat
+                    | FillerId.DoubleTime
+                    | FillerId.HalfTime
+                    | FillerId.WeaponTrickery
+                    | FillerId.NextMultiplier
+                    | FillerId.MaxMultiplier
+                    | FillerId.ResetMultiplier
+                    | FillerId.UltimateTrigger
+                    | FillerId.InvisibleWeapons
+                    | FillerId.ComplementingVoiceline
+                    | FillerId.FailingVoiceline
+                    | FillerId.EncouragingVoiceline,
+                "The included items to randomly dispense."
+            );
+            fillerRandomizedFillerBag.SettingChanged += addOnChangeSave(config);
+
+            // ---
+
+            trapShowActiveItemBox = config.Bind(
+                "Hellsinger.Traps",
+                "ShowActiveItemBox",
+                true,
+                new ConfigDescription("En/Disables the textbox that pops up when an item with duration is active.\nNote: The box doesn't show up for the gameplay toggles, see above.")
+            );
+            trapShowActiveItemBox.SettingChanged += addOnChangeSave(config);
+
+            trapItemboxHorizontalPositioning = config.Bind(
+                "Hellsinger.Traps",
+                "ItemboxHorizontalPositioning",
+                0.5f,
+                new ConfigDescription(
+                    "Horizontal positioning of the active item box in percent, 0 is completely to the left, 1 is completely to the right.",
+                    new AcceptableValueRange<float>(0, 1)
+                )
+            );
+            trapItemboxHorizontalPositioning.SettingChanged += addOnChangeSave(config);
+
+            trapItemboxVerticalPositioning = config.Bind(
+                "Hellsinger.Traps",
+                "ItemboxVerticalPositioning",
+                0.2f,
+                new ConfigDescription(
+                    "Vertical positioning of the active item box in percent, 0 is completely at the top, 1 is completely at the bottom.",
+                    new AcceptableValueRange<float>(0, 1)
+                )
+            );
+            trapItemboxVerticalPositioning.SettingChanged += addOnChangeSave(config);
+
+            trapChanceToTrigger = config.Bind(
+                "Hellsinger.Traps",
+                "ChanceToTrigger",
+                100f,
+                new ConfigDescription(
+                    "Chance in percent as in how high the chance is to pull an item from the item queue.\nThis mod checks about every 0.1 seconds for an item.\nExample: If you want a 1% change to trigger an item every second, set the value to 0.1\nInfo: This mod only checks for an item while actively for more than 10seconds in game AND the game isn't paused.",
+                    new AcceptableValueRange<float>(0, 100)
+                )
+            );
+            trapChanceToTrigger.SettingChanged += addOnChangeSave(config);
+
+            trapDoubleTimeActiveTime = config.Bind(
+                "Hellsinger.Traps",
+                "DoubleTimeActiveTime",
+                15,
+                new ConfigDescription(
+                    "Rate in seconds as in how long the trap should be active.",
+                    new AcceptableValueRange<int>(0, 120)
+                )
+            );
+            trapDoubleTimeActiveTime.SettingChanged += addOnChangeSave(config);
+
+            trapDoubleTimeScale = config.Bind(
+                "Hellsinger.Traps",
+                "DoubleTimeScale",
+                1.35f,
+                new ConfigDescription(
+                    "Timescale for how fast the game should be during Double Time.\nAdjusting this too low/high may make the game unplayable.",
+                    new AcceptableValueRange<float>(1, 2)
+                )
+            );
+            trapDoubleTimeScale.SettingChanged += addOnChangeSave(config);
+
+            trapHalfTimeActiveTime = config.Bind(
+                "Hellsinger.Traps",
+                "HalfTimeActiveTime",
+                15,
+                new ConfigDescription(
+                    "Rate in seconds as in how long the trap should be active.",
+                    new AcceptableValueRange<int>(0, 120)
+                )
+            );
+            trapHalfTimeActiveTime.SettingChanged += addOnChangeSave(config);
+
+            trapHalfTimeScale = config.Bind(
+                "Hellsinger.Traps",
+                "HalfTimeScale",
+                0.70f,
+                new ConfigDescription(
+                    "Timescale for how slow the game should be during Half Time.\nAdjusting this too low/high may make the game unplayable.",
+                    new AcceptableValueRange<float>(0, 1)
+                )
+            );
+            trapHalfTimeScale.SettingChanged += addOnChangeSave(config);
+
+            trapInvisibleWeaponActiveTime = config.Bind(
+                "Hellsinger.Traps",
+                "InvisibleWeaponActiveTime",
+                15,
+                new ConfigDescription(
+                    "Rate in seconds as in how long the trap should be active.",
+                    new AcceptableValueRange<int>(0, 120)
+                )
+            );
+            trapInvisibleWeaponActiveTime.SettingChanged += addOnChangeSave(config);
+
+            trapWeaponTrickeryActiveTime = config.Bind(
+                "Hellsinger.Traps",
+                "WeaponTrickeryActiveTime",
+                15,
+                new ConfigDescription(
+                    "Rate in seconds as in how filler the trap should be active.",
+                    new AcceptableValueRange<int>(0, 120)
+                )
+            );
+            trapWeaponTrickeryActiveTime.SettingChanged += addOnChangeSave(config);
+
+            trapAlwaysOnBeatActiveTime = config.Bind(
+                "Hellsinger.Traps",
+                "AlwaysOnBeatActiveTime",
+                15,
+                new ConfigDescription(
+                    "Rate in seconds as in how filler the filler should be active.",
+                    new AcceptableValueRange<int>(0, 120)
+                )
+            );
+            trapAlwaysOnBeatActiveTime.SettingChanged += addOnChangeSave(config);
 
             // ---
 
@@ -371,24 +553,6 @@ namespace Randomizer
                 "Unless otherwise prioritized, include the chosen songs for the randomization of the boss songs.\nMain songs like 'ThereIsNoEnd' are ignored.\nIf no songs remain after applying this filter, then all unlocked songs are chosen for randomization\n! Important: This still requires the respective DLCs to play their songs !"
             );
             songsBossSongsToInclude .SettingChanged += addOnChangeSave(config);
-
-            // ---
-
-            hellsingerPauseGameOutOfFocused = config.Bind(
-                "Hellsinger",
-                "HellsingerPauseGameOutOfFocused",
-                true,
-                "Pauses the game while it is unfocused.\nLets the GPU idle while unfocused.\n! May be less stable than the ingame's option !"
-            );
-            hellsingerPauseGameOutOfFocused.SettingChanged += (sender, args) =>
-            {
-                Application.runInBackground = !hellsingerPauseGameOutOfFocused.Value;
-                Logger.LogInfo(
-                    "Set run in runInBackground to "
-                        + (!hellsingerPauseGameOutOfFocused.Value).ToString()
-                );
-                config.Save();
-            };
 
         }
 

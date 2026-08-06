@@ -19,10 +19,11 @@ namespace Randomizer
     [Flags]
     public enum ItemClassification
     {
-        trap,
-        filler,
-        useful,
-        progression,
+        none = 0,
+        trap = 1 << 0,
+        filler = 1 << 1,
+        useful = 1 << 2,
+        progression = 1 << 3,
     }
 
     [Flags]
@@ -476,15 +477,18 @@ namespace Randomizer
             // Battle
             { 550, new ItemData(550, "Next Multiplier", filler, ALL, Combat, 0) },
             { 551, new ItemData(551, "Max Multiplier", filler, ALL, Combat, 0) },
-            { 552, new ItemData(552, "Ultimate Trigger", filler, ALL, Combat, 0) },
-            { 553, new ItemData(553, "Always on Beat", filler, ALL, Combat, 0) },
+            { 552, new ItemData(552, "Always on Beat", filler, ALL, Combat, 0) },
+            { 553, new ItemData(553, "Complementing Voiceline", filler, ALL, Combat, 0) },
+            { 554, new ItemData(554, "Encouraging Voiceline", filler, ALL, Combat, 0) },
+            { 565, new ItemData(565, "Failing Voiceline", filler, ALL, Combat, 0) },
 
             { 560, new ItemData(560, "Reset Multiplier", trap, ALL, Combat, 0) },
             { 561, new ItemData(561, "Double Time", trap, ALL, Combat, 0) },
             { 562, new ItemData(562, "Half Time", trap, ALL, Combat, 0) },
             { 563, new ItemData(563, "Invisible Weapons", trap, ALL, Combat, 0) },
             { 564, new ItemData(564, "Weapon Trickery", trap, ALL, Combat, 0) },
-            { 565, new ItemData(565, "Death", trap, ALL, Combat, 0) },
+            { 565, new ItemData(565, "Trigger Ultimate", trap, ALL, Combat, 0) },
+            { 566, new ItemData(566, "Death", trap, ALL, Combat, 0) },
 
             { 666, new ItemData(666, "Filler", filler, ALL, Global, 0) },
         };

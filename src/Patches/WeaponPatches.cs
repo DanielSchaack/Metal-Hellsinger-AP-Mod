@@ -35,9 +35,8 @@ namespace Randomizer
         [HarmonyPatch(nameof(WeaponAbilityBase.TriggerUltimate))]
         static bool TriggerUltimatePrefix(WeaponAbilityBase __instance)
         {
-            bool canUlt = Randomizer.ItemTracker.CanWeaponUltimate(__instance.GetWeaponType());
-            Logger.LogInfo($"WeaponAbilityBase TriggerUltimate Prefix called, can ult: {canUlt}");
-            return canUlt;
+            Logger.LogInfo($"WeaponAbilityBase TriggerUltimate Prefix called");
+            return true;
         }
 
         [HarmonyPostfix]
@@ -51,7 +50,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(WeaponAbilityBase.GetWeaponType))]
         static bool GetWeaponTypePrefix(WeaponAbilityBase __instance)
         {
-            Logger.LogDebug($"WeaponAbilityBase GetWeaponType Prefix called");
+            // Logger.LogDebug($"WeaponAbilityBase GetWeaponType Prefix called");
             return true;
         }
 
@@ -62,9 +61,9 @@ namespace Randomizer
             ref PlayerWeaponType __result
         )
         {
-            Logger.LogDebug(
-                $"WeaponAbilityBase GetWeaponType Postfix called, returning {__result}"
-            );
+            // Logger.LogDebug(
+            //     $"WeaponAbilityBase GetWeaponType Postfix called, returning {__result}"
+            // );
         }
     }
 
@@ -94,6 +93,37 @@ namespace Randomizer
     public class WeaponAbilityControllerPatches
     {
         public static WeaponAbilityController Instance;
+
+        private static bool weaponInvisibleTrapActive = false;
+        public static void ToggleWeaponInvisibility(bool turnInvisible)
+        {
+            weaponInvisibleTrapActive = turnInvisible;
+        }
+
+        private static bool weaponTrickeryTrapActive = false;
+        public static void ToggleWeaponTrickery(bool turnWeaponTrickeryOn)
+        {
+            weaponTrickeryTrapActive = turnWeaponTrickeryOn;
+        }
+
+        public static void TriggerUltimate()
+        {
+            Instance.GetActiveWeaponAbility().UpdateUltimate(1, false);
+            InputReaderPatches.TriggerUltimate();
+            IngameMessagesPatches.DisplayItemActivated($"Trigger Ultimate");
+        }
+
+        internal static void GiveWeapon(PlayerWeaponType type, string weaponName)
+        {
+            if (
+                !Instance.m_carriedWeapons.Contains(type)
+                && Instance.m_favoriteWeapon2 == PlayerWeaponType.None
+            )
+            {
+                Instance.PickUpWeapon(type, true, true, false);
+                IngameMessagesPatches.DisplayItemActivated($"Death");
+            }
+        }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(WeaponAbilityController.ActivateWeaponAbility))]
@@ -130,14 +160,10 @@ namespace Randomizer
             bool ignoreUiTimeScale
         )
         {
-            Logger.LogDebug($"WeaponAbilityController SwitchToWeapon Prefix called");
-            if (
-                explicitlyTriggered
-                && (
-                    Randomizer.IngameDispenser.WeaponTrickeryTrapActive
-                    || Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value
-                )
-            )
+            Logger.LogDebug(
+                $"WeaponAbilityController SwitchToWeapon Prefix called, weapon trickery is active: {IsWeaponTrickeryActive()}"
+            );
+            if (explicitlyTriggered && IsWeaponTrickeryActive())
             {
                 Logger.LogInfo(
                     $"WeaponAbilityController SwitchToWeapon called while WeaponTrickery is active, won't switch"
@@ -145,6 +171,15 @@ namespace Randomizer
                 return false;
             }
             return true;
+        }
+
+        private static bool IsWeaponTrickeryActive()
+        {
+            Logger.LogDebug(
+                $"WeaponAbilityController weapon trickery trap active: {Randomizer.IngameDispenser.WeaponTrickeryTrapActive}, config active: {Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value}"
+            );
+            return weaponTrickeryTrapActive
+                || Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value;
         }
 
         [HarmonyPostfix]
@@ -318,13 +353,11 @@ namespace Randomizer
             //     $"WeaponAbilityController GetActiveWeaponAbility Postfix called for {__result.m_weaponConfig.WeaponType}"
             // );
             bool invisibleWeaponActive =
-                Randomizer.IngameDispenser.InvisibleWeaponTrapActive
+                weaponInvisibleTrapActive
                 || Randomizer.Configuration.gameplayInvisibleWeaponsActive.Value;
-            if (__result.Weapon != null && invisibleWeaponActive
-            )
-                __result.Weapon.SetVisible(!invisibleWeaponActive);
-            else if (__result.Weapon != null && !invisibleWeaponActive
-            )
+            if (__result.Weapon != null && invisibleWeaponActive)
+                __result.Weapon.SetVisible(false);
+            else if (__result.Weapon != null && !invisibleWeaponActive)
                 __result.Weapon.SetVisible(true);
         }
 
@@ -403,7 +436,7 @@ namespace Randomizer
             ref PlayerWeaponType weaponType
         )
         {
-            Logger.LogInfo(
+            Logger.LogDebug(
                 $"WeaponAbilityController GetWeaponConfig Prefix called for {weaponType}"
             );
             return true;
@@ -683,6 +716,35 @@ namespace Randomizer
         static void SetAttackIDForWeaponPostfix(FirstPersonController __instance)
         {
             Logger.LogDebug($"FirstPersonController SetAttackIDForWeapon Postfix called");
+        }
+    }
+
+    [HarmonyPatch(typeof(InputReader))]
+    public class InputReaderPatches
+    {
+        public static InputReader Instance;
+
+        public static void TriggerUltimate()
+        {
+            Instance.TriggeredUltimate = true;
+            Instance.ConsumeAttackInput();
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(InputReader.Update))]
+        static bool UpdatePrefix(
+            ref InputReader __instance
+        )
+        {
+            if(Instance == null)
+                Instance = __instance;
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(InputReader.Update))]
+        static void UpdatePostfix(InputReader __instance)
+        {
         }
     }
 }

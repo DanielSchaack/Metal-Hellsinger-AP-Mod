@@ -118,7 +118,7 @@ namespace Randomizer
             MovementStateType stateType
         )
         {
-            Logger.LogInfo($"MovementStateMachine MoveTo Prefix called and moves to: {stateType}");
+            Logger.LogDebug($"MovementStateMachine MoveTo Prefix called and moves to: {stateType}");
 
             if (stateType == MovementStateType.Overkill)
             {
@@ -156,6 +156,141 @@ namespace Randomizer
             Logger.LogInfo(
                 $"ClinchIndicatorContainer OnOverkillTriggered Postfix called and is onBeat: {onBeat}"
             );
+        }
+    }
+
+    [HarmonyPatch(typeof(JumpMovementState))]
+    public class JumpMovementPatches
+    {
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(JumpMovementState.CanPerform))]
+        static void JumpMovementCanPerformPostfix(
+            JumpMovementState __instance,
+            MovementStateType currentStateType,
+            ref bool __result
+        )
+        {
+            if (
+                currentStateType == MovementStateType.Fall
+                && !Randomizer.ItemTracker.CanDoubleJump()
+            )
+                __result = false;
+
+            __result =
+                (__result && Randomizer.ItemTracker.CanJump())
+                || Randomizer.ItemTracker.CanInfiniteJump();
+
+            Logger.LogInfo(
+                $"JumpMovementState CanPerform Postfix called with current State {currentStateType}, returning {__result}"
+            );
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(JumpMovementState.TriggerJump))]
+        static bool TriggerJumpPrefix(
+            JumpMovementState __instance,
+            ref bool isAirJump,
+            ref bool isDoubleJump
+        )
+        {
+            Logger.LogDebug(
+                $"JumpMovementState TriggerJump Prefix called and is air jump: {isAirJump} and is double jump: {isDoubleJump}"
+            );
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(SoarMovementState))]
+    public class SoarMovementPatches
+    {
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(SoarMovementState.CanPerform))]
+        static void SoarMovementCanPerformPostfix(
+            SoarMovementState __instance,
+            MovementStateType currentStateType,
+            ref bool __result
+        )
+        {
+            __result = __result && Randomizer.ItemTracker.CanSoar();
+            Logger.LogInfo(
+                $"SoarMovementState CanPerform Postfix called with current State {currentStateType}, returning {__result}"
+            );
+        }
+    }
+
+    [HarmonyPatch(typeof(DodgeMovementState))]
+    public class DodgeMovementPatches
+    {
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(DodgeMovementState.CanPerform))]
+        static void DodgeMovementCanPerformPostfix(
+            DodgeMovementState __instance,
+            MovementStateType currentStateType,
+            ref bool __result
+        )
+        {
+            __result = __result && Randomizer.ItemTracker.CanDash();
+            Logger.LogInfo(
+                $"DodgeMovementState CanPerform Postfix called with current State {currentStateType}, returning {__result}"
+            );
+        }
+    }
+
+    [HarmonyPatch(typeof(ScoreController))]
+    public class ScoreControllerPatches
+    {
+        public static ScoreController Instance;
+        public static int NextTiersToApply = 0;
+        public static int MaxTiersToApply = 0;
+        public static int ResetTiersToApply = 0;
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ScoreController.Update))]
+        static bool UpdatePrefix(ref ScoreController __instance, float dt)
+        {
+            if (MaxTiersToApply > 0 && __instance.GetCurrentTierIndex()>__instance.m_minMultiplierTier)
+            {
+                Logger.LogInfo(
+                    $"ScoreController Reset multiplier tier to apply is at {ResetTiersToApply}, decreasing by one"
+                );
+                __instance.SetTier(__instance.m_minMultiplierTier, true);
+                IngameMessagesPatches.DisplayItemActivated($"Reset Multiplier");
+
+                ResetTiersToApply--;
+                return true;
+            }
+
+            if (NextTiersToApply > 0 && !__instance.IsMaxMultiplierTier())
+            {
+                Logger.LogInfo(
+                    $"ScoreController Next multiplier tier to apply is at {NextTiersToApply}, increasing by one"
+                );
+                __instance.AdvanceToNextTier();
+                IngameMessagesPatches.DisplayItemActivated($"Next Multiplier");
+
+                NextTiersToApply--;
+                return true;
+            }
+
+            if (MaxTiersToApply > 0 && !__instance.IsMaxMultiplierTier())
+            {
+                Logger.LogInfo(
+                    $"ScoreController Max multiplier tier to apply is at {MaxTiersToApply}, increasing by one"
+                );
+                __instance.AdvanceToMaxTier();
+                IngameMessagesPatches.DisplayItemActivated($"Max Multiplier");
+                MaxTiersToApply--;
+                return true;
+            }
+            return true;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ScoreController.SetMinTier))]
+        static bool SetMinTierPrefix(ref ScoreController __instance)
+        {
+            Instance = __instance;
+            return true;
         }
     }
 }

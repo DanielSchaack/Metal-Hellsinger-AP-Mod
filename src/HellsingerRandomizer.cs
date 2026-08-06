@@ -22,10 +22,12 @@ namespace Randomizer
         public static ArchipelagoIntegration Archipelago;
 
         public static bool IsLoadingDefinition = false; // Flag for loading LevelDefinition
-        public static bool IsLoadingHells = false; //Flag for in title loading
+        public static bool IsLoadingHellsSelection = false; // Flag for in title loading, for any of the hells stages
+        public static bool IsLoadingHells = false; // TODO: Flag for in title loading, for any of the hells stages
+        public static bool IsLoadingEndless = false; // TODO: Flag for in title loading, for the endless gamemode
         public static bool IsLoadingSongs = false; // Flag for Hells/Torment loading
         public static bool IsFinalLevel = false; // Flag for Sheol
-        public static bool IsPaused = false; // Flag for ingame menu open
+        public static bool IsPaused = true; // Flag for ingame menu open
         public static float SceneActiveTime = 0f; // Time since scene has been loaded
         public static float LevelActiveTime = 0f; // Time since when loading screen play button has been pressed
 
@@ -69,7 +71,6 @@ namespace Randomizer
                 RegisterTypeAndCreateObject<IngameDispenser>("IngameDispenser");
                 RegisterTypeAndCreateObject<SceneTracker>("SceneTracker");
 
-                Application.runInBackground = !Configuration.hellsingerPauseGameOutOfFocused.Value;
                 Logger.LogInfo("Objects initialized");
             }
             catch (System.Exception ex)
@@ -82,7 +83,7 @@ namespace Randomizer
             harmony.PatchAll();
         }
 
-        private T RegisterTypeAndCreateObject<T>(string objectName)
+        public static T RegisterTypeAndCreateObject<T>(string objectName)
             where T : MonoBehaviour
         {
             ClassInjector.RegisterTypeInIl2Cpp<T>();
@@ -90,6 +91,17 @@ namespace Randomizer
             GameObject go = new GameObject(objectName);
             Object.DontDestroyOnLoad(go);
             go.hideFlags = HideFlags.HideAndDontSave;
+
+            return go.AddComponent<T>();
+        }
+
+        public static T RegisterTypeAndCreateObjectWithCollider<T>(string objectName)
+            where T : MonoBehaviour
+        {
+            GameObject go = new GameObject(objectName);
+            Object.DontDestroyOnLoad(go);
+            go.hideFlags = HideFlags.HideAndDontSave;
+            go.AddComponent<SphereCollider>();
 
             return go.AddComponent<T>();
         }

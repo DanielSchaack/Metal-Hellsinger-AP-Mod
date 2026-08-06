@@ -50,7 +50,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(StageSelectCampaignView.OnShowMenu))]
         static bool OnShowMenuPrefix(ref StageSelectCampaignView __instance)
         {
-            Randomizer.IsLoadingHells = false;
+            Randomizer.IsLoadingHellsSelection = false;
             Logger.LogDebug($"StageSelectCampaignView OnShowMenu Prefix called");
             return true;
         }
@@ -121,7 +121,7 @@ namespace Randomizer
                     );
                 }
             }
-            Randomizer.IsLoadingHells = true;
+            Randomizer.IsLoadingHellsSelection = true;
         }
 
         [HarmonyPrefix]

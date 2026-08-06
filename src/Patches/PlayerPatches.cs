@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Outsiders.Messages;
 using UnityEngine;
 
 namespace Randomizer
@@ -9,12 +10,21 @@ namespace Randomizer
     public class PlayerPatches
     {
         public static Player Instance;
+        public static AudioGameplayController m_AudioGameplayController;
 
         public static void KillPlayer(string sender)
         {
             if (Instance == null)
                 return;
+            IngameMessagesPatches.DisplayItemActivated($"Death");
+            Randomizer.LevelActiveTime = -5f;
             Instance.KillPlayer(AttackID.PlayerShieldUltimateBashAttack);
+        }
+
+        public static void ToggleAssistMode(bool isItemActive)
+        {
+            var message = new AssistModeChangedMessage(true);
+            m_AudioGameplayController.OnAssistModeChanged(ref message);
         }
 
         // Used in Hells
@@ -236,11 +246,12 @@ namespace Randomizer
             ref Player __instance,
             Vector3 spawnPosition,
             Quaternion spawnRotation,
-            AudioGameplayController audioGameplayController
+            ref AudioGameplayController audioGameplayController
         )
         {
             Logger.LogDebug($"Player LoadPlayer Postfix called");
             Instance = __instance;
+            m_AudioGameplayController = audioGameplayController;
         }
 
         [HarmonyPrefix]
@@ -279,6 +290,13 @@ namespace Randomizer
     [HarmonyPatch(typeof(Enemy))]
     public class EnemyPatches
     {
+        private static bool weaponTrickeryTrapActive = false;
+
+        public static void ToggleWeaponTrickery(bool turnWeaponTrickeryOn)
+        {
+            weaponTrickeryTrapActive = turnWeaponTrickeryOn;
+        }
+
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Enemy.KillWithAttack))]
         static bool KillWithAttackPrefix(Enemy __instance, AttackInfo attack)
@@ -286,12 +304,7 @@ namespace Randomizer
             Logger.LogDebug(
                 $"Enemy KillWithAttack Prefix called for {__instance.Config.ID} for {attack.Attack.AttackID}"
             );
-            if (
-                (
-                    Randomizer.IngameDispenser.WeaponTrickeryTrapActive
-                    || Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value
-                ) && !Randomizer.CurrentLevel.StartsWith("CH_Marbas")
-            )
+            if (IsWeaponTrickeryActive() && !Randomizer.CurrentLevel.StartsWith("CH_Marbas"))
             {
                 Logger.LogInfo(
                     $"An enemy has been killed while Weapon Trickery is active, switching weapons"
@@ -299,6 +312,15 @@ namespace Randomizer
                 WeaponAbilityControllerPatches.Instance.SwitchToNextWeapon();
             }
             return true;
+        }
+
+        private static bool IsWeaponTrickeryActive()
+        {
+            Logger.LogDebug(
+                $"Enemy is weapon trickery trap active: {Randomizer.IngameDispenser.WeaponTrickeryTrapActive}, config active: {Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value}"
+            );
+            return weaponTrickeryTrapActive
+                || Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value;
         }
 
         [HarmonyPostfix]

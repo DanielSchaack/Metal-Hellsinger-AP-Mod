@@ -774,7 +774,9 @@ namespace Randomizer
                 LocationsCollected.Add(location);
                 CheckedLocations.Add(location.LocationId, true);
                 Randomizer.Archipelago.CompleteLocationCheck(location);
-                if (!isRandomized)
+                if(isRandomized)
+                    IngameMessagesPatches.DisplayCheckCollected($"{location.Description}");
+                else
                 {
                     if (!isResync)
                         Randomizer.Archipelago.SynchronizeNotRandomizedLocation(

@@ -11,7 +11,7 @@ namespace Randomizer
     // shamelessly stolen from oc2-modding https://github.com/toasterparty/oc2-modding/blob/main/OC2Modding/GameLog.cs
     public class ArchipelagoConsole : MonoBehaviour
     {
-        public static ArchipelagoConsole instance { get; private set; }
+        public static ArchipelagoConsole Instance { get; private set; }
         public bool Hidden = true;
 
         public List<string> logLines = new();
@@ -39,7 +39,7 @@ namespace Randomizer
 
         public void Awake()
         {
-            instance = this;
+            Instance = this;
 
             UpdateLayout();
             LogMessage($"Mod v{PluginInfo.VERSION} started");

@@ -20,7 +20,7 @@ namespace Randomizer
         static void CreateTitleScreenPostfix(ref TitleState __instance)
         {
             Logger.LogInfo($"TitleState CreateTitleScreen Postfix called");
-            if(Instance == null)
+            if (Instance == null)
                 Instance = __instance;
         }
 
@@ -103,8 +103,6 @@ namespace Randomizer
         static void CreateCompanionPostfix(CompanionController __instance)
         {
             Logger.LogInfo($"CompanionController CreateCompanion Postfix called");
-            if(__instance.m_endlessModeController != null)
-                Logger.LogInfo($"CompanionController has endless controller");
         }
 
         [HarmonyPrefix]
@@ -120,8 +118,6 @@ namespace Randomizer
         static void ShowPostfix(CompanionController __instance)
         {
             Logger.LogInfo($"CompanionController Show Postfix called");
-            if(__instance.m_endlessModeController != null)
-                Logger.LogInfo($"CompanionController has endless controller");
         }
 
         [HarmonyPrefix]
@@ -137,9 +133,6 @@ namespace Randomizer
         static void IsAnyCompanionItemUnviewedPostfix(CompanionController __instance)
         {
             Logger.LogInfo($"CompanionController IsAnyCompanionItemUnviewed Postfix called");
-            if(__instance.m_endlessModeController != null)
-                Logger.LogInfo($"CompanionController has endless controller");
-
         }
     }
 }

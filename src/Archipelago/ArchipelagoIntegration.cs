@@ -19,7 +19,8 @@ namespace Randomizer
         public enum DeathLinkType
         {
             Death,
-            Trap,
+            DeathTrap,
+            RandomTrap,
             Off,
         }
 
@@ -97,7 +98,7 @@ namespace Randomizer
                 catch (Exception e)
                 {
                     Logger.LogError($"Failed to create archipelago session!\n{e.Message}");
-                    ArchipelagoConsole.instance.LogMessage($"Failed to create archipelago session! {e.Message}");
+                    ArchipelagoConsole.Instance.LogMessage($"Failed to create archipelago session! {e.Message}");
                 }
             }
 
@@ -107,7 +108,7 @@ namespace Randomizer
             incomingItems = new ConcurrentQueue<(ItemInfo ItemInfo, int index)>();
             locationsToSend = new ConcurrentQueue<Location>();
 
-            session.MessageLog.OnMessageReceived += ArchipelagoConsole.instance.LogApMessage;
+            session.MessageLog.OnMessageReceived += ArchipelagoConsole.Instance.LogApMessage;
             session.Locations.CheckedLocationsUpdated += Randomizer.LocationTracker.Resync;
 
             try
@@ -140,12 +141,12 @@ namespace Randomizer
             else
             {
                 LoginFailure loginFailure = (LoginFailure)LoginResult;
-                ArchipelagoConsole.instance.LogMessage("Error connecting to Archipelago:");
+                ArchipelagoConsole.Instance.LogMessage("Error connecting to Archipelago:");
                 string errorList = string.Join("\n", loginFailure.Errors);
                 string fullMessage =
                     $"Failed to connect to Archipelago!\nCheck your settings and/or log output.\n{errorList}";
 
-                ArchipelagoConsole.instance.LogMessage(fullMessage);
+                ArchipelagoConsole.Instance.LogMessage(fullMessage);
                 Logger.LogError(fullMessage);
 
                 foreach (ConnectionRefusedError Error in loginFailure.ErrorCodes)
@@ -162,7 +163,7 @@ namespace Randomizer
         {
             return (deathLinkObject) =>
             {
-                ArchipelagoConsole.instance.LogDeathlink(deathLinkObject);
+                ArchipelagoConsole.Instance.LogDeathlink(deathLinkObject);
                 Randomizer.IngameDispenser.QueueDeathLink(deathLinkObject.Source);
             };
         }
@@ -208,7 +209,7 @@ namespace Randomizer
             {
                 if (connected)
                 {
-                    ArchipelagoConsole.instance.LogMessage("Disconnecting from Archipelago");
+                    ArchipelagoConsole.Instance.LogMessage("Disconnecting from Archipelago");
                 }
                 if (session != null)
                 {
@@ -228,7 +229,7 @@ namespace Randomizer
                 Randomizer.ItemTracker.Reset();
                 Randomizer.IngameDispenser.Reset();
 
-                ArchipelagoConsole.instance.LogMessage("Disconnected from Archipelago");
+                ArchipelagoConsole.Instance.LogMessage("Disconnected from Archipelago");
             }
             catch (Exception e)
             {
@@ -458,10 +459,10 @@ namespace Randomizer
 
         public void ShowNotConnectedError()
         {
-            ArchipelagoConsole.instance.LogMessage(
+            ArchipelagoConsole.Instance.LogMessage(
                 "[archipelago] ERROR: Lost connection to Archipelago!"
             );
-            ArchipelagoConsole.instance.LogMessage(
+            ArchipelagoConsole.Instance.LogMessage(
                 "Unable to send or receive items. Re-connect and try again."
             );
         }

@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Il2CppSystem.Collections.Generic;
 
 namespace Randomizer
 {
@@ -46,7 +47,7 @@ namespace Randomizer
                 $"CollectiblePickupSystem HandlePickupCollected Prefix called for {id}"
             );
             Randomizer.LocationTracker.CheckCoatOfArms(id);
-            return true;
+            return false;
         }
 
         [HarmonyPostfix]

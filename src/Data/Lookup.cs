@@ -415,6 +415,23 @@ namespace Randomizer
         public static readonly Dictionary<PlayerWeaponType, string> WeaponTypeToName =
             WeaponNameToType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
+        public static readonly Dictionary<string, PlayerWeaponType> ExtendedWeaponNameToType = new()
+        {
+            { "Paz", PlayerWeaponType.RhythmWeapon },
+            { "Terminus", PlayerWeaponType.Falx },
+            { "Persephone", PlayerWeaponType.Shotgun },
+            { "Lost Persephone", PlayerWeaponType.Shotgun },
+            { "Manifested Persephone", PlayerWeaponType.Shotgun },
+            { "The Hounds", PlayerWeaponType.Pistols },
+            { "The Lost Hounds", PlayerWeaponType.Pistols },
+            { "Vulcan", PlayerWeaponType.Vulcan },
+            { "Lost Vulcan", PlayerWeaponType.Vulcan },
+            { "Hellcrow", PlayerWeaponType.Boomerang },
+            { "The Red Right Hand", PlayerWeaponType.AssaultRifle },
+            { "Telos", PlayerWeaponType.Bow },
+        };
+
+
         public static readonly Dictionary<string, string> WeaponNameToConfig = new()
         {
             { "Paz", "RhythmWeaponData" },
@@ -1141,5 +1158,62 @@ namespace Randomizer
             );
         }
 
+        [Flags]
+        public enum FillerId : long
+        {
+            NextMultiplier = 1 << 0,
+            MaxMultiplier = 1 << 1,
+            ResetMultiplier = 1 << 2,
+            UltimateTrigger = 1 << 3,
+            AlwaysOnBeat = 1 << 4,
+            ComplementingVoiceline = 1 << 5,
+            EncouragingVoiceline = 1 << 6,
+            FailingVoiceline = 1 << 7,
+            DoubleTime = 1 << 8,
+            HalfTime = 1 << 9,
+            InvisibleWeapons = 1 << 10,
+            WeaponTrickery = 1 << 11,
+            Death = 1 << 12,
+        }
+
+        public static readonly Dictionary<string, FillerId> FillerNameToId = new()
+        {
+            { "Next Multiplier", FillerId.NextMultiplier },
+            { "Max Multiplier", FillerId.MaxMultiplier },
+            { "Reset Multiplier", FillerId.ResetMultiplier },
+            { "Trigger Ultimate", FillerId.UltimateTrigger },
+            { "Always on Beat", FillerId.AlwaysOnBeat },
+            { "Complementing Voiceline", FillerId.ComplementingVoiceline },
+            { "Encouraging Voiceline", FillerId.EncouragingVoiceline },
+            { "Failing Voiceline", FillerId.FailingVoiceline },
+            { "Double Time", FillerId.DoubleTime },
+            { "Half Time", FillerId.HalfTime },
+            { "Invisible Weapons", FillerId.InvisibleWeapons },
+            { "Weapon Trickery", FillerId.WeaponTrickery },
+            { "Death", FillerId.Death},
+        };
+        public static readonly Dictionary<FillerId, string> FillerIdToName =
+            FillerNameToId.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+
+        internal static FillerId GetTrapItems()
+        {
+            return FillerId.WeaponTrickery
+                | FillerId.InvisibleWeapons
+                | FillerId.HalfTime
+                | FillerId.DoubleTime
+                | FillerId.UltimateTrigger
+                | FillerId.Death;
+        }
+
+        internal static FillerId GetFillerItems()
+        {
+            return FillerId.ComplementingVoiceline
+                | FillerId.EncouragingVoiceline
+                | FillerId.FailingVoiceline
+                | FillerId.NextMultiplier
+                | FillerId.MaxMultiplier
+                | FillerId.AlwaysOnBeat;
+        }
     }
 }
