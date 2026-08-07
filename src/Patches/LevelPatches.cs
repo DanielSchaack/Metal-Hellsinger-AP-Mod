@@ -994,5 +994,75 @@ namespace Randomizer
             }
         }
     }
+
+    [HarmonyPatch(typeof(ChallengeController))]
+    public class ChallengeControllerPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ChallengeController.ShowChallengePreEOR))]
+        static bool ShowChallengePreEORPrefix(ChallengeTracker.ChallengeResult challengeResult)
+        {
+            Logger.LogInfo(
+                $"ChallengeController ShowChallengePreEOR Prefix called for {challengeResult}"
+            );
+            if(challengeResult == ChallengeTracker.ChallengeResult.Fail)
+                Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ChallengeController.ShowChallengePreEOR))]
+        static void ShowChallengePreEORPostfix(
+        )
+        {
+            Logger.LogDebug($"ChallengeController ShowChallengePreEOR Postfix called");
+        }
+    }
+
+    [HarmonyPatch(typeof(ChallengeTracker))]
+    public class ChallengeTrackerPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ChallengeTracker.GetResultFromTrackerCount))]
+        static bool GetResultFromTrackerCountPrefix()
+        {
+            Logger.LogDebug(
+                $"ChallengeTracker GetResultFromTrackerCount Prefix called"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ChallengeTracker.GetResultFromTrackerCount))]
+        static void GetResultFromTrackerCountPostfix(
+        ChallengeTracker.ChallengeResult __result
+        )
+        {
+            Logger.LogInfo($"ChallengeTracker GetResultFromTrackerCount Postfix called");
+            if (__result == ChallengeTracker.ChallengeResult.Fail)
+                Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ChallengeTracker.TearDown))]
+        static bool TearDownPrefix()
+        {
+            Logger.LogDebug(
+                $"ChallengeTracker TearDown Prefix called"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ChallengeTracker.TearDown))]
+        static void TearDownPostfix(
+                ChallengeTracker __instance
+        )
+        {
+            Logger.LogInfo($"ChallengeTracker TearDown Postfix called for {__instance.m_challengeResult}");
+            if ( __instance.m_challengeResult == ChallengeTracker.ChallengeResult.Fail)
+                Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
+        }
+    }
 }
 

@@ -234,7 +234,7 @@ namespace Randomizer
     {
         public static BonusScoreContainer Instance;
 
-        private static bool isManualCall = false;
+        private static bool isManualCall = true;
         private static string customMessage = "";
 
         public static void DisplayCheckCollected(string checkName)
@@ -245,6 +245,16 @@ namespace Randomizer
                 Logger.LogInfo($"Showing location pickup: {customMessage}");
 
                 isManualCall = true;
+                if(Lookup.IsChallengeLevelId(Randomizer.CurrentLevel))
+                {
+                    Instance.gameObject.SetActive(true);
+                    Instance.SetVisible(true, false);
+                    Instance.m_canvasGroup.alpha = 1;
+                    Instance.m_tierFill.gameObject.SetActive(false);
+                    Instance.m_tierLabel.gameObject.SetActive(false);
+                    Instance.transform.Find("MultiplierBarBkg")?.gameObject.SetActive(false);
+                    Instance.m_pickupMessage.gameObject.SetActive(true);
+                }
                 Instance.PlayTierGainedSequence();
                 Instance.ShowPickupMessage(MultiplierBoostEventType.AdvancedToNextTier);
                 isManualCall = false;
@@ -315,6 +325,13 @@ namespace Randomizer
                 Instance.InitializeAnimations();
                 Instance.ResetAllStreakTweens();
                 Instance.gameObject.SetActive(true);
+
+                if(Lookup.IsChallengeLevelId(Randomizer.CurrentLevel))
+                {
+                    Instance.SetVisible(true, false);
+                    Instance.m_canvasGroup.alpha = 1;
+                }
+
                 Instance.m_boonMessageContainer.gameObject.SetActive(true);
                 Instance.m_boonMessageContainer.SetText(message);
                 Instance.m_boonMessageContainer.Show(true, true);

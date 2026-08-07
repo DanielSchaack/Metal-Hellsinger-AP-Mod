@@ -148,6 +148,7 @@ namespace Randomizer
             Logger.LogDebug(
                 $"WeaponAbilityController ActivateWeaponAbility Postfix called for {weapon}"
             );
+            RefreshWeaponVisibility();
         }
 
         [HarmonyPrefix]
@@ -156,12 +157,12 @@ namespace Randomizer
             WeaponAbilityController __instance,
             PlayerWeaponType weapon,
             bool fastDeploy,
-            ref bool explicitlyTriggered,
+            bool explicitlyTriggered,
             bool ignoreUiTimeScale
         )
         {
             Logger.LogDebug(
-                $"WeaponAbilityController SwitchToWeapon Prefix called, weapon trickery is active: {IsWeaponTrickeryActive()}"
+                $"WeaponAbilityController SwitchToWeapon Prefix called, fastDeploy: {fastDeploy}, ignoreUiTimeScale: {ignoreUiTimeScale}, weapon trickery active: {IsWeaponTrickeryActive()}"
             );
             if (explicitlyTriggered && IsWeaponTrickeryActive())
             {
@@ -193,6 +194,45 @@ namespace Randomizer
         )
         {
             Logger.LogDebug($"WeaponAbilityController SwitchToWeapon Postfix called for {weapon}");
+            RefreshWeaponVisibility();
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(WeaponAbilityController.SwitchToNextWeapon))]
+        static void SwitchToNextWeaponPrefix(
+            WeaponAbilityController __instance
+        )
+        {
+            Logger.LogDebug($"WeaponAbilityController SwitchToNextWeapon Prefix called");
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(WeaponAbilityController.SwitchToNextWeapon))]
+        static void SwitchToNextWeaponPostfix(
+            WeaponAbilityController __instance
+        )
+        {
+            Logger.LogDebug($"WeaponAbilityController SwitchToNextWeapon Postfix called");
+            RefreshWeaponVisibility();
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(WeaponAbilityController.ExitOverkill))]
+        static void ExitOverkillPrefix(
+            WeaponAbilityController __instance
+        )
+        {
+            Logger.LogDebug($"WeaponAbilityController ExitOverkill Prefix called");
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(WeaponAbilityController.ExitOverkill))]
+        static void ExitOverkillPostfix(
+            WeaponAbilityController __instance
+        )
+        {
+            Logger.LogDebug($"WeaponAbilityController ExitOverkill Postfix called");
+            RefreshWeaponVisibility();
         }
 
         [HarmonyPrefix]
@@ -342,6 +382,27 @@ namespace Randomizer
         //     return true;
         // }
         //
+
+        public static void RefreshWeaponVisibility()
+        {
+            if (Instance != null && Instance.GetActiveWeaponAbility() != null)
+            {
+                var weapon = Instance.GetActiveWeaponAbility().Weapon;
+                RefreshWeaponVisibility(weapon);
+            }
+        }
+
+        public static void RefreshWeaponVisibility(PlayerWeapon weapon)
+        {
+            if (weapon == null) return;
+
+            bool shouldBeVisible =
+                !weaponInvisibleTrapActive
+                && !Randomizer.Configuration.gameplayInvisibleWeaponsActive.Value;
+            weapon.SetVisible(shouldBeVisible);
+            Logger.LogInfo($"Set weapon visibility to: {shouldBeVisible}");
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(nameof(WeaponAbilityController.GetActiveWeaponAbility))]
         static void GetActiveWeaponAbilityPostfix(
@@ -352,13 +413,6 @@ namespace Randomizer
             // Logger.LogInfo(
             //     $"WeaponAbilityController GetActiveWeaponAbility Postfix called for {__result.m_weaponConfig.WeaponType}"
             // );
-            bool invisibleWeaponActive =
-                weaponInvisibleTrapActive
-                || Randomizer.Configuration.gameplayInvisibleWeaponsActive.Value;
-            if (__result.Weapon != null && invisibleWeaponActive)
-                __result.Weapon.SetVisible(false);
-            else if (__result.Weapon != null && !invisibleWeaponActive)
-                __result.Weapon.SetVisible(true);
         }
 
         // WARN: Called on every hit
@@ -432,29 +486,31 @@ namespace Randomizer
         [HarmonyPrefix]
         [HarmonyPatch(nameof(WeaponAbilityController.GetWeaponConfig))]
         static bool GetWeaponConfigPrefix(
-            WeaponAbilityController __instance,
+            ref WeaponAbilityController __instance,
             ref PlayerWeaponType weaponType
         )
         {
             Logger.LogDebug(
                 $"WeaponAbilityController GetWeaponConfig Prefix called for {weaponType}"
             );
+            if(Instance == null)
+                Instance = null;
             return true;
         }
 
-        //
-        // [HarmonyPostfix]
-        // [HarmonyPatch(nameof(WeaponAbilityController.GetWeaponConfig))]
-        // static void GetWeaponConfigPostfix(
-        //     WeaponAbilityController __instance,
-        //     PlayerWeaponType weaponType,
-        //     WeaponDataConfiguration __result
-        // )
-        // {
-        //     Logger.LogInfo(
-        //         $"WeaponAbilityController GetWeaponConfig Postfix called for {weaponType}"
-        //     );
-        // }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(WeaponAbilityController.GetWeaponConfig))]
+        static void GetWeaponConfigPostfix(
+            WeaponAbilityController __instance,
+            PlayerWeaponType weaponType,
+            WeaponDataConfiguration __result
+        )
+        {
+            Logger.LogDebug(
+                $"WeaponAbilityController GetWeaponConfig Postfix called for {weaponType}"
+            );
+        }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(WeaponAbilityController.PickUpLoadOut))]
@@ -478,6 +534,7 @@ namespace Randomizer
         )
         {
             Logger.LogDebug($"WeaponAbilityController PickUpLoadOut Postfix called ");
+            RefreshWeaponVisibility();
         }
 
         [HarmonyPrefix]
@@ -494,10 +551,8 @@ namespace Randomizer
             Logger.LogInfo(
                 $"WeaponAbilityController PickUpWeapon Prefix for {weapon} called and charges Ultimate: {chargePickedUpWeaponUltimate}, is Pickup: {isPickup}, show HUD Message: {showHUDMessage}"
             );
-            if (Randomizer.CurrentGameState != GameStateController.GameStateName.InGame)
-                return false;
-
-            ultimateUnlocked = Randomizer.ItemTracker.CanWeaponUltimate(weapon);
+            if (Randomizer.CurrentGameMode == EGameMode.Stage)
+                ultimateUnlocked = Randomizer.ItemTracker.CanWeaponUltimate(weapon);
             return true;
         }
 
@@ -653,6 +708,14 @@ namespace Randomizer
             string configName = Lookup.WeaponNameToConfig[weaponName];
             Logger.LogInfo($"Returning wanted weapon config {configName} for Vulcan");
             return WeaponDataConfigurationCache.Get(configName);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(WeaponAbilityController.TearDown))]
+        static void TearDownPostfix(WeaponAbilityController __instance)
+        {
+            Instance = null;
+            Logger.LogInfo($"WeaponAbilityController TearDown Postfix called");
         }
     }
 

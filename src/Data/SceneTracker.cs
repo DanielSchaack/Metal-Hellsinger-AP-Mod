@@ -18,6 +18,15 @@ namespace Randomizer
                 Randomizer.SceneActiveTime = 0f;
                 LoadedLevel = Randomizer.CurrentLevel;
             }
+
+            if (
+                Application.runInBackground
+                != !Randomizer.Configuration.hellsingerPauseGameOutOfFocused.Value
+            )
+                Application.runInBackground = !Randomizer
+                    .Configuration
+                    .hellsingerPauseGameOutOfFocused
+                    .Value;
         }
 
         public void ResetLevelActiveTime(){

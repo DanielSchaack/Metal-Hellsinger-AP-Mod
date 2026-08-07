@@ -290,6 +290,7 @@ namespace Randomizer
                 )
             );
             trapInvisibleWeaponActiveTime.SettingChanged += addOnChangeSave(config);
+            trapInvisibleWeaponActiveTime.SettingChanged += (_,_) => WeaponAbilityControllerPatches.RefreshWeaponVisibility(); 
 
             trapWeaponTrickeryActiveTime = config.Bind(
                 "Hellsinger.Traps",

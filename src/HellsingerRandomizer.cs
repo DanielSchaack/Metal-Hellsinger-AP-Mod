@@ -287,5 +287,14 @@ namespace Randomizer
 
             return go.AddComponent<T>();
         }
+
+        public static bool AreItemsDispensible()
+        {
+            return Randomizer.CurrentGameState == GameStateController.GameStateName.InGame
+                && !Randomizer.IsLoadingHellsSelection
+                && Randomizer.LevelActiveTime > 10f
+                && !Randomizer.IsPaused;
+        }
+
     }
 }

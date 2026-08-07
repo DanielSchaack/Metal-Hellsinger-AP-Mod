@@ -113,15 +113,17 @@ namespace Randomizer
 
         public static void PlayComplement()
         {
+            Logger.LogInfo($"Added a Complement quip to the queue");
             var data1 = GetRandomVoTuple(ComplementingVoDataId);
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Gold");
             var data = new System.Random().Next(2) > 0 ? data1 : data2;
-            VoQueue.AddItem(new VoRequest(data, "Complement"));
+            VoQueue.Enqueue(new VoRequest(data, "Complement"));
         }
 
 
         public static void PlayEncouragement()
         {
+            Logger.LogInfo($"Added a Encouragement quip to the queue");
             var data1 = GetChallengeVoTuple("ChallengeVoData", "No");
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Bronze");
             var data3 = GetChallengeVoTuple("ChallengeVoData", "Silver");
@@ -133,15 +135,16 @@ namespace Randomizer
                 _ => data1,
             };
 
-            VoQueue.AddItem(new VoRequest(data, "Encouragement"));
+            VoQueue.Enqueue(new VoRequest(data, "Encouragement"));
         }
 
         public static void PlayFailure()
         {
+            Logger.LogInfo($"Added a Failure quip to the queue");
             var data1 = GetRandomVoTuple(FailureVoData);
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Death");
             var data = new System.Random().Next(2) > 0 ? data1 : data2;
-            VoQueue.AddItem(new VoRequest(data, "Failure"));
+            VoQueue.Enqueue(new VoRequest(data, "Failure"));
         }
 
         private static float ActiveTime = 0f;
@@ -150,7 +153,10 @@ namespace Randomizer
         public static void PollQueue()
         {
             ActiveTime += UnityEngine.Time.unscaledDeltaTime;
-            if(ActiveTime > CheckInterval && VoQueue.TryPeek(out var request))
+            if(ActiveTime < CheckInterval || !Randomizer.AreItemsDispensible())
+                return;
+
+            if(VoQueue.TryPeek(out var request))
             {
                 ActiveTime = 0f;
                 PlayVoiceline(request.Data, request.Message);
@@ -215,10 +221,10 @@ namespace Randomizer
 
         private static void PlayVoiceline(VOAndSubtitleIDTuple data, string message)
         {
+            IngameMessagesPatches.DisplayItemActivated(message);
             SoundEmitter emitter = GetEmitter(data);
             Instance.OnSoundEmitterTriggerEntered(emitter);
             UnityEngine.Object.Destroy(emitter.gameObject);
-            IngameMessagesPatches.DisplayItemActivated(message);
         }
 
         [HarmonyPrefix]

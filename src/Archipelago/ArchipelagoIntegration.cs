@@ -401,7 +401,7 @@ namespace Randomizer
             deathLinkService.DisableDeathLink();
         }
 
-        public void SendDeathLink(AttackID attackID)
+        public void SendDeathLink(string levelId, AttackID attackID = AttackID.None)
         {
             string Player = Randomizer.Configuration.archipelagoUsername.Value;
 

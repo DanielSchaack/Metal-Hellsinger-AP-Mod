@@ -50,7 +50,7 @@ namespace Randomizer
             if (
                 !IsItemActive
                 || ActiveItem == null
-                || Randomizer.IsPaused
+                || !Randomizer.AreItemsDispensible()
                 || !Randomizer.Configuration.trapShowActiveItemBox.Value
             )
                 return;
@@ -73,16 +73,17 @@ namespace Randomizer
             if (Randomizer.CurrentLevel == "TitleScene")
                 return;
 
+            SoundEmitterSystemPatches.PollQueue();
+
             if (timer >= checkInterval)
             {
                 HandleConfigurationItems();
 
                 timer = 0f;
 
-                if (!AreItemsDispensible())
+                if (!Randomizer.AreItemsDispensible())
                     return;
 
-                SoundEmitterSystemPatches.PollQueue();
 
                 if (IsDeathlinkQueued)
                 {
@@ -125,7 +126,6 @@ namespace Randomizer
             if (!ItemsToDispense.TryPeek(out var pendingItem))
                 return false;
 
-            Logger.LogInfo($"Activating item {pendingItem.Item1.Name}");
             ActivateItem(pendingItem.Item1, pendingItem.Item2);
 
             ItemsToDispense.TryDequeue(out var _);
@@ -200,6 +200,7 @@ namespace Randomizer
 
         private void ActivateItem(ItemData item, string sender)
         {
+            Logger.LogInfo($"Activating item {item.Name}");
             switch (item.Type)
             {
                 case ItemType.Weapon:
@@ -307,14 +308,6 @@ namespace Randomizer
             WeaponAbilityControllerPatches.GiveWeapon(type, item.Name);
         }
 
-        private bool AreItemsDispensible()
-        {
-            return Randomizer.CurrentGameState == GameStateController.GameStateName.InGame
-                && !Randomizer.IsLoadingHellsSelection
-                && Randomizer.LevelActiveTime > 10f
-                && !Randomizer.IsPaused;
-        }
-
         private void HandleActiveItem()
         {
             switch (ActiveItem.Name)
@@ -383,8 +376,7 @@ namespace Randomizer
 
             if (
                 Randomizer.Configuration.fillerRandomizedFillerDispensionActive.Value
-                && Randomizer.CurrentGameState == GameStateController.GameStateName.InGame
-                && !Randomizer.IsPaused
+                && Randomizer.AreItemsDispensible()
                 && randomItemTimer >= Randomizer.Configuration.fillerRandomizedFillerRate.Value
             )
             {

@@ -231,7 +231,7 @@ namespace Randomizer
             Logger.LogInfo($"Player KillPlayer Postfix for {attackID} called");
 
             if (attackID != AttackID.PlayerShieldUltimateBashAttack)
-                Randomizer.Archipelago.SendDeathLink(attackID);
+                Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel, attackID);
         }
 
         [HarmonyPrefix]
