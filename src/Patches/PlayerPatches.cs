@@ -23,7 +23,7 @@ namespace Randomizer
 
         public static void ToggleAssistMode(bool isItemActive)
         {
-            var message = new AssistModeChangedMessage(true);
+            var message = new AssistModeChangedMessage(isItemActive);
             m_AudioGameplayController.OnAssistModeChanged(ref message);
         }
 
@@ -214,6 +214,14 @@ namespace Randomizer
             Logger.LogInfo(
                 $"Player PickUpWeapon Postfix for {weapon} called and charges Ultimate: {chargeUltimate}, is Pickup: {isPickup}, show HUD Message: {showHUDMessage}, switch to weapon: {switchToWeapon}"
             );
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Player.KillPlayer))]
+        static void KillPlayerPrefix(ref Player __instance, AttackID attackID)
+        {
+            Randomizer.IsPaused = true;
+            Logger.LogDebug($"Player KillPlayer Prefix for {attackID} called");
         }
 
         [HarmonyPostfix]

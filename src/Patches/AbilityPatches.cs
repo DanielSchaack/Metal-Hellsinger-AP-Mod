@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UnityEngine;
 
 namespace Randomizer
 {
@@ -236,6 +237,22 @@ namespace Randomizer
         }
     }
 
+    [HarmonyPatch(typeof(ResurrectionExplosionAttackMovementState))]
+    public class ResurrectionExplosionAttackMovementPatches
+    {
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ResurrectionExplosionAttackMovementState.DoResurrectionExplosion))]
+        static void ResurrectionExplosionAttackMovementDoResurrectionExplosionPostfix(
+            ResurrectionExplosionAttackMovementState __instance
+        )
+        {
+            Logger.LogInfo(
+                $"ResurrectionExplosionAttackMovementState DoResurrectionExplosion Postfix called"
+            );
+            Randomizer.IsPaused = false;
+        }
+    }
+
     [HarmonyPatch(typeof(ScoreController))]
     public class ScoreControllerPatches
     {
@@ -244,11 +261,22 @@ namespace Randomizer
         public static int MaxTiersToApply = 0;
         public static int ResetTiersToApply = 0;
 
+        public static float TierApplyCooldown = 2.5f; // Target cooldown duration in seconds
+        public static float CurrentCooldownTimer = 0f;
+
         [HarmonyPrefix]
         [HarmonyPatch(nameof(ScoreController.Update))]
         static bool UpdatePrefix(ref ScoreController __instance, float dt)
         {
-            if (MaxTiersToApply > 0 && __instance.GetCurrentTierIndex()>__instance.m_minMultiplierTier)
+            if(Randomizer.IsPaused || Randomizer.LevelActiveTime < 5f)
+                return true;
+
+            CurrentCooldownTimer += Time.unscaledDeltaTime;
+
+            if(CurrentCooldownTimer <= TierApplyCooldown)
+                return true;
+
+            if (ResetTiersToApply > 0 && __instance.GetCurrentTierIndex()>__instance.m_minMultiplierTier)
             {
                 Logger.LogInfo(
                     $"ScoreController Reset multiplier tier to apply is at {ResetTiersToApply}, decreasing by one"
@@ -257,6 +285,7 @@ namespace Randomizer
                 IngameMessagesPatches.DisplayItemActivated($"Reset Multiplier");
 
                 ResetTiersToApply--;
+                CurrentCooldownTimer = 0f;
                 return true;
             }
 
@@ -269,6 +298,7 @@ namespace Randomizer
                 IngameMessagesPatches.DisplayItemActivated($"Next Multiplier");
 
                 NextTiersToApply--;
+                CurrentCooldownTimer = 0f;
                 return true;
             }
 
@@ -280,6 +310,7 @@ namespace Randomizer
                 __instance.AdvanceToMaxTier();
                 IngameMessagesPatches.DisplayItemActivated($"Max Multiplier");
                 MaxTiersToApply--;
+                CurrentCooldownTimer = 0f;
                 return true;
             }
             return true;

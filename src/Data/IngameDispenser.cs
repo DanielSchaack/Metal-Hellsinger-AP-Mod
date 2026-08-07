@@ -82,6 +82,8 @@ namespace Randomizer
                 if (!AreItemsDispensible())
                     return;
 
+                SoundEmitterSystemPatches.PollQueue();
+
                 if (IsDeathlinkQueued)
                 {
                     HandleDeathlink();
@@ -232,16 +234,16 @@ namespace Randomizer
                     WeaponAbilityControllerPatches.TriggerUltimate();
                     break;
 
-                case "Complementing Voiceline":
-                    SoundEmitterSystemPatches.PlayComplementingVoiceline();
+                case "Complement":
+                    SoundEmitterSystemPatches.PlayComplement();
                     break;
 
-                case "Encouraging Voiceline":
-                    SoundEmitterSystemPatches.PlayEncouragingVoiceline();
+                case "Encouragement":
+                    SoundEmitterSystemPatches.PlayEncouragement();
                     break;
 
-                case "Failing Voiceline":
-                    SoundEmitterSystemPatches.PlayFailingVoiceline();
+                case "Failure":
+                    SoundEmitterSystemPatches.PlayFailure();
                     break;
 
                 case "Death":

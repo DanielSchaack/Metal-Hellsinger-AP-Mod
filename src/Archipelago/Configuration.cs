@@ -3,12 +3,15 @@ using static Randomizer.Lookup;
 using static Randomizer.Lookup.OutfitId;
 using static Randomizer.Lookup.SongId;
 using static Randomizer.ArchipelagoIntegration;
+using UnityEngine;
 
 namespace Randomizer
 {
     public class Configuration
     {
         public ConfigFile config;
+
+        internal ConfigEntry<bool> hellsingerPauseGameOutOfFocused;
 
         internal ConfigEntry<string> archipelagoUri;
         internal ConfigEntry<string> archipelagoUsername;
@@ -67,6 +70,25 @@ namespace Randomizer
         public Configuration(ConfigFile config)
         {
             this.config = config;
+
+            hellsingerPauseGameOutOfFocused = config.Bind(
+                             "Hellsinger",
+                             "HellsingerPauseGameOutOfFocused",
+                             false,
+                             "! EXPERIMENTAL !\nPauses the game while it is unfocused.\nLets the GPU idle while unfocused.\n! May be less stable than the ingame's option!"
+                         );
+            hellsingerPauseGameOutOfFocused.SettingChanged += (sender, args) =>
+            {
+                Application.runInBackground = !hellsingerPauseGameOutOfFocused.Value;
+                Logger.LogInfo(
+                    "Set run in runInBackground to "
+                        + (!hellsingerPauseGameOutOfFocused.Value).ToString()
+                );
+                config.Save();
+            };
+
+            // ---
+
             archipelagoUri = config.Bind(
                 "Archipelago",
                 "ArchipelagoServerUri",
@@ -147,7 +169,7 @@ namespace Randomizer
                 30,
                 new ConfigDescription(
                     "Rate in seconds as in how often to add a random item to the queue.",
-                    new AcceptableValueRange<int>(1, 100)
+                    new AcceptableValueRange<int>(1, 120)
                 )
             );
             fillerRandomizedFillerRate.SettingChanged += addOnChangeSave(config);
@@ -164,9 +186,9 @@ namespace Randomizer
                     | FillerId.ResetMultiplier
                     | FillerId.UltimateTrigger
                     | FillerId.InvisibleWeapons
-                    | FillerId.ComplementingVoiceline
-                    | FillerId.FailingVoiceline
-                    | FillerId.EncouragingVoiceline,
+                    | FillerId.Complement
+                    | FillerId.Failure
+                    | FillerId.Encouragement,
                 "The included items to randomly dispense."
             );
             fillerRandomizedFillerBag.SettingChanged += addOnChangeSave(config);

@@ -21,31 +21,208 @@ namespace Randomizer
         public static Settings Settings;
         public static ArchipelagoIntegration Archipelago;
 
-        public static bool IsLoadingDefinition = false; // Flag for loading LevelDefinition
-        public static bool IsLoadingHellsSelection = false; // Flag for in title loading, for any of the hells stages
-        public static bool IsLoadingHells = false; // TODO: Flag for in title loading, for any of the hells stages
-        public static bool IsLoadingEndless = false; // TODO: Flag for in title loading, for the endless gamemode
-        public static bool IsLoadingSongs = false; // Flag for Hells/Torment loading
-        public static bool IsFinalLevel = false; // Flag for Sheol
-        public static bool IsPaused = true; // Flag for ingame menu open
-        public static float SceneActiveTime = 0f; // Time since scene has been loaded
-        public static float LevelActiveTime = 0f; // Time since when loading screen play button has been pressed
+        public static bool IsLoadingDefinition
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsLoadingDefinition - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = false;
 
-        public static EGameMode CurrentGameMode = EGameMode.None;
-        public static EDifficulty CurrentDifficulty = EDifficulty.Easy;
-        public static GameStateController.GameStateName CurrentGameState = GameStateController .GameStateName .Title;
+        public static bool IsLoadingHellsSelection
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsLoadingHellsSelection - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = false;
 
-        public static string CurrentLevel = "";
-        public static PlayerWeaponType CurrentPrimary = PlayerWeaponType.None;
-        public static PlayerWeaponType CurrentSecondary = PlayerWeaponType.None;
-        public static SkinType CurrentOutfit = SkinType.None;
-        public static string CurrentMainSong = "";
-        public static string CurrentBossSong = "";
-        public static EDifficulty SelectedDifficulty = EDifficulty.Easy; // selected Difficulty during Hells select screen
+        public static bool IsLoadingHells
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsLoadingHells - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = false;
 
-        public static ExtendedWeaponType CurrentPersephoneConfig = ExtendedWeaponType.Regular;
-        public static WeaponType CurrentHoundsConfig = WeaponType.Regular;
-        public static WeaponType CurrentVulcanConfig = WeaponType.Regular;
+        public static bool IsLoadingEndless
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsLoadingEndless - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = false;
+
+        public static bool IsLoadingSongs
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsLoadingSongs - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = false;
+
+        public static bool IsFinalLevel
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsFinalLevel - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = false;
+
+        public static bool IsPaused
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"IsPaused - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = true;
+
+        public static float SceneActiveTime { get; set; } = 0f;
+        public static float LevelActiveTime { get; set; } = 0f;
+
+        public static EGameMode CurrentGameMode
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentGameMode - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = EGameMode.None;
+
+        public static EDifficulty CurrentDifficulty
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentDifficulty - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = EDifficulty.Easy;
+
+        public static GameStateController.GameStateName CurrentGameState
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentGameState - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = GameStateController.GameStateName.Title;
+
+        public static string CurrentLevel
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentLevel - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = "";
+
+        public static PlayerWeaponType CurrentPrimary
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentPrimary - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = PlayerWeaponType.None;
+
+        public static PlayerWeaponType CurrentSecondary
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentSecondary - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = PlayerWeaponType.None;
+
+        public static SkinType CurrentOutfit
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentOutfit - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = SkinType.None;
+
+        public static string CurrentMainSong
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentMainSong - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = "";
+
+        public static string CurrentBossSong
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentBossSong - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = "";
+
+        public static EDifficulty SelectedDifficulty
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"SelectedDifficulty - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = EDifficulty.Easy;
+
+        public static ExtendedWeaponType CurrentPersephoneConfig
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentPersephoneConfig - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = ExtendedWeaponType.Regular;
+
+        public static WeaponType CurrentHoundsConfig
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentHoundsConfig - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = WeaponType.Regular;
+
+        public static WeaponType CurrentVulcanConfig
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"CurrentVulcanConfig - Current: {field} | Incoming: {value}");
+                field = value;
+            }
+        } = WeaponType.Regular;
 
         public override void Load()
         {
@@ -70,6 +247,11 @@ namespace Randomizer
 
                 RegisterTypeAndCreateObject<IngameDispenser>("IngameDispenser");
                 RegisterTypeAndCreateObject<SceneTracker>("SceneTracker");
+
+                Application.runInBackground = !Randomizer
+                    .Configuration
+                    .hellsingerPauseGameOutOfFocused
+                    .Value;
 
                 Logger.LogInfo("Objects initialized");
             }

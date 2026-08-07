@@ -185,6 +185,8 @@ namespace Randomizer
         private static void SetDefaultFuryCombos()
         {
             SaveData.CompletedCombos.Clear();
+            foreach(var combo in Lookup.FuryComboToLocationName.Keys)
+                SaveData.CompletedCombos.System_Collections_IList_Add((int)combo);
         }
 
         private static void SetSeenCompanions()
@@ -645,15 +647,14 @@ namespace Randomizer
         [HarmonyPatch(nameof(ProgressionSaveData.SetComboCompleted))]
         static void SetComboCompletedPostfix(EFuryComboType comboType)
         {
-            Logger.LogInfo($"ProgressionSaveData SetComboCompleted Postfix called for {comboType}");
-            Randomizer.LocationTracker.CheckFuryCombo(comboType);
+            Logger.LogDebug($"ProgressionSaveData SetComboCompleted Postfix called for {comboType}");
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(ProgressionSaveData.SetWorldItemAsDiscovered))]
         static bool SetWorldItemAsDiscoveredPrefix(string id)
         {
-            Logger.LogInfo($"ProgressionSaveData SetWorldItemAsDiscovered Prefix called for {id}");
+            Logger.LogDebug($"ProgressionSaveData SetWorldItemAsDiscovered Prefix called for {id}");
             return true;
         }
 
@@ -661,7 +662,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(ProgressionSaveData.SetWorldItemAsDiscovered))]
         static void SetWorldItemAsDiscoveredPostfix(string id)
         {
-            Logger.LogInfo($"ProgressionSaveData SetWorldItemAsDiscovered Postfix called for {id}");
+            Logger.LogDebug($"ProgressionSaveData SetWorldItemAsDiscovered Postfix called for {id}");
         }
 
         // WARN: Messes with WeaponEquipState

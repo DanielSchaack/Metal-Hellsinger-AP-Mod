@@ -1,7 +1,6 @@
 using Outsiders.GUI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static OutsidersButton;
 
@@ -20,68 +19,29 @@ namespace Randomizer
             archipelagoPassword = Randomizer.Configuration.archipelagoPassword.Value;
         }
 
-        private GameObject customRow;
-        private bool isInjectedTitleScreenMenu = false;
-        private bool isInjectedInPauseMenu = false;
-        private float timer = 0f;
-        private float checkInterval = 0.25f;
-
-        private string TitleScreenMenu =
+        private static string TitleScreenMenu =
             "Main/UIRoot/Overlay/Layer-Default/TitleScreenDisplay(Clone)/MenuParentGroup/MenuVerticalLayout";
-        private string PauseMenu =
+        private static string PauseMenu =
             "Main/UIRoot/Overlay/Layer-Default/PauseScreenDisplay(Clone)/MenuDisplay";
 
-        void Update()
+        public static bool TryInjectTitle()
         {
-            if (timer >= checkInterval)
-            {
-                timer = 0f;
+            return TryInjectPopup(TitleScreenMenu, "TitleRow(Clone)");
+        }
 
-                if (
-                    !isInjectedTitleScreenMenu
-                    && SceneManager.GetActiveScene().name == "TitleScene"
-                    && IsGameObjectAvailable(TitleScreenMenu)
-                )
-                {
-                    Logger.LogDebug("Trying to inject into title screen");
-                    isInjectedTitleScreenMenu = TryInjectPopup(TitleScreenMenu, "TitleRow(Clone)");
-                }
-                else if (isInjectedTitleScreenMenu && !IsGameObjectAvailable(TitleScreenMenu))
-                {
-                    isInjectedTitleScreenMenu = false;
-                }
-
-                if (
-                    !isInjectedInPauseMenu
-                    && SceneManager.GetActiveScene().name != "TitleScene"
-                    && IsGameObjectAvailable(PauseMenu)
-                )
-                {
-                    Logger.LogInfo("Trying to inject into pause menu");
-                    isInjectedInPauseMenu = TryInjectPopup(
-                        PauseMenu,
-                        "PauseMenuRowTemplate(Clone)"
-                    );
-                }
-                else if (isInjectedInPauseMenu && !IsGameObjectAvailable(PauseMenu))
-                {
-                    isInjectedInPauseMenu = false;
-                }
-            }
-            else
-            {
-                timer += Time.unscaledDeltaTime;
-            }
+        public static bool TryInjectPause()
+        {
+            return TryInjectPopup(PauseMenu, "PauseMenuRowTemplate(Clone)");
         }
 
         private bool IsGameObjectAvailable(string gameObject)
         {
-                GameObject layoutObj = GameObject.Find(gameObject);
-                bool isAvailable = layoutObj != null;
-                return isAvailable;
+            GameObject layoutObj = GameObject.Find(gameObject);
+            bool isAvailable = layoutObj != null;
+            return isAvailable;
         }
 
-        private bool TryInjectPopup(string layoutParent, string childToCopy)
+        private static bool TryInjectPopup(string layoutParent, string childToCopy)
         {
             GameObject layoutObj = GameObject.Find(layoutParent);
 
@@ -91,7 +51,7 @@ namespace Randomizer
                 if (template == null)
                     return false;
 
-                customRow = Instantiate(template.gameObject, layoutObj.transform);
+                var customRow = Instantiate(template.gameObject, layoutObj.transform);
                 customRow.name = "Archipelago_TitleRow";
                 customRow.transform.SetSiblingIndex(0);
 
@@ -117,7 +77,7 @@ namespace Randomizer
             return false;
         }
 
-        private void OnArchipelagoClick(SelectionEvent sEvent, Il2CppSystem.Object obj)
+        public static void OnArchipelagoClick(SelectionEvent sEvent, Il2CppSystem.Object obj)
         {
             if (sEvent == SelectionEvent.Activated)
             {
@@ -131,12 +91,12 @@ namespace Randomizer
         private static TMP_FontAsset font;
         private static Color fontColor;
 
-        private void ToggleArchipelagoDialog()
+        private static void ToggleArchipelagoDialog()
         {
             UIMaster ui = UIMaster.sm_instance;
             if (ui != null)
             {
-                Logger.LogInfo("UIMaster is not null");
+                Logger.LogDebug("UIMaster is not null");
                 // ui.ShowUnlockPopup()
 
                 PopupButtonData pbdConnect = ArchipelagoConnectButton();
@@ -210,7 +170,7 @@ namespace Randomizer
             labelLe.flexibleWidth = 1;
         }
 
-        private void setFont(GameObject layoutObj)
+        private static void setFont(GameObject layoutObj)
         {
             Transform scroller = layoutObj.transform.Find("Scroller");
             if (scroller == null)
@@ -239,7 +199,7 @@ namespace Randomizer
             return pbdConnect;
         }
 
-        private TMP_InputField CreateInputField(
+        private static TMP_InputField CreateInputField(
             Transform parent,
             string labelText,
             string initialValue,

@@ -24,7 +24,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(WorldItemDiscoverySystem.OnWorldItemTriggerEntered))]
         static void OnWorldItemTriggerEnteredPostfix(WorldItemDiscoverySystem __instance)
         {
-            Logger.LogInfo($"WorldItemDiscoverySystem OnWorldItemTriggerEntered Postfix called");
+            Logger.LogDebug($"WorldItemDiscoverySystem OnWorldItemTriggerEntered Postfix called");
         }
     }
 
@@ -38,9 +38,10 @@ namespace Randomizer
             EnemyDiscoveredTrigger component
         )
         {
-            Logger.LogDebug(
+            Logger.LogInfo(
                 $"EnemyDiscoveredSystem OnEnemyDiscoveredTriggerEntered Prefix called for {component.WorldItemDiscoverySaveID}"
             );
+            Randomizer.LocationTracker.CheckWorldItem(component.WorldItemDiscoverySaveID);
             return false;
         }
 
@@ -51,6 +52,29 @@ namespace Randomizer
             Logger.LogDebug(
                 $"EnemyDiscoveredSystem OnEnemyDiscoveredTriggerEntered Postfix called"
             );
+        }
+    }
+
+    [HarmonyPatch(typeof(BeatGradingItem))]
+    public class BeatGradingItemPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(BeatGradingItem.Show))]
+        static bool ShowPrefix(BeatGradingItem __instance, EBeatGrading beatGrade, EFuryComboType comboType)
+        {
+            if(comboType != EFuryComboType.None)
+                Logger.LogInfo(
+                    $"BeatGradingItem Show Prefix called for beat grading {beatGrade} and combo type {comboType}"
+                );
+            Randomizer.LocationTracker.CheckFuryCombo(comboType);
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(BeatGradingItem.Show))]
+        static void ShowPostfix(BeatGradingItem __instance)
+        {
+            Logger.LogDebug($"BeatGradingItem Show Postfix called");
         }
     }
 
@@ -86,14 +110,14 @@ namespace Randomizer
         {
             if (
                 Instance != null
-                && !Randomizer.IsPaused
-                && Randomizer.LevelActiveTime > 10f
+                && Randomizer.LevelActiveTime > 5f
                 && Randomizer.Configuration.archipelagoPopupForClassification.Value.HasFlag(
                     item.Classification
                 )
             )
             {
-                var message = string.IsNullOrEmpty(sender) ? $"{item.Name.ToUpper()} received!"
+                var message = string.IsNullOrEmpty(sender)
+                    ? $"{item.Name.ToUpper()} received!"
                     : $"{item.Name.ToUpper()} from {sender.ToUpper()} received!";
 
                 Logger.LogInfo($"Showing item received: '{message}'");
@@ -302,7 +326,9 @@ namespace Randomizer
             }
         }
 
-        private static System.Collections.IEnumerator CloseAfterDelay(BeatStreakMessageContainer container)
+        private static System.Collections.IEnumerator CloseAfterDelay(
+            BeatStreakMessageContainer container
+        )
         {
             yield return new UnityEngine.WaitForSeconds(2f);
             container._InitializeAnimations_b__18_0();
@@ -375,9 +401,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(BeatChainContainer.Show))]
         static bool ShowPrefix(BeatChainContainer __instance)
         {
-            Logger.LogDebug(
-                $"BeatChainContainer Show Prefix called"
-            );
+            Logger.LogDebug($"BeatChainContainer Show Prefix called");
             return true;
         }
 
@@ -388,6 +412,7 @@ namespace Randomizer
             Logger.LogDebug($"BeatChainContainer Show Postfix called");
         }
     }
+
     [HarmonyPatch(typeof(BeatStreakMessageContainer))]
     public class BeatStreakMessageContainerPatches
     {

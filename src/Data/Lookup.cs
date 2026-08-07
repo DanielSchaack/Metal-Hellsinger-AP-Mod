@@ -55,14 +55,101 @@ namespace Randomizer
 
         public static readonly Dictionary<EZone, string> EZoneToChallengeBaseId = new Dictionary<EZone, string>()
         {
-            { EZone.KillingWithRhythm, "CH_Amdusias" },
-            { EZone.WeaponTrickery,    "CH_Marbas" },
-            { EZone.RelicThief,        "CH_Halphas" },
-            { EZone.Giantslayer,       "CH_Bune" },
-            { EZone.DeathsEdge,        "CH_Morax" },
-            { EZone.UltimateMastery,   "CH_Flauros" },
-            { EZone.SlaughterMastery,  "CH_Glasya" },
+            { KillingWithRhythm, "CH_Amdusias" },
+            { WeaponTrickery,    "CH_Marbas" },
+            { RelicThief,        "CH_Halphas" },
+            { Giantslayer,       "CH_Bune" },
+            { DeathsEdge,        "CH_Morax" },
+            { UltimateMastery,   "CH_Flauros" },
+            { SlaughterMastery,  "CH_Glasya" },
         };
+
+        public static readonly Dictionary<EZone, List<(EZone, EArena)>> EZoneToIndividualLevels =
+            new Dictionary<EZone, List<(EZone, EArena)>>()
+            {
+                { EZone.Tutorial, [(EZone.Tutorial, EArena.Tutorial)] },
+                {
+                    Voke,
+                    [
+                        (Voke, Arena1),
+                        (KillingWithRhythm, Torment1),
+                        (WeaponTrickery, Torment1),
+                        (RelicThief, Torment1),
+                    ]
+                },
+                {
+                    Stygia,
+                    [
+                        (Stygia, Arena1),
+                        (Giantslayer, Torment1),
+                        (DeathsEdge, Torment1),
+                        (RelicThief, Torment2),
+                    ]
+                },
+                {
+                    Yhelm,
+                    [
+                        (Yhelm, Arena1),
+                        (UltimateMastery, Torment1),
+                        (KillingWithRhythm, Torment2),
+                        (WeaponTrickery, Torment2),
+                    ]
+                },
+                {
+                    Incaustis,
+                    [
+                        (Incaustis, Arena1),
+                        (SlaughterMastery, Torment1),
+                        (Giantslayer, Torment2),
+                        (RelicThief, Torment3),
+                    ]
+                },
+                {
+                    Gehenna,
+                    [
+                        (Gehenna, Arena1),
+                        (DeathsEdge, Torment2),
+                        (KillingWithRhythm, Torment3),
+                        (WeaponTrickery, Torment3),
+                    ]
+                },
+                {
+                    Nihil,
+                    [
+                        (Nihil, Arena1),
+                        (UltimateMastery, Torment2),
+                        (SlaughterMastery, Torment2),
+                        (Giantslayer, Torment3),
+                    ]
+                },
+                {
+                    Acheron,
+                    [
+                        (Acheron, Arena1),
+                        (DeathsEdge, Torment3),
+                        (UltimateMastery, Torment3),
+                        (SlaughterMastery, Torment3),
+                    ]
+                },
+                {
+                    Sheol,
+                    [
+                        (Sheol, Arena1),
+                    ]
+                },
+                {
+                    EZone.Leviathan,
+                    [
+                        (Leviathan, EArena.Bridge),
+                        (Leviathan, EArena.Ziggurat),
+                        (Leviathan, EArena.WalledGarden),
+                        (Leviathan, EArena.Pyramid),
+                        (Leviathan, EArena.Monument),
+                        (Leviathan, EArena.HighRode),
+                        (Leviathan, EArena.FinalDestination),
+                    ]
+                },
+            };
 
         public static readonly Dictionary<string, EArena> LevelIdToArena = new Dictionary<string, EArena>()
         {
@@ -556,13 +643,13 @@ namespace Randomizer
 
         public static readonly Dictionary<string, ESigilType> SigilNameToType = new()
         {
-            { "Streak Guardian", ESigilType.BeatStreakSave },
-            { "Ghost Rounds", ESigilType.WeaponSwitchBonus },
-            { "Boon Momentum", ESigilType.BeatStreakThreshold },
-            { "Unyielding Fury", ESigilType.MultiplierTierPostRezz },
-            { "Last Breath Aegis", ESigilType.ExtraHp },
-            { "Ultimate Sovereignty", ESigilType.UltimateAutoRefill },
-            { "The Perfectionist", ESigilType.LongerSlaughter },
+            { "Progressive Streak Guardian", ESigilType.BeatStreakSave },
+            { "Progressive Ghost Rounds", ESigilType.WeaponSwitchBonus },
+            { "Progressive Boon Momentum", ESigilType.BeatStreakThreshold },
+            { "Progressive Unyielding Fury", ESigilType.MultiplierTierPostRezz },
+            { "Progressive Last Breath Aegis", ESigilType.ExtraHp },
+            { "Progressive Ultimate Sovereignty", ESigilType.UltimateAutoRefill },
+            { "Progressive The Perfectionist", ESigilType.LongerSlaughter },
         };
         public static readonly Dictionary<ESigilType, string> SigilTypeToName =
             SigilNameToType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
@@ -591,7 +678,7 @@ namespace Randomizer
         {
             { Base, new() { "Outfit of the Unknown", "Outfit of the Leviathan" } },
             { DreamOfTheBeast, new() { "Outfit of the Dark Devotee", "Outfit of the Morning Star", "Outfit of the Angel Eyes" } },
-            { Purgatory, new() { "Obisidan Outfit", "Outfit of the Amethyst", "Outfit of the Chromatica" } },
+            { Purgatory, new() { "Outfit of the Obsidian", "Outfit of the Amethyst", "Outfit of the Chromatica" } },
         };
         public static readonly Dictionary<string, SkinType> OutfitNameToType = new()
         {
@@ -599,7 +686,7 @@ namespace Randomizer
             { "Outfit of the Dark Devotee", SkinType.Outfit1 },
             { "Outfit of the Morning Star", SkinType.Outfit2 },
             { "Outfit of the Angel Eyes", SkinType.Outfit3 },
-            { "Obisidan Outfit", SkinType.Outfit4 },
+            { "Outfit of the Obsidian", SkinType.Outfit4 },
             { "Outfit of the Amethyst", SkinType.Outfit5 },
             { "Outfit of the Chromatica", SkinType.Outfit6 },
             { "Outfit of the Leviathan", SkinType.Outfit7 },
@@ -940,7 +1027,7 @@ namespace Randomizer
             { "Outfit of the Dark Devotee", OutfitId.DarkDevotee },
             { "Outfit of the Morning Star", OutfitId.MorningStar },
             { "Outfit of the Angel Eyes", OutfitId.AngelEyes },
-            { "Obisidan Outfit", OutfitId.Obsidian },
+            { "Outfit of the Obsidian", OutfitId.Obsidian },
             { "Outfit of the Amethyst", OutfitId.Amethyst },
             { "Outfit of the Chromatica", OutfitId.Chromatica },
         };
@@ -986,7 +1073,150 @@ namespace Randomizer
             "CH_Glasya3",
         };
 
-        public static readonly List<string> WorldItemIDs = new ()
+        public static readonly Dictionary<string, string> LevelToDefeatedBossLocationName =
+        new Dictionary<string, string>()
+            {
+                { "Voke", "Anger Aspect: Voke defeated" },
+                { "Stygia", "Charged Aspect: Stygia defeated" },
+                { "Yhelm", "Fortress Aspect: Yhelm defeated" },
+                { "Incaustis", "Infernal Fury Aspect: Incaustis defeated" },
+                { "Gehenna", "Hellstorm Aspect: Gehenna defeated" },
+                { "Nihil", "DoppelGanger Aspect: Nihil defeated" },
+                { "Acheron", "Wheel Aspect: Acheron defeated" },
+                { "Sheol", "Red Judge - Worldbreaker: Sheol defeated" },
+            };
+
+        public static string EnemyClassToLocationName(EnemyClassType enemyClass) =>
+            enemyClass switch
+            {
+                EnemyClassType.Marionette => "Marionette discovered",
+                EnemyClassType.Cambion => "Cambion discovered",
+                EnemyClassType.Stalker => "Stalker discovered",
+                EnemyClassType.Reaver => "Behemoth discovered",
+                EnemyClassType.LesserSeraph => "Lesser Seraph discovered",
+                EnemyClassType.Eyeless => "Eyeless discovered",
+                EnemyClassType.Hierophant => "Hierophant discovered",
+                EnemyClassType.Elite_Cambion => "Shield Cambion discovered",
+                EnemyClassType.Elite_Stalker => "Void Stalker discovered",
+                EnemyClassType.Elite_Reaver => "Siege Behemoth discovered",
+                EnemyClassType.Elite_Seraph => "Annihilator Seraph discovered",
+                EnemyClassType.LostUnknown => "The Lost Unknown: Leviathan discovered",
+                EnemyClassType.Boss_Voke => "Anger Aspect: Voke discovered",
+                EnemyClassType.Boss_Stygia => "Charged Aspect: Stygia discovered",
+                EnemyClassType.Boss_Yhelm => "Fortress Aspect: Yhelm discovered",
+                EnemyClassType.Boss_Incaustis => "Infernal Fury Aspect: Incaustis discovered",
+                EnemyClassType.Boss_Gehenna => "Hellstorm Aspect: Gehenna discovered",
+                EnemyClassType.Boss_Nihil => "DoppelGanger Aspect: Nihil discovered",
+                EnemyClassType.Boss_Acheron => "Wheel Aspect: Acheron discovered",
+                EnemyClassType.Boss_Sheol => "Red Judge - Worldbreaker: Sheol discovered",
+                _ => string.Empty,
+            };
+
+        public static readonly Dictionary<string, string> CoatOfArmToLocationName = new Dictionary<
+            string,
+            string
+        >()
+        {
+            { "Collectible_Voke_Easy", "Voke Coat of Arms Easy" },
+            { "Collectible_Voke_Medium", "Voke Coat of Arms Medium" },
+            { "Collectible_Voke_Hard", "Voke Coat of Arms Hard" },
+            { "Collectible_Voke_VeryHard", "Voke Coat of Arms VeryHard" },
+            { "Collectible_Stygia_Easy", "Stygia Coat of Arms Easy" },
+            { "Collectible_Stygia_Medium", "Stygia Coat of Arms Medium" },
+            { "Collectible_Stygia_Hard", "Stygia Coat of Arms Hard" },
+            { "Collectible_Stygia_VeryHard", "Stygia Coat of Arms VeryHard" },
+            { "Collectible_Yhelm_Easy", "Yhelm Coat of Arms Easy" },
+            { "Collectible_Yhelm_Medium", "Yhelm Coat of Arms Medium" },
+            { "Collectible_Yhelm_Hard", "Yhelm Coat of Arms Hard" },
+            { "Collectible_Yhelm_VeryHard", "Yhelm Coat of Arms VeryHard" },
+            { "Collectible_Gehenna_Easy", "Gehenna Coat of Arms Easy" },
+            { "Collectible_Gehenna_Medium", "Gehenna Coat of Arms Medium" },
+            { "Collectible_Gehenna_Hard", "Gehenna Coat of Arms Hard" },
+            { "Collectible_Gehenna_VeryHard", "Gehenna Coat of Arms VeryHard" },
+            { "Collectible_Incaustis_Easy", "Incaustis Coat of Arms Easy" },
+            { "Collectible_Incaustis_Medium", "Incaustis Coat of Arms Medium" },
+            { "Collectible_Incaustis_Hard", "Incaustis Coat of Arms Hard" },
+            { "Collectible_Incaustis_VeryHard", "Incaustis Coat of Arms VeryHard" },
+            { "Collectible_Nihil_Easy", "Nihil Coat of Arms Easy" },
+            { "Collectible_Nihil_Medium", "Nihil Coat of Arms Medium" },
+            { "Collectible_Nihil_Hard", "Nihil Coat of Arms Hard" },
+            { "Collectible_Nihil_VeryHard", "Nihil Coat of Arms VeryHard" },
+            { "Collectible_Acheron_Easy", "Acheron Coat of Arms Easy" },
+            { "Collectible_Acheron_Medium", "Acheron Coat of Arms Medium" },
+            { "Collectible_Acheron_Hard", "Acheron Coat of Arms Hard" },
+            { "Collectible_Acheron_VeryHard", "Acheron Coat of Arms VeryHard" },
+            { "Collectible_Sheol_Easy", "Sheol Coat of Arms Easy" },
+            { "Collectible_Sheol_Medium", "Sheol Coat of Arms Medium" },
+            { "Collectible_Sheol_Hard", "Sheol Coat of Arms Hard" },
+            { "Collectible_Sheol_VeryHard", "Sheol Coat of Arms VeryHard" },
+        };
+
+        public static readonly Dictionary<string, EZone> LevelIdToZoneDictionary = new Dictionary<
+            string,
+            EZone
+        >()
+        {
+            { "EndlessModeBase", EZone.Leviathan },
+            { "Tutorial", EZone.Tutorial },
+            { "Voke", EZone.Voke },
+            { "Stygia", EZone.Stygia },
+            { "Yhelm", EZone.Yhelm },
+            { "Incaustis", EZone.Incaustis },
+            { "Gehenna", EZone.Gehenna },
+            { "Nihil", EZone.Nihil },
+            { "Acheron", EZone.Acheron },
+            { "Sheol", EZone.Sheol },
+            { "CH_Amdusias1", EZone.KillingWithRhythm },
+            { "CH_Marbas1", EZone.WeaponTrickery },
+            { "CH_Halphas1", EZone.RelicThief },
+            { "CH_Bune1", EZone.Giantslayer },
+            { "CH_Morax1", EZone.DeathsEdge },
+            { "CH_Halphas2", EZone.RelicThief },
+            { "CH_Flauros1", EZone.UltimateMastery },
+            { "CH_Amdusias2", EZone.KillingWithRhythm },
+            { "CH_Marbas2", EZone.WeaponTrickery },
+            { "CH_Glasya1", EZone.SlaughterMastery },
+            { "CH_Bune2", EZone.Giantslayer },
+            { "CH_Halphas3", EZone.RelicThief },
+            { "CH_Morax2", EZone.DeathsEdge },
+            { "CH_Amdusias3", EZone.KillingWithRhythm },
+            { "CH_Marbas3", EZone.WeaponTrickery },
+            { "CH_Flauros2", EZone.UltimateMastery },
+            { "CH_Glasya2", EZone.SlaughterMastery },
+            { "CH_Bune3", EZone.Giantslayer },
+            { "CH_Morax3", EZone.DeathsEdge },
+            { "CH_Flauros3", EZone.UltimateMastery },
+            { "CH_Glasya3", EZone.SlaughterMastery },
+        };
+
+        public static readonly Dictionary<string, string> WorldItemToLocationName = new Dictionary<
+            string,
+            string
+        >()
+        {
+            { "WI_Marionette", "Marionette discovered" },
+            { "WI_Cambion", "Cambion discovered" },
+            { "WI_Reaver", "Behemoth discovered" },
+            { "WI_Stalker", "Stalker discovered" },
+            { "WI_Eyeless", "Eyeless discovered" },
+            { "WI_Hierophant", "Hierophant discovered" },
+            { "WI_LesserSeraph", "Lesser Seraph discovered" },
+            { "WI_Elite_Cambion", "Shield Cambion discovered" },
+            { "WI_Elite_Reaver", "Siege Behemoth discovered" },
+            { "WI_Elite_Stalker", "Void Stalker discovered" },
+            { "WI_Elite_LesserSeraph", "Annihilator Seraph discovered" },
+            { "WI_Boss_Voke", "Anger Aspect: Voke discovered" },
+            { "WI_Boss_Stygia", "Charged Aspect: Stygia discovered" },
+            { "WI_Boss_Yhelm", "Fortress Aspect: Yhelm discovered" },
+            { "WI_Boss_Incaustis", "Infernal Fury Aspect: Incaustis discovered" },
+            { "WI_Boss_Gehenna", "Hellstorm Aspect: Gehenna discovered" },
+            { "WI_Boss_Nihil", "DoppelGanger Aspect: Nihil discovered" },
+            { "WI_Boss_Acheron", "Wheel Aspect: Acheron discovered" },
+            { "WI_Boss_Sheol", "Red Judge - Worldbreaker: Sheol discovered" },
+            { "WI_LostUnknown", "The Lost Unknown: Leviathan discovered" },
+        };
+
+        public static readonly List<string> WorldItemIDs = new()
         {
             "IP_BeatMatching",
             "IP_Slaughter",
@@ -995,7 +1225,31 @@ namespace Randomizer
             "IP_Ultimates",
             "IP_QuickReload",
             "IP_Dashing",
-            "IP_Dashing",
+            "WI_Paz",
+            "WI_Pistols",
+            "WI_Shotgun",
+            "WI_Vulcan",
+            "WI_Hellcrow",
+            "WI_Marionette",
+            "WI_Cambion",
+            "WI_Elite_Cambion",
+            "WI_Reaver",
+            "WI_Elite_Reaver",
+            "WI_Stalker",
+            "WI_Elite_Stalker",
+            "WI_Eyeless",
+            "WI_Hierophant",
+            "WI_LesserSeraph",
+            "WI_Elite_LesserSeraph",
+            "WI_Boss_Voke",
+            "WI_Boss_Stygia",
+            "WI_Boss_Yhelm",
+            "WI_Boss_Incaustis",
+            "WI_Boss_Gehenna",
+            "WI_Boss_Nihil",
+            "WI_Boss_Acheron",
+            "WI_Boss_Sheol",
+            "WI_LostUnknown",
         };
 
         public static readonly List<string> InstructionIDs = new ()
@@ -1107,8 +1361,359 @@ namespace Randomizer
         };
 
         public static readonly List<string> BossEndScenarioNames = new () {
+            "Tutorial_Outro",
             "CompleteStage",
             "Phase_CompleteStage", // Sheol
+        };
+
+        public static readonly Dictionary<EFuryComboType, string> FuryComboToLocationName =
+            new Dictionary<EFuryComboType, string>()
+            {
+                { EFuryComboType.ActiveReloadHealth, "Styx Reload discovered" },
+                { EFuryComboType.ActiveReloadKill, "Hells's Heartbeat discovered" },
+                { EFuryComboType.DashKill, "Basilisk Mode discovered" },
+                { EFuryComboType.DestructDash, "Double Hit and Run discovered" },
+                { EFuryComboType.DoubleDestructible, "Shatter Two discovered" },
+                { EFuryComboType.DoubleJumpDash, "Devil's Flight discovered" },
+                { EFuryComboType.DoubleOverkill, "Double Slaughter discovered" },
+                { EFuryComboType.ExplosionSlaughter, "Chaos and Slaughter discovered" },
+                { EFuryComboType.KillSlaughter, "Unholy Mess discovered" },
+                { EFuryComboType.ManySlaughters, "Five Endings discovered" },
+                { EFuryComboType.SlaughterKill, "Slaughter and Kill discovered" },
+                { EFuryComboType.SoarJumpDestruct, "Chaos Flight discovered" },
+                { EFuryComboType.SoarSlaughter, "Death from Above discovered" },
+                { EFuryComboType.SwitchDamage, "Lethal Cycle discovered" },
+                { EFuryComboType.TripleKill, "Kill Trio discovered" },
+                { EFuryComboType.TrippleDash, "Triple Dash discovered" },
+            };
+
+        public static readonly Dictionary<string, int> LocationDestructionCountRequired =
+            new Dictionary<string, int>()
+            {
+                { "Voke Ammostash Arena1", 3 },
+                { "Voke Ammostash Arena2", 3 },
+                { "Voke Ammostash Arena3", 5 },
+                { "Voke Ammostash Arena4", 2 },
+                { "Voke Ammostash Boss", 4 },
+                { "Voke HealthCrystal Arena1", 4 },
+                { "Voke HealthCrystal Arena2", 2 },
+                { "Voke HealthCrystal Arena3", 3 },
+                { "Voke HealthCrystal Arena4", 3 },
+                { "Voke HealthCrystal Boss", 4 },
+                // { "Voke ChaosCrystal Arena1", 0},
+                { "Voke ChaosCrystal Arena2", 2 },
+                { "Voke ChaosCrystal Arena3", 2 },
+                { "Voke ChaosCrystal Arena4", 2 },
+                { "Voke ChaosCrystal Boss", 4 },
+                { "Stygia Ammostash Arena1", 2 },
+                { "Stygia Ammostash Arena2", 6 },
+                { "Stygia Ammostash Arena3", 4 },
+                { "Stygia Ammostash Arena4", 7 },
+                { "Stygia Ammostash Boss", 4 },
+                { "Stygia HealthCrystal Arena1", 2 },
+                { "Stygia HealthCrystal Arena2", 4 },
+                { "Stygia HealthCrystal Arena3", 3 },
+                { "Stygia HealthCrystal Arena4", 5 },
+                { "Stygia HealthCrystal Boss", 5 },
+                // { "Stygia ChaosCrystal Arena1", 0},
+                { "Stygia ChaosCrystal Arena2", 5 },
+                { "Stygia ChaosCrystal Arena3", 2 },
+                { "Stygia ChaosCrystal Arena4", 4 },
+                // { "Stygia ChaosCrystal Boss", 0},
+
+                { "Yhelm Ammostash Arena1", 8 },
+                { "Yhelm Ammostash Arena2", 4 },
+                { "Yhelm Ammostash Arena3", 1 },
+                { "Yhelm Ammostash Arena4", 7 },
+                { "Yhelm Ammostash Boss", 4 },
+                { "Yhelm HealthCrystal Arena1", 3 },
+                { "Yhelm HealthCrystal Arena2", 4 },
+                { "Yhelm HealthCrystal Arena3", 3 },
+                { "Yhelm HealthCrystal Arena4", 6 },
+                { "Yhelm HealthCrystal Boss", 5 },
+                // { "Yhelm ChaosCrystal Arena1", 0},
+                { "Yhelm ChaosCrystal Arena2", 1 },
+                { "Yhelm ChaosCrystal Arena3", 2 },
+                { "Yhelm ChaosCrystal Arena4", 4 },
+                { "Yhelm ChaosCrystal Boss", 6 },
+                { "Incaustis Ammostash Arena1", 5 },
+                { "Incaustis Ammostash Arena2", 7 },
+                { "Incaustis Ammostash Arena3", 4 },
+                { "Incaustis Ammostash Arena4", 6 },
+                { "Incaustis Ammostash Boss", 4 },
+                { "Incaustis HealthCrystal Arena1", 3 },
+                { "Incaustis HealthCrystal Arena2", 5 },
+                { "Incaustis HealthCrystal Arena3", 4 },
+                { "Incaustis HealthCrystal Arena4", 6 },
+                { "Incaustis HealthCrystal Boss", 5 },
+                { "Incaustis ChaosCrystal Arena1", 5 },
+                { "Incaustis ChaosCrystal Arena2", 2 },
+                { "Incaustis ChaosCrystal Arena3", 3 },
+                { "Incaustis ChaosCrystal Arena4", 3 },
+                // { "Incaustis ChaosCrystal Boss", 0},
+
+                { "Gehenna Ammostash Arena1", 4 },
+                { "Gehenna Ammostash Arena2", 4 },
+                { "Gehenna Ammostash Arena3", 4 },
+                { "Gehenna Ammostash Arena4", 3 },
+                { "Gehenna Ammostash Boss", 4 },
+                { "Gehenna HealthCrystal Arena1", 2 },
+                { "Gehenna HealthCrystal Arena2", 4 },
+                { "Gehenna HealthCrystal Arena3", 4 },
+                { "Gehenna HealthCrystal Arena4", 4 },
+                { "Gehenna HealthCrystal Boss", 4 },
+                { "Gehenna ChaosCrystal Arena1", 1 },
+                { "Gehenna ChaosCrystal Arena2", 1 },
+                { "Gehenna ChaosCrystal Arena3", 6 },
+                { "Gehenna ChaosCrystal Arena4", 2 },
+                // { "Gehenna ChaosCrystal Boss", 0},
+
+                { "Nihil Ammostash Arena1", 3 },
+                { "Nihil Ammostash Arena2", 4 },
+                { "Nihil Ammostash Arena3", 6 },
+                { "Nihil Ammostash Arena4", 4 },
+                { "Nihil Ammostash Boss", 4 },
+                { "Nihil HealthCrystal Arena1", 3 },
+                { "Nihil HealthCrystal Arena2", 3 },
+                { "Nihil HealthCrystal Arena3", 4 },
+                { "Nihil HealthCrystal Arena4", 5 },
+                { "Nihil HealthCrystal Boss", 5 },
+                { "Nihil ChaosCrystal Arena1", 1 },
+                // { "Nihil ChaosCrystal Arena2", 0},
+                { "Nihil ChaosCrystal Arena3", 2 },
+                // { "Nihil ChaosCrystal Arena4", 0},
+                { "Nihil ChaosCrystal Boss", 2 },
+                { "Acheron Ammostash Arena1", 5 },
+                { "Acheron Ammostash Arena2", 3 },
+                { "Acheron Ammostash Arena3", 7 },
+                { "Acheron Ammostash Arena4", 6 },
+                // { "Acheron Ammostash Boss", 0},
+                { "Acheron HealthCrystal Arena1", 4 },
+                { "Acheron HealthCrystal Arena2", 3 },
+                { "Acheron HealthCrystal Arena3", 6 },
+                { "Acheron HealthCrystal Arena4", 4 },
+                { "Acheron HealthCrystal Boss", 5 },
+                { "Acheron ChaosCrystal Arena1", 2 },
+                { "Acheron ChaosCrystal Arena2", 1 },
+                { "Acheron ChaosCrystal Arena3", 5 },
+                { "Acheron ChaosCrystal Arena4", 4 },
+                // { "Acheron ChaosCrystal Boss", 0},
+
+                { "Sheol Ammostash Arena1", 6 },
+                { "Sheol Ammostash Arena2", 5 },
+                { "Sheol Ammostash Arena3", 5 },
+                { "Sheol Ammostash Arena4", 5 },
+                { "Sheol Ammostash Boss", 7 },
+                { "Sheol HealthCrystal Arena1", 5 },
+                { "Sheol HealthCrystal Arena2", 4 },
+                { "Sheol HealthCrystal Arena3", 5 },
+                { "Sheol HealthCrystal Arena4", 5 },
+                { "Sheol HealthCrystal Boss", 7 },
+                { "Sheol ChaosCrystal Arena1", 2 },
+                { "Sheol ChaosCrystal Arena2", 3 },
+                { "Sheol ChaosCrystal Arena3", 3 },
+                { "Sheol ChaosCrystal Arena4", 4 },
+                // { "Sheol ChaosCrystal Boss", 0},
+            };
+
+        public static readonly Dictionary<string, string> LocationDestructionToCompletionId =
+            new Dictionary<string, string>()
+            {
+                { "Voke Ammostash Arena1", "Voke Arena 1 Ammostash Destruction" },
+                { "Voke Ammostash Arena2", "Voke Arena 2 Ammostash Destruction" },
+                { "Voke Ammostash Arena3", "Voke Arena 3 Ammostash Destruction" },
+                { "Voke Ammostash Arena4", "Voke Arena 4 Ammostash Destruction" },
+                { "Voke Ammostash Boss", "Voke Boss Ammostash Destruction" },
+                { "Voke HealthCrystal Arena1", "Voke Arena 1 Health Crystal Destruction" },
+                { "Voke HealthCrystal Arena2", "Voke Arena 2 Health Crystal Destruction" },
+                { "Voke HealthCrystal Arena3", "Voke Arena 3 Health Crystal Destruction" },
+                { "Voke HealthCrystal Arena4", "Voke Arena 4 Health Crystal Destruction" },
+                { "Voke HealthCrystal Boss", "Voke Boss Health Crystal Destruction" },
+                // { "Voke ChaosCrystal Arena1", "Voke Arena 1 Chaos Crystal Destruction" },
+                { "Voke ChaosCrystal Arena2", "Voke Arena 2 Chaos Crystal Destruction" },
+                { "Voke ChaosCrystal Arena3", "Voke Arena 3 Chaos Crystal Destruction" },
+                { "Voke ChaosCrystal Arena4", "Voke Arena 4 Chaos Crystal Destruction" },
+                { "Voke ChaosCrystal Boss", "Voke Boss Chaos Crystal Destruction" },
+                { "Stygia Ammostash Arena1", "Stygia Arena 1 Ammostash Destruction" },
+                { "Stygia Ammostash Arena2", "Stygia Arena 2 Ammostash Destruction" },
+                { "Stygia Ammostash Arena3", "Stygia Arena 3 Ammostash Destruction" },
+                { "Stygia Ammostash Arena4", "Stygia Arena 4 Ammostash Destruction" },
+                { "Stygia Ammostash Boss", "Stygia Boss Ammostash Destruction" },
+                { "Stygia HealthCrystal Arena1", "Stygia Arena 1 Health Crystal Destruction" },
+                { "Stygia HealthCrystal Arena2", "Stygia Arena 2 Health Crystal Destruction" },
+                { "Stygia HealthCrystal Arena3", "Stygia Arena 3 Health Crystal Destruction" },
+                { "Stygia HealthCrystal Arena4", "Stygia Arena 4 Health Crystal Destruction" },
+                { "Stygia HealthCrystal Boss", "Stygia Boss Health Crystal Destruction" },
+                // { "Stygia ChaosCrystal Arena1", "Stygia Arena 1 Chaos Crystal Destruction" },
+                { "Stygia ChaosCrystal Arena2", "Stygia Arena 2 Chaos Crystal Destruction" },
+                { "Stygia ChaosCrystal Arena3", "Stygia Arena 3 Chaos Crystal Destruction" },
+                { "Stygia ChaosCrystal Arena4", "Stygia Arena 4 Chaos Crystal Destruction" },
+                // { "Stygia ChaosCrystal Boss", "Stygia Boss Chaos Crystal Destruction" },
+
+                { "Yhelm Ammostash Arena1", "Yhelm Arena 1 Ammostash Destruction" },
+                { "Yhelm Ammostash Arena2", "Yhelm Arena 2 Ammostash Destruction" },
+                { "Yhelm Ammostash Arena3", "Yhelm Arena 3 Ammostash Destruction" },
+                { "Yhelm Ammostash Arena4", "Yhelm Arena 4 Ammostash Destruction" },
+                { "Yhelm Ammostash Boss", "Yhelm Boss Ammostash Destruction" },
+                { "Yhelm HealthCrystal Arena1", "Yhelm Arena 1 Health Crystal Destruction" },
+                { "Yhelm HealthCrystal Arena2", "Yhelm Arena 2 Health Crystal Destruction" },
+                { "Yhelm HealthCrystal Arena3", "Yhelm Arena 3 Health Crystal Destruction" },
+                { "Yhelm HealthCrystal Arena4", "Yhelm Arena 4 Health Crystal Destruction" },
+                { "Yhelm HealthCrystal Boss", "Yhelm Boss Health Crystal Destruction" },
+                // { "Yhelm ChaosCrystal Arena1", "Yhelm Arena 1 Chaos Crystal Destruction" },
+                { "Yhelm ChaosCrystal Arena2", "Yhelm Arena 2 Chaos Crystal Destruction" },
+                { "Yhelm ChaosCrystal Arena3", "Yhelm Arena 3 Chaos Crystal Destruction" },
+                { "Yhelm ChaosCrystal Arena4", "Yhelm Arena 4 Chaos Crystal Destruction" },
+                { "Yhelm ChaosCrystal Boss", "Yhelm Boss Chaos Crystal Destruction" },
+                { "Incaustis Ammostash Arena1", "Incaustis Arena 1 Ammostash Destruction" },
+                { "Incaustis Ammostash Arena2", "Incaustis Arena 2 Ammostash Destruction" },
+                { "Incaustis Ammostash Arena3", "Incaustis Arena 3 Ammostash Destruction" },
+                { "Incaustis Ammostash Arena4", "Incaustis Arena 4 Ammostash Destruction" },
+                { "Incaustis Ammostash Boss", "Incaustis Boss Ammostash Destruction" },
+                { "Incaustis HealthCrystal Arena1", "Incaustis Arena 1 Health Crystal Destruction" },
+                { "Incaustis HealthCrystal Arena2", "Incaustis Arena 2 Health Crystal Destruction" },
+                { "Incaustis HealthCrystal Arena3", "Incaustis Arena 3 Health Crystal Destruction" },
+                { "Incaustis HealthCrystal Arena4", "Incaustis Arena 4 Health Crystal Destruction" },
+                { "Incaustis HealthCrystal Boss", "Incaustis Boss Health Crystal Destruction" },
+                { "Incaustis ChaosCrystal Arena1", "Incaustis Arena 1 Chaos Crystal Destruction" },
+                { "Incaustis ChaosCrystal Arena2", "Incaustis Arena 2 Chaos Crystal Destruction" },
+                { "Incaustis ChaosCrystal Arena3", "Incaustis Arena 3 Chaos Crystal Destruction" },
+                { "Incaustis ChaosCrystal Arena4", "Incaustis Arena 4 Chaos Crystal Destruction" },
+                // { "Incaustis ChaosCrystal Boss", "Incaustis Boss Chaos Crystal Destruction" },
+
+                { "Gehenna Ammostash Arena1", "Gehenna Arena 1 Ammostash Destruction" },
+                { "Gehenna Ammostash Arena2", "Gehenna Arena 2 Ammostash Destruction" },
+                { "Gehenna Ammostash Arena3", "Gehenna Arena 3 Ammostash Destruction" },
+                { "Gehenna Ammostash Arena4", "Gehenna Arena 4 Ammostash Destruction" },
+                { "Gehenna Ammostash Boss", "Gehenna Boss Ammostash Destruction" },
+                { "Gehenna HealthCrystal Arena1", "Gehenna Arena 1 Health Crystal Destruction" },
+                { "Gehenna HealthCrystal Arena2", "Gehenna Arena 2 Health Crystal Destruction" },
+                { "Gehenna HealthCrystal Arena3", "Gehenna Arena 3 Health Crystal Destruction" },
+                { "Gehenna HealthCrystal Arena4", "Gehenna Arena 4 Health Crystal Destruction" },
+                { "Gehenna HealthCrystal Boss", "Gehenna Boss Health Crystal Destruction" },
+                { "Gehenna ChaosCrystal Arena1", "Gehenna Arena 1 Chaos Crystal Destruction" },
+                { "Gehenna ChaosCrystal Arena2", "Gehenna Arena 2 Chaos Crystal Destruction" },
+                { "Gehenna ChaosCrystal Arena3", "Gehenna Arena 3 Chaos Crystal Destruction" },
+                { "Gehenna ChaosCrystal Arena4", "Gehenna Arena 4 Chaos Crystal Destruction" },
+                // { "Gehenna ChaosCrystal Boss", "Gehenna Boss Chaos Crystal Destruction" },
+
+                { "Nihil Ammostash Arena1", "Nihil Arena 1 Ammostash Destruction" },
+                { "Nihil Ammostash Arena2", "Nihil Arena 2 Ammostash Destruction" },
+                { "Nihil Ammostash Arena3", "Nihil Arena 3 Ammostash Destruction" },
+                { "Nihil Ammostash Arena4", "Nihil Arena 4 Ammostash Destruction" },
+                { "Nihil Ammostash Boss", "Nihil Boss Ammostash Destruction" },
+                { "Nihil HealthCrystal Arena1", "Nihil Arena 1 Health Crystal Destruction" },
+                { "Nihil HealthCrystal Arena2", "Nihil Arena 2 Health Crystal Destruction" },
+                { "Nihil HealthCrystal Arena3", "Nihil Arena 3 Health Crystal Destruction" },
+                { "Nihil HealthCrystal Arena4", "Nihil Arena 4 Health Crystal Destruction" },
+                { "Nihil HealthCrystal Boss", "Nihil Boss Health Crystal Destruction" },
+                { "Nihil ChaosCrystal Arena1", "Nihil Arena 1 Chaos Crystal Destruction" },
+                // { "Nihil ChaosCrystal Arena2", "Nihil Arena 2 Chaos Crystal Destruction" },
+                { "Nihil ChaosCrystal Arena3", "Nihil Arena 3 Chaos Crystal Destruction" },
+                // { "Nihil ChaosCrystal Arena4", "Nihil Arena 4 Chaos Crystal Destruction" },
+                { "Nihil ChaosCrystal Boss", "Nihil Boss Chaos Crystal Destruction" },
+                { "Acheron Ammostash Arena1", "Acheron Arena 1 Ammostash Destruction" },
+                { "Acheron Ammostash Arena2", "Acheron Arena 2 Ammostash Destruction" },
+                { "Acheron Ammostash Arena3", "Acheron Arena 3 Ammostash Destruction" },
+                { "Acheron Ammostash Arena4", "Acheron Arena 4 Ammostash Destruction" },
+                // { "Acheron Ammostash Boss", "Acheron Boss Ammostash Destruction" },
+                { "Acheron HealthCrystal Arena1", "Acheron Arena 1 Health Crystal Destruction" },
+                { "Acheron HealthCrystal Arena2", "Acheron Arena 2 Health Crystal Destruction" },
+                { "Acheron HealthCrystal Arena3", "Acheron Arena 3 Health Crystal Destruction" },
+                { "Acheron HealthCrystal Arena4", "Acheron Arena 4 Health Crystal Destruction" },
+                { "Acheron HealthCrystal Boss", "Acheron Boss Health Crystal Destruction" },
+                { "Acheron ChaosCrystal Arena1", "Acheron Arena 1 Chaos Crystal Destruction" },
+                { "Acheron ChaosCrystal Arena2", "Acheron Arena 2 Chaos Crystal Destruction" },
+                { "Acheron ChaosCrystal Arena3", "Acheron Arena 3 Chaos Crystal Destruction" },
+                { "Acheron ChaosCrystal Arena4", "Acheron Arena 4 Chaos Crystal Destruction" },
+                // { "Acheron ChaosCrystal Boss", "Acheron Boss Chaos Crystal Destruction" },
+
+                { "Sheol Ammostash Arena1", "Sheol Arena 1 Ammostash Destruction" },
+                { "Sheol Ammostash Arena2", "Sheol Arena 2 Ammostash Destruction" },
+                { "Sheol Ammostash Arena3", "Sheol Arena 3 Ammostash Destruction" },
+                { "Sheol Ammostash Arena4", "Sheol Arena 4 Ammostash Destruction" },
+                { "Sheol Ammostash Boss", "Sheol Boss Ammostash Destruction" },
+                { "Sheol HealthCrystal Arena1", "Sheol Arena 1 Health Crystal Destruction" },
+                { "Sheol HealthCrystal Arena2", "Sheol Arena 2 Health Crystal Destruction" },
+                { "Sheol HealthCrystal Arena3", "Sheol Arena 3 Health Crystal Destruction" },
+                { "Sheol HealthCrystal Arena4", "Sheol Arena 4 Health Crystal Destruction" },
+                { "Sheol HealthCrystal Boss", "Sheol Boss Health Crystal Destruction" },
+                { "Sheol ChaosCrystal Arena1", "Sheol Arena 1 Chaos Crystal Destruction" },
+                { "Sheol ChaosCrystal Arena2", "Sheol Arena 2 Chaos Crystal Destruction" },
+                { "Sheol ChaosCrystal Arena3", "Sheol Arena 3 Chaos Crystal Destruction" },
+                { "Sheol ChaosCrystal Arena4", "Sheol Arena 4 Chaos Crystal Destruction" },
+                // { "Sheol ChaosCrystal Boss", "Sheol Boss Chaos Crystal Destruction" },
+            };
+
+        public static readonly Dictionary<string, List<string>> RequiredSubCompletionsForArena = new Dictionary<
+            string,
+            List<string>
+        >()
+        {
+            { "Voke Arena 1 Destructible Completion", new List<string> { "Voke Arena 1 Ammostash Destruction", "Voke Arena 1 Health Crystal Destruction", } },
+            { "Voke Arena 2 Destructible Completion", new List<string> { "Voke Arena 2 Ammostash Destruction", "Voke Arena 2 Health Crystal Destruction", "Voke Arena 2 Chaos Crystal Destruction", } },
+            { "Voke Arena 3 Destructible Completion", new List<string> { "Voke Arena 3 Ammostash Destruction", "Voke Arena 3 Health Crystal Destruction", "Voke Arena 3 Chaos Crystal Destruction", } },
+            { "Voke Arena 4 Destructible Completion", new List<string> { "Voke Arena 4 Ammostash Destruction", "Voke Arena 4 Health Crystal Destruction", "Voke Arena 4 Chaos Crystal Destruction", } },
+            { "Voke Boss Destructible Completion", new List<string> { "Voke Boss Ammostash Destruction", "Voke Boss Health Crystal Destruction", "Voke Boss Chaos Crystal Destruction", } },
+            { "Voke Ammostash Destruction", new List<string> { "Voke Arena 1 Ammostash Destruction", "Voke Arena 2 Ammostash Destruction", "Voke Arena 3 Ammostash Destruction", "Voke Arena 4 Ammostash Destruction", "Voke Boss Ammostash Destruction", } },
+            { "Voke Health Crystal Destruction", new List<string> { "Voke Arena 1 Health Crystal Destruction", "Voke Arena 2 Health Crystal Destruction", "Voke Arena 3 Health Crystal Destruction", "Voke Arena 4 Health Crystal Destruction", "Voke Boss Health Crystal Destruction", } },
+            { "Voke Chaos Crystal Destruction", new List<string> { "Voke Arena 2 Chaos Crystal Destruction", "Voke Arena 3 Chaos Crystal Destruction", "Voke Arena 4 Chaos Crystal Destruction", "Voke Boss Chaos Crystal Destruction", } },
+            { "Stygia Arena 1 Destructible Completion", new List<string> { "Stygia Arena 1 Ammostash Destruction", "Stygia Arena 1 Health Crystal Destruction", } },
+            { "Stygia Arena 2 Destructible Completion", new List<string> { "Stygia Arena 2 Ammostash Destruction", "Stygia Arena 2 Health Crystal Destruction", "Stygia Arena 2 Chaos Crystal Destruction", } },
+            { "Stygia Arena 3 Destructible Completion", new List<string> { "Stygia Arena 3 Ammostash Destruction", "Stygia Arena 3 Health Crystal Destruction", "Stygia Arena 3 Chaos Crystal Destruction", } },
+            { "Stygia Arena 4 Destructible Completion", new List<string> { "Stygia Arena 4 Ammostash Destruction", "Stygia Arena 4 Health Crystal Destruction", "Stygia Arena 4 Chaos Crystal Destruction", } },
+            { "Stygia Boss Destructible Completion", new List<string> { "Stygia Boss Ammostash Destruction", "Stygia Boss Health Crystal Destruction", } },
+            { "Stygia Ammostash Destruction", new List<string> { "Stygia Arena 1 Ammostash Destruction", "Stygia Arena 2 Ammostash Destruction", "Stygia Arena 3 Ammostash Destruction", "Stygia Arena 4 Ammostash Destruction", "Stygia Boss Ammostash Destruction", } },
+            { "Stygia Health Crystal Destruction", new List<string> { "Stygia Arena 1 Health Crystal Destruction", "Stygia Arena 2 Health Crystal Destruction", "Stygia Arena 3 Health Crystal Destruction", "Stygia Arena 4 Health Crystal Destruction", "Stygia Boss Health Crystal Destruction", } },
+            { "Stygia Chaos Crystal Destruction", new List<string> { "Stygia Arena 2 Chaos Crystal Destruction", "Stygia Arena 3 Chaos Crystal Destruction", "Stygia Arena 4 Chaos Crystal Destruction", } },
+            { "Yhelm Arena 1 Destructible Completion", new List<string> { "Yhelm Arena 1 Ammostash Destruction", "Yhelm Arena 1 Health Crystal Destruction", } },
+            { "Yhelm Arena 2 Destructible Completion", new List<string> { "Yhelm Arena 2 Ammostash Destruction", "Yhelm Arena 2 Health Crystal Destruction", "Yhelm Arena 2 Chaos Crystal Destruction", } },
+            { "Yhelm Arena 3 Destructible Completion", new List<string> { "Yhelm Arena 3 Ammostash Destruction", "Yhelm Arena 3 Health Crystal Destruction", "Yhelm Arena 3 Chaos Crystal Destruction", } },
+            { "Yhelm Arena 4 Destructible Completion", new List<string> { "Yhelm Arena 4 Ammostash Destruction", "Yhelm Arena 4 Health Crystal Destruction", "Yhelm Arena 4 Chaos Crystal Destruction", } },
+            { "Yhelm Boss Destructible Completion", new List<string> { "Yhelm Boss Ammostash Destruction", "Yhelm Boss Health Crystal Destruction", "Yhelm Boss Chaos Crystal Destruction", } },
+            { "Yhelm Ammostash Destruction", new List<string> { "Yhelm Arena 1 Ammostash Destruction", "Yhelm Arena 2 Ammostash Destruction", "Yhelm Arena 3 Ammostash Destruction", "Yhelm Arena 4 Ammostash Destruction", "Yhelm Boss Ammostash Destruction", } },
+            { "Yhelm Health Crystal Destruction", new List<string> { "Yhelm Arena 1 Health Crystal Destruction", "Yhelm Arena 2 Health Crystal Destruction", "Yhelm Arena 3 Health Crystal Destruction", "Yhelm Arena 4 Health Crystal Destruction", "Yhelm Boss Health Crystal Destruction", } },
+            { "Yhelm Chaos Crystal Destruction", new List<string> { "Yhelm Arena 2 Chaos Crystal Destruction", "Yhelm Arena 3 Chaos Crystal Destruction", "Yhelm Arena 4 Chaos Crystal Destruction", "Yhelm Boss Chaos Crystal Destruction", } },
+            { "Incaustis Arena 1 Destructible Completion", new List<string> { "Incaustis Arena 1 Ammostash Destruction", "Incaustis Arena 1 Health Crystal Destruction", "Incaustis Arena 1 Chaos Crystal Destruction", } },
+            { "Incaustis Arena 2 Destructible Completion", new List<string> { "Incaustis Arena 2 Ammostash Destruction", "Incaustis Arena 2 Health Crystal Destruction", "Incaustis Arena 2 Chaos Crystal Destruction", } },
+            { "Incaustis Arena 3 Destructible Completion", new List<string> { "Incaustis Arena 3 Ammostash Destruction", "Incaustis Arena 3 Health Crystal Destruction", "Incaustis Arena 3 Chaos Crystal Destruction", } },
+            { "Incaustis Arena 4 Destructible Completion", new List<string> { "Incaustis Arena 4 Ammostash Destruction", "Incaustis Arena 4 Health Crystal Destruction", "Incaustis Arena 4 Chaos Crystal Destruction", } },
+            { "Incaustis Boss Destructible Completion", new List<string> { "Incaustis Boss Ammostash Destruction", "Incaustis Boss Health Crystal Destruction", } },
+            { "Incaustis Ammostash Destruction", new List<string> { "Incaustis Arena 1 Ammostash Destruction", "Incaustis Arena 2 Ammostash Destruction", "Incaustis Arena 3 Ammostash Destruction", "Incaustis Arena 4 Ammostash Destruction", "Incaustis Boss Ammostash Destruction", } },
+            { "Incaustis Health Crystal Destruction", new List<string> { "Incaustis Arena 1 Health Crystal Destruction", "Incaustis Arena 2 Health Crystal Destruction", "Incaustis Arena 3 Health Crystal Destruction", "Incaustis Arena 4 Health Crystal Destruction", "Incaustis Boss Health Crystal Destruction", } },
+            { "Incaustis Chaos Crystal Destruction", new List<string> { "Incaustis Arena 1 Chaos Crystal Destruction", "Incaustis Arena 2 Chaos Crystal Destruction", "Incaustis Arena 3 Chaos Crystal Destruction", "Incaustis Arena 4 Chaos Crystal Destruction", } },
+            { "Gehenna Arena 1 Destructible Completion", new List<string> { "Gehenna Arena 1 Ammostash Destruction", "Gehenna Arena 1 Health Crystal Destruction", "Gehenna Arena 1 Chaos Crystal Destruction", } },
+            { "Gehenna Arena 2 Destructible Completion", new List<string> { "Gehenna Arena 2 Ammostash Destruction", "Gehenna Arena 2 Health Crystal Destruction", "Gehenna Arena 2 Chaos Crystal Destruction", } },
+            { "Gehenna Arena 3 Destructible Completion", new List<string> { "Gehenna Arena 3 Ammostash Destruction", "Gehenna Arena 3 Health Crystal Destruction", "Gehenna Arena 3 Chaos Crystal Destruction", } },
+            { "Gehenna Arena 4 Destructible Completion", new List<string> { "Gehenna Arena 4 Ammostash Destruction", "Gehenna Arena 4 Health Crystal Destruction", "Gehenna Arena 4 Chaos Crystal Destruction", } },
+            { "Gehenna Boss Destructible Completion", new List<string> { "Gehenna Boss Ammostash Destruction", "Gehenna Boss Health Crystal Destruction", } },
+            { "Gehenna Ammostash Destruction", new List<string> { "Gehenna Arena 1 Ammostash Destruction", "Gehenna Arena 2 Ammostash Destruction", "Gehenna Arena 3 Ammostash Destruction", "Gehenna Arena 4 Ammostash Destruction", "Gehenna Boss Ammostash Destruction", } },
+            { "Gehenna Health Crystal Destruction", new List<string> { "Gehenna Arena 1 Health Crystal Destruction", "Gehenna Arena 2 Health Crystal Destruction", "Gehenna Arena 3 Health Crystal Destruction", "Gehenna Arena 4 Health Crystal Destruction", "Gehenna Boss Health Crystal Destruction", } },
+            { "Gehenna Chaos Crystal Destruction", new List<string> { "Gehenna Arena 1 Chaos Crystal Destruction", "Gehenna Arena 2 Chaos Crystal Destruction", "Gehenna Arena 3 Chaos Crystal Destruction", "Gehenna Arena 4 Chaos Crystal Destruction", } },
+            { "Nihil Arena 1 Destructible Completion", new List<string> { "Nihil Arena 1 Ammostash Destruction", "Nihil Arena 1 Health Crystal Destruction", "Nihil Arena 1 Chaos Crystal Destruction", } },
+            { "Nihil Arena 2 Destructible Completion", new List<string> { "Nihil Arena 2 Ammostash Destruction", "Nihil Arena 2 Health Crystal Destruction", } },
+            { "Nihil Arena 3 Destructible Completion", new List<string> { "Nihil Arena 3 Ammostash Destruction", "Nihil Arena 3 Health Crystal Destruction", "Nihil Arena 3 Chaos Crystal Destruction", } },
+            { "Nihil Arena 4 Destructible Completion", new List<string> { "Nihil Arena 4 Ammostash Destruction", "Nihil Arena 4 Health Crystal Destruction", } },
+            { "Nihil Boss Destructible Completion", new List<string> { "Nihil Boss Ammostash Destruction", "Nihil Boss Health Crystal Destruction", "Nihil Boss Chaos Crystal Destruction", } },
+            { "Nihil Ammostash Destruction", new List<string> { "Nihil Arena 1 Ammostash Destruction", "Nihil Arena 2 Ammostash Destruction", "Nihil Arena 3 Ammostash Destruction", "Nihil Arena 4 Ammostash Destruction", "Nihil Boss Ammostash Destruction", } },
+            { "Nihil Health Crystal Destruction", new List<string> { "Nihil Arena 1 Health Crystal Destruction", "Nihil Arena 2 Health Crystal Destruction", "Nihil Arena 3 Health Crystal Destruction", "Nihil Arena 4 Health Crystal Destruction", "Nihil Boss Health Crystal Destruction", } },
+            { "Nihil Chaos Crystal Destruction", new List<string> { "Nihil Arena 1 Chaos Crystal Destruction", "Nihil Arena 3 Chaos Crystal Destruction", "Nihil Boss Chaos Crystal Destruction", } },
+            { "Acheron Arena 1 Destructible Completion", new List<string> { "Acheron Arena 1 Ammostash Destruction", "Acheron Arena 1 Health Crystal Destruction", "Acheron Arena 1 Chaos Crystal Destruction", } },
+            { "Acheron Arena 2 Destructible Completion", new List<string> { "Acheron Arena 2 Ammostash Destruction", "Acheron Arena 2 Health Crystal Destruction", "Acheron Arena 2 Chaos Crystal Destruction", } },
+            { "Acheron Arena 3 Destructible Completion", new List<string> { "Acheron Arena 3 Ammostash Destruction", "Acheron Arena 3 Health Crystal Destruction", "Acheron Arena 3 Chaos Crystal Destruction", } },
+            { "Acheron Arena 4 Destructible Completion", new List<string> { "Acheron Arena 4 Ammostash Destruction", "Acheron Arena 4 Health Crystal Destruction", "Acheron Arena 4 Chaos Crystal Destruction", } },
+            { "Acheron Boss Destructible Completion", new List<string> { "Acheron Boss Health Crystal Destruction" } },
+            { "Acheron Ammostash Destruction", new List<string> { "Acheron Arena 1 Ammostash Destruction", "Acheron Arena 2 Ammostash Destruction", "Acheron Arena 3 Ammostash Destruction", "Acheron Arena 4 Ammostash Destruction", } },
+            { "Acheron Health Crystal Destruction", new List<string> { "Acheron Arena 1 Health Crystal Destruction", "Acheron Arena 2 Health Crystal Destruction", "Acheron Arena 3 Health Crystal Destruction", "Acheron Arena 4 Health Crystal Destruction", "Acheron Boss Health Crystal Destruction", } },
+            { "Acheron Chaos Crystal Destruction", new List<string> { "Acheron Arena 1 Chaos Crystal Destruction", "Acheron Arena 2 Chaos Crystal Destruction", "Acheron Arena 3 Chaos Crystal Destruction", "Acheron Arena 4 Chaos Crystal Destruction", } },
+            { "Sheol Arena 1 Destructible Completion", new List<string> { "Sheol Arena 1 Ammostash Destruction", "Sheol Arena 1 Health Crystal Destruction", "Sheol Arena 1 Chaos Crystal Destruction", } },
+            { "Sheol Arena 2 Destructible Completion", new List<string> { "Sheol Arena 2 Ammostash Destruction", "Sheol Arena 2 Health Crystal Destruction", "Sheol Arena 2 Chaos Crystal Destruction", } },
+            { "Sheol Arena 3 Destructible Completion", new List<string> { "Sheol Arena 3 Ammostash Destruction", "Sheol Arena 3 Health Crystal Destruction", "Sheol Arena 3 Chaos Crystal Destruction", } },
+            { "Sheol Arena 4 Destructible Completion", new List<string> { "Sheol Arena 4 Ammostash Destruction", "Sheol Arena 4 Health Crystal Destruction", "Sheol Arena 4 Chaos Crystal Destruction", } },
+            { "Sheol Boss Destructible Completion", new List<string> { "Sheol Boss Ammostash Destruction", "Sheol Boss Health Crystal Destruction", } },
+            { "Sheol Ammostash Destruction", new List<string> { "Sheol Arena 1 Ammostash Destruction", "Sheol Arena 2 Ammostash Destruction", "Sheol Arena 3 Ammostash Destruction", "Sheol Arena 4 Ammostash Destruction", "Sheol Boss Ammostash Destruction", } },
+            { "Sheol Health Crystal Destruction", new List<string> { "Sheol Arena 1 Health Crystal Destruction", "Sheol Arena 2 Health Crystal Destruction", "Sheol Arena 3 Health Crystal Destruction", "Sheol Arena 4 Health Crystal Destruction", "Sheol Boss Health Crystal Destruction", } },
+            { "Sheol Chaos Crystal Destruction", new List<string> { "Sheol Arena 1 Chaos Crystal Destruction", "Sheol Arena 2 Chaos Crystal Destruction", "Sheol Arena 3 Chaos Crystal Destruction", "Sheol Arena 4 Chaos Crystal Destruction", } },
         };
 
         internal static bool IsHellsLevelId(string actualLevelId)
@@ -1166,9 +1771,9 @@ namespace Randomizer
             ResetMultiplier = 1 << 2,
             UltimateTrigger = 1 << 3,
             AlwaysOnBeat = 1 << 4,
-            ComplementingVoiceline = 1 << 5,
-            EncouragingVoiceline = 1 << 6,
-            FailingVoiceline = 1 << 7,
+            Complement = 1 << 5,
+            Encouragement = 1 << 6,
+            Failure = 1 << 7,
             DoubleTime = 1 << 8,
             HalfTime = 1 << 9,
             InvisibleWeapons = 1 << 10,
@@ -1183,9 +1788,9 @@ namespace Randomizer
             { "Reset Multiplier", FillerId.ResetMultiplier },
             { "Trigger Ultimate", FillerId.UltimateTrigger },
             { "Always on Beat", FillerId.AlwaysOnBeat },
-            { "Complementing Voiceline", FillerId.ComplementingVoiceline },
-            { "Encouraging Voiceline", FillerId.EncouragingVoiceline },
-            { "Failing Voiceline", FillerId.FailingVoiceline },
+            { "Complement", FillerId.Complement },
+            { "Encouragement", FillerId.Encouragement },
+            { "Failure", FillerId.Failure },
             { "Double Time", FillerId.DoubleTime },
             { "Half Time", FillerId.HalfTime },
             { "Invisible Weapons", FillerId.InvisibleWeapons },
@@ -1208,12 +1813,49 @@ namespace Randomizer
 
         internal static FillerId GetFillerItems()
         {
-            return FillerId.ComplementingVoiceline
-                | FillerId.EncouragingVoiceline
-                | FillerId.FailingVoiceline
+            return FillerId.Complement
+                | FillerId.Encouragement
+                | FillerId.Failure
                 | FillerId.NextMultiplier
                 | FillerId.MaxMultiplier
                 | FillerId.AlwaysOnBeat;
+        }
+
+        internal static string ZoneArenaToName(EZone item1, EArena item2)
+        {
+            bool isHells = item1 switch
+            {
+                EZone.Tutorial => true,
+                Voke => true,
+                Stygia => true,
+                Yhelm => true,
+                Incaustis => true,
+                Gehenna => true,
+                Nihil => true,
+                Acheron => true,
+                Sheol => true,
+                _ => false,
+            };
+
+            if(isHells)
+                return item1.ToString();
+
+            if(item1 == Leviathan)
+                return "EndlessModeBase";
+
+            if(item1 == EZone.Global)
+                return "";
+
+            var baseString = EZoneToChallengeBaseId[item1];
+            var number = item2 switch
+            {
+                Torment1 => "1",
+                Torment2 => "2",
+                Torment3 => "3",
+                _ => "",
+            };
+
+            return $"{baseString}{number}";
         }
     }
 }

@@ -44,10 +44,10 @@ namespace Randomizer
             AudioEventEmitter.AudioEventEmitterPlayEvent playEvent
         )
         {
-            if (emitter != null)
-                Logger.LogInfo(
-                    $"AudioEventSystem HandleAudioEventEmitterGameObjectEvent Prefix called for event {emitter.Event} triggering due to {playEvent}"
-                );
+            // if (emitter != null)
+            //     Logger.LogInfo(
+            //         $"AudioEventSystem HandleAudioEventEmitterGameObjectEvent Prefix called for event {emitter.Event} triggering due to {playEvent}"
+            //     );
             return true;
         }
 
@@ -55,9 +55,9 @@ namespace Randomizer
         [HarmonyPatch(nameof(AudioEventSystem.HandleAudioEventEmitterGameObjectEvent))]
         static void HandleAudioEventEmitterGameObjectEventPostfix(AudioEventSystem __instance)
         {
-            Logger.LogInfo(
-                $"AudioEventSystem HandleAudioEventEmitterGameObjectEvent Postfix called"
-            );
+            // Logger.LogInfo(
+            //     $"AudioEventSystem HandleAudioEventEmitterGameObjectEvent Postfix called"
+            // );
         }
 
         [HarmonyPrefix]
@@ -85,6 +85,18 @@ namespace Randomizer
     public class SoundEmitterSystemPatches
     {
         public static SoundEmitterSystem Instance;
+        private static readonly System.Collections.Concurrent.ConcurrentQueue<VoRequest> VoQueue = new();
+        private class VoRequest
+        {
+            public VOAndSubtitleIDTuple Data;
+            public string Message;
+
+            public VoRequest(VOAndSubtitleIDTuple data, string message)
+            {
+                Data = data;
+                Message = message;
+            }
+        }
 
         private static readonly System.Collections.Generic.List<string> ComplementingVoDataId =
         [
@@ -99,19 +111,16 @@ namespace Randomizer
             "TormentDeathCutsceneVOData",
         ];
 
-        public static void PlayComplementingVoiceline()
+        public static void PlayComplement()
         {
             var data1 = GetRandomVoTuple(ComplementingVoDataId);
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Gold");
             var data = new System.Random().Next(2) > 0 ? data1 : data2;
-            SoundEmitter emitter = GetEmitter(data);
-            Instance.OnSoundEmitterTriggerEntered(emitter);
-            UnityEngine.Object.Destroy(emitter.gameObject);
-
-            IngameMessagesPatches.DisplayItemActivated($"Complementing Voiceline");
+            VoQueue.AddItem(new VoRequest(data, "Complement"));
         }
 
-        public static void PlayEncouragingVoiceline()
+
+        public static void PlayEncouragement()
         {
             var data1 = GetChallengeVoTuple("ChallengeVoData", "No");
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Bronze");
@@ -124,21 +133,29 @@ namespace Randomizer
                 _ => data1,
             };
 
-            SoundEmitter emitter = GetEmitter(data);
-            Instance.OnSoundEmitterTriggerEntered(emitter);
-            UnityEngine.Object.Destroy(emitter.gameObject);
-            IngameMessagesPatches.DisplayItemActivated($"Encouraging Voiceline");
+            VoQueue.AddItem(new VoRequest(data, "Encouragement"));
         }
 
-        public static void PlayFailingVoiceline()
+        public static void PlayFailure()
         {
             var data1 = GetRandomVoTuple(FailureVoData);
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Death");
             var data = new System.Random().Next(2) > 0 ? data1 : data2;
-            SoundEmitter emitter = GetEmitter(data);
-            Instance.OnSoundEmitterTriggerEntered(emitter);
-            UnityEngine.Object.Destroy(emitter.gameObject);
-            IngameMessagesPatches.DisplayItemActivated($"Failing Voiceline");
+            VoQueue.AddItem(new VoRequest(data, "Failure"));
+        }
+
+        private static float ActiveTime = 0f;
+        private static float CheckInterval = 3f;
+
+        public static void PollQueue()
+        {
+            ActiveTime += UnityEngine.Time.unscaledDeltaTime;
+            if(ActiveTime > CheckInterval && VoQueue.TryPeek(out var request))
+            {
+                ActiveTime = 0f;
+                PlayVoiceline(request.Data, request.Message);
+                VoQueue.TryDequeue(out _);
+            }
         }
 
         private static SoundEmitter GetEmitter(VOAndSubtitleIDTuple data)
@@ -196,6 +213,14 @@ namespace Randomizer
             return quips[new System.Random().Next(quips.Count)];
         }
 
+        private static void PlayVoiceline(VOAndSubtitleIDTuple data, string message)
+        {
+            SoundEmitter emitter = GetEmitter(data);
+            Instance.OnSoundEmitterTriggerEntered(emitter);
+            UnityEngine.Object.Destroy(emitter.gameObject);
+            IngameMessagesPatches.DisplayItemActivated(message);
+        }
+
         [HarmonyPrefix]
         [HarmonyPatch(nameof(SoundEmitterSystem.OnSoundEmitterTriggerEntered))]
         static bool OnSoundEmitterTriggerEnteredPrefix(
@@ -212,17 +237,6 @@ namespace Randomizer
         [HarmonyPostfix]
         [HarmonyPatch(nameof(SoundEmitterSystem.OnSoundEmitterTriggerEntered))]
         static void OnSoundEmitterTriggerEnteredPostfix(SoundEmitterSystem __instance) { }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(nameof(SoundEmitterSystem.OnNewLevelLoadRequest))]
-        static void OnNewLevelLoadRequestPostfix(
-            ref SoundEmitterSystem __instance,
-            ref Outsiders.Messages.CoreRequestLoadLevelMessage __0
-        )
-        {
-            Logger.LogInfo($"SoundEmitterSystem OnNewLevelLoadRequest Postfix called");
-            Instance = __instance;
-        }
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(SoundEmitterSystem.Register))]

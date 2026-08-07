@@ -29,8 +29,6 @@ namespace Randomizer
             {
                 __instance.OnWeaponEquipStateChanged(i, WeaponEquipState.None);
             }
-
-
         }
 
         [HarmonyPrefix]
@@ -501,6 +499,90 @@ namespace Randomizer
         }
     }
 
+    [HarmonyPatch(typeof(SongSelectionView))]
+    public class SongSelectionViewPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(SongSelectionView.InitWithContract))]
+        static bool InitWithContractPrefix(SongSelectionView __instance)
+        {
+            Logger.LogDebug($"SongSelectionView InitWithContract Prefix called");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(SongSelectionView.InitWithContract))]
+        static void InitWithContractPostfix(SongSelectionView __instance)
+        {
+            Logger.LogDebug($"SongSelectionView InitWithContract Postfix called");
+            __instance.m_enterLoadoutButton.gameObject.SetActive(false);
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(SongSelectionView.OnSetAsViewed))]
+        static bool OnSetAsViewedPrefix(SongInformation songInfo)
+        {
+            Logger.LogDebug(
+                $"SongSelectionView OnSetAsViewed Prefix for {songInfo.ID} called"
+            );
+            return false;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(SongSelectionView.OnSetAsViewed))]
+        static void OnSetAsViewedPostfix(SongInformation songInfo)
+        {
+            Logger.LogDebug(
+                $"SongSelectionView OnSetAsViewed Postfix for {songInfo.ID}"
+            );
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(SongSelectionView.CreateList))]
+        static bool CreateListPrefix(SongSelectionView __instance, Dictionary<string, SongSelectionController.SongStateData> songStateData)
+        {
+            Logger.LogInfo($"SongSelectionView CreateList Prefix called for {songStateData.Count} songs");
+            var keys = new List<string>();
+            foreach (var key in songStateData.Keys)
+            {
+                keys.Add(key);
+            }
+
+            foreach (var songId in keys)
+            {
+                var songname = Lookup.SongIdToName[songId];
+                var isUnlocked = Randomizer.ItemTracker.Has(songname);
+                var isUnchecked = Randomizer.LocationTracker.IsSongUnchecked(songname);
+                var songData = new SongSelectionController.SongStateData(isUnlocked, !isUnchecked);
+                songStateData[songId] = songData;
+                Logger.LogInfo($"Song {songname} is unlocked: {songData.IsUnlocked}, is viewed: {songData.IsViewed}");
+            }
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(SongSelectionView.CreateList))]
+        static void CreateListPostfix(SongSelectionView __instance)
+        {
+            Logger.LogDebug($"SongSelectionView CreateList Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(SongSelectionView.OnEnterLoadout))]
+        static bool OnEnterLoadoutPrefix(SongSelectionView __instance)
+        {
+            Logger.LogInfo($"SongSelectionView OnEnterLoadout Prefix called");
+            return false;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(SongSelectionView.OnEnterLoadout))]
+        static void OnEnterLoadoutPostfix(SongSelectionView __instance)
+        {
+            Logger.LogDebug($"SongSelectionView OnEnterLoadout Postfix called");
+        }
+    }
+
     [HarmonyPatch(typeof(EndlessSongSelectionController))]
     public class EndlessSongSelectionControllerPatches
     {
@@ -541,10 +623,11 @@ namespace Randomizer
         [HarmonyPatch(nameof(TabBarItem.Show))]
         static void ShowPostfix(ref TabBarItem __instance)
         {
-            Logger.LogDebug(
-                $"TabBarItem Show Postfix for {__instance.m_text} called"
-            );
-            if(__instance.m_text == "ARSENAL" && Randomizer.LocationTracker.HasUncheckedWeapons())
+            Logger.LogDebug($"TabBarItem Show Postfix for {__instance.m_text} called");
+            if (
+                (__instance.m_text == "ARSENAL" || __instance.m_text == "WEAPON SKINS")
+                && Randomizer.LocationTracker.HasUncheckedWeapons()
+            )
                 __instance.SetNewIconVisible(true);
         }
 

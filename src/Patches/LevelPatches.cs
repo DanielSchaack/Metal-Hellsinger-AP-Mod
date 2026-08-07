@@ -13,7 +13,6 @@ namespace Randomizer
         [HarmonyPatch(nameof(Main.Awake))]
         static bool AwakePrefix(Main __instance)
         {
-            Main.DisplayDebugInfo = true;
             Logger.LogInfo("Main Awake Prefix called");
             return true;
         }
@@ -27,6 +26,8 @@ namespace Randomizer
             Il2CppReferenceArray<Il2CppSystem.Object> stateParameters
         )
         {
+            Randomizer.IsPaused = true;
+
             Logger.LogInfo(
                 $"Main LoadLevel Prefix called, loading {levelDefinition.ID} with loading screen: {showLoadingScreen}"
             );
@@ -133,6 +134,7 @@ namespace Randomizer
                 $"InGameGUIController ShowChallengeTierLevel Postfix called for {result}"
             );
             Randomizer.LocationTracker.CheckChallengeProgress(result, Randomizer.CurrentLevel);
+            Randomizer.IsPaused = true;
         }
     }
 
@@ -181,6 +183,7 @@ namespace Randomizer
                     + $"Sigil Level: {__result.UnlockedSigilLevel} | "
                     + $"Param Count: {__result.UnlockedSigilsDescriptionParameters?.Count ?? 0}"
             );
+            Randomizer.IsPaused = true;
         }
 
         [HarmonyPrefix]
@@ -227,6 +230,7 @@ namespace Randomizer
             );
 
             Randomizer.LocationTracker.CheckLeviathanCompletion(__result);
+            Randomizer.IsPaused = true;
         }
 
         [HarmonyPrefix]
@@ -278,6 +282,7 @@ namespace Randomizer
                 bossDefeated,
                 Randomizer.CurrentLevel
             );
+            Randomizer.IsPaused = true;
         }
 
         [HarmonyPrefix]
@@ -324,6 +329,7 @@ namespace Randomizer
                     + $"Sigil Level: {__result.UnlockedSigilLevel} | "
                     + $"Param Count: {__result.UnlockedSigilsDescriptionParameters?.Count ?? 0}"
             );
+            Randomizer.IsPaused = true;
         }
 
         [HarmonyPrefix]
@@ -415,6 +421,7 @@ namespace Randomizer
         static bool OnLevelCompletedPrefix(InGameState __instance, GameManager.EEndCause cause)
         {
             Logger.LogDebug($"InGameState OnLevelCompleted Prefix called with cause {cause}");
+            Randomizer.IsPaused = true;
             return true;
         }
 
@@ -952,16 +959,37 @@ namespace Randomizer
             GameObject scenarioGo = levelScenario.gameObject;
             string scenarioName = scenarioGo.name;
 
-            Logger.LogDebug($"LevelScenarioSystem StartScenario Prefix called for scenario {scenarioName}");
+            Logger.LogError($"LevelScenarioSystem StartScenario Prefix called for scenario {scenarioName}");
 
             if (scenarioName == "Phase1_Damage Boss")
                 Randomizer.LocationTracker.ResetUpCollections();
             else if(Lookup.BossStartScenarioNames.Contains(scenarioName)){
                 Randomizer.LocationTracker.CheckSectionCompletion(Randomizer.CurrentPrimary, Randomizer.CurrentSecondary, Randomizer.CurrentOutfit, Randomizer.CurrentMainSong);
+                Randomizer.IsPaused = true;
                 Randomizer.SceneTracker.ResetLevelActiveTime();
             }
             else if(Lookup.BossEndScenarioNames.Contains(scenarioName)){
+                Randomizer.IsPaused = true;
                 Randomizer.LocationTracker.CheckSectionCompletion(Randomizer.CurrentPrimary, Randomizer.CurrentSecondary, Randomizer.CurrentOutfit, Randomizer.CurrentBossSong);
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(LevelScenarioSystem.EndAndRemoveScenario))]
+        public static void EndAndRemoveScenarioPrefix(LevelScenario levelScenario)
+        {
+            if (levelScenario == null)
+                return;
+
+            GameObject scenarioGo = levelScenario.gameObject;
+            string scenarioName = scenarioGo.name;
+
+            Logger.LogError($"LevelScenarioSystem EndAndRemoveScenario Prefix called for scenario {scenarioName}");
+
+            if(Lookup.BossStartScenarioNames.Contains(scenarioName)){
+                Randomizer.IsPaused = false;
+            }
+            else if(Lookup.BossEndScenarioNames.Contains(scenarioName)){
                 Randomizer.IsPaused = true;
             }
         }

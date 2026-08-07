@@ -44,7 +44,7 @@ namespace Randomizer
             { "Red Judge - Worldbreaker: Sheol defeated", 1 },
 
             { "Progressive Killing with Rhythm", 3 },
-            { "Killing with Rhythm: 1", 0 },
+            { "Killing with Rhythm: 1", 1 },
             { "Killing with Rhythm: 2", 1 },
             { "Killing with Rhythm: 3", 1 },
             { "Progressive Giantslayer", 3 },
@@ -80,7 +80,7 @@ namespace Randomizer
             { "Persephone Ultimate", 1 },
             { "The Hounds", 1 },
             { "The Hounds Ultimate", 1 },
-            { "Vulcan", 0 },
+            { "Vulcan", 1 },
             { "Vulcan Ultimate", 1 },
             { "Hellcrow", 1 },
             { "Hellcrow Ultimate", 1 },
@@ -89,13 +89,18 @@ namespace Randomizer
             { "Telos", 1 },
             { "Telos Ultimate", 1 },
 
-            { "Streak Guardian", 3 },
-            { "Ghost Rounds", 3 },
-            { "Boon Momentum", 3 },
-            { "Unyielding Fury", 3 },
-            { "Last Breath Aegis", 3 },
-            { "Ultimate Sovereignty", 3 },
-            { "The Perfectionist", 3 },
+            { "Lost Persephone", 1 },
+            { "Manifested Persephone", 1 },
+            { "The Lost Hounds", 1 },
+            { "Lost Vulcan", 1 },
+
+            { "Progressive Streak Guardian", 3 },
+            { "Progressive Ghost Rounds", 3 },
+            { "Progressive Boon Momentum", 3 },
+            { "Progressive Unyielding Fury", 3 },
+            { "Progressive Last Breath Aegis", 3 },
+            { "Progressive Ultimate Sovereignty", 3 },
+            { "Progressive The Perfectionist", 3 },
 
             { "Enduring Fury", 1 },
             { "Faster Ultimate Gain", 1 },
@@ -117,15 +122,16 @@ namespace Randomizer
             { "Destructible Health Crystals", 1 },
             { "Destructible Chaos Crystals", 1 },
 
-            { "Lamb", 1 },
-            { "Goat", 1 },
-            { "Beast", 1 },
+            { "Regressive Difficulty", 4 },
             { "Archdevil", 1 },
+            { "Beast", 1 },
+            { "Goat", 1 },
+            { "Lamb", 1 },
 
-            { "Paz Skin", 0 },
+            { "Paz Skin", 1 },
             { "Terminus Skin", 1 },
             { "Persephone Skin", 1 },
-            { "The Hounds Skin", 0 },
+            { "The Hounds Skin", 1 },
             { "Vulcan Skin", 1 },
             { "Hellcrow Skin", 1 },
 
@@ -133,30 +139,30 @@ namespace Randomizer
             { "Outfit of the Dark Devotee", 1 },
             { "Outfit of the Morning Star", 1 },
             { "Outfit of the Angel Eyes", 1 },
-            { "Obisidan Outfit", 0 },
+            { "Outfit of the Obsidian", 1 },
             { "Outfit of the Amethyst", 1 },
             { "Outfit of the Chromatica", 1 },
-            { "Outfit of the Leviathan", 0 },
+            { "Outfit of the Leviathan", 1 },
 
             { "This is the End", 1 },
-            { "Stygia (Song)", 0 },
+            { "Stygia (Song)", 1 },
             { "Burial At Night", 1 },
             { "This Devastation", 1 },
             { "Poetry of Cinder", 1 },
-            { "Dissolution", 0 },
+            { "Dissolution", 1 },
             { "Acheron (Song)", 1 },
             { "Silent No More", 1 },
 
             { "Blood and Law", 1 },
-            { "Infernal Invocation I: Hopes and Fears", 0 },
+            { "Infernal Invocation I: Hopes and Fears", 1 },
             { "Infernal Invocation II: Defiance", 1 },
             { "Infernal Invocation III: Dreaming in Distortion", 1 },
             { "No Tomorrow", 1 },
 
-            { "Leviathan (Song)", 0 },
+            { "Leviathan (Song)", 1 },
             { "Dream of the Beast", 1 },
             { "Swallow the Fire", 1 },
-            { "Mouth of Hell", 0 },
+            { "Mouth of Hell", 1 },
             { "Goodbye, Morning Star", 1 },
 
             { "Departure to Destruction", 1 },
@@ -177,12 +183,6 @@ namespace Randomizer
             { "Feel Good Inc.", 1 },
             { "I Love It feat. Charli XCX", 1 },
             { "Personal Jesus", 1 },
-
-            // TODO:
-            { "Lost Persephone", 1 },
-            { "Manifested Persephone", 1 },
-            { "The Lost Hounds", 1 },
-            { "Lost Vulcan", 1 },
 
             // Not in use yet
             // Anguish Gates
@@ -362,27 +362,21 @@ namespace Randomizer
 
         private static Dictionary<string, string> LevelToLoadedLevel = new Dictionary<string, string>()
         {
-            { "EndlessModeBase", "Voke" },
-            // { "EndlessModeBase", "EndlessModeBase" },
-            { "Tutorial", "CH_Bune1" },
-            // { "Tutorial", "Tutorial" },
-            { "Voke", "Stygia" },
-            // { "Voke", "Voke" },
-            { "Stygia", "EndlessModeBase" },
-            // { "Stygia", "Stygia" },
-            { "Yhelm", "CH_Halphas1" },
-            // { "Yhelm", "Yhelm" },
+            { "EndlessModeBase", "EndlessModeBase" },
+            { "Tutorial", "Tutorial" },
+            { "Voke", "Voke" },
+            { "Stygia", "Stygia" },
+            { "Yhelm", "Yhelm" },
             { "Incaustis", "Incaustis" },
             { "Gehenna", "Gehenna" },
             { "Nihil", "Nihil" },
             { "Acheron", "Acheron" },
             { "Sheol", "Sheol" },
-            { "CH_Amdusias1", "CH_Amdusias1" },
-            { "CH_Marbas1", "CH_Marbas3" },
-            // { "CH_Halphas1", "CH_Halphas1" },
-            { "CH_Halphas1", "Yhelm" },
-            { "CH_Bune1", "Tutorial" },
-            // { "CH_Bune1", "CH_Bune1" },
+            // { "CH_Amdusias1", "CH_Amdusias1" },
+            { "CH_Amdusias1", "CH_Amdusias3" },
+            { "CH_Marbas1", "CH_Marbas1" },
+            { "CH_Halphas1", "CH_Halphas1" },
+            { "CH_Bune1", "CH_Bune1" },
             { "CH_Morax1", "CH_Morax1" },
             { "CH_Halphas2", "CH_Halphas2" },
             { "CH_Flauros1", "CH_Flauros1" },
@@ -392,8 +386,9 @@ namespace Randomizer
             { "CH_Bune2", "CH_Bune2" },
             { "CH_Halphas3", "CH_Halphas3" },
             { "CH_Morax2", "CH_Morax2" },
-            { "CH_Amdusias3", "CH_Amdusias3" },
-            { "CH_Marbas3", "CH_Marbas1" },
+            // { "CH_Amdusias3", "CH_Amdusias3" },
+            { "CH_Amdusias3", "CH_Amdusias1" },
+            { "CH_Marbas3", "CH_Marbas3" },
             { "CH_Flauros2", "CH_Flauros2" },
             { "CH_Glasya2", "CH_Glasya2" },
             { "CH_Bune3", "CH_Bune3" },
@@ -404,7 +399,13 @@ namespace Randomizer
         public Dictionary<string, string> LoadedLevelToLevel =
             LevelToLoadedLevel.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
-        private bool Has(string itemName)
+        // TODO:
+        public void Resync(ReadOnlyCollection<ItemInfo> allItemsReceived)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool Has(string itemName)
         {
             return CollectedImportantItemCountsByName.TryGetValue(itemName, out int count)
                 && count > 0;
@@ -483,8 +484,8 @@ namespace Randomizer
 
         private readonly List<long> ProgressiveIds =
         [
-            13, 17, 21, 25, 29, 33,
-            37, 50, 70, 72, 77, 82,
+            7, 12, 16, 20, 24, 28, 32,
+            36, 50, 70, 72, 77, 82,
             87, 92, 97, 102, 107, 160,
             163, 167,
         ];
@@ -506,13 +507,13 @@ namespace Randomizer
             ItemData item = Items.ItemDataById[itemId];
             Logger.LogInfo("Granting item " + item.Name);
 
-            IngameMessagesPatches.DisplayItemReceived(item, sender);
-
             if (itemIndex.HasValue)
                 CollectedItemsByIndex.Add(itemIndex.Value, item);
 
             if (item.Name == "Filler")
                 return;
+
+            IngameMessagesPatches.DisplayItemReceived(item, sender);
 
             if (CollectedImportantItemCountsByName.ContainsKey(item.Name))
             {
@@ -631,35 +632,14 @@ namespace Randomizer
             return missingItems;
         }
 
-        public string GetChallengeDisplayName(string LevelID)
-        {
-            return Lookup.ChallengeIdToDisplayDictionary.GetValueOrDefault(LevelID, LevelID);
-        }
-
-        public string GetActualLevelName(string LevelID)
-        {
-            return Lookup.LevelIdToActualName[LevelID];
-        }
-
         public bool HasHellOfChallenge(string levelID)
         {
             return Has(Lookup.ChallengeToHellDictionary[levelID]);
         }
 
-        public string GetHellOfChallenge(string levelID)
-        {
-            return Lookup.ChallengeToHellDictionary[levelID];
-        }
-
         public bool HasWeaponsForLevel(string levelID)
         {
             return GetMissingWeaponsForLevel(levelID).Count == 0;
-        }
-
-        public List<string> GetWeaponsForLevel(string levelID)
-        {
-            var weapons = Lookup.RequiredWeaponsForLevel[levelID];
-            return weapons;
         }
 
         public List<string> GetMissingWeaponsForLevel(string levelID)
@@ -747,12 +727,6 @@ namespace Randomizer
 
             Logger.LogError($"Sigil type {sigilType} is not mapped to any known item.");
             return 0;
-        }
-
-        // TODO:
-        public void Resync(ReadOnlyCollection<ItemInfo> allItemsReceived)
-        {
-            throw new NotImplementedException();
         }
 
         public bool HasItemByIndex(int itemIndex)
@@ -1162,20 +1136,14 @@ namespace Randomizer
 
                 if (
                     !Randomizer.Settings.RandomizedSongDLCs.HasFlag(origin)
-                    || (
-                        origin == DreamOfTheBeast
-                        && !DLCPatches.Instance.HasDLC(EDLC.DreamOfTheBeast)
-                    )
+                    || (origin == DreamOfTheBeast && !DLCPatches.Instance.HasDLC(EDLC.DreamOfTheBeast))
                     || (origin == Purgatory && !DLCPatches.Instance.HasDLC(EDLC.Purgatory))
-                    || (
-                        origin == EssentialHits && !DLCPatches.Instance.HasDLC(EDLC.LicensedTracks1)
-                    )
-                )
+                    || (origin == EssentialHits && !DLCPatches.Instance.HasDLC(EDLC.LicensedTracks1)))
                     continue;
 
                 foreach (string songName in kvp.Value)
                 {
-                    if (HasSongByName(songName))
+                    if (Has(songName))
                         unlockedSongs.Add(songName);
                 }
             }
@@ -1194,20 +1162,14 @@ namespace Randomizer
 
                 if (
                     !Randomizer.Settings.RandomizedSongDLCs.HasFlag(origin)
-                    || (
-                        origin == DreamOfTheBeast
-                        && !DLCPatches.Instance.HasDLC(EDLC.DreamOfTheBeast)
-                    )
+                    || (origin == DreamOfTheBeast && !DLCPatches.Instance.HasDLC(EDLC.DreamOfTheBeast))
                     || (origin == Purgatory && !DLCPatches.Instance.HasDLC(EDLC.Purgatory))
-                    || (
-                        origin == EssentialHits && !DLCPatches.Instance.HasDLC(EDLC.LicensedTracks1)
-                    )
-                )
+                    || (origin == EssentialHits && !DLCPatches.Instance.HasDLC(EDLC.LicensedTracks1)))
                     continue;
 
                 foreach (string songName in kvp.Value)
                 {
-                    if (HasSongByName(songName))
+                    if (Has(songName))
                         unlockedSongs.Add(songName);
                 }
             }
@@ -1227,23 +1189,6 @@ namespace Randomizer
 
             Logger.LogInfo($"Has difficulty for button {buttonName}: {hasDifficulty}");
             return hasDifficulty;
-        }
-
-        internal bool HasSongByName(string songName)
-        {
-            return Has(songName);
-        }
-
-        //TODO:
-        internal EZone GetZoneForLevelId(string levelId)
-        {
-            return Lookup.LevelIdToEZone[levelId];
-        }
-
-        //TODO:
-        internal EArena GetArenasForLevelId(string levelId)
-        {
-            return Lookup.LevelIdToArena[levelId];
         }
 
         internal List<ExtendedWeaponType> GetAvailablePersephoneTypes()

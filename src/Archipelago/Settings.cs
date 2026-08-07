@@ -72,7 +72,7 @@ namespace Randomizer
         public bool DestructibleLocationsEnabled { get; set; } = false;
         public bool DestructibleAsUnlocks { get; set; } = false;
         public DestructibleMode DestructibleLocationsMode { get; set; } = DestructibleMode.PerEntireArena;
-        public bool RandomisedBoonsEnabled { get; set; } = true;
+        public bool RandomizedBoonsEnabled { get; set; } = true;
 
         public bool RandomizedDashEnabled { get; set; } = true;
         public bool RandomizedJumpEnabled { get; set; } = true;

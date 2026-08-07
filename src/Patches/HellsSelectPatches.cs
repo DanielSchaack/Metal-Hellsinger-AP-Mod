@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppSystem.Collections.Generic;
 using Outsiders.GUI;
 using TMPro;
+using static Randomizer.Locations;
 
 namespace Randomizer
 {
@@ -425,7 +427,7 @@ namespace Randomizer
             else
             {
                 string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(data.LevelID);
-                string showcaseName = Randomizer.ItemTracker.GetActualLevelName(actualLevelID);
+                string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
                 __instance.m_label.text = showcaseName;
 
                 bool hasClearedLevel = Randomizer.LocationTracker.HasClearedLevel(actualLevelID);
@@ -708,7 +710,7 @@ namespace Randomizer
                 && !Randomizer.ItemTracker.HasHellOfChallenge(LevelID)
             )
             {
-                msg += $"<b>{Randomizer.ItemTracker.GetHellOfChallenge(LevelID)}</b>";
+                msg += $"<b>{Lookup.ChallengeToHellDictionary[LevelID]}</b>";
             }
 
             if (
@@ -730,7 +732,7 @@ namespace Randomizer
                 if (msg.Length > 0)
                     msg += " and ";
                 msg +=
-                    $"<b>{progressiveUnlockCount}</b> more <b>Progressive {Randomizer.ItemTracker.GetChallengeDisplayName(LevelID)}</b>(s)";
+                    $"<b>{progressiveUnlockCount}</b> more <b>Progressive {Lookup.ChallengeIdToDisplayDictionary.GetValueOrDefault(LevelID, LevelID)}</b>(s)";
             }
             return msg;
         }
@@ -760,7 +762,7 @@ namespace Randomizer
             Logger.LogDebug($"AlbumChallengeRow SetDifficulty adjusted difficulty to {difficulty}");
 
             string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(
-                __instance.m_data.LevelID
+                LevelID
             );
 
             if (Randomizer.Settings.RandomizedChallengesEnabled)
@@ -792,7 +794,7 @@ namespace Randomizer
             }
             else
             {
-                string showcaseName = Randomizer.ItemTracker.GetActualLevelName(actualLevelID);
+                string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
                 __instance.m_nameLabel.text = showcaseName.ToUpper();
 
                 __instance.m_tormentConqueredHighlight.gameObject.SetActive(
@@ -1295,7 +1297,7 @@ namespace Randomizer
             Action<LevelCode> levelViewedCallback,
             UIMaster uiMaster,
             EDifficulty currentDifficulty,
-            List<CollectiblesStageData> collectiblesData,
+            Il2CppSystem.Collections.Generic.List<CollectiblesStageData> collectiblesData,
             Action<LevelCode> songSelectionOpenedCallback,
             Il2CppReferenceArray<SongPreviewInfo> songPreviewInfo,
             Action<string, bool> onLevelSelectedCallback,
@@ -1318,7 +1320,7 @@ namespace Randomizer
             Action<LevelCode> levelViewedCallback,
             UIMaster uiMaster,
             EDifficulty currentDifficulty,
-            List<CollectiblesStageData> collectiblesData,
+            Il2CppSystem.Collections.Generic.List<CollectiblesStageData> collectiblesData,
             Action<LevelCode> songSelectionOpenedCallback,
             Il2CppReferenceArray<SongPreviewInfo> songPreviewInfo,
             Action<string, bool> onLevelSelectedCallback,
@@ -1669,6 +1671,51 @@ namespace Randomizer
         static void OnItemClickedPostfix(StageSelectProgressBar __instance, int index)
         {
             Logger.LogDebug($"StageSelectProgressBar OnItemClicked Postfix called for: {index}");
+        }
+    }
+
+    [HarmonyPatch(typeof(StageSelectProgressItem))]
+    public class StageSelectProgressItemPatches
+    {
+        private static EZone IndexToZone(int index) =>
+            index switch
+            {
+                0 => EZone.Tutorial,
+                1 => EZone.Voke,
+                2 => EZone.Stygia,
+                3 => EZone.Yhelm,
+                4 => EZone.Incaustis,
+                5 => EZone.Gehenna,
+                6 => EZone.Nihil,
+                7 => EZone.Acheron,
+                8 => EZone.Sheol,
+                _ => EZone.Global,
+            };
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(StageSelectProgressItem.SetViewedIconVisible))]
+        static bool SetViewedIconVisiblePrefix(StageSelectProgressItem __instance, ref bool visible)
+        {
+            var zone = IndexToZone(__instance.m_index);
+
+            var reachable = LocationAccessibility.CanAccessRegion(zone);
+            __instance.gameObject.SetActive(reachable);
+
+            if(reachable)
+                visible = Randomizer.LocationTracker.IsRegionUnchecked(zone);
+            Logger.LogInfo(
+                $"StageSelectProgressItem SetViewedIconVisible Prefix called for item at index {__instance.m_index} and is reachable: {reachable}, is visible: {visible}"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(StageSelectProgressItem.SetViewedIconVisible))]
+        static void SetViewedIconVisiblePostfix(StageSelectProgressItem __instance)
+        {
+            Logger.LogDebug(
+                $"StageSelectProgressItem SetViewedIconVisible Postfix called"
+            );
         }
     }
 }

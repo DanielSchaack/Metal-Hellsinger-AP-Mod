@@ -1,5 +1,4 @@
 using HarmonyLib;
-using Il2CppSystem.Collections.Generic;
 
 namespace Randomizer
 {
@@ -102,6 +101,12 @@ namespace Randomizer
             Logger.LogDebug(
                 $"DestructibleObjectSystem Destruct Postfix called for {combatant.Destructible.name}"
             );
+            bool isDestructible = Randomizer.LocationTracker.IsDestructible(combatant.Destructible);
+            if (isDestructible)
+                Randomizer.LocationTracker.CheckDestructible(
+                    Randomizer.CurrentLevel,
+                    combatant.Destructible
+                );
         }
 
         [HarmonyPrefix]
@@ -132,10 +137,6 @@ namespace Randomizer
         {
             Logger.LogDebug(
                 $"DestructibleObjectSystem OnHit Postfix called for {combatant.Destructible.name}"
-            );
-            Randomizer.LocationTracker.CheckDestructible(
-                Randomizer.CurrentLevel,
-                combatant.Destructible
             );
         }
     }
