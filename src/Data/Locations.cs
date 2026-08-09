@@ -19,7 +19,6 @@ namespace Randomizer
             public GameObject ReferenceGameObject;
             public bool IsCollected = false;
             public bool IsSetupForCollection = false;
-            public bool IsAvailableAsLocation = false;
 
             public EZone Zone;
             public EArena Arena;
@@ -118,7 +117,7 @@ namespace Randomizer
             SectionClearOutfit,
             SectionClearMainSong,
             SectionClearBossSong,
-            Skin,
+            WeaponSkin,
             Boon,
             TormentBronze,
             TormentSilver,
@@ -127,7 +126,6 @@ namespace Randomizer
             Codex,
             Bestiary,
             BossAchievement,
-            FirstDestruction,
             FirstMiscellaneous
         }
 
@@ -166,7 +164,6 @@ namespace Randomizer
                 "Tutorial Paz Weapon Pickup",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 1,
                     LocationId = "Tutorial Paz Weapon Pickup",
                     Description = "Tutorial - Paz Pickup in Arena",
@@ -182,7 +179,6 @@ namespace Randomizer
                 "Tutorial Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 2,
                     LocationId = "Tutorial Max Multiplier 1",
                     Description = "Tutorial - Max Multiplier in the last Arena",
@@ -198,10 +194,9 @@ namespace Randomizer
                 "Tutorial Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 3,
                     LocationId = "Tutorial Anguish Gate 1",
-                    Description = "Tutorial - Anguish Gate destroyed",
+                    Description = "Tutorial - Finished the forced Encounter",
                     OriginalItemName = "Filler",
                     Zone = EZone.Tutorial,
                     Arena = EArena.Tutorial,
@@ -216,7 +211,6 @@ namespace Randomizer
                 "Tutorial Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 4,
                     LocationId = "Tutorial Completion",
                     Description = "Tutorial - Completed the Hell",
@@ -231,7 +225,6 @@ namespace Randomizer
                 "Voke Persephone Weapon Pickup",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 5,
                     LocationId = "Voke Persephone Weapon Pickup",
                     Description = "Voke - Weapon Pickup in Arena 1",
@@ -247,13 +240,12 @@ namespace Randomizer
                 "Voke Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 6,
                     LocationId = "Voke Anguish Gate 1",
-                    Description = "Voke - Anguish Gate 1",
+                    Description = "Voke - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_CryptGate (AnguishGate1) (CorruptedSeraphIntro)/PF_AnguishGate(Exit)/",
@@ -265,13 +257,12 @@ namespace Randomizer
                 "Voke Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 7,
                     LocationId = "Voke Anguish Gate 2",
-                    Description = "Voke - Anguish Gate 2",
+                    Description = "Voke - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_CryptYard (AnguishGate2)/PF_AnguishGate(Exit)/",
@@ -283,13 +274,12 @@ namespace Randomizer
                 "Voke Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 8,
                     LocationId = "Voke Anguish Gate 3",
-                    Description = "Voke - Anguish Gate 3",
+                    Description = "Voke - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_FallenChurch_ReaverIntro (AnguishGate3)/PF_AnguishGate(Exit)/",
@@ -301,13 +291,12 @@ namespace Randomizer
                 "Voke Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 9,
                     LocationId = "Voke Anguish Gate 4",
-                    Description = "Voke - Anguish Gate 4",
+                    Description = "Voke - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_RagingCaves (AnguishGate4)/PF_AnguishGate(Exit)/",
@@ -319,7 +308,6 @@ namespace Randomizer
                 "Voke Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 10,
                     LocationId = "Voke Next Multiplier 1",
                     Description = "Voke - Next Multiplier in Arena 1",
@@ -335,7 +323,6 @@ namespace Randomizer
                 "Voke Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 11,
                     LocationId = "Voke Next Multiplier 2",
                     Description = "Voke - Next Multiplier in Arena 3",
@@ -351,7 +338,6 @@ namespace Randomizer
                 "Voke Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 12,
                     LocationId = "Voke Next Multiplier 3",
                     Description = "Voke - Next Multiplier in Arena 4",
@@ -367,7 +353,6 @@ namespace Randomizer
                 "Voke Boss Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 13,
                     LocationId = "Voke Boss Next Multiplier 1",
                     Description = "Voke - Next Multiplier in Boss Arena atop left Bridge",
@@ -383,7 +368,6 @@ namespace Randomizer
                 "Voke Boss Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 14,
                     LocationId = "Voke Boss Next Multiplier 2",
                     Description = "Voke - Next Multiplier in Boss Arena atop right Bridge",
@@ -399,7 +383,6 @@ namespace Randomizer
                 "Voke Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 15,
                     LocationId = "Voke Max Multiplier 1",
                     Description = "Voke - Max Multiplier in Arena 4",
@@ -415,7 +398,6 @@ namespace Randomizer
                 "Voke Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 16,
                     LocationId = "Voke Secret Max Multiplier",
                     Description = "Voke - Secret Max Multiplier",
@@ -428,13 +410,12 @@ namespace Randomizer
                 }
             },
             {
-                "Voke Coat of Arms Easy",
+                "Voke Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 17,
-                    LocationId = "Voke Coat of Arms Easy",
-                    Description = "Voke - Coat of Arm in Arena 3",
+                    LocationId = "Voke Coat of Arms Lamb",
+                    Description = "Voke - Coat of Arms in Arena 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Voke,
                     Arena = EArena.Arena3,
@@ -444,13 +425,12 @@ namespace Randomizer
                 }
             },
             {
-                "Voke Coat of Arms Medium",
+                "Voke Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 18,
-                    LocationId = "Voke Coat of Arms Medium",
-                    Description = "Voke - Coat of Arm in Arena 4",
+                    LocationId = "Voke Coat of Arms Goat",
+                    Description = "Voke - Coat of Arms in Arena 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Voke,
                     Arena = EArena.Arena4,
@@ -460,13 +440,12 @@ namespace Randomizer
                 }
             },
             {
-                "Voke Coat of Arms Hard",
+                "Voke Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 19,
-                    LocationId = "Voke Coat of Arms Hard",
-                    Description = "Voke - Coat of Arm between Arena 2 & 3",
+                    LocationId = "Voke Coat of Arms Beast",
+                    Description = "Voke - Coat of Arms between Arena 2 & 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Voke,
                     Arena = EArena.Arena3,
@@ -476,13 +455,12 @@ namespace Randomizer
                 }
             },
             {
-                "Voke Coat of Arms VeryHard",
+                "Voke Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 20,
-                    LocationId = "Voke Coat of Arms VeryHard",
-                    Description = "Voke - Coat of Arm before Arena 1",
+                    LocationId = "Voke Coat of Arms Archdevil",
+                    Description = "Voke - Coat of Arms before Arena 1",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Voke,
                     Arena = EArena.Arena1,
@@ -495,7 +473,6 @@ namespace Randomizer
                 "Voke Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 21,
                     LocationId = "Voke Completion",
                     Description = "Voke - Completed the Hell",
@@ -510,7 +487,6 @@ namespace Randomizer
                 "Enduring Fury Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 22,
                     LocationId = "Enduring Fury Unlock",
                     Description = "Completed Voke",
@@ -525,7 +501,6 @@ namespace Randomizer
                 "Stygia Persephone Weapon Pickup",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 23,
                     LocationId = "Stygia Persephone Weapon Pickup",
                     Description = "Stygia - Weapon Pickup in Arena 1",
@@ -540,7 +515,6 @@ namespace Randomizer
                 "Stygia The Hounds Weapon Pickup",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 24,
                     LocationId = "Stygia The Hounds Weapon Pickup",
                     Description = "Stygia - Weapon Pickup in Arena 2",
@@ -556,13 +530,12 @@ namespace Randomizer
                 "Stygia Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 25,
                     LocationId = "Stygia Anguish Gate 1",
-                    Description = "Stygia - Anguish Gate 1",
+                    Description = "Stygia - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_CityGates (AnguishGate1)/PF_AnguishGate_modular(exit)/",
@@ -574,13 +547,12 @@ namespace Randomizer
                 "Stygia Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 26,
                     LocationId = "Stygia Anguish Gate 2",
-                    Description = "Stygia - Anguish Gate 2",
+                    Description = "Stygia - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_TerraceOverlook (AnguishGate2)/PF_AnguishGate_modular(exit)/",
@@ -592,13 +564,12 @@ namespace Randomizer
                 "Stygia Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 27,
                     LocationId = "Stygia Anguish Gate 3",
-                    Description = "Stygia - Anguish Gate 3",
+                    Description = "Stygia - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_MemorialSite (AnguishGate3)/PF_AnguishGate_modular(exit)/",
@@ -610,13 +581,12 @@ namespace Randomizer
                 "Stygia Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 28,
                     LocationId = "Stygia Anguish Gate 4",
-                    Description = "Stygia - Anguish Gate 4",
+                    Description = "Stygia - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_FracturedParkStaircase (AnguishGate4)/PF_AnguishGate_modular(exit)/",
@@ -628,7 +598,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 29,
                     LocationId = "Stygia Next Multiplier 1",
                     Description = "Stygia - Next Multiplier in Arena 1 on pillar",
@@ -644,7 +613,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 30,
                     LocationId = "Stygia Next Multiplier 2",
                     Description = "Stygia - Next Multiplier in Arena 1 on ground",
@@ -660,7 +628,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 31,
                     LocationId = "Stygia Next Multiplier 3",
                     Description = "Stygia - Next Multiplier in Arena 1 to the right",
@@ -676,7 +643,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 32,
                     LocationId = "Stygia Next Multiplier 4",
                     Description = "Stygia - Next Multiplier between Arena 1 & 2",
@@ -692,7 +658,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 5",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 33,
                     LocationId = "Stygia Next Multiplier 5",
                     Description = "Stygia - Next Multiplier in Arena 2 top right",
@@ -708,7 +673,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 6",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 34,
                     LocationId = "Stygia Next Multiplier 6",
                     Description = "Stygia - Next Multiplier in Arena 2 tunnel left",
@@ -724,7 +688,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 7",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 35,
                     LocationId = "Stygia Next Multiplier 7",
                     Description = "Stygia - Next Multiplier in Arena 2 tunnel right",
@@ -740,7 +703,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 8",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 36,
                     LocationId = "Stygia Next Multiplier 8",
                     Description = "Stygia - Next Multiplier in Arena 3 behind statue",
@@ -756,7 +718,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 9",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 37,
                     LocationId = "Stygia Next Multiplier 9",
                     Description = "Stygia - Next Multiplier in Arena 3 back half",
@@ -772,7 +733,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 10",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 38,
                     LocationId = "Stygia Next Multiplier 10",
                     Description = "Stygia - Next Multiplier in Arena 3 front half",
@@ -788,7 +748,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 11",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 39,
                     LocationId = "Stygia Next Multiplier 11",
                     Description = "Stygia - Next Multiplier in Arena 4 high ground",
@@ -804,7 +763,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 12",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 40,
                     LocationId = "Stygia Next Multiplier 12",
                     Description = "Stygia - Next Multiplier in Arena 4 low ground",
@@ -820,7 +778,6 @@ namespace Randomizer
                 "Stygia Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 41,
                     LocationId = "Stygia Max Multiplier 1",
                     Description = "Stygia - Max Multiplier in Arena 3",
@@ -836,7 +793,6 @@ namespace Randomizer
                 "Stygia Boss Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 42,
                     LocationId = "Stygia Boss Max Multiplier 1",
                     Description = "Stygia - Max Multiplier in Boss Arena",
@@ -852,7 +808,6 @@ namespace Randomizer
                 "Stygia Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 43,
                     LocationId = "Stygia Secret Max Multiplier",
                     Description = "Stygia - Secret Max Multiplier",
@@ -865,13 +820,12 @@ namespace Randomizer
                 }
             },
             {
-                "Stygia Coat of Arms Easy",
+                "Stygia Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 44,
-                    LocationId = "Stygia Coat of Arms Easy",
-                    Description = "Stygia - Coat of Arm in Arena 4",
+                    LocationId = "Stygia Coat of Arms Lamb",
+                    Description = "Stygia - Coat of Arms in Arena 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena4,
@@ -881,13 +835,12 @@ namespace Randomizer
                 }
             },
             {
-                "Stygia Coat of Arms Medium",
+                "Stygia Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 45,
-                    LocationId = "Stygia Coat of Arms Medium",
-                    Description = "Stygia - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Stygia Coat of Arms Goat",
+                    Description = "Stygia - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena4,
@@ -897,13 +850,12 @@ namespace Randomizer
                 }
             },
             {
-                "Stygia Coat of Arms Hard",
+                "Stygia Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 46,
-                    LocationId = "Stygia Coat of Arms Hard",
-                    Description = "Stygia - Coat of Arm between Arena 1 & 2",
+                    LocationId = "Stygia Coat of Arms Beast",
+                    Description = "Stygia - Coat of Arms between Arena 1 & 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena2,
@@ -913,13 +865,12 @@ namespace Randomizer
                 }
             },
             {
-                "Stygia Coat of Arms VeryHard",
+                "Stygia Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 47,
-                    LocationId = "Stygia Coat of Arms VeryHard",
-                    Description = "Stygia - Coat of Arm before Arena 1",
+                    LocationId = "Stygia Coat of Arms Archdevil",
+                    Description = "Stygia - Coat of Arms before Arena 1",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena1,
@@ -932,7 +883,6 @@ namespace Randomizer
                 "Stygia Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 48,
                     LocationId = "Stygia Completion",
                     Description = "Stygia - Completed the Hell",
@@ -947,7 +897,6 @@ namespace Randomizer
                 "Faster Ultimate Gain Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 49,
                     LocationId = "Faster Ultimate Gain Unlock",
                     Description = "Completed Stygia",
@@ -962,7 +911,6 @@ namespace Randomizer
                 "Yhelm Vulcan Weapon Pickup",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 50,
                     LocationId = "Yhelm Vulcan Weapon Pickup",
                     Description = "Yhelm - Weapon Pickup in Arena 2",
@@ -978,13 +926,12 @@ namespace Randomizer
                 "Yhelm Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 51,
                     LocationId = "Yhelm Anguish Gate 1",
-                    Description = "Yhelm - Anguish Gate 1",
+                    Description = "Yhelm - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_DamnedChurchGarden_(AnguishGate1)/PF_AnguishGate_modular(exit)/",
@@ -996,13 +943,12 @@ namespace Randomizer
                 "Yhelm Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 52,
                     LocationId = "Yhelm Anguish Gate 2",
-                    Description = "Yhelm - Anguish Gate 2",
+                    Description = "Yhelm - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_DamnedChurchCatacombs_(AnguishGate2)/PF_AnguishGate_modular(exit)/",
@@ -1014,13 +960,12 @@ namespace Randomizer
                 "Yhelm Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 53,
                     LocationId = "Yhelm Anguish Gate 3",
-                    Description = "Yhelm - Anguish Gate 3",
+                    Description = "Yhelm - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_DamnedChurchSewers_(AnguishGate3)/PF_AnguishGate_modular(exit)/",
@@ -1032,13 +977,12 @@ namespace Randomizer
                 "Yhelm Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 54,
                     LocationId = "Yhelm Anguish Gate 4",
-                    Description = "Yhelm - Anguish Gate 4",
+                    Description = "Yhelm - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_ForestOfAnguish_(AnguishGate4)/PF_AnguishGate_modular(exit)/",
@@ -1050,7 +994,6 @@ namespace Randomizer
                 "Yhelm Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 55,
                     LocationId = "Yhelm Next Multiplier 1",
                     Description = "Yhelm - Next Multiplier in Arena 1",
@@ -1066,7 +1009,6 @@ namespace Randomizer
                 "Yhelm Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 56,
                     LocationId = "Yhelm Next Multiplier 2",
                     Description = "Yhelm - Next Multiplier in Arena 2 first on right",
@@ -1082,7 +1024,6 @@ namespace Randomizer
                 "Yhelm Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 57,
                     LocationId = "Yhelm Next Multiplier 3",
                     Description = "Yhelm - Next Multiplier in Arena 2 second on right",
@@ -1098,7 +1039,6 @@ namespace Randomizer
                 "Yhelm Next Multiplier 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 58,
                     LocationId = "Yhelm Next Multiplier 4",
                     Description = "Yhelm - Next Multiplier in Arena 3",
@@ -1114,7 +1054,6 @@ namespace Randomizer
                 "Yhelm Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 59,
                     LocationId = "Yhelm Max Multiplier 1",
                     Description = "Yhelm - Max Multiplier in Arena 3",
@@ -1130,7 +1069,6 @@ namespace Randomizer
                 "Yhelm Boss Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 60,
                     LocationId = "Yhelm Boss Next Multiplier 1",
                     Description = "Yhelm - Next Multiplier in Boss Arena",
@@ -1146,7 +1084,6 @@ namespace Randomizer
                 "Yhelm Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 61,
                     LocationId = "Yhelm Secret Max Multiplier",
                     Description = "Yhelm - Secret Max Multiplier",
@@ -1159,13 +1096,12 @@ namespace Randomizer
                 }
             },
             {
-                "Yhelm Coat of Arms Easy",
+                "Yhelm Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 62,
-                    LocationId = "Yhelm Coat of Arms Easy",
-                    Description = "Yhelm - Coat of Arm in Arena 4",
+                    LocationId = "Yhelm Coat of Arms Lamb",
+                    Description = "Yhelm - Coat of Arms in Arena 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Yhelm,
                     Arena = EArena.Arena4,
@@ -1175,13 +1111,12 @@ namespace Randomizer
                 }
             },
             {
-                "Yhelm Coat of Arms Medium",
+                "Yhelm Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 63,
-                    LocationId = "Yhelm Coat of Arms Medium",
-                    Description = "Yhelm - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Yhelm Coat of Arms Goat",
+                    Description = "Yhelm - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Yhelm,
                     Arena = EArena.Arena4,
@@ -1191,13 +1126,12 @@ namespace Randomizer
                 }
             },
             {
-                "Yhelm Coat of Arms Hard",
+                "Yhelm Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 64,
-                    LocationId = "Yhelm Coat of Arms Hard",
-                    Description = "Yhelm - Coat of Arm in Arena 3",
+                    LocationId = "Yhelm Coat of Arms Beast",
+                    Description = "Yhelm - Coat of Arms in Arena 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Yhelm,
                     Arena = EArena.Arena3,
@@ -1207,13 +1141,12 @@ namespace Randomizer
                 }
             },
             {
-                "Yhelm Coat of Arms VeryHard",
+                "Yhelm Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 65,
-                    LocationId = "Yhelm Coat of Arms VeryHard",
-                    Description = "Yhelm - Coat of Arm in Arena 1",
+                    LocationId = "Yhelm Coat of Arms Archdevil",
+                    Description = "Yhelm - Coat of Arms in Arena 1",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Yhelm,
                     Arena = EArena.Arena1,
@@ -1226,7 +1159,6 @@ namespace Randomizer
                 "Yhelm Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 66,
                     LocationId = "Yhelm Completion",
                     Description = "Yhelm - Completed the Hell",
@@ -1241,7 +1173,6 @@ namespace Randomizer
                 "Incaustis Hellcrow Weapon Pickup",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 67,
                     LocationId = "Incaustis Hellcrow Weapon Pickup",
                     Description = "Incaustis - Weapon Pickup in Arena 2",
@@ -1257,13 +1188,12 @@ namespace Randomizer
                 "Incaustis Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 68,
                     LocationId = "Incaustis Anguish Gate 1",
-                    Description = "Incaustis - Anguish Gate 1",
+                    Description = "Incaustis - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_TheFirstDescent_(AnguishGate1)/PF_AnguishGate_modular(exit)/",
@@ -1275,13 +1205,12 @@ namespace Randomizer
                 "Incaustis Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 69,
                     LocationId = "Incaustis Anguish Gate 2",
-                    Description = "Incaustis - Anguish Gate 1",
+                    Description = "Incaustis - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_Crow_Shrine_(AnguishGate2)/PF_AnguishGate_modular(exit)/",
@@ -1293,13 +1222,12 @@ namespace Randomizer
                 "Incaustis Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 70,
                     LocationId = "Incaustis Anguish Gate 3",
-                    Description = "Incaustis - Anguish Gate 1",
+                    Description = "Incaustis - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_AncientBarracks_(AnguishGate3)/PF_AnguishGate_modular(exit)/",
@@ -1311,13 +1239,12 @@ namespace Randomizer
                 "Incaustis Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 71,
                     LocationId = "Incaustis Anguish Gate 4",
-                    Description = "Incaustis - Anguish Gate 1",
+                    Description = "Incaustis - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_LavaFalls_(AnguishGate4)/PF_AnguishGate_modular(exit)/",
@@ -1329,7 +1256,6 @@ namespace Randomizer
                 "Incaustis Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 72,
                     LocationId = "Incaustis Next Multiplier 1",
                     Description = "Incaustis - Next Multiplier in Arena 1",
@@ -1345,7 +1271,6 @@ namespace Randomizer
                 "Incaustis Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 73,
                     LocationId = "Incaustis Next Multiplier 2",
                     Description = "Incaustis - Next Multiplier in Arena 4",
@@ -1361,7 +1286,6 @@ namespace Randomizer
                 "Incaustis Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 74,
                     LocationId = "Incaustis Max Multiplier 1",
                     Description = "Incaustis - Max Multiplier in Arena 3",
@@ -1377,7 +1301,6 @@ namespace Randomizer
                 "Incaustis Boss Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 75,
                     LocationId = "Incaustis Boss Max Multiplier 1",
                     Description = "Incaustis - Max Multiplier in Boss Arena",
@@ -1393,7 +1316,6 @@ namespace Randomizer
                 "Incaustis Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 76,
                     LocationId = "Incaustis Secret Max Multiplier",
                     Description = "Incaustis - Secret Max Multiplier",
@@ -1406,13 +1328,12 @@ namespace Randomizer
                 }
             },
             {
-                "Incaustis Coat of Arms Easy",
+                "Incaustis Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 77,
-                    LocationId = "Incaustis Coat of Arms Easy",
-                    Description = "Incaustis - Coat of Arm in Arena 3",
+                    LocationId = "Incaustis Coat of Arms Lamb",
+                    Description = "Incaustis - Coat of Arms in Arena 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Arena3,
@@ -1422,13 +1343,12 @@ namespace Randomizer
                 }
             },
             {
-                "Incaustis Coat of Arms Medium",
+                "Incaustis Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 78,
-                    LocationId = "Incaustis Coat of Arms Medium",
-                    Description = "Incaustis - Coat of Arm before the boss fight",
+                    LocationId = "Incaustis Coat of Arms Goat",
+                    Description = "Incaustis - Coat of Arms before the boss fight",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Boss,
@@ -1438,13 +1358,12 @@ namespace Randomizer
                 }
             },
             {
-                "Incaustis Coat of Arms Hard",
+                "Incaustis Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 79,
-                    LocationId = "Incaustis Coat of Arms Hard",
-                    Description = "Incaustis - Coat of Arm between Arena 1 & 2",
+                    LocationId = "Incaustis Coat of Arms Beast",
+                    Description = "Incaustis - Coat of Arms between Arena 1 & 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Arena2,
@@ -1454,13 +1373,12 @@ namespace Randomizer
                 }
             },
             {
-                "Incaustis Coat of Arms VeryHard",
+                "Incaustis Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 80,
-                    LocationId = "Incaustis Coat of Arms VeryHard",
-                    Description = "Incaustis - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Incaustis Coat of Arms Archdevil",
+                    Description = "Incaustis - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Arena4,
@@ -1473,7 +1391,6 @@ namespace Randomizer
                 "Incaustis Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 81,
                     LocationId = "Incaustis Completion",
                     Description = "Incaustis - Completed the Hell",
@@ -1488,7 +1405,6 @@ namespace Randomizer
                 "Deadlier Dash Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 82,
                     LocationId = "Deadlier Dash Unlock",
                     Description = "Completed Incaustis",
@@ -1503,13 +1419,12 @@ namespace Randomizer
                 "Gehenna Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 83,
                     LocationId = "Gehenna Anguish Gate 1",
-                    Description = "Gehenna - Anguish Gate 1",
+                    Description = "Gehenna - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Gehenna,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_CliffSide (AnguishGate1)/PF_AnguishGate_modular (exit)/",
@@ -1521,13 +1436,12 @@ namespace Randomizer
                 "Gehenna Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 84,
                     LocationId = "Gehenna Anguish Gate 2",
-                    Description = "Gehenna - Anguish Gate 2",
+                    Description = "Gehenna - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Gehenna,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_BurialChamber (AnguishGate2)/PF_AnguishGate_modular (exit)/",
@@ -1539,13 +1453,12 @@ namespace Randomizer
                 "Gehenna Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 85,
                     LocationId = "Gehenna Anguish Gate 3",
-                    Description = "Gehenna - Anguish Gate 3",
+                    Description = "Gehenna - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Gehenna,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_SacrificialShrine (AnguishGate3)/PF_AnguishGate_modular (exit)/",
@@ -1557,13 +1470,12 @@ namespace Randomizer
                 "Gehenna Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 86,
                     LocationId = "Gehenna Anguish Gate 4",
-                    Description = "Gehenna - Anguish Gate 4",
+                    Description = "Gehenna - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Gehenna,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_EmbalmingRoom (AnguishGate4)/PF_AnguishGate_modular (exit)/",
@@ -1575,7 +1487,6 @@ namespace Randomizer
                 "Gehenna Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 87,
                     LocationId = "Gehenna Next Multiplier 1",
                     Description = "Gehenna - Next Multiplier in Arena 1",
@@ -1591,7 +1502,6 @@ namespace Randomizer
                 "Gehenna Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 88,
                     LocationId = "Gehenna Next Multiplier 2",
                     Description = "Gehenna - Next Multiplier in Arena 4",
@@ -1607,7 +1517,6 @@ namespace Randomizer
                 "Gehenna Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 89,
                     LocationId = "Gehenna Max Multiplier 1",
                     Description = "Gehenna - Max Multiplier in Arena 3",
@@ -1623,7 +1532,6 @@ namespace Randomizer
                 "Gehenna Boss Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 90,
                     LocationId = "Gehenna Boss Next Multiplier 1",
                     Description = "Gehenna - Next Multiplier in Boss Arena",
@@ -1639,7 +1547,6 @@ namespace Randomizer
                 "Gehenna Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 91,
                     LocationId = "Gehenna Secret Max Multiplier",
                     Description = "Gehenna - Secret Max Multiplier",
@@ -1652,13 +1559,12 @@ namespace Randomizer
                 }
             },
             {
-                "Gehenna Coat of Arms Easy",
+                "Gehenna Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 92,
-                    LocationId = "Gehenna Coat of Arms Easy",
-                    Description = "Gehenna - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Gehenna Coat of Arms Lamb",
+                    Description = "Gehenna - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Gehenna,
                     Arena = EArena.Arena4,
@@ -1668,13 +1574,12 @@ namespace Randomizer
                 }
             },
             {
-                "Gehenna Coat of Arms Medium",
+                "Gehenna Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 93,
-                    LocationId = "Gehenna Coat of Arms Medium",
-                    Description = "Gehenna - Coat of Arm between Arena 2 & 3",
+                    LocationId = "Gehenna Coat of Arms Goat",
+                    Description = "Gehenna - Coat of Arms between Arena 2 & 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Gehenna,
                     Arena = EArena.Arena3,
@@ -1684,13 +1589,12 @@ namespace Randomizer
                 }
             },
             {
-                "Gehenna Coat of Arms Hard",
+                "Gehenna Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 94,
-                    LocationId = "Gehenna Coat of Arms Hard",
-                    Description = "Gehenna - Coat of Arm before the boss fight",
+                    LocationId = "Gehenna Coat of Arms Beast",
+                    Description = "Gehenna - Coat of Arms before the boss fight",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Gehenna,
                     Arena = EArena.Boss,
@@ -1700,13 +1604,12 @@ namespace Randomizer
                 }
             },
             {
-                "Gehenna Coat of Arms VeryHard",
+                "Gehenna Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 95,
-                    LocationId = "Gehenna Coat of Arms VeryHard",
-                    Description = "Gehenna - Coat of Arm between Arena 1 & 2",
+                    LocationId = "Gehenna Coat of Arms Archdevil",
+                    Description = "Gehenna - Coat of Arms between Arena 1 & 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Gehenna,
                     Arena = EArena.Arena2,
@@ -1719,7 +1622,6 @@ namespace Randomizer
                 "Gehenna Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 96,
                     LocationId = "Gehenna Completion",
                     Description = "Gehenna - Completed the Hell",
@@ -1734,13 +1636,12 @@ namespace Randomizer
                 "Nihil Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 97,
                     LocationId = "Nihil Anguish Gate 1",
-                    Description = "Nihil - Anguish Gate 1",
+                    Description = "Nihil - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Nihil,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Encounter_1_(AnguishGate1)/PF_AnguishGate_modular(exit)/",
@@ -1752,13 +1653,12 @@ namespace Randomizer
                 "Nihil Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 98,
                     LocationId = "Nihil Anguish Gate 2",
-                    Description = "Nihil - Anguish Gate 2",
+                    Description = "Nihil - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Nihil,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Encounter_4_(AnguishGate2)/PF_AnguishGate_modular(exit)/",
@@ -1770,13 +1670,12 @@ namespace Randomizer
                 "Nihil Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 99,
                     LocationId = "Nihil Anguish Gate 3",
-                    Description = "Nihil - Anguish Gate 3",
+                    Description = "Nihil - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Nihil,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Encounter_6_(AnguishGate3)/PF_AnguishGate_modular(exit)/",
@@ -1788,13 +1687,12 @@ namespace Randomizer
                 "Nihil Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 100,
                     LocationId = "Nihil Anguish Gate 4",
-                    Description = "Nihil - Anguish Gate 4",
+                    Description = "Nihil - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Nihil,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Encounter_7_(AnguishGate4)/PF_AnguishGate_modular(exit)/",
@@ -1806,7 +1704,6 @@ namespace Randomizer
                 "Nihil Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 101,
                     LocationId = "Nihil Next Multiplier 1",
                     Description = "Nihil - Next Multiplier in Arena 2",
@@ -1822,7 +1719,6 @@ namespace Randomizer
                 "Nihil Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 102,
                     LocationId = "Nihil Next Multiplier 2",
                     Description = "Nihil - Next Multiplier between Arena 2 & 3",
@@ -1838,7 +1734,6 @@ namespace Randomizer
                 "Nihil Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 103,
                     LocationId = "Nihil Next Multiplier 3",
                     Description = "Nihil - Next Multiplier in Arena 3",
@@ -1854,7 +1749,6 @@ namespace Randomizer
                 "Nihil Next Multiplier 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 104,
                     LocationId = "Nihil Next Multiplier 4",
                     Description = "Nihil - Next Multiplier in Arena 4",
@@ -1870,7 +1764,6 @@ namespace Randomizer
                 "Nihil Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 105,
                     LocationId = "Nihil Max Multiplier 1",
                     Description = "Nihil - Max Multiplier in Arena 1",
@@ -1886,7 +1779,6 @@ namespace Randomizer
                 "Nihil Boss Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 106,
                     LocationId = "Nihil Boss Next Multiplier 1",
                     Description = "Nihil - Next Multiplier in Boss Arena",
@@ -1902,7 +1794,6 @@ namespace Randomizer
                 "Nihil Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 107,
                     LocationId = "Nihil Secret Max Multiplier",
                     Description = "Nihil - Secret Max Multiplier",
@@ -1915,13 +1806,12 @@ namespace Randomizer
                 }
             },
             {
-                "Nihil Coat of Arms Easy",
+                "Nihil Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 108,
-                    LocationId = "Nihil Coat of Arms Easy",
-                    Description = "Nihil - Coat of Arm between Arena 2 & 3",
+                    LocationId = "Nihil Coat of Arms Lamb",
+                    Description = "Nihil - Coat of Arms between Arena 2 & 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Nihil,
                     Arena = EArena.Arena3,
@@ -1931,13 +1821,12 @@ namespace Randomizer
                 }
             },
             {
-                "Nihil Coat of Arms Medium",
+                "Nihil Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 109,
-                    LocationId = "Nihil Coat of Arms Medium",
-                    Description = "Nihil - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Nihil Coat of Arms Goat",
+                    Description = "Nihil - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Nihil,
                     Arena = EArena.Arena4,
@@ -1947,13 +1836,12 @@ namespace Randomizer
                 }
             },
             {
-                "Nihil Coat of Arms Hard",
+                "Nihil Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 110,
-                    LocationId = "Nihil Coat of Arms Hard",
-                    Description = "Nihil - Coat of Arm before the boss fight",
+                    LocationId = "Nihil Coat of Arms Beast",
+                    Description = "Nihil - Coat of Arms before the boss fight",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Nihil,
                     Arena = EArena.Boss,
@@ -1963,13 +1851,12 @@ namespace Randomizer
                 }
             },
             {
-                "Nihil Coat of Arms VeryHard",
+                "Nihil Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 111,
-                    LocationId = "Nihil Coat of Arms VeryHard",
-                    Description = "Nihil - Coat of Arm between Arena 1 & 2",
+                    LocationId = "Nihil Coat of Arms Archdevil",
+                    Description = "Nihil - Coat of Arms between Arena 1 & 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Nihil,
                     Arena = EArena.Arena2,
@@ -1982,7 +1869,6 @@ namespace Randomizer
                 "Nihil Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 112,
                     LocationId = "Nihil Completion",
                     Description = "Nihil - Completed the Hell",
@@ -1997,7 +1883,6 @@ namespace Randomizer
                 "Explosive Slaughter Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 113,
                     LocationId = "Explosive Slaughter Unlock",
                     Description = "Completed Nihil",
@@ -2012,13 +1897,12 @@ namespace Randomizer
                 "Acheron Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 114,
                     LocationId = "Acheron Anguish Gate 1",
-                    Description = "Acheron - Anguish Gate 1",
+                    Description = "Acheron - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Wave_Start_Bridge (AnguishGate1)/PF_AnguishGate_modular(exit)/",
@@ -2030,13 +1914,12 @@ namespace Randomizer
                 "Acheron Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 115,
                     LocationId = "Acheron Anguish Gate 2",
-                    Description = "Acheron - Anguish Gate 2",
+                    Description = "Acheron - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Wave_Start_Tunnel_Mid (AnguishGate2)/PF_AnguishGate_modular(exit)/",
@@ -2048,13 +1931,12 @@ namespace Randomizer
                 "Acheron Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 116,
                     LocationId = "Acheron Anguish Gate 3",
-                    Description = "Acheron - Anguish Gate 3",
+                    Description = "Acheron - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Wave_Start_Building (AnguishGate3)/PF_AnguishGate_modular(exit)/",
@@ -2066,13 +1948,12 @@ namespace Randomizer
                 "Acheron Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 117,
                     LocationId = "Acheron Anguish Gate 4",
-                    Description = "Acheron - Anguish Gate 4",
+                    Description = "Acheron - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "EnemyEncounters/Wave_Start_Cargo_Hall (AnguishGate4)/PF_AnguishGate_modular(exit)/",
@@ -2084,7 +1965,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 118,
                     LocationId = "Acheron Next Multiplier 1",
                     Description = "Acheron - Next Multiplier before Arena 1",
@@ -2100,7 +1980,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 119,
                     LocationId = "Acheron Next Multiplier 2",
                     Description = "Acheron - Next Multiplier in Arena 1 top Cog",
@@ -2116,7 +1995,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 120,
                     LocationId = "Acheron Next Multiplier 3",
                     Description = "Acheron - Next Multiplier in Arena 1 bottom Cog",
@@ -2132,7 +2010,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 121,
                     LocationId = "Acheron Next Multiplier 4",
                     Description = "Acheron - Next Multiplier in Arena 1 back right Alley",
@@ -2148,7 +2025,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 5",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 122,
                     LocationId = "Acheron Next Multiplier 5",
                     Description = "Acheron - Next Multiplier in Arena 1 front left Containers",
@@ -2164,7 +2040,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 6",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 123,
                     LocationId = "Acheron Next Multiplier 6",
                     Description = "Acheron - Next Multiplier in Arena 1 back left Containers",
@@ -2180,7 +2055,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 7",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 124,
                     LocationId = "Acheron Next Multiplier 7",
                     Description = "Acheron - Next Multiplier in Arena 2",
@@ -2196,7 +2070,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 8",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 125,
                     LocationId = "Acheron Next Multiplier 8",
                     Description = "Acheron - Next Multiplier between Arena 2 & 3",
@@ -2212,7 +2085,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 9",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 126,
                     LocationId = "Acheron Next Multiplier 9",
                     Description = "Acheron - Next Multiplier in Arena 3 front left Corner",
@@ -2228,7 +2100,6 @@ namespace Randomizer
                 "Acheron Next Multiplier 10",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 127,
                     LocationId = "Acheron Next Multiplier 10",
                     Description = "Acheron - Next Multiplier in Arena 3 back Corner",
@@ -2244,7 +2115,6 @@ namespace Randomizer
                 "Acheron Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 128,
                     LocationId = "Acheron Max Multiplier 1",
                     Description = "Acheron - Max Multiplier in Arena 4",
@@ -2260,7 +2130,6 @@ namespace Randomizer
                 "Acheron Boss Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 129,
                     LocationId = "Acheron Boss Next Multiplier 1",
                     Description = "Acheron - Next Multiplier in Boss Arena front Cog",
@@ -2276,7 +2145,6 @@ namespace Randomizer
                 "Acheron Boss Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 130,
                     LocationId = "Acheron Boss Next Multiplier 2",
                     Description = "Acheron - Next Multiplier in Boss Arena first back left Cog",
@@ -2292,7 +2160,6 @@ namespace Randomizer
                 "Acheron Boss Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 131,
                     LocationId = "Acheron Boss Next Multiplier 3",
                     Description = "Acheron - Next Multiplier in Boss Arena second back left Cog",
@@ -2308,7 +2175,6 @@ namespace Randomizer
                 "Acheron Boss Next Multiplier 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 132,
                     LocationId = "Acheron Boss Next Multiplier 4",
                     Description = "Acheron - Next Multiplier in Boss Arena first back right Cog",
@@ -2324,7 +2190,6 @@ namespace Randomizer
                 "Acheron Boss Next Multiplier 5",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 133,
                     LocationId = "Acheron Boss Next Multiplier 5",
                     Description = "Acheron - Next Multiplier in Boss Arena second back right Cog",
@@ -2340,7 +2205,6 @@ namespace Randomizer
                 "Acheron Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 134,
                     LocationId = "Acheron Secret Max Multiplier",
                     Description = "Acheron - Secret Max Multiplier",
@@ -2353,13 +2217,12 @@ namespace Randomizer
                 }
             },
             {
-                "Acheron Coat of Arms Easy",
+                "Acheron Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 135,
-                    LocationId = "Acheron Coat of Arms Easy",
-                    Description = "Acheron - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Acheron Coat of Arms Lamb",
+                    Description = "Acheron - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena4,
@@ -2369,13 +2232,12 @@ namespace Randomizer
                 }
             },
             {
-                "Acheron Coat of Arms Medium",
+                "Acheron Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 136,
-                    LocationId = "Acheron Coat of Arms Medium",
-                    Description = "Acheron - Coat of Arm between Arena 2 & 3",
+                    LocationId = "Acheron Coat of Arms Goat",
+                    Description = "Acheron - Coat of Arms between Arena 2 & 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena3,
@@ -2385,13 +2247,12 @@ namespace Randomizer
                 }
             },
             {
-                "Acheron Coat of Arms Hard",
+                "Acheron Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 137,
-                    LocationId = "Acheron Coat of Arms Hard",
-                    Description = "Acheron - Coat of Arm in Arena 3",
+                    LocationId = "Acheron Coat of Arms Beast",
+                    Description = "Acheron - Coat of Arms in Arena 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena3,
@@ -2401,13 +2262,12 @@ namespace Randomizer
                 }
             },
             {
-                "Acheron Coat of Arms VeryHard",
+                "Acheron Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 138,
-                    LocationId = "Acheron Coat of Arms VeryHard",
-                    Description = "Acheron - Coat of Arm between Arena 1 & 2",
+                    LocationId = "Acheron Coat of Arms Archdevil",
+                    Description = "Acheron - Coat of Arms between Arena 1 & 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena2,
@@ -2420,7 +2280,6 @@ namespace Randomizer
                 "Acheron Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 139,
                     LocationId = "Acheron Completion",
                     Description = "Acheron - Completed the Hell",
@@ -2435,13 +2294,12 @@ namespace Randomizer
                 "Sheol Anguish Gate 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 140,
                     LocationId = "Sheol Anguish Gate 1",
-                    Description = "Sheol - Anguish Gate 1",
+                    Description = "Sheol - Finished forced Encounter 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Sheol,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_TheHowlingRamparts (AnguishGate1)/PF_AnguishGate_modular(exit)/",
@@ -2453,13 +2311,12 @@ namespace Randomizer
                 "Sheol Anguish Gate 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 141,
                     LocationId = "Sheol Anguish Gate 2",
-                    Description = "Sheol - Anguish Gate 2",
+                    Description = "Sheol - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Sheol,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena3,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_ThePaleCitadelGate (AnguishGate2)/PF_AnguishGate_modular(exit)/",
@@ -2471,13 +2328,12 @@ namespace Randomizer
                 "Sheol Anguish Gate 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 142,
                     LocationId = "Sheol Anguish Gate 3",
-                    Description = "Sheol - Anguish Gate 3",
+                    Description = "Sheol - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Sheol,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_HallOfDarkness (AnguishGate3)/PF_AnguishGate_modular(exit)/",
@@ -2489,13 +2345,12 @@ namespace Randomizer
                 "Sheol Anguish Gate 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 143,
                     LocationId = "Sheol Anguish Gate 4",
-                    Description = "Sheol - Anguish Gate 4",
+                    Description = "Sheol - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Sheol,
-                    Arena = EArena.Arena4,
+                    Arena = EArena.Boss,
                     LocationType = ELocationType.AnguishGate,
                     GameObjectName =
                         "Wave_Spawning/Wave_Start_TheEternalClimb (AnguishGate4)/PF_AnguishGate_modular(exit)/",
@@ -2507,7 +2362,6 @@ namespace Randomizer
                 "Sheol Next Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 144,
                     LocationId = "Sheol Next Multiplier 1",
                     Description = "Sheol - Next Multiplier before Arena 1",
@@ -2523,7 +2377,6 @@ namespace Randomizer
                 "Sheol Next Multiplier 2",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 145,
                     LocationId = "Sheol Next Multiplier 2",
                     Description = "Sheol - Next Multiplier in Arena 1",
@@ -2539,7 +2392,6 @@ namespace Randomizer
                 "Sheol Next Multiplier 3",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 146,
                     LocationId = "Sheol Next Multiplier 3",
                     Description = "Sheol - Next Multiplier in Arena 2 front right Corner",
@@ -2555,7 +2407,6 @@ namespace Randomizer
                 "Sheol Next Multiplier 4",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 147,
                     LocationId = "Sheol Next Multiplier 4",
                     Description = "Sheol - Next Multiplier in Arena 2 on back Pillar",
@@ -2571,7 +2422,6 @@ namespace Randomizer
                 "Sheol Next Multiplier 5",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 148,
                     LocationId = "Sheol Next Multiplier 5",
                     Description = "Sheol - Next Multiplier in Arena 3",
@@ -2587,7 +2437,6 @@ namespace Randomizer
                 "Sheol Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 149,
                     LocationId = "Sheol Max Multiplier 1",
                     Description = "Sheol - Max Multiplier in Arena 4",
@@ -2603,7 +2452,6 @@ namespace Randomizer
                 "Sheol Boss Max Multiplier 1",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 150,
                     LocationId = "Sheol Boss Max Multiplier 1",
                     Description = "Sheol - Max Multiplier in Boss Arena",
@@ -2619,7 +2467,6 @@ namespace Randomizer
                 "Sheol Secret Max Multiplier",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 151,
                     LocationId = "Sheol Secret Max Multiplier",
                     Description = "Sheol - Secret Max Multiplier",
@@ -2632,13 +2479,12 @@ namespace Randomizer
                 }
             },
             {
-                "Sheol Coat of Arms Easy",
+                "Sheol Coat of Arms Lamb",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 152,
-                    LocationId = "Sheol Coat of Arms Easy",
-                    Description = "Sheol - Coat of Arm before Arena 1",
+                    LocationId = "Sheol Coat of Arms Lamb",
+                    Description = "Sheol - Coat of Arms before Arena 1",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Sheol,
                     Arena = EArena.Arena1,
@@ -2648,13 +2494,12 @@ namespace Randomizer
                 }
             },
             {
-                "Sheol Coat of Arms Medium",
+                "Sheol Coat of Arms Goat",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 153,
-                    LocationId = "Sheol Coat of Arms Medium",
-                    Description = "Sheol - Coat of Arm between Arena 1 & 2",
+                    LocationId = "Sheol Coat of Arms Goat",
+                    Description = "Sheol - Coat of Arms between Arena 1 & 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Sheol,
                     Arena = EArena.Arena2,
@@ -2664,13 +2509,12 @@ namespace Randomizer
                 }
             },
             {
-                "Sheol Coat of Arms Hard",
+                "Sheol Coat of Arms Beast",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 154,
-                    LocationId = "Sheol Coat of Arms Hard",
-                    Description = "Sheol - Coat of Arm between Arena 2 & 3",
+                    LocationId = "Sheol Coat of Arms Beast",
+                    Description = "Sheol - Coat of Arms between Arena 2 & 3",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Sheol,
                     Arena = EArena.Arena3,
@@ -2680,13 +2524,12 @@ namespace Randomizer
                 }
             },
             {
-                "Sheol Coat of Arms VeryHard",
+                "Sheol Coat of Arms Archdevil",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 155,
-                    LocationId = "Sheol Coat of Arms VeryHard",
-                    Description = "Sheol - Coat of Arm between Arena 3 & 4",
+                    LocationId = "Sheol Coat of Arms Archdevil",
+                    Description = "Sheol - Coat of Arms between Arena 3 & 4",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Sheol,
                     Arena = EArena.Arena4,
@@ -2699,7 +2542,6 @@ namespace Randomizer
                 "Sheol Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 156,
                     LocationId = "Sheol Completion",
                     Description = "Sheol - Completed the Hell",
@@ -2714,14 +2556,13 @@ namespace Randomizer
                 "Paz Weapon Skin Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 157,
                     LocationId = "Paz Weapon Skin Unlock",
                     Description = "Collect 2 Coat of Arms",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.Skin,
+                    LocationType = ELocationType.WeaponSkin,
                     GameObjectName = null,
                 }
             },
@@ -2729,14 +2570,13 @@ namespace Randomizer
                 "Terminus Weapon Skin Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 158,
                     LocationId = "Terminus Weapon Skin Unlock",
                     Description = "Collect 8 Coat of Arms",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.Skin,
+                    LocationType = ELocationType.WeaponSkin,
                     GameObjectName = null,
                 }
             },
@@ -2744,14 +2584,13 @@ namespace Randomizer
                 "Persephone Weapon Skin Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 159,
                     LocationId = "Persephone Weapon Skin Unlock",
                     Description = "Collect 14 Coat of Arms",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.Skin,
+                    LocationType = ELocationType.WeaponSkin,
                     GameObjectName = null,
                 }
             },
@@ -2759,14 +2598,13 @@ namespace Randomizer
                 "The Hounds Weapon Skin Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 160,
                     LocationId = "The Hounds Weapon Skin Unlock",
                     Description = "Collect 20 Coat of Arms",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.Skin,
+                    LocationType = ELocationType.WeaponSkin,
                     GameObjectName = null,
                 }
             },
@@ -2774,14 +2612,13 @@ namespace Randomizer
                 "Vulcan Weapon Skin Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 161,
                     LocationId = "Vulcan Weapon Skin Unlock",
                     Description = "Collect 26 Coat of Arms",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.Skin,
+                    LocationType = ELocationType.WeaponSkin,
                     GameObjectName = null,
                 }
             },
@@ -2789,14 +2626,13 @@ namespace Randomizer
                 "Hellcrow Weapon Skin Unlock",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 162,
                     LocationId = "Hellcrow Weapon Skin Unlock",
                     Description = "Collect 32 Coat of Arms",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.Skin,
+                    LocationType = ELocationType.WeaponSkin,
                     GameObjectName = null,
                 }
             },
@@ -2804,7 +2640,6 @@ namespace Randomizer
                 "Killing with Rhythm: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 163,
                     LocationId = "Killing with Rhythm: 1 Bronze",
                     Description = "Killing with Rhythm: 1 - Achieve Bronze",
@@ -2819,7 +2654,6 @@ namespace Randomizer
                 "Killing with Rhythm: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 164,
                     LocationId = "Killing with Rhythm: 1 Silver",
                     Description = "Killing with Rhythm: 1 - Achieve Silver",
@@ -2834,7 +2668,6 @@ namespace Randomizer
                 "Killing with Rhythm: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 165,
                     LocationId = "Killing with Rhythm: 1 Gold",
                     Description = "Killing with Rhythm: 1 - Achieve Gold",
@@ -2849,10 +2682,9 @@ namespace Randomizer
                 "Killing with Rhythm: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 166,
                     LocationId = "Killing with Rhythm: 1 Completion",
-                    Description = "Killing with Rhythm: 1 - Sigil Upgrade",
+                    Description = "Killing with Rhythm: 1 - Completion",
                     OriginalItemName = "Progressive Streak Guardian",
                     Zone = EZone.KillingWithRhythm,
                     Arena = EArena.Torment1,
@@ -2864,7 +2696,6 @@ namespace Randomizer
                 "Killing with Rhythm: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 167,
                     LocationId = "Killing with Rhythm: 2 Bronze",
                     Description = "Killing with Rhythm: 2 - Achieve Bronze",
@@ -2879,7 +2710,6 @@ namespace Randomizer
                 "Killing with Rhythm: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 168,
                     LocationId = "Killing with Rhythm: 2 Silver",
                     Description = "Killing with Rhythm: 2 - Achieve Silver",
@@ -2894,7 +2724,6 @@ namespace Randomizer
                 "Killing with Rhythm: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 169,
                     LocationId = "Killing with Rhythm: 2 Gold",
                     Description = "Killing with Rhythm: 2 - Achieve Gold",
@@ -2909,10 +2738,9 @@ namespace Randomizer
                 "Killing with Rhythm: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 170,
                     LocationId = "Killing with Rhythm: 2 Completion",
-                    Description = "Killing with Rhythm: 2 - Sigil Upgrade",
+                    Description = "Killing with Rhythm: 2 - Completion",
                     OriginalItemName = "Progressive Streak Guardian",
                     Zone = EZone.KillingWithRhythm,
                     Arena = EArena.Torment2,
@@ -2924,7 +2752,6 @@ namespace Randomizer
                 "Killing with Rhythm: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 171,
                     LocationId = "Killing with Rhythm: 3 Bronze",
                     Description = "Killing with Rhythm: 3 - Achieve Bronze",
@@ -2939,7 +2766,6 @@ namespace Randomizer
                 "Killing with Rhythm: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 172,
                     LocationId = "Killing with Rhythm: 3 Silver",
                     Description = "Killing with Rhythm: 3 - Achieve Silver",
@@ -2954,7 +2780,6 @@ namespace Randomizer
                 "Killing with Rhythm: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 173,
                     LocationId = "Killing with Rhythm: 3 Gold",
                     Description = "Killing with Rhythm: 3 - Achieve Gold",
@@ -2969,10 +2794,9 @@ namespace Randomizer
                 "Killing with Rhythm: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 174,
                     LocationId = "Killing with Rhythm: 3 Completion",
-                    Description = "Killing with Rhythm: 3 - Sigil Upgrade",
+                    Description = "Killing with Rhythm: 3 - Completion",
                     OriginalItemName = "Progressive Streak Guardian",
                     Zone = EZone.KillingWithRhythm,
                     Arena = EArena.Torment3,
@@ -2984,7 +2808,6 @@ namespace Randomizer
                 "Giantslayer: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 175,
                     LocationId = "Giantslayer: 1 Bronze",
                     Description = "Giantslayer: 1 - Achieve Bronze",
@@ -2999,7 +2822,6 @@ namespace Randomizer
                 "Giantslayer: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 176,
                     LocationId = "Giantslayer: 1 Silver",
                     Description = "Giantslayer: 1 - Achieve Silver",
@@ -3014,7 +2836,6 @@ namespace Randomizer
                 "Giantslayer: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 177,
                     LocationId = "Giantslayer: 1 Gold",
                     Description = "Giantslayer: 1 - Achieve Gold",
@@ -3029,10 +2850,9 @@ namespace Randomizer
                 "Giantslayer: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 178,
                     LocationId = "Giantslayer: 1 Completion",
-                    Description = "Giantslayer: 1 - Sigil Upgrade",
+                    Description = "Giantslayer: 1 - Completion",
                     OriginalItemName = "Progressive Unyielding Fury",
                     Zone = EZone.Giantslayer,
                     Arena = EArena.Torment1,
@@ -3044,7 +2864,6 @@ namespace Randomizer
                 "Giantslayer: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 179,
                     LocationId = "Giantslayer: 2 Bronze",
                     Description = "Giantslayer: 2 - Achieve Bronze",
@@ -3059,7 +2878,6 @@ namespace Randomizer
                 "Giantslayer: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 180,
                     LocationId = "Giantslayer: 2 Silver",
                     Description = "Giantslayer: 2 - Achieve Silver",
@@ -3074,7 +2892,6 @@ namespace Randomizer
                 "Giantslayer: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 181,
                     LocationId = "Giantslayer: 2 Gold",
                     Description = "Giantslayer: 2 - Achieve Gold",
@@ -3089,10 +2906,9 @@ namespace Randomizer
                 "Giantslayer: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 182,
                     LocationId = "Giantslayer: 2 Completion",
-                    Description = "Giantslayer: 2 - Sigil Upgrade",
+                    Description = "Giantslayer: 2 - Completion",
                     OriginalItemName = "Progressive Unyielding Fury",
                     Zone = EZone.Giantslayer,
                     Arena = EArena.Torment2,
@@ -3104,7 +2920,6 @@ namespace Randomizer
                 "Giantslayer: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 183,
                     LocationId = "Giantslayer: 3 Bronze",
                     Description = "Giantslayer: 3 - Achieve Bronze",
@@ -3119,7 +2934,6 @@ namespace Randomizer
                 "Giantslayer: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 184,
                     LocationId = "Giantslayer: 3 Silver",
                     Description = "Giantslayer: 3 - Achieve Silver",
@@ -3134,7 +2948,6 @@ namespace Randomizer
                 "Giantslayer: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 185,
                     LocationId = "Giantslayer: 3 Gold",
                     Description = "Giantslayer: 3 - Achieve Gold",
@@ -3149,10 +2962,9 @@ namespace Randomizer
                 "Giantslayer: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 186,
                     LocationId = "Giantslayer: 3 Completion",
-                    Description = "Giantslayer: 3 - Sigil Upgrade",
+                    Description = "Giantslayer: 3 - Completion",
                     OriginalItemName = "Progressive Unyielding Fury",
                     Zone = EZone.Giantslayer,
                     Arena = EArena.Torment3,
@@ -3164,7 +2976,6 @@ namespace Randomizer
                 "Ultimate Mastery: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 187,
                     LocationId = "Ultimate Mastery: 1 Bronze",
                     Description = "Ultimate Mastery: 1 - Achieve Bronze",
@@ -3179,7 +2990,6 @@ namespace Randomizer
                 "Ultimate Mastery: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 188,
                     LocationId = "Ultimate Mastery: 1 Silver",
                     Description = "Ultimate Mastery: 1 - Achieve Silver",
@@ -3194,7 +3004,6 @@ namespace Randomizer
                 "Ultimate Mastery: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 189,
                     LocationId = "Ultimate Mastery: 1 Gold",
                     Description = "Ultimate Mastery: 1 - Achieve Gold",
@@ -3209,10 +3018,9 @@ namespace Randomizer
                 "Ultimate Mastery: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 190,
                     LocationId = "Ultimate Mastery: 1 Completion",
-                    Description = "Ultimate Mastery: 1 - Sigil Upgrade",
+                    Description = "Ultimate Mastery: 1 - Completion",
                     OriginalItemName = "Progressive Ultimate Sovereignty",
                     Zone = EZone.UltimateMastery,
                     Arena = EArena.Torment1,
@@ -3224,7 +3032,6 @@ namespace Randomizer
                 "Ultimate Mastery: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 191,
                     LocationId = "Ultimate Mastery: 2 Bronze",
                     Description = "Ultimate Mastery: 2 - Achieve Bronze",
@@ -3239,7 +3046,6 @@ namespace Randomizer
                 "Ultimate Mastery: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 192,
                     LocationId = "Ultimate Mastery: 2 Silver",
                     Description = "Ultimate Mastery: 2 - Achieve Silver",
@@ -3254,7 +3060,6 @@ namespace Randomizer
                 "Ultimate Mastery: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 193,
                     LocationId = "Ultimate Mastery: 2 Gold",
                     Description = "Ultimate Mastery: 2 - Achieve Gold",
@@ -3269,10 +3074,9 @@ namespace Randomizer
                 "Ultimate Mastery: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 194,
                     LocationId = "Ultimate Mastery: 2 Completion",
-                    Description = "Ultimate Mastery: 2 - Sigil Upgrade",
+                    Description = "Ultimate Mastery: 2 - Completion",
                     OriginalItemName = "Progressive Ultimate Sovereignty",
                     Zone = EZone.UltimateMastery,
                     Arena = EArena.Torment2,
@@ -3284,7 +3088,6 @@ namespace Randomizer
                 "Ultimate Mastery: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 195,
                     LocationId = "Ultimate Mastery: 3 Bronze",
                     Description = "Ultimate Mastery: 3 - Achieve Bronze",
@@ -3299,7 +3102,6 @@ namespace Randomizer
                 "Ultimate Mastery: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 196,
                     LocationId = "Ultimate Mastery: 3 Silver",
                     Description = "Ultimate Mastery: 3 - Achieve Silver",
@@ -3314,7 +3116,6 @@ namespace Randomizer
                 "Ultimate Mastery: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 197,
                     LocationId = "Ultimate Mastery: 3 Gold",
                     Description = "Ultimate Mastery: 3 - Achieve Gold",
@@ -3329,10 +3130,9 @@ namespace Randomizer
                 "Ultimate Mastery: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 198,
                     LocationId = "Ultimate Mastery: 3 Completion",
-                    Description = "Ultimate Mastery: 3 - Sigil Upgrade",
+                    Description = "Ultimate Mastery: 3 - Completion",
                     OriginalItemName = "Progressive Ultimate Sovereignty",
                     Zone = EZone.UltimateMastery,
                     Arena = EArena.Torment3,
@@ -3344,7 +3144,6 @@ namespace Randomizer
                 "Slaughter Mastery: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 199,
                     LocationId = "Slaughter Mastery: 1 Bronze",
                     Description = "Slaughter Mastery: 1 - Achieve Bronze",
@@ -3359,7 +3158,6 @@ namespace Randomizer
                 "Slaughter Mastery: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 200,
                     LocationId = "Slaughter Mastery: 1 Silver",
                     Description = "Slaughter Mastery: 1 - Achieve Silver",
@@ -3374,7 +3172,6 @@ namespace Randomizer
                 "Slaughter Mastery: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 201,
                     LocationId = "Slaughter Mastery: 1 Gold",
                     Description = "Slaughter Mastery: 1 - Achieve Gold",
@@ -3389,10 +3186,9 @@ namespace Randomizer
                 "Slaughter Mastery: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 202,
                     LocationId = "Slaughter Mastery: 1 Completion",
-                    Description = "Slaughter Mastery: 1 - Sigil Upgrade",
+                    Description = "Slaughter Mastery: 1 - Completion",
                     OriginalItemName = "Progressive The Perfectionist",
                     Zone = EZone.SlaughterMastery,
                     Arena = EArena.Torment1,
@@ -3404,7 +3200,6 @@ namespace Randomizer
                 "Slaughter Mastery: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 203,
                     LocationId = "Slaughter Mastery: 2 Bronze",
                     Description = "Slaughter Mastery: 2 - Achieve Bronze",
@@ -3419,7 +3214,6 @@ namespace Randomizer
                 "Slaughter Mastery: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 204,
                     LocationId = "Slaughter Mastery: 2 Silver",
                     Description = "Slaughter Mastery: 2 - Achieve Silver",
@@ -3434,7 +3228,6 @@ namespace Randomizer
                 "Slaughter Mastery: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 205,
                     LocationId = "Slaughter Mastery: 2 Gold",
                     Description = "Slaughter Mastery: 2 - Achieve Gold",
@@ -3449,10 +3242,9 @@ namespace Randomizer
                 "Slaughter Mastery: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 206,
                     LocationId = "Slaughter Mastery: 2 Completion",
-                    Description = "Slaughter Mastery: 2 - Sigil Upgrade",
+                    Description = "Slaughter Mastery: 2 - Completion",
                     OriginalItemName = "Progressive The Perfectionist",
                     Zone = EZone.SlaughterMastery,
                     Arena = EArena.Torment2,
@@ -3464,7 +3256,6 @@ namespace Randomizer
                 "Slaughter Mastery: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 207,
                     LocationId = "Slaughter Mastery: 3 Bronze",
                     Description = "Slaughter Mastery: 3 - Achieve Bronze",
@@ -3479,7 +3270,6 @@ namespace Randomizer
                 "Slaughter Mastery: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 208,
                     LocationId = "Slaughter Mastery: 3 Silver",
                     Description = "Slaughter Mastery: 3 - Achieve Silver",
@@ -3494,7 +3284,6 @@ namespace Randomizer
                 "Slaughter Mastery: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 209,
                     LocationId = "Slaughter Mastery: 3 Gold",
                     Description = "Slaughter Mastery: 3 - Achieve Gold",
@@ -3509,10 +3298,9 @@ namespace Randomizer
                 "Slaughter Mastery: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 210,
                     LocationId = "Slaughter Mastery: 3 Completion",
-                    Description = "Slaughter Mastery: 3 - Sigil Upgrade",
+                    Description = "Slaughter Mastery: 3 - Completion",
                     OriginalItemName = "Progressive The Perfectionist",
                     Zone = EZone.SlaughterMastery,
                     Arena = EArena.Torment3,
@@ -3524,7 +3312,6 @@ namespace Randomizer
                 "Relic Thief: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 211,
                     LocationId = "Relic Thief: 1 Bronze",
                     Description = "Relic Thief: 1 - Achieve Bronze",
@@ -3539,7 +3326,6 @@ namespace Randomizer
                 "Relic Thief: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 212,
                     LocationId = "Relic Thief: 1 Silver",
                     Description = "Relic Thief: 1 - Achieve Silver",
@@ -3554,7 +3340,6 @@ namespace Randomizer
                 "Relic Thief: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 213,
                     LocationId = "Relic Thief: 1 Gold",
                     Description = "Relic Thief: 1 - Achieve Gold",
@@ -3569,10 +3354,9 @@ namespace Randomizer
                 "Relic Thief: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 214,
                     LocationId = "Relic Thief: 1 Completion",
-                    Description = "Relic Thief: 1 - Sigil Upgrade",
+                    Description = "Relic Thief: 1 - Completion",
                     OriginalItemName = "Progressive Boon Momentum",
                     Zone = EZone.RelicThief,
                     Arena = EArena.Torment1,
@@ -3584,7 +3368,6 @@ namespace Randomizer
                 "Relic Thief: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 215,
                     LocationId = "Relic Thief: 2 Bronze",
                     Description = "Relic Thief: 2 - Achieve Bronze",
@@ -3599,7 +3382,6 @@ namespace Randomizer
                 "Relic Thief: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 216,
                     LocationId = "Relic Thief: 2 Silver",
                     Description = "Relic Thief: 2 - Achieve Silver",
@@ -3614,7 +3396,6 @@ namespace Randomizer
                 "Relic Thief: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 217,
                     LocationId = "Relic Thief: 2 Gold",
                     Description = "Relic Thief: 2 - Achieve Gold",
@@ -3629,10 +3410,9 @@ namespace Randomizer
                 "Relic Thief: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 218,
                     LocationId = "Relic Thief: 2 Completion",
-                    Description = "Relic Thief: 2 - Sigil Upgrade",
+                    Description = "Relic Thief: 2 - Completion",
                     OriginalItemName = "Progressive Boon Momentum",
                     Zone = EZone.RelicThief,
                     Arena = EArena.Torment2,
@@ -3644,7 +3424,6 @@ namespace Randomizer
                 "Relic Thief: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 219,
                     LocationId = "Relic Thief: 3 Bronze",
                     Description = "Relic Thief: 3 - Achieve Bronze",
@@ -3659,7 +3438,6 @@ namespace Randomizer
                 "Relic Thief: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 220,
                     LocationId = "Relic Thief: 3 Silver",
                     Description = "Relic Thief: 3 - Achieve Silver",
@@ -3674,7 +3452,6 @@ namespace Randomizer
                 "Relic Thief: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 221,
                     LocationId = "Relic Thief: 3 Gold",
                     Description = "Relic Thief: 3 - Achieve Gold",
@@ -3689,10 +3466,9 @@ namespace Randomizer
                 "Relic Thief: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 222,
                     LocationId = "Relic Thief: 3 Completion",
-                    Description = "Relic Thief: 3 - Sigil Upgrade",
+                    Description = "Relic Thief: 3 - Completion",
                     OriginalItemName = "Progressive Boon Momentum",
                     Zone = EZone.RelicThief,
                     Arena = EArena.Torment3,
@@ -3704,7 +3480,6 @@ namespace Randomizer
                 "Weapon Trickery: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 223,
                     LocationId = "Weapon Trickery: 1 Bronze",
                     Description = "Weapon Trickery: 1 - Achieve Bronze",
@@ -3719,7 +3494,6 @@ namespace Randomizer
                 "Weapon Trickery: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 224,
                     LocationId = "Weapon Trickery: 1 Silver",
                     Description = "Weapon Trickery: 1 - Achieve Silver",
@@ -3734,7 +3508,6 @@ namespace Randomizer
                 "Weapon Trickery: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 225,
                     LocationId = "Weapon Trickery: 1 Gold",
                     Description = "Weapon Trickery: 1 - Achieve Gold",
@@ -3749,10 +3522,9 @@ namespace Randomizer
                 "Weapon Trickery: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 226,
                     LocationId = "Weapon Trickery: 1 Completion",
-                    Description = "Weapon Trickery: 1 - Sigil Upgrade",
+                    Description = "Weapon Trickery: 1 - Completion",
                     OriginalItemName = "Progressive Ghost Rounds",
                     Zone = EZone.WeaponTrickery,
                     Arena = EArena.Torment1,
@@ -3764,7 +3536,6 @@ namespace Randomizer
                 "Weapon Trickery: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 227,
                     LocationId = "Weapon Trickery: 2 Bronze",
                     Description = "Weapon Trickery: 2 - Achieve Bronze",
@@ -3779,7 +3550,6 @@ namespace Randomizer
                 "Weapon Trickery: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 228,
                     LocationId = "Weapon Trickery: 2 Silver",
                     Description = "Weapon Trickery: 2 - Achieve Silver",
@@ -3794,7 +3564,6 @@ namespace Randomizer
                 "Weapon Trickery: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 229,
                     LocationId = "Weapon Trickery: 2 Gold",
                     Description = "Weapon Trickery: 2 - Achieve Gold",
@@ -3809,10 +3578,9 @@ namespace Randomizer
                 "Weapon Trickery: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 230,
                     LocationId = "Weapon Trickery: 2 Completion",
-                    Description = "Weapon Trickery: 2 - Sigil Upgrade",
+                    Description = "Weapon Trickery: 2 - Completion",
                     OriginalItemName = "Progressive Ghost Rounds",
                     Zone = EZone.WeaponTrickery,
                     Arena = EArena.Torment2,
@@ -3824,7 +3592,6 @@ namespace Randomizer
                 "Weapon Trickery: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 231,
                     LocationId = "Weapon Trickery: 3 Bronze",
                     Description = "Weapon Trickery: 3 - Achieve Bronze",
@@ -3839,7 +3606,6 @@ namespace Randomizer
                 "Weapon Trickery: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 232,
                     LocationId = "Weapon Trickery: 3 Silver",
                     Description = "Weapon Trickery: 3 - Achieve Silver",
@@ -3854,7 +3620,6 @@ namespace Randomizer
                 "Weapon Trickery: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 233,
                     LocationId = "Weapon Trickery: 3 Gold",
                     Description = "Weapon Trickery: 3 - Achieve Gold",
@@ -3869,10 +3634,9 @@ namespace Randomizer
                 "Weapon Trickery: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 234,
                     LocationId = "Weapon Trickery: 3 Completion",
-                    Description = "Weapon Trickery: 3 - Sigil Upgrade",
+                    Description = "Weapon Trickery: 3 - Completion",
                     OriginalItemName = "Progressive Ghost Rounds",
                     Zone = EZone.WeaponTrickery,
                     Arena = EArena.Torment3,
@@ -3884,7 +3648,6 @@ namespace Randomizer
                 "Death's Edge: 1 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 235,
                     LocationId = "Death's Edge: 1 Bronze",
                     Description = "Death's Edge: 1 - Achieve Bronze",
@@ -3899,7 +3662,6 @@ namespace Randomizer
                 "Death's Edge: 1 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 236,
                     LocationId = "Death's Edge: 1 Silver",
                     Description = "Death's Edge: 1 - Achieve Silver",
@@ -3914,7 +3676,6 @@ namespace Randomizer
                 "Death's Edge: 1 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 237,
                     LocationId = "Death's Edge: 1 Gold",
                     Description = "Death's Edge: 1 - Achieve Gold",
@@ -3929,10 +3690,9 @@ namespace Randomizer
                 "Death's Edge: 1 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 238,
                     LocationId = "Death's Edge: 1 Completion",
-                    Description = "Death's Edge: 1 - Sigil Upgrade",
+                    Description = "Death's Edge: 1 - Completion",
                     OriginalItemName = "Progressive Last Breath Aegis",
                     Zone = EZone.DeathsEdge,
                     Arena = EArena.Torment1,
@@ -3944,7 +3704,6 @@ namespace Randomizer
                 "Death's Edge: 2 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 239,
                     LocationId = "Death's Edge: 2 Bronze",
                     Description = "Death's Edge: 2 - Achieve Bronze",
@@ -3959,7 +3718,6 @@ namespace Randomizer
                 "Death's Edge: 2 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 240,
                     LocationId = "Death's Edge: 2 Silver",
                     Description = "Death's Edge: 2 - Achieve Silver",
@@ -3974,7 +3732,6 @@ namespace Randomizer
                 "Death's Edge: 2 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 241,
                     LocationId = "Death's Edge: 2 Gold",
                     Description = "Death's Edge: 2 - Achieve Gold",
@@ -3989,10 +3746,9 @@ namespace Randomizer
                 "Death's Edge: 2 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 242,
                     LocationId = "Death's Edge: 2 Completion",
-                    Description = "Death's Edge: 2 - Sigil Upgrade",
+                    Description = "Death's Edge: 2 - Completion",
                     OriginalItemName = "Progressive Last Breath Aegis",
                     Zone = EZone.DeathsEdge,
                     Arena = EArena.Torment2,
@@ -4004,7 +3760,6 @@ namespace Randomizer
                 "Death's Edge: 3 Bronze",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 243,
                     LocationId = "Death's Edge: 3 Bronze",
                     Description = "Death's Edge: 3 - Achieve Bronze",
@@ -4019,7 +3774,6 @@ namespace Randomizer
                 "Death's Edge: 3 Silver",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 244,
                     LocationId = "Death's Edge: 3 Silver",
                     Description = "Death's Edge: 3 - Achieve Silver",
@@ -4034,7 +3788,6 @@ namespace Randomizer
                 "Death's Edge: 3 Gold",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 245,
                     LocationId = "Death's Edge: 3 Gold",
                     Description = "Death's Edge: 3 - Achieve Gold",
@@ -4049,10 +3802,9 @@ namespace Randomizer
                 "Death's Edge: 3 Completion",
                 new Location
                 {
-                    IsAvailableAsLocation = true,
                     ArchipelagoId = 246,
                     LocationId = "Death's Edge: 3 Completion",
-                    Description = "Death's Edge: 3 - Sigil Upgrade",
+                    Description = "Death's Edge: 3 - Completion",
                     OriginalItemName = "Progressive Last Breath Aegis",
                     Zone = EZone.DeathsEdge,
                     Arena = EArena.Torment3,
@@ -4901,12 +4653,12 @@ namespace Randomizer
                 }
             },
             {
-                "DoppelGanger Aspect: Nihil discovered",
+                "Doppelganger Aspect: Nihil discovered",
                 new Location
                 {
                     ArchipelagoId = 307,
-                    LocationId = "DoppelGanger Aspect: Nihil discovered",
-                    Description = "DoppelGanger Aspect: Nihil discovered",
+                    LocationId = "Doppelganger Aspect: Nihil discovered",
+                    Description = "Doppelganger Aspect: Nihil discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Nihil,
                     Arena = EArena.Boss,
@@ -5027,13 +4779,13 @@ namespace Randomizer
                 }
             },
             {
-                "DoppelGanger Aspect: Nihil defeated",
+                "Doppelganger Aspect: Nihil defeated",
                 new Location
                 {
                     ArchipelagoId = 316,
-                    LocationId = "DoppelGanger Aspect: Nihil defeated",
-                    Description = "DoppelGanger Aspect: Nihil defeated",
-                    OriginalItemName = "DoppelGanger Aspect: Nihil defeated",
+                    LocationId = "Doppelganger Aspect: Nihil defeated",
+                    Description = "Doppelganger Aspect: Nihil defeated",
+                    OriginalItemName = "Doppelganger Aspect: Nihil defeated",
                     Zone = EZone.Nihil,
                     Arena = EArena.Boss,
                     LocationType = ELocationType.BossAchievement,
@@ -16717,44 +16469,44 @@ namespace Randomizer
                 }
             },
             {
-                "Destroyed First Ammostash",
+                "First Miscellaneous: Ammostash",
                 new Location
                 {
                     ArchipelagoId = 1152,
-                    LocationId = "Destroyed First Ammostash",
-                    Description = "Destroyed First Ammostash",
+                    LocationId = "First Miscellaneous: Ammostash",
+                    Description = "Destroyed their first Ammostash",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstDestruction,
+                    LocationType = ELocationType.FirstMiscellaneous,
                     GameObjectName = null,
                 }
             },
             {
-                "Destroyed First Health Crystal",
+                "First Miscellaneous: Health Crystal",
                 new Location
                 {
                     ArchipelagoId = 1153,
-                    LocationId = "Destroyed First Health Crystal",
-                    Description = "Destroyed First Health Crystal",
+                    LocationId = "First Miscellaneous: Health Crystal",
+                    Description = "Destroyed their first Health Crystal",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstDestruction,
+                    LocationType = ELocationType.FirstMiscellaneous,
                     GameObjectName = null,
                 }
             },
             {
-                "Destroyed First Chaos Crystal",
+                "First Miscellaneous: Chaos Crystal",
                 new Location
                 {
                     ArchipelagoId = 1154,
-                    LocationId = "Destroyed First Chaos Crystal",
-                    Description = "Destroyed First Chaos Crystal",
+                    LocationId = "First Miscellaneous: Chaos Crystal",
+                    Description = "Destroyed destroyed first Chaos Crystal",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstDestruction,
+                    LocationType = ELocationType.FirstMiscellaneous,
                     GameObjectName = null,
                 }
             },
@@ -17473,12 +17225,12 @@ namespace Randomizer
                 }
             },
             {
-                "Section Cleared with: Runaway (UGoodbye, Morning StarI)",
+                "Section Cleared with: Runaway (U&I)",
                 new Location
                 {
                     ArchipelagoId = 1206,
-                    LocationId = "Section Cleared with: Runaway (UGoodbye, Morning StarI)",
-                    Description = "Section Cleared with: Runaway (UGoodbye, Morning StarI)",
+                    LocationId = "Section Cleared with: Runaway (U&I)",
+                    Description = "Section Cleared with: Runaway (U&I)",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17534,7 +17286,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 1210,
                     LocationId = "First Miscellaneous: Slaughter",
-                    Description = "Slaughtered its first victim",
+                    Description = "Slaughtering their first victim",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17553,6 +17305,258 @@ namespace Randomizer
                     Zone = EZone.Global,
                     Arena = EArena.Global,
                     LocationType = ELocationType.Codex,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Jump",
+                new Location
+                {
+                    ArchipelagoId = 1212,
+                    LocationId = "First Miscellaneous: Jump",
+                    Description = "Jumping for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Double Jump",
+                new Location
+                {
+                    ArchipelagoId = 1213,
+                    LocationId = "First Miscellaneous: Double Jump",
+                    Description = "Double Jumping for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Infinite Jump",
+                new Location
+                {
+                    ArchipelagoId = 1214,
+                    LocationId = "First Miscellaneous: Infinite Jump",
+                    Description = "Found out they can infinitely jump now",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Quick Reload",
+                new Location
+                {
+                    ArchipelagoId = 1215,
+                    LocationId = "First Miscellaneous: Quick Reload",
+                    Description = "Hitting their first quick reload",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Dash",
+                new Location
+                {
+                    ArchipelagoId = 1216,
+                    LocationId = "First Miscellaneous: Dash",
+                    Description = "Dashing for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Soar",
+                new Location
+                {
+                    ArchipelagoId = 1217,
+                    LocationId = "First Miscellaneous: Soar",
+                    Description = "Soaring for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Enduring Fury",
+                new Location
+                {
+                    ArchipelagoId = 1218,
+                    LocationId = "First Miscellaneous: Enduring Fury",
+                    Description = "Activate Enduring Fury for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Faster Ultimate Gain",
+                new Location
+                {
+                    ArchipelagoId = 1219,
+                    LocationId = "First Miscellaneous: Faster Ultimate Gain",
+                    Description = "Activate Faster Ultimate Gain for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Deadlier Dash",
+                new Location
+                {
+                    ArchipelagoId = 1220,
+                    LocationId = "First Miscellaneous: Deadlier Dash",
+                    Description = "Activate Deadlier Dash for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Explosive Slaughter",
+                new Location
+                {
+                    ArchipelagoId = 1221,
+                    LocationId = "First Miscellaneous: Explosive Slaughter",
+                    Description = "Activate Explosive Slaughter for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Paz Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1222,
+                    LocationId = "First Miscellaneous: Paz Ultimate",
+                    Description = "Activate Paz' Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Terminus Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1223,
+                    LocationId = "First Miscellaneous: Terminus Ultimate",
+                    Description = "Activate Terminus' Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Persephone Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1224,
+                    LocationId = "First Miscellaneous: Persephone Ultimate",
+                    Description = "Activate Persephones Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: The Hounds Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1225,
+                    LocationId = "First Miscellaneous: The Hounds Ultimate",
+                    Description = "Activate the Hounds Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Vulcan Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1226,
+                    LocationId = "First Miscellaneous: Vulcan Ultimate",
+                    Description = "Activate Vulcans Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Hellcrow Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1227,
+                    LocationId = "First Miscellaneous: Hellcrow Ultimate",
+                    Description = "Activate Hellcrows Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: The Red Right Hand Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1228,
+                    LocationId = "First Miscellaneous: The Red Right Hand Ultimate",
+                    Description = "Activate the Red Right Hands Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "First Miscellaneous: Telos Ultimate",
+                new Location
+                {
+                    ArchipelagoId = 1229,
+                    LocationId = "First Miscellaneous: Telos Ultimate",
+                    Description = "Activate Telos' Ultimate for the first time",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstMiscellaneous,
                     GameObjectName = null,
                 }
             },

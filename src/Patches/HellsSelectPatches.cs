@@ -261,7 +261,8 @@ namespace Randomizer
 
             if (!__instance.m_unlocked)
             {
-                __instance.m_label.text = "LOCKED";
+                if(!Randomizer.Configuration.archipelagoSpoilLevelNames.Value)
+                    __instance.m_label.text = "LOCKED";
                 __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
                 __instance.SetViewedIconVisible(false);
             }
@@ -270,6 +271,10 @@ namespace Randomizer
                 string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(
                     RowToData[__instance.GetInstanceID()].LevelID
                 );
+
+                if(actualLevelID == "Sheol")
+                    __instance.m_unlocked = Randomizer.LocationTracker.IsSheolUnlocked();
+
                 bool hasClearedLevel = Randomizer.LocationTracker.HasClearedLevel(actualLevelID);
                 __instance.m_cleared = hasClearedLevel;
                 __instance.m_clearedBadge.gameObject.SetActive(hasClearedLevel);
@@ -304,6 +309,9 @@ namespace Randomizer
                     _ => null,
                 }
                 : null;
+
+            item = AlbumChallengeRowPatches.GetSheolLockMessage(LevelID, item);
+
             return item != null ? $"Requires {item} to unlock" : null;
         }
 
@@ -420,7 +428,14 @@ namespace Randomizer
 
             if (!__instance.m_unlocked)
             {
-                __instance.m_label.text = "LOCKED";
+                if(!Randomizer.Configuration.archipelagoSpoilLevelNames.Value)
+                    __instance.m_label.text = "LOCKED";
+                else
+                {
+                    string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(data.LevelID);
+                    string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
+                    __instance.m_label.text = showcaseName;
+                }
                 __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
                 __instance.SetViewedIconVisible(false);
             }
@@ -698,6 +713,8 @@ namespace Randomizer
                 }
                 : null;
 
+            item = GetSheolLockMessage(LevelID, item);
+
             return item;
         }
 
@@ -764,6 +781,7 @@ namespace Randomizer
             string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(
                 LevelID
             );
+            string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
 
             if (Randomizer.Settings.RandomizedChallengesEnabled)
             {
@@ -786,16 +804,19 @@ namespace Randomizer
 
             if (!__instance.m_unlocked)
             {
+                var lockedLabel = Randomizer.Configuration.archipelagoSpoilLevelNames.Value? showcaseName : "LOCKED";
                 __instance.m_nameLabel.text = Randomizer.Settings.RandomizedChallengesEnabled
-                    ? "LOCKED"
+                    ? lockedLabel
                     : "NOT INCLUDED";
                 __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
                 __instance.m_tormentConqueredHighlight.gameObject.SetActive(false);
             }
             else
             {
-                string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
                 __instance.m_nameLabel.text = showcaseName.ToUpper();
+
+                if(showcaseName == "Sheol")
+                    __instance.m_unlocked = Randomizer.LocationTracker.IsSheolUnlocked();
 
                 __instance.m_tormentConqueredHighlight.gameObject.SetActive(
                     Randomizer.LocationTracker.HasClearedLevel(actualLevelID)
@@ -811,7 +832,7 @@ namespace Randomizer
                     Il2CppSystem.Action<int> il2cppCallback = new Action<int>(managedCallback);
                     __instance.SetClickCallback(il2cppCallback);
                 }
-                __instance.m_lockMessageContainer.gameObject.SetActive(false);
+                __instance.m_lockMessageContainer.gameObject.SetActive(!__instance.m_unlocked);
             }
 
             var skulls = __instance.transform.Find("Skulls");
@@ -858,6 +879,20 @@ namespace Randomizer
                     SetLockMessageLabel(__instance, $"Requires {item} to unlock");
             }
             return true;
+        }
+
+        internal static string GetSheolLockMessage(string levelID, string item)
+        {
+            if(!IsChallengeUnlocked(levelID, Randomizer.SelectedDifficulty))
+                return item;
+
+            string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(levelID);
+            string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
+            if (showcaseName == "Sheol" && !Randomizer.LocationTracker.IsSheolUnlocked() && item == null)
+                item = $"<b>{string.Join(", ", Randomizer.ItemTracker.GetMissingSheolItems())}</b>";
+            else if (showcaseName == "Sheol" && !Randomizer.LocationTracker.IsSheolUnlocked() && item != null)
+                item += $" and <b>{string.Join(", ", Randomizer.ItemTracker.GetMissingSheolItems())}</b>";
+            return item;
         }
 
         [HarmonyPostfix]

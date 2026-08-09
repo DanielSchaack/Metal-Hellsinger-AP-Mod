@@ -38,17 +38,19 @@ namespace Randomizer
 
         public bool RandomizedHellsEnabled { get; set; } = true;
         public bool RandomizedLevelsEnabled { get; set; } = false;
+        public bool RequireAspectForBossArena { get; set; } = false;
         public HellsMode HellsUnlockMode { get; set; } = HellsMode.UnlockAsCollectible;
 
-        public bool RequireNoTomorrowForSheolBoss { get; set; } = true;
-        public bool RequireCoatOfArmsForSheolBoss { get; set; } = true;
-        public int RequiredCoatOfArmsForSheolBoss { get; set; } = 26;
+        public bool RequireNoTomorrowForSheol { get; set; } = true;
+        public bool RequireCoatOfArmsForSheol { get; set; } = true;
+        public int RequiredCoatOfArmsForSheol { get; set; } = 26;
+        public bool RequireNumberOfAspectDefeatedForSheol { get; set; } = true;
+        public int RequiredAspectDefeatedForSheol { get; set; } = 7;
 
         public bool RandomizedChallengesEnabled { get; set; } = true;
         public ChallengeMode ChallengeUnlockMode { get; set; } = ChallengeMode.UnlockAsCollectible;
         public bool RequireStageForChallenges { get; set; } = true;
         public bool RequireWeaponsForChallenges { get; set; } = false;
-        public bool RequireUltimatesForChallenges { get; set; } = true;
         public bool ChallengeMedaillonsEnabled { get; set; } = true;
         public bool RequireGoldForChallengeCompletion { get; set; } = true;
 
@@ -86,6 +88,7 @@ namespace Randomizer
         public ItemOrigin RandomizedSongDLCs { get; set; } = Base | Dusk | DreamOfTheBeast | Purgatory | EssentialHits;
 
         public int RequiredDestructionCompletions { get; set; } = 5;
+        public bool IncludeMiscellaneousChecks { get; set; } = true;
 
         // TODO: translate into individual settings
         public Settings(Dictionary<string, object> slotData)

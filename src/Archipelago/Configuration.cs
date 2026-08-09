@@ -19,6 +19,7 @@ namespace Randomizer
         internal ConfigEntry<bool> archipelagoConsoleEnabled;
         internal ConfigEntry<DeathLinkType> archipelagoDeathlinkType;
         internal ConfigEntry<ItemClassification> archipelagoPopupForClassification;
+        internal ConfigEntry<bool> archipelagoSpoilLevelNames;
 
         internal ConfigEntry<bool> fillerRandomizedFillerDispensionActive;
         internal ConfigEntry<FillerId> fillerRandomizedFillerBag;
@@ -152,6 +153,14 @@ namespace Randomizer
                 addOnChangeSave(config);
                 Randomizer.Archipelago.CheckDeathlink();
             };
+
+            archipelagoSpoilLevelNames = config.Bind(
+                "Archipelago",
+                "SpoilLevelNames",
+                false,
+                "Instead of showing 'LOCKED', the game shows the actual level name behind locked hells/challenges on the select screen."
+            );
+            archipelagoSpoilLevelNames.SettingChanged += addOnChangeSave(config);
 
             // ---
 

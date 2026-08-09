@@ -212,16 +212,15 @@ namespace Randomizer
                 ELocationType.SecretMultiplier => Randomizer.Settings.HellsSecretMultiplierEnabled,
                 ELocationType.ChallengePickup => false, // only for tracking
                 ELocationType.WeaponPickup => true, // required for check count
-                ELocationType.CoatOfArms => Randomizer.Settings.HellsCoatOfArmsEnabled,
+                ELocationType.CoatOfArms => Randomizer.Settings.HellsCoatOfArmsEnabled || Randomizer.Settings.RequireCoatOfArmsForSheol,
                 ELocationType.AnguishGate => true, // maybe in the future adjustable, for now for check count
                 ELocationType.Ammostash => false, // only for tracking destructibles
                 ELocationType.HealthCrystal => false, // only for tracking destructibles
                 ELocationType.ChaosCrystal => false, // only for tracking destructibles
-                ELocationType.FirstDestruction => Randomizer.Settings.DestructibleAsUnlocks,
-                ELocationType.FirstMiscellaneous => false, // collection of individual locations
+                ELocationType.FirstMiscellaneous => Randomizer.Settings.IncludeMiscellaneousChecks, // collection of individual locations
                 ELocationType.Boon => Randomizer.Settings.RandomizedBoonsEnabled,
-                ELocationType.Bestiary => true, // required for check count,
-                ELocationType.Codex => true,
+                ELocationType.Bestiary => true, // required for check count
+                ELocationType.Codex => true, // required for check count
                 ELocationType.LevelCompletion => Randomizer.Settings.RandomizedHellsEnabled,
                 ELocationType.LevelAmmostashCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
                 ELocationType.LevelHealthCrystalCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
@@ -233,7 +232,9 @@ namespace Randomizer
                 ELocationType.ArenaDestructibleCompletion => Randomizer.Settings.DestructibleLocationsEnabled && Randomizer.Settings.DestructibleLocationsMode == DestructibleMode.PerEntireArena,
                 ELocationType.SectionClearMainSong => Randomizer.Settings.RandomizedSongsEnabled,
                 ELocationType.SectionClearBossSong => Randomizer.Settings.RandomizedSongsEnabled,
-                ELocationType.Skin => Randomizer.Settings.HellsRandomizedWeaponSkinsEnabled,
+                ELocationType.SectionClearWeapon => Randomizer.Settings.HellsRandomizedWeaponsEnabled,
+                ELocationType.SectionClearOutfit => Randomizer.Settings.RandomizedOutfitsEnabled,
+                ELocationType.WeaponSkin => Randomizer.Settings.HellsRandomizedWeaponSkinsEnabled,
                 ELocationType.TormentBronze => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentSilver => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentGold => Randomizer.Settings.ChallengeMedaillonsEnabled,
@@ -417,27 +418,48 @@ namespace Randomizer
         public bool IsDestructible(DestructibleObject destructible)
         {
             bool IsDestructible = true;
+            bool HasNoTomorrow = true;
             string destructibleName =
                 destructible.Root != null ? destructible.Root.name : destructible.name;
+            if (destructibleName.EndsWith("Anguish Gate 4"))
+                IsDestructible = Randomizer.ItemTracker.HasAspectOfLevel(Randomizer.CurrentLevel);
             if (destructibleName.Equals("Sheol Anguish Gate 4"))
-                IsDestructible = IsSheolBossUnlocked();
-            return IsDestructible && Randomizer.ItemTracker.IsDestructible(destructibleName);
+                HasNoTomorrow = RequiresAndHasSheolBossSong();
+            return IsDestructible
+                && HasNoTomorrow
+                && Randomizer.ItemTracker.IsDestructible(destructibleName);
         }
 
-        internal bool IsSheolBossUnlocked()
+        private bool RequiresAndHasSheolBossSong()
+        {
+            bool hasNoTomorrow =
+                !Randomizer.Settings.RequireNoTomorrowForSheol
+                || (
+                    Randomizer.ItemTracker.Has("No Tomorrow")
+                    && Randomizer.CurrentBossSong == "No Tomorrow"
+                );
+            return hasNoTomorrow;
+        }
+
+        internal bool IsSheolUnlocked()
         {
             if (
-                !Randomizer.Settings.RequireCoatOfArmsForSheolBoss
-                && !Randomizer.Settings.RequireNoTomorrowForSheolBoss
+                !Randomizer.Settings.RequireCoatOfArmsForSheol
+                && !Randomizer.Settings.RequireNoTomorrowForSheol
+                && !Randomizer.Settings.RequireNumberOfAspectDefeatedForSheol
             )
                 return true;
             bool hasCoatOfArms =
-                !Randomizer.Settings.RequireCoatOfArmsForSheolBoss
+                !Randomizer.Settings.RequireCoatOfArmsForSheol
                 || Randomizer.ItemTracker.GetCollectedCoatOfArms()
-                    >= Randomizer.Settings.RequiredCoatOfArmsForSheolBoss;
+                    >= Randomizer.Settings.RequiredCoatOfArmsForSheol;
             bool hasNoTomorrow =
-                !Randomizer.Settings.RequireNoTomorrowForSheolBoss
+                !Randomizer.Settings.RequireNoTomorrowForSheol
                 || Randomizer.ItemTracker.Has("No Tomorrow");
+            bool hasEnoughAspects = 
+                !Randomizer.Settings.RequireNumberOfAspectDefeatedForSheol
+                || Randomizer.ItemTracker.GetBossesDefeated(ItemGamemode.HELL).Count
+                    >= Randomizer.Settings.RequiredAspectDefeatedForSheol;
             return hasCoatOfArms && hasNoTomorrow;
         }
 
@@ -476,8 +498,7 @@ namespace Randomizer
                     continue;
                 }
 
-                if (IsLocationTypeRandomized(ELocationType.FirstDestruction))
-                    CheckFirstDestructions(location.LocationType);
+                CheckFirstDestructions(location.LocationType);
 
                 location.IsCollected = true;
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
@@ -497,29 +518,27 @@ namespace Randomizer
         private void CheckFirstDestructions(ELocationType locationType)
         {
             if (
-                !CheckedLocations.ContainsKey("Destroyed First Ammostash")
+                !CheckedLocations.ContainsKey("First Miscellaneous: Ammostash")
                 && locationType == ELocationType.Ammostash
             )
             {
-                var location = Locations.LocationDataByName["Destroyed First Ammostash"];
+                var location = Locations.LocationDataByName["First Miscellaneous: Ammostash"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
             }
-
-            if (
-                !CheckedLocations.ContainsKey("Destroyed First Health Crystal")
+            else if (
+                !CheckedLocations.ContainsKey("First Miscellaneous: Health Crystal")
                 && locationType == ELocationType.HealthCrystal
             )
             {
-                var location = Locations.LocationDataByName["Destroyed First Health Crystal"];
+                var location = Locations.LocationDataByName["First Miscellaneous: Health Crystal"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
             }
-
-            if (
-                !CheckedLocations.ContainsKey("Destroyed First Chaos Crystal")
+            else if (
+                !CheckedLocations.ContainsKey("First Miscellaneous: Chaos Crystal")
                 && locationType == ELocationType.ChaosCrystal
             )
             {
-                var location = Locations.LocationDataByName["Destroyed First Chaos Crystal"];
+                var location = Locations.LocationDataByName["First Miscellaneous: Chaos Crystal"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
             }
         }

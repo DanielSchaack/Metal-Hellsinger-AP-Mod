@@ -53,8 +53,9 @@ namespace Randomizer
         Memory,
         Song,
         Outfit,
-        Global,
         Combat,
+        Global,
+        Aspect,
     }
 
     public class ItemData
@@ -168,7 +169,7 @@ namespace Randomizer
             { 42, new ItemData(42, "Fortress Aspect: Yhelm defeated", progression, HELL, Completion, 1) },
             { 43, new ItemData(43, "Infernal Fury Aspect: Incaustis defeated", progression, HELL, Completion, 1) },
             { 44, new ItemData(44, "Hellstorm Aspect: Gehenna defeated", progression, HELL, Completion, 1) },
-            { 45, new ItemData(45, "DoppelGanger Aspect: Nihil defeated", progression, HELL, Completion, 1) },
+            { 45, new ItemData(45, "Doppelganger Aspect: Nihil defeated", progression, HELL, Completion, 1) },
             { 46, new ItemData(46, "Wheel Aspect: Acheron defeated", progression, HELL, Completion, 1) },
             { 47, new ItemData(47, "Red Judge - Worldbreaker: Sheol defeated", progression, HELL, Completion, 1) },
             { 48, new ItemData(48, "The Lost Unknown: Leviathan defeated", progression, LEVIATHAN, Completion, 1) },
@@ -295,6 +296,14 @@ namespace Randomizer
             { 171, new ItemData(171, "Destructible Health Crystals", progression, HELL, Ability, 1) },
             { 172, new ItemData(172, "Destructible Chaos Crystals", progression, HELL, Ability, 1) },
             { 173, new ItemData(173, "Slaughter", progression, HELL, Ability, 1) },
+
+            { 180, new ItemData(180, "Aspect of Anger", progression, HELL, Aspect, 1) },
+            { 181, new ItemData(181, "Aspect of the Charged", progression, HELL, Aspect, 1) },
+            { 182, new ItemData(182, "Aspect of the Fortress", progression, HELL, Aspect, 1) },
+            { 183, new ItemData(183, "Aspect of Infernal Fury", progression, HELL, Aspect, 1) },
+            { 184, new ItemData(184, "Aspect of the Hellstorm", progression, HELL, Aspect, 1) },
+            { 185, new ItemData(185, "Aspect of the Doppelganger", progression, HELL, Aspect, 1) },
+            { 186, new ItemData(186, "Aspect of the Wheel", progression, HELL, Aspect, 1) },
 
             // Leviathan
             { 310, new ItemData(310, "Progressive Dream of the Heartbeat of Leviathan", useful, LEVIATHAN, Dream, 4) },

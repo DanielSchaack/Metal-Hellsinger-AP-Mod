@@ -27,18 +27,25 @@ namespace Randomizer
             { "Progressive Hells", 8 },
             { "Tutorial", 1 },
             { "Voke", 1 },
+            { "Aspect of Anger", 1 },
             { "Anger Aspect: Voke defeated", 1 },
             { "Stygia", 1 },
+            { "Aspect of the Charged", 1 },
             { "Charged Aspect: Stygia defeated", 1 },
             { "Yhelm", 1 },
+            { "Aspect of the Fortress", 1 },
             { "Fortress Aspect: Yhelm defeated", 1 },
             { "Incaustis", 1 },
+            { "Aspect of Infernal Fury", 1 },
             { "Infernal Fury Aspect: Incaustis defeated", 1 },
             { "Gehenna", 1 },
+            { "Aspect of the Hellstorm", 1 },
             { "Hellstorm Aspect: Gehenna defeated", 1 },
             { "Nihil", 1 },
-            { "DoppelGanger Aspect: Nihil defeated", 1 },
+            { "Aspect of the Doppelganger", 1 },
+            { "Doppelganger Aspect: Nihil defeated", 1 },
             { "Acheron", 1 },
+            { "Aspect of the Wheel", 1 },
             { "Wheel Aspect: Acheron defeated", 1 },
             { "Sheol", 1 },
             { "Red Judge - Worldbreaker: Sheol defeated", 1 },
@@ -739,6 +746,10 @@ namespace Randomizer
             var boonName = Lookup.BoonTypeToName[effect];
             bool isAvailable = Has(boonName);
             Logger.LogInfo($"Boon {effect} is available: {isAvailable}");
+
+            if (isAvailable)
+                Randomizer.LocationTracker.CheckMisc(boonName);
+
             return isAvailable;
         }
 
@@ -754,7 +765,7 @@ namespace Randomizer
             "Fortress Aspect: Yhelm defeated",
             "Infernal Fury Aspect: Incaustis defeated",
             "Hellstorm Aspect: Gehenna defeated",
-            "DoppelGanger Aspect: Nihil defeated",
+            "Doppelganger Aspect: Nihil defeated",
             "Wheel Aspect: Acheron defeated",
             "Red Judge - Worldbreaker: Sheol defeated",
         ];
@@ -790,6 +801,8 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedDashEnabled)
                 canPerform = Has("Dash");
 
+            if(canPerform)
+                Randomizer.LocationTracker.CheckMisc("Dash");
             Logger.LogDebug($"Can perform Dash: {canPerform}");
             return canPerform;
         }
@@ -800,6 +813,8 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedDashEnabled && CanDash())
                 canPerform = Has("Soar");
 
+            if(canPerform)
+                Randomizer.LocationTracker.CheckMisc("Soar");
             Logger.LogDebug($"Can perform Soar: {canPerform}");
             return canPerform;
         }
@@ -810,6 +825,8 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedJumpEnabled)
                 canPerform = Has("Jump");
 
+            if(canPerform)
+                Randomizer.LocationTracker.CheckMisc("Jump");
             Logger.LogDebug($"Can perform Jump: {canPerform}");
             return canPerform;
         }
@@ -820,6 +837,8 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedJumpEnabled && CanJump())
                 canPerform = Has("Double Jump");
 
+            if(canPerform)
+                Randomizer.LocationTracker.CheckMisc("Double Jump");
             Logger.LogDebug($"Can perform Double Jump: {canPerform}");
             return canPerform;
         }
@@ -830,6 +849,8 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedJumpEnabled && CanJump() && CanDoubleJump())
                 canPerform = Has("Infinite Jump");
 
+            if(canPerform)
+                Randomizer.LocationTracker.CheckMisc("Infinite Jump");
             Logger.LogDebug($"Can perform Infinite Jump: {canPerform}");
             return canPerform;
         }
@@ -850,6 +871,8 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedReloadEnabled)
                 canPerform = Has("Quick Reload");
 
+            if(canPerform)
+                Randomizer.LocationTracker.CheckMisc("Quick Reload");
             Logger.LogDebug($"Can perform Quick Reload: {canPerform}");
             return canPerform;
         }
@@ -862,7 +885,7 @@ namespace Randomizer
 
         internal bool CanWeaponUltimate(string weaponName)
         {
-            bool canPerform = Has($"{weaponName} Ultimate");
+            bool canPerform = Has(weaponName) && Has($"{weaponName} Ultimate");
             Logger.LogDebug($"Can perform {weaponName}'s ultimate: {canPerform}");
             return true;
         }
@@ -879,11 +902,26 @@ namespace Randomizer
         internal bool IsDestructible(string destructibleName)
         {
             if (destructibleName.Contains("Ammostash"))
-                return Has("Destructible Ammostashes");
+            {
+                bool v = Has("Destructible Ammostashes");
+                if (v)
+                    Randomizer.LocationTracker.CheckMisc("Ammostash");
+                return v;
+            }
             else if (destructibleName.Contains("Health"))
-                return Has("Destructible Health Crystals");
+            {
+                bool v = Has("Destructible Health Crystals");
+                if (v)
+                    Randomizer.LocationTracker.CheckMisc("Health Crystal");
+                return v;
+            }
             else if (destructibleName.Contains("Chaos"))
-                return Has("Destructible Chaos Crystals");
+            {
+                bool v = Has("Destructible Chaos Crystals");
+                if (v)
+                    Randomizer.LocationTracker.CheckMisc("Chaos Crystal");
+                return v;
+            }
 
             return true;
         }
@@ -1229,6 +1267,57 @@ namespace Randomizer
             if (Has("Lost Vulcan"))
                 availableTypes.Add(WeaponType.Lost);
             return availableTypes;
+        }
+
+        internal bool HasSongByLocation(string id)
+        {
+            return Has(ExtractName(id));
+        }
+
+        internal bool HasWeaponByLocation(string id)
+        {
+            return Has(ExtractName(id));
+        }
+
+        internal bool HasOutfitByLocation(string id)
+        {
+            return Has(ExtractName(id));
+        }
+
+        private static string ExtractName(string input)
+        {
+            const string prefix = "Section Cleared with: ";
+
+            int index = input.IndexOf(prefix);
+            if (index != -1)
+                return input.Substring(index + prefix.Length).Trim();
+
+            return input;
+        }
+
+        internal bool HasAspectOfLevel(string levelId)
+        {
+            if(Lookup.HellsNameToAspect.TryGetValue(levelId, out var aspectName))
+                return Has(aspectName);
+            return true;
+        }
+
+        internal List<string> GetMissingSheolItems()
+        {
+            List<string> missingItems = new List<string>();
+
+            int missingCoatOfArms = Math.Max(Randomizer.Settings.RequiredCoatOfArmsForSheol - CollectedImportantItemCountsByName["Coat of Arms"], 0);
+            if(Randomizer.Settings.RequireCoatOfArmsForSheol && missingCoatOfArms > 0)
+                missingItems.Add($"{missingCoatOfArms} more Coat of Arms");
+
+            int missingDefeatedAspects = Math.Max(Randomizer.Settings.RequiredAspectDefeatedForSheol - Randomizer.ItemTracker.GetBossesDefeated(ItemGamemode.HELL).Count, 0);
+            if(Randomizer.Settings.RequireNumberOfAspectDefeatedForSheol && missingDefeatedAspects > 0)
+                missingItems.Add($"{missingDefeatedAspects} more defeated Aspects");
+
+            if(Randomizer.Settings.RequireNoTomorrowForSheol && !Randomizer.ItemTracker.Has("No Tomorrow"))
+                missingItems.Add("No Tomorrow");
+
+            return missingItems;
         }
     }
 }

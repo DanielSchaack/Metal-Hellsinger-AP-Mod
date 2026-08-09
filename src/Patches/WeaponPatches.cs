@@ -35,8 +35,15 @@ namespace Randomizer
         [HarmonyPatch(nameof(WeaponAbilityBase.TriggerUltimate))]
         static bool TriggerUltimatePrefix(WeaponAbilityBase __instance)
         {
-            Logger.LogInfo($"WeaponAbilityBase TriggerUltimate Prefix called");
-            return true;
+            bool canUlt = Randomizer.ItemTracker.CanWeaponUltimate(__instance.GetWeaponType());
+            if(canUlt)
+            {
+                var weaponName = Randomizer.ItemTracker.GetWeaponNameByType(__instance.GetWeaponType());
+                Randomizer.LocationTracker.CheckMisc($"{weaponName} Ultimate");
+            }
+
+            Logger.LogInfo($"WeaponAbilityBase TriggerUltimate Prefix called, can ult: {canUlt}");
+            return canUlt;
         }
 
         [HarmonyPostfix]

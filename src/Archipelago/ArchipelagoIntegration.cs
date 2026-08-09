@@ -290,17 +290,17 @@ namespace Randomizer
                     continue;
                 }
 
-                // TODO:
                 // Delay after scene change
-                // while (
-                //     SaveFile.GetFloat("playtime")
-                //     < SceneLoaderPatches.TimeOfLastSceneTransition + 3.0f
-                // )
-                // {
-                //     yield return true;
-                // }
+                while (Randomizer.SceneActiveTime < 10.0f)
+                    yield return true;
 
-                Randomizer.ItemTracker.SetCollectedItem(itemId, pendingItem.index, true, false, itemSender);
+                Randomizer.ItemTracker.SetCollectedItem(
+                    itemId,
+                    pendingItem.index,
+                    true,
+                    false,
+                    itemSender
+                );
                 incomingItems.TryDequeue(out _);
 
                 // Delay item processing
@@ -406,41 +406,23 @@ namespace Randomizer
             string Player = Randomizer.Configuration.archipelagoUsername.Value;
 
             HashSet<string> MessageOptions = new HashSet<string>();
+            foreach (string generic in DeathLinkMessages.Areas["Generic"])
+                MessageOptions.Add(generic);
+            if (Lookup.IsChallengeLevelId(levelId))
+                foreach (string generic in DeathLinkMessages.Areas["Torment"])
+                    MessageOptions.Add(generic);
+            else
+                foreach (string generic in DeathLinkMessages.Areas[levelId])
+                    MessageOptions.Add(generic);
 
-            // TODO:
-            // string hitBy = PlayerCharacterPatches.lastHitTriggerHitBy;
-            string hitBy = "Nothing";
 
-            if (hitBy != "" && DeathLinkMessages.HitTriggerCauses.ContainsKey(hitBy))
-            {
-                MessageOptions.Add(DeathLinkMessages.HitTriggerCauses[hitBy]);
-            }
-
-            if (hitBy != "" && DeathLinkMessages.HitTriggerDescriptions.ContainsKey(hitBy))
-            {
-                foreach (string cause in DeathLinkMessages.GenericMessages)
-                {
-                    MessageOptions.Add($"{cause}{DeathLinkMessages.HitTriggerDescriptions[hitBy]}");
-                }
-            }
-
-            // TODO:
-            // if (DeathLinkMessages.Causes.ContainsKey(SceneLoaderPatches.SceneName))
-            if (DeathLinkMessages.Causes.ContainsKey("CurrentScene"))
-            {
-                // foreach (string cause in DeathLinkMessages.Causes[SceneLoaderPatches.SceneName])
-                // {
-                //     MessageOptions.Add(cause);
-                // }
-            }
-
-            if (MessageOptions.Count == 0)
-            {
-                foreach (string cause in DeathLinkMessages.Causes["Generic"])
-                {
-                    MessageOptions.Add(cause);
-                }
-            }
+            // TODO: attack id messages
+            // if(attackID != AttackID.None)
+            // {
+                // string hitBy = attackID.ToString();
+                // if (hitBy != "" && DeathLinkMessages.HitTriggerDescriptions.ContainsKey(hitBy))
+                // { }
+            // }
 
 
             if(connected)
