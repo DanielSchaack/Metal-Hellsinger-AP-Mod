@@ -50,7 +50,8 @@ namespace Randomizer
             }
 
             EZone zone = Lookup.LevelIdToZoneDictionary[levelId];
-            var zoneLocations = Locations.LocationDataByName.Values.Where(loc => loc.Zone == zone);
+            EArena arena = Lookup.LevelIdToArena[levelId];
+            var zoneLocations = Locations.LocationDataByName.Values.Where(loc => loc.Zone == zone && arena.HasFlag(loc.Arena));
 
             NextMultipliers = zoneLocations
                 .Where(loc => loc.LocationType == ELocationType.NextMultiplier)
@@ -100,6 +101,7 @@ namespace Randomizer
             SetupCollectionReferences(MaxMultiplier, ELocationType.MaxMultiplier);
             SetupCollectionReferences(SecretMultipliers, ELocationType.SecretMultiplier);
             SetupCollectionReferences(AnguishGates, ELocationType.AnguishGate);
+            UpdateAnguishGates();
             SetupCollectionReferences(WeaponPickups, ELocationType.WeaponPickup);
             SetupCollectionReferences(Ammostashes, ELocationType.Ammostash);
             SetupCollectionReferences(HealthCrystals, ELocationType.HealthCrystal);
@@ -113,6 +115,27 @@ namespace Randomizer
             SetupCollectionReferences(NextMultipliers, ELocationType.NextMultiplier);
             SetupCollectionReferences(MaxMultiplier, ELocationType.MaxMultiplier);
             Logger.LogInfo("Re-setup mult pickup locations");
+        }
+
+        public void UpdateAnguishGates()
+        {
+            for (int i = 0; i < AnguishGates.Count; i++)
+            {
+                Location location = AnguishGates[i];
+                Logger.LogInfo($"Location {location.LocationId} is being checked for destructible anguish gates");
+
+                if(Randomizer.ItemTracker.HasAnguishGateSkip(location.LocationId))
+                {
+                    if (!location.LoadedGameObject.activeSelf && location.LoadedGameObject.TryGetComponent<DestructibleObject>(out var destructible))
+                    {
+                        destructible.enabled = true;
+                        Logger.LogInfo($"Anguish Gate {location.LoadedGameObject.name} is now skippable");
+                    }
+                }
+
+                AnguishGates[i] = location;
+            }
+
         }
 
         private void SetupCollectionReferences(List<Location> locations, ELocationType locationType)
@@ -207,12 +230,12 @@ namespace Randomizer
         {
             return locationType switch
             {
-                ELocationType.NextMultiplier => Randomizer.Settings.HellsNextMultiplierEnabled,
-                ELocationType.MaxMultiplier => Randomizer.Settings.HellsMaxMultiplierEnabled,
-                ELocationType.SecretMultiplier => Randomizer.Settings.HellsSecretMultiplierEnabled,
+                ELocationType.NextMultiplier => true,
+                ELocationType.MaxMultiplier => true,
+                ELocationType.SecretMultiplier => Randomizer.Settings.IncludeSecretMultiplierChecks,
                 ELocationType.ChallengePickup => false, // only for tracking
                 ELocationType.WeaponPickup => true, // required for check count
-                ELocationType.CoatOfArms => Randomizer.Settings.HellsCoatOfArmsEnabled || Randomizer.Settings.RequireCoatOfArmsForSheol,
+                ELocationType.CoatOfArms => Randomizer.Settings.IncludeCoatOfArmsChecks || Randomizer.Settings.RequireCoatOfArmsForSheol,
                 ELocationType.AnguishGate => true, // maybe in the future adjustable, for now for check count
                 ELocationType.Ammostash => false, // only for tracking destructibles
                 ELocationType.HealthCrystal => false, // only for tracking destructibles
@@ -221,25 +244,25 @@ namespace Randomizer
                 ELocationType.Boon => Randomizer.Settings.RandomizedBoonsEnabled,
                 ELocationType.Bestiary => true, // required for check count
                 ELocationType.Codex => true, // required for check count
-                ELocationType.LevelCompletion => Randomizer.Settings.RandomizedHellsEnabled,
-                ELocationType.LevelAmmostashCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
-                ELocationType.LevelHealthCrystalCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
-                ELocationType.LevelChaosCrystalCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
-                ELocationType.LevelSpeed => Randomizer.Settings.HellsCoatOfArmsEnabled,
+                ELocationType.LevelCompletion => true,
+                ELocationType.LevelAmmostashCompletion => Randomizer.Settings.LevelDestructibleLocationsEnabled,
+                ELocationType.LevelHealthCrystalCompletion => Randomizer.Settings.LevelDestructibleLocationsEnabled,
+                ELocationType.LevelChaosCrystalCompletion => Randomizer.Settings.LevelDestructibleLocationsEnabled,
+                ELocationType.LevelSpeed => false, // TODO: implement
                 ELocationType.ArenaAmmostashCompletion => Randomizer.Settings.DestructibleLocationsEnabled && Randomizer.Settings.DestructibleLocationsMode == DestructibleMode.PerDestructibleType,
                 ELocationType.ArenaHealthCrystalCompletion => Randomizer.Settings.DestructibleLocationsEnabled && Randomizer.Settings.DestructibleLocationsMode == DestructibleMode.PerDestructibleType,
                 ELocationType.ArenaChaosCrystalCompletion => Randomizer.Settings.DestructibleLocationsEnabled && Randomizer.Settings.DestructibleLocationsMode == DestructibleMode.PerDestructibleType,
                 ELocationType.ArenaDestructibleCompletion => Randomizer.Settings.DestructibleLocationsEnabled && Randomizer.Settings.DestructibleLocationsMode == DestructibleMode.PerEntireArena,
-                ELocationType.SectionClearMainSong => Randomizer.Settings.RandomizedSongsEnabled,
-                ELocationType.SectionClearBossSong => Randomizer.Settings.RandomizedSongsEnabled,
-                ELocationType.SectionClearWeapon => Randomizer.Settings.HellsRandomizedWeaponsEnabled,
-                ELocationType.SectionClearOutfit => Randomizer.Settings.RandomizedOutfitsEnabled,
-                ELocationType.WeaponSkin => Randomizer.Settings.HellsRandomizedWeaponSkinsEnabled,
+                ELocationType.SectionClearMainSong => Randomizer.Settings.IncludeSectionSongCheck,
+                ELocationType.SectionClearBossSong => Randomizer.Settings.IncludeSectionSongCheck,
+                ELocationType.SectionClearWeapon => Randomizer.Settings.IncludeSectionWeaponCheck,
+                ELocationType.SectionClearOutfit => Randomizer.Settings.IncludeSectionOutfitCheck,
+                ELocationType.WeaponSkin => Randomizer.Settings.IncludeRandomizedWeaponSkinsChecks,
                 ELocationType.TormentBronze => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentSilver => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentGold => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
-                ELocationType.BossAchievement => Randomizer.Settings.RequireHellsCompletion,
+                ELocationType.BossAchievement => true,
                 ELocationType.XpEgg => false, // TODO: Leviathan integration
                 ELocationType.NightmareCrystal => false, // TODO: Leviathan integration
                 _ => false,
@@ -300,20 +323,30 @@ namespace Randomizer
         )
         {
             Logger.LogInfo(
-                $"Checking location {location.LocationId}, which is randomized: {isRandomized}"
+                $"Checking location {location.LocationId}, which is randomized: {isRandomized} and is in a resync: {isResync}"
             );
 
             if (!CheckedLocations.ContainsKey(location.LocationId))
             {
-                Logger.LogInfo($"Location {location.LocationId} is new, adding and sending check");
+                Logger.LogInfo($"Location {location.LocationId} is new");
 
                 LocationsCollected.Add(location);
                 CheckedLocations.Add(location.LocationId, true);
-                Randomizer.Archipelago.CompleteLocationCheck(location);
-                if (isRandomized)
-                    IngameMessagesPatches.DisplayCheckCollected($"{location.Description}");
-                else
+
+
+                if (isRandomized && !isResync)
                 {
+                    Logger.LogInfo($"Adding and sending Location {location.LocationId}");
+                    Randomizer.Archipelago.CompleteLocationCheck(location);
+                    IngameMessagesPatches.DisplayCheckCollected(
+                        $"{location.Description}",
+                        location.ArchipelagoId
+                    );
+                }
+
+                else if (!isRandomized)
+                {
+                    Logger.LogInfo($"Location {location.LocationId} is not randomized");
                     if (!isResync)
                         Randomizer.Archipelago.SynchronizeNotRandomizedLocation(
                             LocationsCollected.ToArray()
@@ -323,39 +356,18 @@ namespace Randomizer
                         Randomizer.ItemTracker.SetCollectedItem(
                             Items.ItemDataByName[location.OriginalItemName].ArchipelagoId,
                             null,
-                            false,
-                            true
+                            false
                         );
-                }
 
-                CheckGoalCompletion();
+                    if(!Randomizer.Archipelago.connected)
+                        IngameMessagesPatches.DisplayCheckCollected(
+                            $"{location.Description}",
+                            location.ArchipelagoId
+                        );
+                    }
+
+                Randomizer.Archipelago.CheckGoalCompletion();
             }
-        }
-
-        private void CheckGoalCompletion()
-        {
-            bool IsHellsRelevant =
-                Randomizer.Settings.RequireHellsCompletion
-                || Randomizer.Settings.RequireSheolCompletion;
-            bool IsLeviathanRelevant = Randomizer.Settings.RequireLeviathanCompletion;
-            bool IsAspectsDone =
-                Randomizer.ItemTracker.GetBossesDefeated(ItemGamemode.HELL).Count
-                >= Randomizer.Settings.RequiredHellsCompletion;
-            bool IsRedJudgeDefeated = Randomizer
-                .ItemTracker.GetBossesDefeated(ItemGamemode.HELL)
-                .Contains("Red Judge - Worldbreaker: Sheol defeated");
-            bool IsHellsDone =
-                (!Randomizer.Settings.RequireHellsCompletion || IsAspectsDone)
-                && (!Randomizer.Settings.RequireSheolCompletion || IsRedJudgeDefeated);
-            bool IsLeviathanDone =
-                Randomizer.ItemTracker.GetBossesDefeated(ItemGamemode.LEVIATHAN).Count == 1;
-
-            if (
-                !Randomizer.Archipelago.sentCompletion
-                && (!IsHellsRelevant || IsHellsDone)
-                && (IsLeviathanRelevant || IsLeviathanDone)
-            )
-                Randomizer.Archipelago.SendCompletion();
         }
 
         public void CheckAnguishGates(string anguishGateName)
@@ -394,6 +406,7 @@ namespace Randomizer
             {
                 Location location = LocationDataByName[locationName];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+
             }
         }
 
@@ -418,15 +431,11 @@ namespace Randomizer
         public bool IsDestructible(DestructibleObject destructible)
         {
             bool IsDestructible = true;
-            bool HasNoTomorrow = true;
             string destructibleName =
                 destructible.Root != null ? destructible.Root.name : destructible.name;
             if (destructibleName.EndsWith("Anguish Gate 4"))
                 IsDestructible = Randomizer.ItemTracker.HasAspectOfLevel(Randomizer.CurrentLevel);
-            if (destructibleName.Equals("Sheol Anguish Gate 4"))
-                HasNoTomorrow = RequiresAndHasSheolBossSong();
             return IsDestructible
-                && HasNoTomorrow
                 && Randomizer.ItemTracker.IsDestructible(destructibleName);
         }
 
@@ -446,21 +455,25 @@ namespace Randomizer
             if (
                 !Randomizer.Settings.RequireCoatOfArmsForSheol
                 && !Randomizer.Settings.RequireNoTomorrowForSheol
-                && !Randomizer.Settings.RequireNumberOfAspectDefeatedForSheol
             )
+            {
+                Logger.LogDebug("Sheol unlocked (No requirements enabled)");
                 return true;
+            }
+
             bool hasCoatOfArms =
                 !Randomizer.Settings.RequireCoatOfArmsForSheol
                 || Randomizer.ItemTracker.GetCollectedCoatOfArms()
                     >= Randomizer.Settings.RequiredCoatOfArmsForSheol;
+
             bool hasNoTomorrow =
                 !Randomizer.Settings.RequireNoTomorrowForSheol
                 || Randomizer.ItemTracker.Has("No Tomorrow");
-            bool hasEnoughAspects = 
-                !Randomizer.Settings.RequireNumberOfAspectDefeatedForSheol
-                || Randomizer.ItemTracker.GetBossesDefeated(ItemGamemode.HELL).Count
-                    >= Randomizer.Settings.RequiredAspectDefeatedForSheol;
-            return hasCoatOfArms && hasNoTomorrow;
+
+            bool canAccess = hasCoatOfArms && hasNoTomorrow;
+
+            Logger.LogDebug($"Sheol is unlocked: {canAccess} | CoA: {hasCoatOfArms}, NoTomorrow: {hasNoTomorrow}");
+            return canAccess;
         }
 
         public void CheckDestructible(string currentLevel, DestructibleObject destructible)
@@ -485,6 +498,7 @@ namespace Randomizer
             Logger.LogInfo(
                 $"Checking for destructible '{destructibleName}' in {locations.Count} destructibles"
             );
+            Location? checkedLocation = null;
             for (int i = 0; i < locations.Count; i++)
             {
                 Location location = locations[i];
@@ -492,6 +506,7 @@ namespace Randomizer
                 if (!location.LocationId.Equals(destructibleName))
                     continue;
 
+                checkedLocation = location;
                 if (location.IsCollected)
                 {
                     Logger.LogDebug($"Location '{location.LocationId}' is already collected");
@@ -505,10 +520,10 @@ namespace Randomizer
                 locations[i] = location;
             }
 
-            if (locations.Count > 0)
+            if (checkedLocation.HasValue)
             {
                 Logger.LogDebug($"Checking for arena and level completions");
-                var location = locations[0];
+                var location = checkedLocation.Value;
                 CheckCompletions(location.Zone, location.Arena, location.LocationType, locations);
                 CheckDestructionCompletions(location.Zone, location.Arena, location.LocationType);
                 CheckLevelCompletions(location.Zone, location.LocationType);
@@ -518,27 +533,27 @@ namespace Randomizer
         private void CheckFirstDestructions(ELocationType locationType)
         {
             if (
-                !CheckedLocations.ContainsKey("First Miscellaneous: Ammostash")
+                IsLocationUnchecked("First Miscellaneous - Ammostash")
                 && locationType == ELocationType.Ammostash
             )
             {
-                var location = Locations.LocationDataByName["First Miscellaneous: Ammostash"];
+                var location = Locations.LocationDataByName["First Miscellaneous - Ammostash"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
             }
             else if (
-                !CheckedLocations.ContainsKey("First Miscellaneous: Health Crystal")
+                IsLocationUnchecked("First Miscellaneous - Health Crystal")
                 && locationType == ELocationType.HealthCrystal
             )
             {
-                var location = Locations.LocationDataByName["First Miscellaneous: Health Crystal"];
+                var location = Locations.LocationDataByName["First Miscellaneous - Health Crystal"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
             }
             else if (
-                !CheckedLocations.ContainsKey("First Miscellaneous: Chaos Crystal")
+                IsLocationUnchecked("First Miscellaneous - Chaos Crystal")
                 && locationType == ELocationType.ChaosCrystal
             )
             {
-                var location = Locations.LocationDataByName["First Miscellaneous: Chaos Crystal"];
+                var location = Locations.LocationDataByName["First Miscellaneous - Chaos Crystal"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
             }
         }
@@ -621,11 +636,7 @@ namespace Randomizer
                 if (CheckedLocations.TryGetValue(locationId, out bool hasCollected) && hasCollected)
                     count++;
             }
-            return count
-                >= Math.Min(
-                    levelLocationIds.Count,
-                    Randomizer.Settings.RequiredDestructionCompletions
-                );
+            return count >= levelLocationIds.Count;
         }
 
         private void CheckCompletions(
@@ -690,9 +701,7 @@ namespace Randomizer
                 && endCause != GameManager.EEndCause.StageCompleted
                 && endCause != GameManager.EEndCause.TutorialCompleted
             )
-            {
                 return;
-            }
 
             if (Randomizer.ItemTracker.IsChallenge(levelId) && HasChallengeAnyResults(levelId))
             {
@@ -705,6 +714,14 @@ namespace Randomizer
             {
                 Location location = Locations.LocationDataByName[$"{levelId} Completion"];
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType), false);
+
+                if(Lookup.LevelToBoonUnlock.TryGetValue(levelId, out var boonCompletionName))
+                {
+                    Logger.LogDebug($"Checking if {levelId} has a boon completion: {boonCompletionName}");
+                    if (Locations.LocationDataByName.TryGetValue(boonCompletionName, out var loc))
+                        CollectLocation(loc, IsLocationTypeRandomized(loc.LocationType), false);
+                }
+
             }
         }
 
@@ -736,11 +753,13 @@ namespace Randomizer
         )
         {
             Logger.LogInfo($"Level {levelId} ended and has boss defeated: {bossDefeated}");
-            if (bossDefeated)
+            if (
+                bossDefeated
+                && Lookup.LevelToDefeatedBossLocationName.TryGetValue(levelId, out var slainBoss)
+            )
             {
-                string checkName = Lookup.LevelToDefeatedBossLocationName[levelId];
-                Location location = Locations.LocationDataByName[checkName];
-                CollectLocation(location, IsLocationTypeRandomized(location.LocationType), false);
+                Randomizer.Archipelago.AddSlainBoss(slainBoss);
+                Randomizer.Archipelago.CheckGoalCompletion();
             }
         }
 
@@ -751,8 +770,14 @@ namespace Randomizer
             string songName
         )
         {
+            if(Randomizer.CurrentLevel == "Tutorial")
+            {
+                Logger.LogInfo($"Skipping section cleared checking, current level is the {Randomizer.CurrentLevel}");
+                return;
+            }
+
             Logger.LogInfo(
-                $"Section cleared with primary {primaryWeapon}, secondary {secondaryWeapon} and song {songName}"
+                $"Section cleared with primary {primaryWeapon}, secondary {secondaryWeapon} and song {songName} in level {Randomizer.CurrentLevel}"
             );
             if (primaryWeapon != PlayerWeaponType.None)
             {
@@ -781,7 +806,7 @@ namespace Randomizer
         {
             var locationId = $"Section Cleared with: {sectionItem}";
             if (Locations.LocationDataByName.TryGetValue(locationId, out var location))
-                CollectLocation(location, IsLocationTypeRandomized(location.LocationType), true);
+                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
         }
 
         public void Resync(ReadOnlyCollection<long> allLocationsChecked)
@@ -799,18 +824,17 @@ namespace Randomizer
 
         internal void CheckSkinUnlocks(int coatOfArmsCount)
         {
-            int skinLocationCount = GetSkinLocationAmount();
-            if (coatOfArmsCount >= 1)
-                GrantSkinLocation("Paz");
             if (coatOfArmsCount >= 2)
+                GrantSkinLocation("Paz");
+            if (coatOfArmsCount >= 8)
                 GrantSkinLocation("Terminus");
-            if (coatOfArmsCount >= 3)
+            if (coatOfArmsCount >= 14)
                 GrantSkinLocation("Persephone");
-            if (coatOfArmsCount >= 4)
+            if (coatOfArmsCount >= 20)
                 GrantSkinLocation("The Hounds");
-            if (coatOfArmsCount >= 5)
+            if (coatOfArmsCount >= 26)
                 GrantSkinLocation("Vulcan");
-            if (coatOfArmsCount >= 6)
+            if (coatOfArmsCount >= 32)
                 GrantSkinLocation("Hellcrow");
         }
 
@@ -818,24 +842,14 @@ namespace Randomizer
         {
             var locationId = $"{weaponName} Weapon Skin Unlock";
             var location = Locations.LocationDataByName[locationId];
-            CollectLocation(location, IsLocationTypeRandomized(location.LocationType), true);
+            CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
         }
 
         internal void CheckMisc(string itemName)
         {
-            var locationId = $"First Miscellaneous: {itemName}";
+            var locationId = $"First Miscellaneous - {itemName}";
             if (Locations.LocationDataByName.TryGetValue(locationId, out var location))
-                CollectLocation(location, IsLocationTypeRandomized(location.LocationType), true);
-        }
-
-        internal int GetSkinLocationAmount()
-        {
-            int skinLocationCount =
-                Randomizer.ItemTracker.GetCollectedCoatOfArms() >= 2
-                    ? 1
-                    : 0 + Randomizer.ItemTracker.GetCollectedCoatOfArms() / 6;
-            Logger.LogInfo($"Returning skin location amount: {skinLocationCount}");
-            return skinLocationCount;
+                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
         }
 
         internal List<string> GetItemsWithMissingChecks(List<string> unlockedItems)
@@ -844,7 +858,7 @@ namespace Randomizer
             foreach (string unlockedItem in unlockedItems)
             {
                 var checkName = $"Section Cleared with: {unlockedItem}";
-                if (!CheckedLocations.ContainsKey(checkName))
+                if (IsLocationUnchecked(checkName))
                 {
                     missingItems.Add(unlockedItem);
                     Logger.LogDebug(
@@ -888,7 +902,7 @@ namespace Randomizer
         internal bool HasUncheckedWeapons()
         {
             bool isUnchecked =
-                Randomizer.Settings.HellsRandomizedWeaponsEnabled
+                Randomizer.Settings.IncludeSectionWeaponCheck
                 && (
                     LocationAccessibility.CanReachAny(
                         getUncheckedLocationsByType(ELocationType.SectionClearWeapon)
@@ -903,7 +917,7 @@ namespace Randomizer
             Logger.LogDebug($"Checking if {availableWeapons.Count} are unchecked");
             List<PlayerWeaponType> uncheckedWeapons = new() { };
 
-            if (!Randomizer.Settings.HellsRandomizedWeaponsEnabled)
+            if (!Randomizer.Settings.IncludeSectionWeaponCheck && !Randomizer.Settings.IncludeMiscellaneousChecks)
                 return uncheckedWeapons;
 
             foreach (var weapon in availableWeapons)
@@ -914,12 +928,23 @@ namespace Randomizer
                     var locationName = $"Section Cleared with: {name}";
                     Logger.LogDebug(locationName);
                     if (
-                        !CheckedLocations.ContainsKey(locationName)
+                        Randomizer.Settings.IncludeSectionWeaponCheck 
+                        && IsLocationUnchecked(locationName)
                         && LocationAccessibility.CanReach(locationName)
+                    )
+                        uncheckedWeapons.Add(weapon);
+
+                    string locName = $"First Miscellaneous - {Lookup.WeaponTypeToName[weapon]} Ultimate";
+                    if (
+                        Randomizer.Settings.IncludeMiscellaneousChecks
+                        && Randomizer.ItemTracker.CanWeaponUltimate(weapon)
+                        && IsLocationUnchecked(locName)
+                        && LocationAccessibility.CanReach(locName)
                     )
                         uncheckedWeapons.Add(weapon);
                 }
             }
+
             Logger.LogDebug($"Returning unchecked weapons: {string.Join(", ", uncheckedWeapons)}");
             return uncheckedWeapons;
         }
@@ -928,7 +953,7 @@ namespace Randomizer
         {
             return Locations
                 .LocationDataByName.Where(kvp =>
-                    kvp.Value.LocationType == type && !CheckedLocations.ContainsKey(kvp.Key)
+                    kvp.Value.LocationType == type && IsLocationUnchecked(kvp.Value.ArchipelagoId)
                 )
                 .Select(kvp => kvp.Value)
                 .ToList();
@@ -1027,7 +1052,7 @@ namespace Randomizer
         internal bool HasClearedLevel(string levelID)
         {
             string actualLevelName = Lookup.LevelIdToActualName[levelID];
-            return CheckedLocations.ContainsKey($"{actualLevelName} Completion");
+            return !IsLocationUnchecked($"{actualLevelName} Completion");
         }
 
         internal int GetReachedChallengeMedaillon(string levelID)
@@ -1047,7 +1072,7 @@ namespace Randomizer
 
             string outfitName = Randomizer.ItemTracker.GetOutfitNameByType(outfitType);
             string locationName = $"Section Cleared with: {outfitName}";
-            if (CheckedLocations.ContainsKey(locationName))
+            if (!IsLocationUnchecked(locationName))
                 return false;
 
             bool v = LocationAccessibility.CanReach(locationName);
@@ -1061,7 +1086,7 @@ namespace Randomizer
                 return false;
 
             string locationName = $"Section Cleared with: {songName}";
-            if (CheckedLocations.ContainsKey(locationName))
+            if (!IsLocationUnchecked(locationName))
                 return false;
 
             bool reachable = LocationAccessibility.CanReach(locationName);
@@ -1090,7 +1115,7 @@ namespace Randomizer
                 string name = Lookup.PersephoneTypeToName[type];
                 string locationName = $"Section Cleared with: {name}";
                 if (
-                    !CheckedLocations.ContainsKey(locationName)
+                    IsLocationUnchecked(locationName)
                     && LocationAccessibility.CanReach(locationName)
                 )
                     missingTypes.Add(type);
@@ -1106,7 +1131,7 @@ namespace Randomizer
                 string name = Lookup.HoundsTypeToName[type];
                 string locationName = $"Section Cleared with: {name}";
                 if (
-                    !CheckedLocations.ContainsKey(locationName)
+                    IsLocationUnchecked(locationName)
                     && LocationAccessibility.CanReach(locationName)
                 )
                     missingTypes.Add(type);
@@ -1122,7 +1147,7 @@ namespace Randomizer
                 string name = Lookup.VulcanTypeToName[type];
                 string locationName = $"Section Cleared with: {name}";
                 if (
-                    !CheckedLocations.ContainsKey(locationName)
+                    IsLocationUnchecked(locationName)
                     && LocationAccessibility.CanReach(locationName)
                 )
                     missingTypes.Add(type);
@@ -1141,7 +1166,7 @@ namespace Randomizer
         {
             Logger.LogDebug($"Checking if Bestiary is checked: {classType}");
             var locationName = EnemyClassToLocationName(classType);
-            return !CheckedLocations.ContainsKey(locationName) && IsBestiaryReachable(classType);
+            return IsLocationUnchecked(locationName) && IsBestiaryReachable(classType);
         }
 
         internal bool IsRegionUnchecked(EZone hells)
@@ -1158,6 +1183,19 @@ namespace Randomizer
                     return true;
             }
             return false;
+        }
+
+        internal bool IsLocationUnchecked(string locationName)
+        {
+            if (!LocationDataByName.ContainsKey(locationName))
+                return false;
+            Location location = LocationDataByName[locationName];
+            return IsLocationUnchecked(location.ArchipelagoId);
+        }
+
+        internal bool IsLocationUnchecked(long locationId)
+        {
+            return Randomizer.Archipelago.GetOpenLocations().Contains(locationId);
         }
 
         //TODO: Leviathan integration

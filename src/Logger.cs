@@ -31,7 +31,7 @@ namespace Randomizer
             if (Log == null)
                 return;
 
-            string timestampedMessage = $"[{System.DateTime.Now:HH:mm:ss.fff}] {message}";
+            string timestampedMessage = $"[{System.DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}";
 
             LogQueue.Enqueue((level, timestampedMessage));
 

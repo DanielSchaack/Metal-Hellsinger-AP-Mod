@@ -6,7 +6,7 @@ using static ProgressionSaveData;
 
 namespace Randomizer
 {
-    public class SaveStateManager
+    public class SaveDataManager
     {
         public static ProgressionSaveData SaveData;
         public static CampaignManager CampaignManager;
@@ -79,21 +79,10 @@ namespace Randomizer
             }
         }
 
-        //TODO: set on connect to starting level
-        public string LastPlayedLevelID { get; set; }
-
-        public static void SetupBaseState(ProgressionSaveData progressionSaveData)
+        public static void ResetState()
         {
-            if (progressionSaveData != null)
-            {
-                SaveStateManager.SaveData = progressionSaveData;
-            }
-
-            Logger.LogInfo("ProgressionSaveData is available");
-            SaveStateManager.DebugLogState();
-
             Logger.LogInfo("Resetting ProgressionSaveData");
-            SaveStateManager.SaveData.Reset();
+            SaveDataManager.SaveData.Reset();
             AddDefaultWeapons();
             AddDefaultStages();
             AddDefaultChallenges();
@@ -110,15 +99,26 @@ namespace Randomizer
             LoadoutOutfitItemPatches.HasSkinEquipped = false;
             Logger.LogInfo("Resetted ProgressionSaveData");
 
-            SaveStateManager.DebugLogState();
+            SaveDataManager.DebugLogState();
+        }
+        public static void SetupBaseState(ProgressionSaveData progressionSaveData)
+        {
+            if (progressionSaveData != null)
+            {
+                SaveDataManager.SaveData = progressionSaveData;
+            }
+
+            Logger.LogInfo("ProgressionSaveData is available");
+            SaveDataManager.DebugLogState();
+            SaveDataManager.ResetState();
         }
 
         private static void SetSeenInstructions()
         {
-            SaveStateManager.SaveData.SeenInstructions.Clear();
+            SaveDataManager.SaveData.SeenInstructions.Clear();
             foreach (string instruction in Lookup.InstructionIDs)
             {
-                SaveStateManager.SaveData.SeenInstructions.System_Collections_IList_Add(
+                SaveDataManager.SaveData.SeenInstructions.System_Collections_IList_Add(
                     instruction
                 );
             }
@@ -126,10 +126,10 @@ namespace Randomizer
 
         private static void SetSeenWorldItems()
         {
-            SaveStateManager.SaveData.DiscoveredWorldItems.Clear();
+            SaveDataManager.SaveData.DiscoveredWorldItems.Clear();
             foreach (string worldItem in Lookup.WorldItemIDs)
             {
-                SaveStateManager.SaveData.DiscoveredWorldItems.System_Collections_IList_Add(
+                SaveDataManager.SaveData.DiscoveredWorldItems.System_Collections_IList_Add(
                     worldItem
                 );
             }
@@ -137,13 +137,13 @@ namespace Randomizer
 
         private static void AddDefaultEndlessSave()
         {
-            var EndlessSaveData = SaveStateManager.SaveData.EndlessModeSaveData;
+            var EndlessSaveData = SaveDataManager.SaveData.EndlessModeSaveData;
             EndlessSaveData.HaveInteractedWithActiveMemories = true;
             EndlessSaveData.HavePlayedEndless = true;
             EndlessSaveData.Orbs = 4000;
             EndlessSaveData.HighestLevel = 0;
             EndlessSaveData.RespecCount = 0;
-            SaveStateManager.SaveData.EndlessModeSaveData = EndlessSaveData;
+            SaveDataManager.SaveData.EndlessModeSaveData = EndlessSaveData;
 
             // SaveStateManager.EndlessSaveData.LevelsPerArena = 5;
             // SaveStateManager.EndlessSaveData.MaxInvestableOrbsAmount = 5000;
@@ -191,21 +191,21 @@ namespace Randomizer
 
         private static void SetSeenCompanions()
         {
-            SaveStateManager.SaveData.CompanionStates.Clear();
+            SaveDataManager.SaveData.CompanionStates.Clear();
 
             foreach (var companionId in Lookup.CompanionIds)
             {
                 var companion = new ProgressionSaveData.CompanionItemState { ItemId = companionId, Viewed = true, };
-                SaveStateManager.SaveData.CompanionStates.System_Collections_IList_Add(companion);
+                SaveDataManager.SaveData.CompanionStates.System_Collections_IList_Add(companion);
             }
         }
 
         private static void SetSeenSongs()
         {
-            SaveStateManager.SaveData.SeenSongs.Clear();
+            SaveDataManager.SaveData.SeenSongs.Clear();
             foreach (string song in Lookup.SongIdToName.Keys)
             {
-                SaveStateManager.SaveData.SeenSongs.System_Collections_IList_Add(song);
+                SaveDataManager.SaveData.SeenSongs.System_Collections_IList_Add(song);
             }
         }
 
@@ -337,7 +337,7 @@ namespace Randomizer
             Logger.LogInfo(
                 "GameSaveProvider LoadProgression Postfix called, setting up save state"
             );
-            SaveStateManager.SetupBaseState(__instance.ProgressionSave);
+            SaveDataManager.SetupBaseState(__instance.ProgressionSave);
         }
 
         [HarmonyPrefix]
@@ -406,9 +406,9 @@ namespace Randomizer
         static void InitPostfix(GameDataConfigurationProvider __instance)
         {
             Logger.LogDebug("GameDataConfigurationProvider Init Postfix called");
-            SaveStateManager.GameData = __instance;
+            SaveDataManager.GameData = __instance;
 
-            DebugGameData(SaveStateManager.GameData);
+            DebugGameData(SaveDataManager.GameData);
         }
 
         private static void DebugGameData(GameDataConfigurationProvider gameData)
@@ -525,6 +525,33 @@ namespace Randomizer
             Logger.LogInfo(
                 $"ProgressionSaveData GetUnlockedWeapons Postfix called, returning {weaponList}"
             );
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ProgressionSaveData.GetIsWorldItemDiscovered))]
+        static bool GetIsWorldItemDiscoveredPrefix(string id)
+        {
+            Logger.LogDebug(
+                $"ProgressionSaveData GetIsWorldItemDiscovered Prefix called for {id}"
+            );
+            if(!Randomizer.IsPaused && Randomizer.CurrentGameState == GameStateController.GameStateName.InGame)
+                Randomizer.LocationTracker.CheckWorldItem(id);
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ProgressionSaveData.GetIsWorldItemDiscovered))]
+        static void GetIsWorldItemDiscoveredPostfix(string id, ref bool __result)
+        {
+            Logger.LogDebug(
+                $"ProgressionSaveData GetIsWorldItemDiscovered Postfix called for {id}, returning {__result}"
+            );
+            // Enable world item discovery events
+            if (
+                Randomizer.CurrentGameState == GameStateController.GameStateName.InGame
+                && Randomizer.IsLoadingSongs
+            )
+                __result = false;
         }
 
         [HarmonyPrefix]
@@ -897,16 +924,19 @@ namespace Randomizer
                 Randomizer.IsLoadingHellsSelection
                 && Randomizer.Configuration.songsRandomizeBossSongsInHellsSelect.Value
             )
-                __result = Randomizer.ItemTracker.GetRandomizedBossSong();
+                __result = Randomizer.ItemTracker.GetRandomizedBossSong(levelId);
             else if (
                 Randomizer.IsLoadingSongs
                 && (Randomizer.CurrentGameMode == EGameMode.Stage || Randomizer.CurrentGameMode == EGameMode.Endless)
                 && !Randomizer.Configuration.songsRandomizeBossSongsInHellsSelect.Value
                 && Randomizer.Configuration.songsRandomizeBossSongs.Value
             )
-                __result = Randomizer.ItemTracker.GetRandomizedBossSong();
+                __result = Randomizer.ItemTracker.GetRandomizedBossSong(levelId);
+
             Logger.LogDebug($"ProgressionSaveData GetBossSongIDForLevel Postfix called for {levelId}, returning {__result}");
 
+            if(Randomizer.IsLoadingSongs)
+                Randomizer.CurrentBossSong = Lookup.SongIdToName[__result];
         }
 
         [HarmonyPrefix]
@@ -963,6 +993,9 @@ namespace Randomizer
 
 
             Logger.LogDebug($"ProgressionSaveData GetMainSongIDForLevel Postfix called for {levelId}, returning {__result}");
+            if(Randomizer.IsLoadingSongs)
+                Randomizer.CurrentMainSong = Lookup.SongIdToName[__result];
+
         }
 
         [HarmonyPrefix]

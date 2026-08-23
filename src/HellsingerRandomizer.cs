@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System.IO;
+using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
@@ -10,7 +11,7 @@ namespace Randomizer
     [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
     public class Randomizer : BasePlugin
     {
-        public const string Game = "MetalHellsinger";
+        public const string Game = "Metal: Hellsinger";
         public const string ModInfo = $"{PluginInfo.NAME} v{PluginInfo.VERSION}";
 
         public static ItemTracker ItemTracker;
@@ -20,6 +21,10 @@ namespace Randomizer
         public static Configuration Configuration;
         public static Settings Settings;
         public static ArchipelagoIntegration Archipelago;
+
+        public static float SceneActiveTime { get; set; } = 0f;
+        public static float LevelActiveTime { get; set; } = 0f;
+        public static float TimeSinceLastDeathlink { get; set; } = 0f;
 
         public static bool IsLoadingDefinition
         {
@@ -90,9 +95,6 @@ namespace Randomizer
                 field = value;
             }
         } = true;
-
-        public static float SceneActiveTime { get; set; } = 0f;
-        public static float LevelActiveTime { get; set; } = 0f;
 
         public static EGameMode CurrentGameMode
         {
@@ -224,6 +226,9 @@ namespace Randomizer
             }
         } = WeaponType.Regular;
 
+        private static bool shouldExportLocations = false;
+        private static bool shouldExportItems = false;
+
         public override void Load()
         {
             Logger.SetLogger(Log);
@@ -232,20 +237,18 @@ namespace Randomizer
             ItemTracker = new ItemTracker();
             LocationTracker = new LocationTracker();
             SceneTracker = new SceneTracker();
-            IngameDispenser = new IngameDispenser();
             Configuration = new Configuration(Config);
             Settings = new Settings();
-            Archipelago = new ArchipelagoIntegration();
 
             try
             {
                 Logger.LogInfo("Creating GameObjects");
 
-                RegisterTypeAndCreateObject<ArchipelagoIntegration>("ArchipelagoIntegration");
+                Archipelago = RegisterTypeAndCreateObject<ArchipelagoIntegration>("ArchipelagoIntegration");
                 RegisterTypeAndCreateObject<ArchipelagoConsole>("AP Console");
                 RegisterTypeAndCreateObject<ArchipelagoConnectorGui>("AP Connector UI");
 
-                RegisterTypeAndCreateObject<IngameDispenser>("IngameDispenser");
+                IngameDispenser = RegisterTypeAndCreateObject<IngameDispenser>("IngameDispenser");
                 RegisterTypeAndCreateObject<SceneTracker>("SceneTracker");
 
                 Application.runInBackground = !Randomizer
@@ -254,6 +257,29 @@ namespace Randomizer
                     .Value;
 
                 Logger.LogInfo("Objects initialized");
+
+                if(shouldExportLocations)
+                {
+                    string outputPath = Path.Combine(BepInEx.Paths.ConfigPath, "location_region_mapping.py");
+
+                    LocationMappingExporter.ExportLocationRegionMapping(
+                        Locations.LocationDataByName,
+                        outputPath
+                    );
+                    Logger.LogInfo($"Locations available at: {outputPath}");
+                }
+
+                if(shouldExportItems)
+                {
+                    string outputPath = Path.Combine(BepInEx.Paths.ConfigPath, "item_dict.py");
+
+                    ItemExporter.ExportItemTable(
+                        Items.ItemDataById,
+                        outputPath
+                    );
+                    Logger.LogInfo($"Items available at: {outputPath}");
+                }
+
             }
             catch (System.Exception ex)
             {

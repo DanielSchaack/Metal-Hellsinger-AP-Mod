@@ -24,7 +24,8 @@ namespace Randomizer
         public static void ToggleAssistMode(bool isItemActive)
         {
             var message = new AssistModeChangedMessage(isItemActive);
-            m_AudioGameplayController.OnAssistModeChanged(ref message);
+            if(m_AudioGameplayController != null)
+                m_AudioGameplayController.OnAssistModeChanged(ref message);
         }
 
         // Used in Hells
@@ -325,7 +326,7 @@ namespace Randomizer
         private static bool IsWeaponTrickeryActive()
         {
             Logger.LogDebug(
-                $"Enemy is weapon trickery trap active: {Randomizer.IngameDispenser.WeaponTrickeryTrapActive}, config active: {Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value}"
+                $"Enemy is weapon trickery trap active: {weaponTrickeryTrapActive}, config active: {Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value}"
             );
             return weaponTrickeryTrapActive
                 || Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value;

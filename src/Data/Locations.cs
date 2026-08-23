@@ -63,6 +63,10 @@ namespace Randomizer
 
             //Leviathan
             Leviathan,
+
+            Song,
+            Weapon,
+            Outfit,
         }
 
         [Flags]
@@ -88,6 +92,12 @@ namespace Randomizer
             Monument = 1 << 14,
             Ziggurat = 1 << 15,
             FinalDestination = 1 << 16,
+
+            Basegame = 1 << 17,
+            DreamOfTheBeast = 1 << 18,
+            Purgatory = 1 << 19,
+            EssentialHits = 1 << 20,
+            DuskSoundtrack = 1 << 21,
         }
 
         public enum ELocationType
@@ -310,10 +320,10 @@ namespace Randomizer
                 {
                     ArchipelagoId = 10,
                     LocationId = "Voke Next Multiplier 1",
-                    Description = "Voke - Next Multiplier in Arena 1",
+                    Description = "Voke - Next Multiplier in Arena 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.NextMultiplier,
                     GameObjectName =
                         "MultiplierBoostPickup_Groups/MultiplierBoostNextTier/MultiplierBoostNextTier/",
@@ -355,7 +365,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 13,
                     LocationId = "Voke Boss Next Multiplier 1",
-                    Description = "Voke - Next Multiplier in Boss Arena atop left Bridge",
+                    Description = "Voke - Next Multiplier in Boss Arena atop right Bridge",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
                     Arena = EArena.Boss,
@@ -370,7 +380,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 14,
                     LocationId = "Voke Boss Next Multiplier 2",
-                    Description = "Voke - Next Multiplier in Boss Arena atop right Bridge",
+                    Description = "Voke - Next Multiplier in Boss Arena atop left Bridge",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
                     Arena = EArena.Boss,
@@ -489,7 +499,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 22,
                     LocationId = "Enduring Fury Unlock",
-                    Description = "Completed Voke",
+                    Description = "Voke - Boon Completion",
                     OriginalItemName = "Enduring Fury",
                     Zone = EZone.Voke,
                     Arena = EArena.Boss,
@@ -600,7 +610,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 29,
                     LocationId = "Stygia Next Multiplier 1",
-                    Description = "Stygia - Next Multiplier in Arena 1 on pillar",
+                    Description = "Stygia - Next Multiplier in Arena 1 on ground",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena1,
@@ -615,7 +625,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 30,
                     LocationId = "Stygia Next Multiplier 2",
-                    Description = "Stygia - Next Multiplier in Arena 1 on ground",
+                    Description = "Stygia - Next Multiplier in Arena 1 on pillar",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena1,
@@ -870,10 +880,10 @@ namespace Randomizer
                 {
                     ArchipelagoId = 47,
                     LocationId = "Stygia Coat of Arms Archdevil",
-                    Description = "Stygia - Coat of Arms before Arena 1",
+                    Description = "Stygia - Coat of Arms in Arena 2",
                     OriginalItemName = "Coat of Arms",
                     Zone = EZone.Stygia,
-                    Arena = EArena.Arena1,
+                    Arena = EArena.Arena2,
                     LocationType = ELocationType.CoatOfArms,
                     GameObjectName =
                         "Coat_Of_Arms_Collectibles/VeryHard/Coat_Of_Arms_Collectible_VeryHard/",
@@ -899,7 +909,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 49,
                     LocationId = "Faster Ultimate Gain Unlock",
-                    Description = "Completed Stygia",
+                    Description = "Stygia - Boon Completion",
                     OriginalItemName = "Faster Ultimate Gain",
                     Zone = EZone.Stygia,
                     Arena = EArena.Boss,
@@ -1207,7 +1217,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 69,
                     LocationId = "Incaustis Anguish Gate 2",
-                    Description = "Incaustis - Finished forced Encounter 1",
+                    Description = "Incaustis - Finished forced Encounter 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Arena3,
@@ -1224,7 +1234,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 70,
                     LocationId = "Incaustis Anguish Gate 3",
-                    Description = "Incaustis - Finished forced Encounter 1",
+                    Description = "Incaustis - Finished forced Encounter 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Arena4,
@@ -1241,7 +1251,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 71,
                     LocationId = "Incaustis Anguish Gate 4",
-                    Description = "Incaustis - Finished forced Encounter 1",
+                    Description = "Incaustis - Finished forced Encounter 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Boss,
@@ -1309,7 +1319,7 @@ namespace Randomizer
                     Arena = EArena.Boss,
                     LocationType = ELocationType.MaxMultiplier,
                     GameObjectName =
-                        "MultiplierBoostPickup_Groups/MultiplierBoostMaxTier/MultiplierBoostMaxTier/",
+                        "MultiplierBoostPickup_Groups/MultiplierBoostMax/MultiplierBoostMaxTier/",
                 }
             },
             {
@@ -1407,7 +1417,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 82,
                     LocationId = "Deadlier Dash Unlock",
-                    Description = "Completed Incaustis",
+                    Description = "Incaustis - Boon Completion",
                     OriginalItemName = "Deadlier Dash",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Boss,
@@ -1885,7 +1895,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 113,
                     LocationId = "Explosive Slaughter Unlock",
-                    Description = "Completed Nihil",
+                    Description = "Nihil - Boon Completion",
                     OriginalItemName = "Explosive Slaughter",
                     Zone = EZone.Nihil,
                     Arena = EArena.Boss,
@@ -1982,7 +1992,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 119,
                     LocationId = "Acheron Next Multiplier 2",
-                    Description = "Acheron - Next Multiplier in Arena 1 top Cog",
+                    Description = "Acheron - Next Multiplier in Arena 1 front left Containers",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena1,
@@ -1997,7 +2007,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 120,
                     LocationId = "Acheron Next Multiplier 3",
-                    Description = "Acheron - Next Multiplier in Arena 1 bottom Cog",
+                    Description = "Acheron - Next Multiplier in Arena 1 top Cog",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena1,
@@ -2012,7 +2022,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 121,
                     LocationId = "Acheron Next Multiplier 4",
-                    Description = "Acheron - Next Multiplier in Arena 1 back right Alley",
+                    Description = "Acheron - Next Multiplier in Arena 1 bottom Cog",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena1,
@@ -2027,7 +2037,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 122,
                     LocationId = "Acheron Next Multiplier 5",
-                    Description = "Acheron - Next Multiplier in Arena 1 front left Containers",
+                    Description = "Acheron - Next Multiplier in Arena 1 back right Alley",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena1,
@@ -2475,7 +2485,7 @@ namespace Randomizer
                     Arena = EArena.Arena4,
                     LocationType = ELocationType.SecretMultiplier,
                     GameObjectName =
-                        "MultiplierBoostPickup_Groups/MultiplierBoostMaxTier_Secret/MultiplierBoostMaxTier/",
+                        "MultiplierBoostPickup_Groups/MultiplierBoost_Secret/MultiplierBoostMaxTier/",
                 }
             },
             {
@@ -3916,7 +3926,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 254,
                     LocationId = "Stygia Chaos Crystal Destruction",
-                    Description = "Stygia - Complete Health Crystal Destruction",
+                    Description = "Stygia - Complete Chaos Crystal Destruction",
                     OriginalItemName = "Death's Edge: 1",
                     Zone = EZone.Stygia,
                     Arena = EArena.Arena4,
@@ -3972,7 +3982,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 258,
                     LocationId = "Yhelm Chaos Crystal Destruction",
-                    Description = "Yhelm - Complete Health Crystal Destruction",
+                    Description = "Yhelm - Complete Chaos Crystal Destruction",
                     OriginalItemName = "Killing with Rhythm: 2",
                     Zone = EZone.Yhelm,
                     Arena = EArena.Boss,
@@ -4028,7 +4038,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 262,
                     LocationId = "Incaustis Chaos Crystal Destruction",
-                    Description = "Incaustis - Complete Health Crystal Destruction",
+                    Description = "Incaustis - Complete Chaos Crystal Destruction",
                     OriginalItemName = "Giantslayer: 2",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Arena4,
@@ -4084,7 +4094,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 266,
                     LocationId = "Gehenna Chaos Crystal Destruction",
-                    Description = "Gehenna - Complete Health Crystal Destruction",
+                    Description = "Gehenna - Complete Chaos Crystal Destruction",
                     OriginalItemName = "Killing with Rhythm: 3",
                     Zone = EZone.Gehenna,
                     Arena = EArena.Arena4,
@@ -4140,7 +4150,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 270,
                     LocationId = "Nihil Chaos Crystal Destruction",
-                    Description = "Nihil - Complete Health Crystal Destruction",
+                    Description = "Nihil - Complete Chaos Crystal Destruction",
                     OriginalItemName = "Slaughter Mastery: 2",
                     Zone = EZone.Nihil,
                     Arena = EArena.Boss,
@@ -4196,25 +4206,11 @@ namespace Randomizer
                 {
                     ArchipelagoId = 274,
                     LocationId = "Acheron Chaos Crystal Destruction",
-                    Description = "Acheron - Complete Health Crystal Destruction",
+                    Description = "Acheron - Complete Chaos Crystal Destruction",
                     OriginalItemName = "Ultimate Mastery: 3",
                     Zone = EZone.Acheron,
                     Arena = EArena.Arena4,
                     LocationType = ELocationType.LevelChaosCrystalCompletion,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Chaos Reload discovered",
-                new Location
-                {
-                    ArchipelagoId = 275,
-                    LocationId = "Chaos Reload discovered",
-                    Description = "Chaos Reload discovered",
-                    OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
-                    LocationType = ELocationType.Codex,
                     GameObjectName = null,
                 }
             },
@@ -4224,7 +4220,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 276,
                     LocationId = "Hells's Heartbeat discovered",
-                    Description = "Hells's Heartbeat discovered",
+                    Description = "Fury Combo - Hells's Heartbeat discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4238,7 +4234,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 277,
                     LocationId = "Basilisk Mode discovered",
-                    Description = "Basilisk Mode discovered",
+                    Description = "Fury Combo - Basilisk Mode discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4252,7 +4248,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 278,
                     LocationId = "Double Hit and Run discovered",
-                    Description = "Double Hit and Run discovered",
+                    Description = "Fury Combo - Double Hit and Run discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4266,7 +4262,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 279,
                     LocationId = "Shatter Two discovered",
-                    Description = "Shatter Two discovered",
+                    Description = "Fury Combo - Shatter Two discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4280,7 +4276,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 280,
                     LocationId = "Devil's Flight discovered",
-                    Description = "Devil's Flight discovered",
+                    Description = "Fury Combo - Devil's Flight discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4294,7 +4290,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 281,
                     LocationId = "Double Slaughter discovered",
-                    Description = "Double Slaughter discovered",
+                    Description = "Fury Combo - Double Slaughter discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4308,7 +4304,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 282,
                     LocationId = "Chaos and Slaughter discovered",
-                    Description = "Chaos and Slaughter discovered",
+                    Description = "Fury Combo - Chaos and Slaughter discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4322,7 +4318,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 283,
                     LocationId = "Unholy Mess discovered",
-                    Description = "Unholy Mess discovered",
+                    Description = "Fury Combo - Unholy Mess discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4336,7 +4332,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 284,
                     LocationId = "Five Endings discovered",
-                    Description = "Five Endings discovered",
+                    Description = "Fury Combo - Five Endings discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4350,7 +4346,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 285,
                     LocationId = "Slaughter and Kill discovered",
-                    Description = "Slaughter and Kill discovered",
+                    Description = "Fury Combo - Slaughter and Kill discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4364,7 +4360,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 286,
                     LocationId = "Chaos Flight discovered",
-                    Description = "Chaos Flight discovered",
+                    Description = "Fury Combo - Chaos Flight discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4378,7 +4374,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 287,
                     LocationId = "Death from Above discovered",
-                    Description = "Death from Above discovered",
+                    Description = "Fury Combo - Death from Above discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4392,7 +4388,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 288,
                     LocationId = "Lethal Cycle discovered",
-                    Description = "Lethal Cycle discovered",
+                    Description = "Fury Combo - Lethal Cycle discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4406,7 +4402,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 289,
                     LocationId = "Kill Trio discovered",
-                    Description = "Kill Trio discovered",
+                    Description = "Fury Combo - Kill Trio discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4420,7 +4416,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 290,
                     LocationId = "Triple Dash discovered",
-                    Description = "Triple Dash discovered",
+                    Description = "Fury Combo - Triple Dash discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4434,7 +4430,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 291,
                     LocationId = "Marionette discovered",
-                    Description = "Marionette discovered",
+                    Description = "Tutorial - Marionette discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4448,7 +4444,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 292,
                     LocationId = "Cambion discovered",
-                    Description = "Cambion discovered",
+                    Description = "Voke/Stygia - Cambion discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4462,7 +4458,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 293,
                     LocationId = "Behemoth discovered",
-                    Description = "Behemoth discovered",
+                    Description = "Voke - Behemoth discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4476,7 +4472,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 294,
                     LocationId = "Stalker discovered",
-                    Description = "Stalker discovered",
+                    Description = "Stygia - Stalker discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4490,7 +4486,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 295,
                     LocationId = "Eyeless discovered",
-                    Description = "Eyeless discovered",
+                    Description = "Yhelm - Eyeless discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4504,7 +4500,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 296,
                     LocationId = "Hierophant discovered",
-                    Description = "Hierophant discovered",
+                    Description = "Incaustis - Hierophant discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4518,7 +4514,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 297,
                     LocationId = "Lesser Seraph discovered",
-                    Description = "Lesser Seraph discovered",
+                    Description = "Gehenna - Lesser Seraph discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4532,7 +4528,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 298,
                     LocationId = "Shield Cambion discovered",
-                    Description = "Shield Cambion discovered",
+                    Description = "Yhelm - Shield Cambion discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4546,7 +4542,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 299,
                     LocationId = "Siege Behemoth discovered",
-                    Description = "Siege Behemoth discovered",
+                    Description = "Incaustis - Siege Behemoth discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4560,7 +4556,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 300,
                     LocationId = "Void Stalker discovered",
-                    Description = "Void Stalker discovered",
+                    Description = "Nihil - Void Stalker discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4574,7 +4570,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 301,
                     LocationId = "Annihilator Seraph discovered",
-                    Description = "Annihilator Seraph discovered",
+                    Description = "Voke (Archdevil) - Annihilator Seraph discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4705,132 +4701,6 @@ namespace Randomizer
                     Zone = EZone.Leviathan,
                     Arena = EArena.FinalDestination,
                     LocationType = ELocationType.Bestiary,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Anger Aspect: Voke defeated",
-                new Location
-                {
-                    ArchipelagoId = 311,
-                    LocationId = "Anger Aspect: Voke defeated",
-                    Description = "Anger Aspect: Voke defeated",
-                    OriginalItemName = "Anger Aspect: Voke defeated",
-                    Zone = EZone.Voke,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Charged Aspect: Stygia defeated",
-                new Location
-                {
-                    ArchipelagoId = 312,
-                    LocationId = "Charged Aspect: Stygia defeated",
-                    Description = "Charged Aspect: Stygia defeated",
-                    OriginalItemName = "Charged Aspect: Stygia defeated",
-                    Zone = EZone.Stygia,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Fortress Aspect: Yhelm defeated",
-                new Location
-                {
-                    ArchipelagoId = 313,
-                    LocationId = "Fortress Aspect: Yhelm defeated",
-                    Description = "Fortress Aspect: Yhelm defeated",
-                    OriginalItemName = "Fortress Aspect: Yhelm defeated",
-                    Zone = EZone.Yhelm,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Infernal Fury Aspect: Incaustis defeated",
-                new Location
-                {
-                    ArchipelagoId = 314,
-                    LocationId = "Infernal Fury Aspect: Incaustis defeated",
-                    Description = "Infernal Fury Aspect: Incaustis defeated",
-                    OriginalItemName = "Infernal Fury Aspect: Incaustis defeated",
-                    Zone = EZone.Incaustis,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Hellstorm Aspect: Gehenna defeated",
-                new Location
-                {
-                    ArchipelagoId = 315,
-                    LocationId = "Hellstorm Aspect: Gehenna defeated",
-                    Description = "Hellstorm Aspect: Gehenna defeated",
-                    OriginalItemName = "Hellstorm Aspect: Gehenna defeated",
-                    Zone = EZone.Gehenna,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Doppelganger Aspect: Nihil defeated",
-                new Location
-                {
-                    ArchipelagoId = 316,
-                    LocationId = "Doppelganger Aspect: Nihil defeated",
-                    Description = "Doppelganger Aspect: Nihil defeated",
-                    OriginalItemName = "Doppelganger Aspect: Nihil defeated",
-                    Zone = EZone.Nihil,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Wheel Aspect: Acheron defeated",
-                new Location
-                {
-                    ArchipelagoId = 317,
-                    LocationId = "Wheel Aspect: Acheron defeated",
-                    Description = "Wheel Aspect: Acheron defeated",
-                    OriginalItemName = "Wheel Aspect: Acheron defeated",
-                    Zone = EZone.Acheron,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "Red Judge - Worldbreaker: Sheol defeated",
-                new Location
-                {
-                    ArchipelagoId = 318,
-                    LocationId = "Red Judge - Worldbreaker: Sheol defeated",
-                    Description = "Red Judge - Worldbreaker: Sheol defeated",
-                    OriginalItemName = "Red Judge - Worldbreaker: Sheol defeated",
-                    Zone = EZone.Sheol,
-                    Arena = EArena.Boss,
-                    LocationType = ELocationType.BossAchievement,
-                    GameObjectName = null,
-                }
-            },
-            {
-                "The Lost Unknown: Leviathan defeated",
-                new Location
-                {
-                    ArchipelagoId = 319,
-                    LocationId = "The Lost Unknown: Leviathan defeated",
-                    Description = "The Lost Unknown: Leviathan defeated",
-                    OriginalItemName = "The Lost Unknown: Leviathan defeated",
-                    Zone = EZone.Leviathan,
-                    Arena = EArena.FinalDestination,
-                    LocationType = ELocationType.BossAchievement,
                     GameObjectName = null,
                 }
             },
@@ -12227,12 +12097,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Ammostash 1",
+                "Garden of Chronos - Ammostash 1",
                 new Location
                 {
                     ArchipelagoId = 848,
-                    LocationId = "Walled Garden (Garden of Chronos) - Ammostash 1",
-                    Description = "Walled Garden (Garden of Chronos) - Ammostash 1",
+                    LocationId = "Garden of Chronos - Ammostash 1",
+                    Description = "Garden of Chronos - Ammostash 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12241,12 +12111,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Ammostash 2",
+                "Garden of Chronos - Ammostash 2",
                 new Location
                 {
                     ArchipelagoId = 849,
-                    LocationId = "Walled Garden (Garden of Chronos) - Ammostash 2",
-                    Description = "Walled Garden (Garden of Chronos) - Ammostash 2",
+                    LocationId = "Garden of Chronos - Ammostash 2",
+                    Description = "Garden of Chronos - Ammostash 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12255,12 +12125,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Ammostash 3",
+                "Garden of Chronos - Ammostash 3",
                 new Location
                 {
                     ArchipelagoId = 850,
-                    LocationId = "Walled Garden (Garden of Chronos) - Ammostash 3",
-                    Description = "Walled Garden (Garden of Chronos) - Ammostash 3",
+                    LocationId = "Garden of Chronos - Ammostash 3",
+                    Description = "Garden of Chronos - Ammostash 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12269,12 +12139,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Ammostash 4",
+                "Garden of Chronos - Ammostash 4",
                 new Location
                 {
                     ArchipelagoId = 851,
-                    LocationId = "Walled Garden (Garden of Chronos) - Ammostash 4",
-                    Description = "Walled Garden (Garden of Chronos) - Ammostash 4",
+                    LocationId = "Garden of Chronos - Ammostash 4",
+                    Description = "Garden of Chronos - Ammostash 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12283,12 +12153,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Ammostash 5",
+                "Garden of Chronos - Ammostash 5",
                 new Location
                 {
                     ArchipelagoId = 852,
-                    LocationId = "Walled Garden (Garden of Chronos) - Ammostash 5",
-                    Description = "Walled Garden (Garden of Chronos) - Ammostash 5",
+                    LocationId = "Garden of Chronos - Ammostash 5",
+                    Description = "Garden of Chronos - Ammostash 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12297,12 +12167,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Health Crystal 1",
+                "Garden of Chronos - Health Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 853,
-                    LocationId = "Walled Garden (Garden of Chronos) - Health Crystal 1",
-                    Description = "Walled Garden (Garden of Chronos) - Health Crystal 1",
+                    LocationId = "Garden of Chronos - Health Crystal 1",
+                    Description = "Garden of Chronos - Health Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12311,12 +12181,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Health Crystal 2",
+                "Garden of Chronos - Health Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 854,
-                    LocationId = "Walled Garden (Garden of Chronos) - Health Crystal 2",
-                    Description = "Walled Garden (Garden of Chronos) - Health Crystal 2",
+                    LocationId = "Garden of Chronos - Health Crystal 2",
+                    Description = "Garden of Chronos - Health Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12325,12 +12195,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Health Crystal 3",
+                "Garden of Chronos - Health Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 855,
-                    LocationId = "Walled Garden (Garden of Chronos) - Health Crystal 3",
-                    Description = "Walled Garden (Garden of Chronos) - Health Crystal 3",
+                    LocationId = "Garden of Chronos - Health Crystal 3",
+                    Description = "Garden of Chronos - Health Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12339,12 +12209,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Health Crystal 4",
+                "Garden of Chronos - Health Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 856,
-                    LocationId = "Walled Garden (Garden of Chronos) - Health Crystal 4",
-                    Description = "Walled Garden (Garden of Chronos) - Health Crystal 4",
+                    LocationId = "Garden of Chronos - Health Crystal 4",
+                    Description = "Garden of Chronos - Health Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12353,12 +12223,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Health Crystal 5",
+                "Garden of Chronos - Health Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 857,
-                    LocationId = "Walled Garden (Garden of Chronos) - Health Crystal 5",
-                    Description = "Walled Garden (Garden of Chronos) - Health Crystal 5",
+                    LocationId = "Garden of Chronos - Health Crystal 5",
+                    Description = "Garden of Chronos - Health Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12367,12 +12237,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Health Crystal 6",
+                "Garden of Chronos - Health Crystal 6",
                 new Location
                 {
                     ArchipelagoId = 858,
-                    LocationId = "Walled Garden (Garden of Chronos) - Health Crystal 6",
-                    Description = "Walled Garden (Garden of Chronos) - Health Crystal 6",
+                    LocationId = "Garden of Chronos - Health Crystal 6",
+                    Description = "Garden of Chronos - Health Crystal 6",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12381,12 +12251,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Chaos Crystal 1",
+                "Garden of Chronos - Chaos Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 859,
-                    LocationId = "Walled Garden (Garden of Chronos) - Chaos Crystal 1",
-                    Description = "Walled Garden (Garden of Chronos) - Chaos Crystal 1",
+                    LocationId = "Garden of Chronos - Chaos Crystal 1",
+                    Description = "Garden of Chronos - Chaos Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12395,12 +12265,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Chaos Crystal 2",
+                "Garden of Chronos - Chaos Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 860,
-                    LocationId = "Walled Garden (Garden of Chronos) - Chaos Crystal 2",
-                    Description = "Walled Garden (Garden of Chronos) - Chaos Crystal 2",
+                    LocationId = "Garden of Chronos - Chaos Crystal 2",
+                    Description = "Garden of Chronos - Chaos Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12409,12 +12279,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Chaos Crystal 3",
+                "Garden of Chronos - Chaos Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 861,
-                    LocationId = "Walled Garden (Garden of Chronos) - Chaos Crystal 3",
-                    Description = "Walled Garden (Garden of Chronos) - Chaos Crystal 3",
+                    LocationId = "Garden of Chronos - Chaos Crystal 3",
+                    Description = "Garden of Chronos - Chaos Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12423,12 +12293,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Chaos Crystal 4",
+                "Garden of Chronos - Chaos Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 862,
-                    LocationId = "Walled Garden (Garden of Chronos) - Chaos Crystal 4",
-                    Description = "Walled Garden (Garden of Chronos) - Chaos Crystal 4",
+                    LocationId = "Garden of Chronos - Chaos Crystal 4",
+                    Description = "Garden of Chronos - Chaos Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12437,12 +12307,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Chaos Crystal 5",
+                "Garden of Chronos - Chaos Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 863,
-                    LocationId = "Walled Garden (Garden of Chronos) - Chaos Crystal 5",
-                    Description = "Walled Garden (Garden of Chronos) - Chaos Crystal 5",
+                    LocationId = "Garden of Chronos - Chaos Crystal 5",
+                    Description = "Garden of Chronos - Chaos Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12451,12 +12321,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - XP Egg 1",
+                "Garden of Chronos - XP Egg 1",
                 new Location
                 {
                     ArchipelagoId = 864,
-                    LocationId = "Walled Garden (Garden of Chronos) - XP Egg 1",
-                    Description = "Walled Garden (Garden of Chronos) - XP Egg 1",
+                    LocationId = "Garden of Chronos - XP Egg 1",
+                    Description = "Garden of Chronos - XP Egg 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12465,12 +12335,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - XP Egg 2",
+                "Garden of Chronos - XP Egg 2",
                 new Location
                 {
                     ArchipelagoId = 865,
-                    LocationId = "Walled Garden (Garden of Chronos) - XP Egg 2",
-                    Description = "Walled Garden (Garden of Chronos) - XP Egg 2",
+                    LocationId = "Garden of Chronos - XP Egg 2",
+                    Description = "Garden of Chronos - XP Egg 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12479,12 +12349,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - XP Egg 3",
+                "Garden of Chronos - XP Egg 3",
                 new Location
                 {
                     ArchipelagoId = 866,
-                    LocationId = "Walled Garden (Garden of Chronos) - XP Egg 3",
-                    Description = "Walled Garden (Garden of Chronos) - XP Egg 3",
+                    LocationId = "Garden of Chronos - XP Egg 3",
+                    Description = "Garden of Chronos - XP Egg 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12493,12 +12363,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Nightmare Crystal 1",
+                "Garden of Chronos - Nightmare Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 867,
-                    LocationId = "Walled Garden (Garden of Chronos) - Nightmare Crystal 1",
-                    Description = "Walled Garden (Garden of Chronos) - Nightmare Crystal 1",
+                    LocationId = "Garden of Chronos - Nightmare Crystal 1",
+                    Description = "Garden of Chronos - Nightmare Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12507,12 +12377,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Nightmare Crystal 2",
+                "Garden of Chronos - Nightmare Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 868,
-                    LocationId = "Walled Garden (Garden of Chronos) - Nightmare Crystal 2",
-                    Description = "Walled Garden (Garden of Chronos) - Nightmare Crystal 2",
+                    LocationId = "Garden of Chronos - Nightmare Crystal 2",
+                    Description = "Garden of Chronos - Nightmare Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12521,12 +12391,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Nightmare Crystal 3",
+                "Garden of Chronos - Nightmare Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 869,
-                    LocationId = "Walled Garden (Garden of Chronos) - Nightmare Crystal 3",
-                    Description = "Walled Garden (Garden of Chronos) - Nightmare Crystal 3",
+                    LocationId = "Garden of Chronos - Nightmare Crystal 3",
+                    Description = "Garden of Chronos - Nightmare Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12535,12 +12405,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Nightmare Crystal 4",
+                "Garden of Chronos - Nightmare Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 870,
-                    LocationId = "Walled Garden (Garden of Chronos) - Nightmare Crystal 4",
-                    Description = "Walled Garden (Garden of Chronos) - Nightmare Crystal 4",
+                    LocationId = "Garden of Chronos - Nightmare Crystal 4",
+                    Description = "Garden of Chronos - Nightmare Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12549,12 +12419,12 @@ namespace Randomizer
                 }
             },
             {
-                "Walled Garden (Garden of Chronos) - Nightmare Crystal 5",
+                "Garden of Chronos - Nightmare Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 871,
-                    LocationId = "Walled Garden (Garden of Chronos) - Nightmare Crystal 5",
-                    Description = "Walled Garden (Garden of Chronos) - Nightmare Crystal 5",
+                    LocationId = "Garden of Chronos - Nightmare Crystal 5",
+                    Description = "Garden of Chronos - Nightmare Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.WalledGarden,
@@ -12563,12 +12433,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Ammostash 1",
+                "Calamity - Ammostash 1",
                 new Location
                 {
                     ArchipelagoId = 872,
-                    LocationId = "High Rode (Calamity) - Ammostash 1",
-                    Description = "High Rode (Calamity) - Ammostash 1",
+                    LocationId = "Calamity - Ammostash 1",
+                    Description = "Calamity - Ammostash 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12577,12 +12447,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Ammostash 2",
+                "Calamity - Ammostash 2",
                 new Location
                 {
                     ArchipelagoId = 873,
-                    LocationId = "High Rode (Calamity) - Ammostash 2",
-                    Description = "High Rode (Calamity) - Ammostash 2",
+                    LocationId = "Calamity - Ammostash 2",
+                    Description = "Calamity - Ammostash 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12591,12 +12461,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Ammostash 3",
+                "Calamity - Ammostash 3",
                 new Location
                 {
                     ArchipelagoId = 874,
-                    LocationId = "High Rode (Calamity) - Ammostash 3",
-                    Description = "High Rode (Calamity) - Ammostash 3",
+                    LocationId = "Calamity - Ammostash 3",
+                    Description = "Calamity - Ammostash 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12605,12 +12475,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Ammostash 4",
+                "Calamity - Ammostash 4",
                 new Location
                 {
                     ArchipelagoId = 875,
-                    LocationId = "High Rode (Calamity) - Ammostash 4",
-                    Description = "High Rode (Calamity) - Ammostash 4",
+                    LocationId = "Calamity - Ammostash 4",
+                    Description = "Calamity - Ammostash 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12619,12 +12489,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Ammostash 5",
+                "Calamity - Ammostash 5",
                 new Location
                 {
                     ArchipelagoId = 876,
-                    LocationId = "High Rode (Calamity) - Ammostash 5",
-                    Description = "High Rode (Calamity) - Ammostash 5",
+                    LocationId = "Calamity - Ammostash 5",
+                    Description = "Calamity - Ammostash 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12633,12 +12503,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Health Crystal 1",
+                "Calamity - Health Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 877,
-                    LocationId = "High Rode (Calamity) - Health Crystal 1",
-                    Description = "High Rode (Calamity) - Health Crystal 1",
+                    LocationId = "Calamity - Health Crystal 1",
+                    Description = "Calamity - Health Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12647,12 +12517,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Health Crystal 2",
+                "Calamity - Health Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 878,
-                    LocationId = "High Rode (Calamity) - Health Crystal 2",
-                    Description = "High Rode (Calamity) - Health Crystal 2",
+                    LocationId = "Calamity - Health Crystal 2",
+                    Description = "Calamity - Health Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12661,12 +12531,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Health Crystal 3",
+                "Calamity - Health Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 879,
-                    LocationId = "High Rode (Calamity) - Health Crystal 3",
-                    Description = "High Rode (Calamity) - Health Crystal 3",
+                    LocationId = "Calamity - Health Crystal 3",
+                    Description = "Calamity - Health Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12675,12 +12545,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Health Crystal 4",
+                "Calamity - Health Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 880,
-                    LocationId = "High Rode (Calamity) - Health Crystal 4",
-                    Description = "High Rode (Calamity) - Health Crystal 4",
+                    LocationId = "Calamity - Health Crystal 4",
+                    Description = "Calamity - Health Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12689,12 +12559,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Health Crystal 5",
+                "Calamity - Health Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 881,
-                    LocationId = "High Rode (Calamity) - Health Crystal 5",
-                    Description = "High Rode (Calamity) - Health Crystal 5",
+                    LocationId = "Calamity - Health Crystal 5",
+                    Description = "Calamity - Health Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12703,12 +12573,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Health Crystal 6",
+                "Calamity - Health Crystal 6",
                 new Location
                 {
                     ArchipelagoId = 882,
-                    LocationId = "High Rode (Calamity) - Health Crystal 6",
-                    Description = "High Rode (Calamity) - Health Crystal 6",
+                    LocationId = "Calamity - Health Crystal 6",
+                    Description = "Calamity - Health Crystal 6",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12717,12 +12587,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Chaos Crystal 1",
+                "Calamity - Chaos Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 883,
-                    LocationId = "High Rode (Calamity) - Chaos Crystal 1",
-                    Description = "High Rode (Calamity) - Chaos Crystal 1",
+                    LocationId = "Calamity - Chaos Crystal 1",
+                    Description = "Calamity - Chaos Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12731,12 +12601,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Chaos Crystal 2",
+                "Calamity - Chaos Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 884,
-                    LocationId = "High Rode (Calamity) - Chaos Crystal 2",
-                    Description = "High Rode (Calamity) - Chaos Crystal 2",
+                    LocationId = "Calamity - Chaos Crystal 2",
+                    Description = "Calamity - Chaos Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12745,12 +12615,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Chaos Crystal 3",
+                "Calamity - Chaos Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 885,
-                    LocationId = "High Rode (Calamity) - Chaos Crystal 3",
-                    Description = "High Rode (Calamity) - Chaos Crystal 3",
+                    LocationId = "Calamity - Chaos Crystal 3",
+                    Description = "Calamity - Chaos Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12759,12 +12629,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Chaos Crystal 4",
+                "Calamity - Chaos Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 886,
-                    LocationId = "High Rode (Calamity) - Chaos Crystal 4",
-                    Description = "High Rode (Calamity) - Chaos Crystal 4",
+                    LocationId = "Calamity - Chaos Crystal 4",
+                    Description = "Calamity - Chaos Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12773,12 +12643,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Chaos Crystal 5",
+                "Calamity - Chaos Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 887,
-                    LocationId = "High Rode (Calamity) - Chaos Crystal 5",
-                    Description = "High Rode (Calamity) - Chaos Crystal 5",
+                    LocationId = "Calamity - Chaos Crystal 5",
+                    Description = "Calamity - Chaos Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12787,12 +12657,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - XP Egg 1",
+                "Calamity - XP Egg 1",
                 new Location
                 {
                     ArchipelagoId = 888,
-                    LocationId = "High Rode (Calamity) - XP Egg 1",
-                    Description = "High Rode (Calamity) - XP Egg 1",
+                    LocationId = "Calamity - XP Egg 1",
+                    Description = "Calamity - XP Egg 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12801,12 +12671,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - XP Egg 2",
+                "Calamity - XP Egg 2",
                 new Location
                 {
                     ArchipelagoId = 889,
-                    LocationId = "High Rode (Calamity) - XP Egg 2",
-                    Description = "High Rode (Calamity) - XP Egg 2",
+                    LocationId = "Calamity - XP Egg 2",
+                    Description = "Calamity - XP Egg 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12815,12 +12685,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - XP Egg 3",
+                "Calamity - XP Egg 3",
                 new Location
                 {
                     ArchipelagoId = 890,
-                    LocationId = "High Rode (Calamity) - XP Egg 3",
-                    Description = "High Rode (Calamity) - XP Egg 3",
+                    LocationId = "Calamity - XP Egg 3",
+                    Description = "Calamity - XP Egg 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12829,12 +12699,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Nightmare Crystal 1",
+                "Calamity - Nightmare Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 891,
-                    LocationId = "High Rode (Calamity) - Nightmare Crystal 1",
-                    Description = "High Rode (Calamity) - Nightmare Crystal 1",
+                    LocationId = "Calamity - Nightmare Crystal 1",
+                    Description = "Calamity - Nightmare Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12843,12 +12713,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Nightmare Crystal 2",
+                "Calamity - Nightmare Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 892,
-                    LocationId = "High Rode (Calamity) - Nightmare Crystal 2",
-                    Description = "High Rode (Calamity) - Nightmare Crystal 2",
+                    LocationId = "Calamity - Nightmare Crystal 2",
+                    Description = "Calamity - Nightmare Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12857,12 +12727,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Nightmare Crystal 3",
+                "Calamity - Nightmare Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 893,
-                    LocationId = "High Rode (Calamity) - Nightmare Crystal 3",
-                    Description = "High Rode (Calamity) - Nightmare Crystal 3",
+                    LocationId = "Calamity - Nightmare Crystal 3",
+                    Description = "Calamity - Nightmare Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12871,12 +12741,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Nightmare Crystal 4",
+                "Calamity - Nightmare Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 894,
-                    LocationId = "High Rode (Calamity) - Nightmare Crystal 4",
-                    Description = "High Rode (Calamity) - Nightmare Crystal 4",
+                    LocationId = "Calamity - Nightmare Crystal 4",
+                    Description = "Calamity - Nightmare Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12885,12 +12755,12 @@ namespace Randomizer
                 }
             },
             {
-                "High Rode (Calamity) - Nightmare Crystal 5",
+                "Calamity - Nightmare Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 895,
-                    LocationId = "High Rode (Calamity) - Nightmare Crystal 5",
-                    Description = "High Rode (Calamity) - Nightmare Crystal 5",
+                    LocationId = "Calamity - Nightmare Crystal 5",
+                    Description = "Calamity - Nightmare Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.HighRode,
@@ -12899,12 +12769,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Ammostash 1",
+                "Demonitorium - Ammostash 1",
                 new Location
                 {
                     ArchipelagoId = 896,
-                    LocationId = "Bridge (Demonitorium) - Ammostash 1",
-                    Description = "Bridge (Demonitorium) - Ammostash 1",
+                    LocationId = "Demonitorium - Ammostash 1",
+                    Description = "Demonitorium - Ammostash 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12913,12 +12783,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Ammostash 2",
+                "Demonitorium - Ammostash 2",
                 new Location
                 {
                     ArchipelagoId = 897,
-                    LocationId = "Bridge (Demonitorium) - Ammostash 2",
-                    Description = "Bridge (Demonitorium) - Ammostash 2",
+                    LocationId = "Demonitorium - Ammostash 2",
+                    Description = "Demonitorium - Ammostash 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12927,12 +12797,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Ammostash 3",
+                "Demonitorium - Ammostash 3",
                 new Location
                 {
                     ArchipelagoId = 898,
-                    LocationId = "Bridge (Demonitorium) - Ammostash 3",
-                    Description = "Bridge (Demonitorium) - Ammostash 3",
+                    LocationId = "Demonitorium - Ammostash 3",
+                    Description = "Demonitorium - Ammostash 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12941,12 +12811,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Ammostash 4",
+                "Demonitorium - Ammostash 4",
                 new Location
                 {
                     ArchipelagoId = 899,
-                    LocationId = "Bridge (Demonitorium) - Ammostash 4",
-                    Description = "Bridge (Demonitorium) - Ammostash 4",
+                    LocationId = "Demonitorium - Ammostash 4",
+                    Description = "Demonitorium - Ammostash 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12955,12 +12825,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Ammostash 5",
+                "Demonitorium - Ammostash 5",
                 new Location
                 {
                     ArchipelagoId = 900,
-                    LocationId = "Bridge (Demonitorium) - Ammostash 5",
-                    Description = "Bridge (Demonitorium) - Ammostash 5",
+                    LocationId = "Demonitorium - Ammostash 5",
+                    Description = "Demonitorium - Ammostash 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12969,12 +12839,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Health Crystal 1",
+                "Demonitorium - Health Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 901,
-                    LocationId = "Bridge (Demonitorium) - Health Crystal 1",
-                    Description = "Bridge (Demonitorium) - Health Crystal 1",
+                    LocationId = "Demonitorium - Health Crystal 1",
+                    Description = "Demonitorium - Health Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12983,12 +12853,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Health Crystal 2",
+                "Demonitorium - Health Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 902,
-                    LocationId = "Bridge (Demonitorium) - Health Crystal 2",
-                    Description = "Bridge (Demonitorium) - Health Crystal 2",
+                    LocationId = "Demonitorium - Health Crystal 2",
+                    Description = "Demonitorium - Health Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -12997,12 +12867,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Health Crystal 3",
+                "Demonitorium - Health Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 903,
-                    LocationId = "Bridge (Demonitorium) - Health Crystal 3",
-                    Description = "Bridge (Demonitorium) - Health Crystal 3",
+                    LocationId = "Demonitorium - Health Crystal 3",
+                    Description = "Demonitorium - Health Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13011,12 +12881,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Health Crystal 4",
+                "Demonitorium - Health Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 904,
-                    LocationId = "Bridge (Demonitorium) - Health Crystal 4",
-                    Description = "Bridge (Demonitorium) - Health Crystal 4",
+                    LocationId = "Demonitorium - Health Crystal 4",
+                    Description = "Demonitorium - Health Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13025,12 +12895,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Health Crystal 5",
+                "Demonitorium - Health Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 905,
-                    LocationId = "Bridge (Demonitorium) - Health Crystal 5",
-                    Description = "Bridge (Demonitorium) - Health Crystal 5",
+                    LocationId = "Demonitorium - Health Crystal 5",
+                    Description = "Demonitorium - Health Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13039,12 +12909,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Health Crystal 6",
+                "Demonitorium - Health Crystal 6",
                 new Location
                 {
                     ArchipelagoId = 906,
-                    LocationId = "Bridge (Demonitorium) - Health Crystal 6",
-                    Description = "Bridge (Demonitorium) - Health Crystal 6",
+                    LocationId = "Demonitorium - Health Crystal 6",
+                    Description = "Demonitorium - Health Crystal 6",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13053,12 +12923,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Chaos Crystal 1",
+                "Demonitorium - Chaos Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 907,
-                    LocationId = "Bridge (Demonitorium) - Chaos Crystal 1",
-                    Description = "Bridge (Demonitorium) - Chaos Crystal 1",
+                    LocationId = "Demonitorium - Chaos Crystal 1",
+                    Description = "Demonitorium - Chaos Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13067,12 +12937,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Chaos Crystal 2",
+                "Demonitorium - Chaos Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 908,
-                    LocationId = "Bridge (Demonitorium) - Chaos Crystal 2",
-                    Description = "Bridge (Demonitorium) - Chaos Crystal 2",
+                    LocationId = "Demonitorium - Chaos Crystal 2",
+                    Description = "Demonitorium - Chaos Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13081,12 +12951,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Chaos Crystal 3",
+                "Demonitorium - Chaos Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 909,
-                    LocationId = "Bridge (Demonitorium) - Chaos Crystal 3",
-                    Description = "Bridge (Demonitorium) - Chaos Crystal 3",
+                    LocationId = "Demonitorium - Chaos Crystal 3",
+                    Description = "Demonitorium - Chaos Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13095,12 +12965,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Chaos Crystal 4",
+                "Demonitorium - Chaos Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 910,
-                    LocationId = "Bridge (Demonitorium) - Chaos Crystal 4",
-                    Description = "Bridge (Demonitorium) - Chaos Crystal 4",
+                    LocationId = "Demonitorium - Chaos Crystal 4",
+                    Description = "Demonitorium - Chaos Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13109,12 +12979,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Chaos Crystal 5",
+                "Demonitorium - Chaos Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 911,
-                    LocationId = "Bridge (Demonitorium) - Chaos Crystal 5",
-                    Description = "Bridge (Demonitorium) - Chaos Crystal 5",
+                    LocationId = "Demonitorium - Chaos Crystal 5",
+                    Description = "Demonitorium - Chaos Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13123,12 +12993,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - XP Egg 1",
+                "Demonitorium - XP Egg 1",
                 new Location
                 {
                     ArchipelagoId = 912,
-                    LocationId = "Bridge (Demonitorium) - XP Egg 1",
-                    Description = "Bridge (Demonitorium) - XP Egg 1",
+                    LocationId = "Demonitorium - XP Egg 1",
+                    Description = "Demonitorium - XP Egg 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13137,12 +13007,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - XP Egg 2",
+                "Demonitorium - XP Egg 2",
                 new Location
                 {
                     ArchipelagoId = 913,
-                    LocationId = "Bridge (Demonitorium) - XP Egg 2",
-                    Description = "Bridge (Demonitorium) - XP Egg 2",
+                    LocationId = "Demonitorium - XP Egg 2",
+                    Description = "Demonitorium - XP Egg 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13151,12 +13021,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - XP Egg 3",
+                "Demonitorium - XP Egg 3",
                 new Location
                 {
                     ArchipelagoId = 914,
-                    LocationId = "Bridge (Demonitorium) - XP Egg 3",
-                    Description = "Bridge (Demonitorium) - XP Egg 3",
+                    LocationId = "Demonitorium - XP Egg 3",
+                    Description = "Demonitorium - XP Egg 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13165,12 +13035,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Nightmare Crystal 1",
+                "Demonitorium - Nightmare Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 915,
-                    LocationId = "Bridge (Demonitorium) - Nightmare Crystal 1",
-                    Description = "Bridge (Demonitorium) - Nightmare Crystal 1",
+                    LocationId = "Demonitorium - Nightmare Crystal 1",
+                    Description = "Demonitorium - Nightmare Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13179,12 +13049,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Nightmare Crystal 2",
+                "Demonitorium - Nightmare Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 916,
-                    LocationId = "Bridge (Demonitorium) - Nightmare Crystal 2",
-                    Description = "Bridge (Demonitorium) - Nightmare Crystal 2",
+                    LocationId = "Demonitorium - Nightmare Crystal 2",
+                    Description = "Demonitorium - Nightmare Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13193,12 +13063,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Nightmare Crystal 3",
+                "Demonitorium - Nightmare Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 917,
-                    LocationId = "Bridge (Demonitorium) - Nightmare Crystal 3",
-                    Description = "Bridge (Demonitorium) - Nightmare Crystal 3",
+                    LocationId = "Demonitorium - Nightmare Crystal 3",
+                    Description = "Demonitorium - Nightmare Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13207,12 +13077,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Nightmare Crystal 4",
+                "Demonitorium - Nightmare Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 918,
-                    LocationId = "Bridge (Demonitorium) - Nightmare Crystal 4",
-                    Description = "Bridge (Demonitorium) - Nightmare Crystal 4",
+                    LocationId = "Demonitorium - Nightmare Crystal 4",
+                    Description = "Demonitorium - Nightmare Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13221,12 +13091,12 @@ namespace Randomizer
                 }
             },
             {
-                "Bridge (Demonitorium) - Nightmare Crystal 5",
+                "Demonitorium - Nightmare Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 919,
-                    LocationId = "Bridge (Demonitorium) - Nightmare Crystal 5",
-                    Description = "Bridge (Demonitorium) - Nightmare Crystal 5",
+                    LocationId = "Demonitorium - Nightmare Crystal 5",
+                    Description = "Demonitorium - Nightmare Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Bridge,
@@ -13235,12 +13105,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Ammostash 1",
+                "Tombs of the Ancients - Ammostash 1",
                 new Location
                 {
                     ArchipelagoId = 920,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Ammostash 1",
-                    Description = "Pyramid (Tombs of the Ancients) - Ammostash 1",
+                    LocationId = "Tombs of the Ancients - Ammostash 1",
+                    Description = "Tombs of the Ancients - Ammostash 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13249,12 +13119,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Ammostash 2",
+                "Tombs of the Ancients - Ammostash 2",
                 new Location
                 {
                     ArchipelagoId = 921,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Ammostash 2",
-                    Description = "Pyramid (Tombs of the Ancients) - Ammostash 2",
+                    LocationId = "Tombs of the Ancients - Ammostash 2",
+                    Description = "Tombs of the Ancients - Ammostash 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13263,12 +13133,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Ammostash 3",
+                "Tombs of the Ancients - Ammostash 3",
                 new Location
                 {
                     ArchipelagoId = 922,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Ammostash 3",
-                    Description = "Pyramid (Tombs of the Ancients) - Ammostash 3",
+                    LocationId = "Tombs of the Ancients - Ammostash 3",
+                    Description = "Tombs of the Ancients - Ammostash 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13277,12 +13147,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Ammostash 4",
+                "Tombs of the Ancients - Ammostash 4",
                 new Location
                 {
                     ArchipelagoId = 923,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Ammostash 4",
-                    Description = "Pyramid (Tombs of the Ancients) - Ammostash 4",
+                    LocationId = "Tombs of the Ancients - Ammostash 4",
+                    Description = "Tombs of the Ancients - Ammostash 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13291,12 +13161,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Ammostash 5",
+                "Tombs of the Ancients - Ammostash 5",
                 new Location
                 {
                     ArchipelagoId = 924,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Ammostash 5",
-                    Description = "Pyramid (Tombs of the Ancients) - Ammostash 5",
+                    LocationId = "Tombs of the Ancients - Ammostash 5",
+                    Description = "Tombs of the Ancients - Ammostash 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13305,12 +13175,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Health Crystal 1",
+                "Tombs of the Ancients - Health Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 925,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Health Crystal 1",
-                    Description = "Pyramid (Tombs of the Ancients) - Health Crystal 1",
+                    LocationId = "Tombs of the Ancients - Health Crystal 1",
+                    Description = "Tombs of the Ancients - Health Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13319,12 +13189,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Health Crystal 2",
+                "Tombs of the Ancients - Health Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 926,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Health Crystal 2",
-                    Description = "Pyramid (Tombs of the Ancients) - Health Crystal 2",
+                    LocationId = "Tombs of the Ancients - Health Crystal 2",
+                    Description = "Tombs of the Ancients - Health Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13333,12 +13203,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Health Crystal 3",
+                "Tombs of the Ancients - Health Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 927,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Health Crystal 3",
-                    Description = "Pyramid (Tombs of the Ancients) - Health Crystal 3",
+                    LocationId = "Tombs of the Ancients - Health Crystal 3",
+                    Description = "Tombs of the Ancients - Health Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13347,12 +13217,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Health Crystal 4",
+                "Tombs of the Ancients - Health Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 928,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Health Crystal 4",
-                    Description = "Pyramid (Tombs of the Ancients) - Health Crystal 4",
+                    LocationId = "Tombs of the Ancients - Health Crystal 4",
+                    Description = "Tombs of the Ancients - Health Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13361,12 +13231,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Health Crystal 5",
+                "Tombs of the Ancients - Health Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 929,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Health Crystal 5",
-                    Description = "Pyramid (Tombs of the Ancients) - Health Crystal 5",
+                    LocationId = "Tombs of the Ancients - Health Crystal 5",
+                    Description = "Tombs of the Ancients - Health Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13375,12 +13245,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Health Crystal 6",
+                "Tombs of the Ancients - Health Crystal 6",
                 new Location
                 {
                     ArchipelagoId = 930,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Health Crystal 6",
-                    Description = "Pyramid (Tombs of the Ancients) - Health Crystal 6",
+                    LocationId = "Tombs of the Ancients - Health Crystal 6",
+                    Description = "Tombs of the Ancients - Health Crystal 6",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13389,12 +13259,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Chaos Crystal 1",
+                "Tombs of the Ancients - Chaos Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 931,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Chaos Crystal 1",
-                    Description = "Pyramid (Tombs of the Ancients) - Chaos Crystal 1",
+                    LocationId = "Tombs of the Ancients - Chaos Crystal 1",
+                    Description = "Tombs of the Ancients - Chaos Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13403,12 +13273,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Chaos Crystal 2",
+                "Tombs of the Ancients - Chaos Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 932,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Chaos Crystal 2",
-                    Description = "Pyramid (Tombs of the Ancients) - Chaos Crystal 2",
+                    LocationId = "Tombs of the Ancients - Chaos Crystal 2",
+                    Description = "Tombs of the Ancients - Chaos Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13417,12 +13287,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Chaos Crystal 3",
+                "Tombs of the Ancients - Chaos Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 933,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Chaos Crystal 3",
-                    Description = "Pyramid (Tombs of the Ancients) - Chaos Crystal 3",
+                    LocationId = "Tombs of the Ancients - Chaos Crystal 3",
+                    Description = "Tombs of the Ancients - Chaos Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13431,12 +13301,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Chaos Crystal 4",
+                "Tombs of the Ancients - Chaos Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 934,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Chaos Crystal 4",
-                    Description = "Pyramid (Tombs of the Ancients) - Chaos Crystal 4",
+                    LocationId = "Tombs of the Ancients - Chaos Crystal 4",
+                    Description = "Tombs of the Ancients - Chaos Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13445,12 +13315,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Chaos Crystal 5",
+                "Tombs of the Ancients - Chaos Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 935,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Chaos Crystal 5",
-                    Description = "Pyramid (Tombs of the Ancients) - Chaos Crystal 5",
+                    LocationId = "Tombs of the Ancients - Chaos Crystal 5",
+                    Description = "Tombs of the Ancients - Chaos Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13459,12 +13329,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - XP Egg 1",
+                "Tombs of the Ancients - XP Egg 1",
                 new Location
                 {
                     ArchipelagoId = 936,
-                    LocationId = "Pyramid (Tombs of the Ancients) - XP Egg 1",
-                    Description = "Pyramid (Tombs of the Ancients) - XP Egg 1",
+                    LocationId = "Tombs of the Ancients - XP Egg 1",
+                    Description = "Tombs of the Ancients - XP Egg 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13473,12 +13343,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - XP Egg 2",
+                "Tombs of the Ancients - XP Egg 2",
                 new Location
                 {
                     ArchipelagoId = 937,
-                    LocationId = "Pyramid (Tombs of the Ancients) - XP Egg 2",
-                    Description = "Pyramid (Tombs of the Ancients) - XP Egg 2",
+                    LocationId = "Tombs of the Ancients - XP Egg 2",
+                    Description = "Tombs of the Ancients - XP Egg 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13487,12 +13357,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - XP Egg 3",
+                "Tombs of the Ancients - XP Egg 3",
                 new Location
                 {
                     ArchipelagoId = 938,
-                    LocationId = "Pyramid (Tombs of the Ancients) - XP Egg 3",
-                    Description = "Pyramid (Tombs of the Ancients) - XP Egg 3",
+                    LocationId = "Tombs of the Ancients - XP Egg 3",
+                    Description = "Tombs of the Ancients - XP Egg 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13501,12 +13371,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Nightmare Crystal 1",
+                "Tombs of the Ancients - Nightmare Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 939,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 1",
-                    Description = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 1",
+                    LocationId = "Tombs of the Ancients - Nightmare Crystal 1",
+                    Description = "Tombs of the Ancients - Nightmare Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13515,12 +13385,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Nightmare Crystal 2",
+                "Tombs of the Ancients - Nightmare Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 940,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 2",
-                    Description = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 2",
+                    LocationId = "Tombs of the Ancients - Nightmare Crystal 2",
+                    Description = "Tombs of the Ancients - Nightmare Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13529,12 +13399,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Nightmare Crystal 3",
+                "Tombs of the Ancients - Nightmare Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 941,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 3",
-                    Description = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 3",
+                    LocationId = "Tombs of the Ancients - Nightmare Crystal 3",
+                    Description = "Tombs of the Ancients - Nightmare Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13543,12 +13413,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Nightmare Crystal 4",
+                "Tombs of the Ancients - Nightmare Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 942,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 4",
-                    Description = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 4",
+                    LocationId = "Tombs of the Ancients - Nightmare Crystal 4",
+                    Description = "Tombs of the Ancients - Nightmare Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13557,12 +13427,12 @@ namespace Randomizer
                 }
             },
             {
-                "Pyramid (Tombs of the Ancients) - Nightmare Crystal 5",
+                "Tombs of the Ancients - Nightmare Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 943,
-                    LocationId = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 5",
-                    Description = "Pyramid (Tombs of the Ancients) - Nightmare Crystal 5",
+                    LocationId = "Tombs of the Ancients - Nightmare Crystal 5",
+                    Description = "Tombs of the Ancients - Nightmare Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Pyramid,
@@ -13571,12 +13441,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Ammostash 1",
+                "Necropolis - Ammostash 1",
                 new Location
                 {
                     ArchipelagoId = 944,
-                    LocationId = "Monument (Necropolis) - Ammostash 1",
-                    Description = "Monument (Necropolis) - Ammostash 1",
+                    LocationId = "Necropolis - Ammostash 1",
+                    Description = "Necropolis - Ammostash 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13585,12 +13455,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Ammostash 2",
+                "Necropolis - Ammostash 2",
                 new Location
                 {
                     ArchipelagoId = 945,
-                    LocationId = "Monument (Necropolis) - Ammostash 2",
-                    Description = "Monument (Necropolis) - Ammostash 2",
+                    LocationId = "Necropolis - Ammostash 2",
+                    Description = "Necropolis - Ammostash 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13599,12 +13469,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Ammostash 3",
+                "Necropolis - Ammostash 3",
                 new Location
                 {
                     ArchipelagoId = 946,
-                    LocationId = "Monument (Necropolis) - Ammostash 3",
-                    Description = "Monument (Necropolis) - Ammostash 3",
+                    LocationId = "Necropolis - Ammostash 3",
+                    Description = "Necropolis - Ammostash 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13613,12 +13483,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Ammostash 4",
+                "Necropolis - Ammostash 4",
                 new Location
                 {
                     ArchipelagoId = 947,
-                    LocationId = "Monument (Necropolis) - Ammostash 4",
-                    Description = "Monument (Necropolis) - Ammostash 4",
+                    LocationId = "Necropolis - Ammostash 4",
+                    Description = "Necropolis - Ammostash 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13627,12 +13497,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Ammostash 5",
+                "Necropolis - Ammostash 5",
                 new Location
                 {
                     ArchipelagoId = 948,
-                    LocationId = "Monument (Necropolis) - Ammostash 5",
-                    Description = "Monument (Necropolis) - Ammostash 5",
+                    LocationId = "Necropolis - Ammostash 5",
+                    Description = "Necropolis - Ammostash 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13641,12 +13511,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Health Crystal 1",
+                "Necropolis - Health Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 949,
-                    LocationId = "Monument (Necropolis) - Health Crystal 1",
-                    Description = "Monument (Necropolis) - Health Crystal 1",
+                    LocationId = "Necropolis - Health Crystal 1",
+                    Description = "Necropolis - Health Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13655,12 +13525,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Health Crystal 2",
+                "Necropolis - Health Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 950,
-                    LocationId = "Monument (Necropolis) - Health Crystal 2",
-                    Description = "Monument (Necropolis) - Health Crystal 2",
+                    LocationId = "Necropolis - Health Crystal 2",
+                    Description = "Necropolis - Health Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13669,12 +13539,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Health Crystal 3",
+                "Necropolis - Health Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 951,
-                    LocationId = "Monument (Necropolis) - Health Crystal 3",
-                    Description = "Monument (Necropolis) - Health Crystal 3",
+                    LocationId = "Necropolis - Health Crystal 3",
+                    Description = "Necropolis - Health Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13683,12 +13553,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Health Crystal 4",
+                "Necropolis - Health Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 952,
-                    LocationId = "Monument (Necropolis) - Health Crystal 4",
-                    Description = "Monument (Necropolis) - Health Crystal 4",
+                    LocationId = "Necropolis - Health Crystal 4",
+                    Description = "Necropolis - Health Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13697,12 +13567,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Health Crystal 5",
+                "Necropolis - Health Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 953,
-                    LocationId = "Monument (Necropolis) - Health Crystal 5",
-                    Description = "Monument (Necropolis) - Health Crystal 5",
+                    LocationId = "Necropolis - Health Crystal 5",
+                    Description = "Necropolis - Health Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13711,12 +13581,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Health Crystal 6",
+                "Necropolis - Health Crystal 6",
                 new Location
                 {
                     ArchipelagoId = 954,
-                    LocationId = "Monument (Necropolis) - Health Crystal 6",
-                    Description = "Monument (Necropolis) - Health Crystal 6",
+                    LocationId = "Necropolis - Health Crystal 6",
+                    Description = "Necropolis - Health Crystal 6",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13725,12 +13595,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Chaos Crystal 1",
+                "Necropolis - Chaos Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 955,
-                    LocationId = "Monument (Necropolis) - Chaos Crystal 1",
-                    Description = "Monument (Necropolis) - Chaos Crystal 1",
+                    LocationId = "Necropolis - Chaos Crystal 1",
+                    Description = "Necropolis - Chaos Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13739,12 +13609,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Chaos Crystal 2",
+                "Necropolis - Chaos Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 956,
-                    LocationId = "Monument (Necropolis) - Chaos Crystal 2",
-                    Description = "Monument (Necropolis) - Chaos Crystal 2",
+                    LocationId = "Necropolis - Chaos Crystal 2",
+                    Description = "Necropolis - Chaos Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13753,12 +13623,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Chaos Crystal 3",
+                "Necropolis - Chaos Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 957,
-                    LocationId = "Monument (Necropolis) - Chaos Crystal 3",
-                    Description = "Monument (Necropolis) - Chaos Crystal 3",
+                    LocationId = "Necropolis - Chaos Crystal 3",
+                    Description = "Necropolis - Chaos Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13767,12 +13637,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Chaos Crystal 4",
+                "Necropolis - Chaos Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 958,
-                    LocationId = "Monument (Necropolis) - Chaos Crystal 4",
-                    Description = "Monument (Necropolis) - Chaos Crystal 4",
+                    LocationId = "Necropolis - Chaos Crystal 4",
+                    Description = "Necropolis - Chaos Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13781,12 +13651,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Chaos Crystal 5",
+                "Necropolis - Chaos Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 959,
-                    LocationId = "Monument (Necropolis) - Chaos Crystal 5",
-                    Description = "Monument (Necropolis) - Chaos Crystal 5",
+                    LocationId = "Necropolis - Chaos Crystal 5",
+                    Description = "Necropolis - Chaos Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13795,12 +13665,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - XP Egg 1",
+                "Necropolis - XP Egg 1",
                 new Location
                 {
                     ArchipelagoId = 960,
-                    LocationId = "Monument (Necropolis) - XP Egg 1",
-                    Description = "Monument (Necropolis) - XP Egg 1",
+                    LocationId = "Necropolis - XP Egg 1",
+                    Description = "Necropolis - XP Egg 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13809,12 +13679,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - XP Egg 2",
+                "Necropolis - XP Egg 2",
                 new Location
                 {
                     ArchipelagoId = 961,
-                    LocationId = "Monument (Necropolis) - XP Egg 2",
-                    Description = "Monument (Necropolis) - XP Egg 2",
+                    LocationId = "Necropolis - XP Egg 2",
+                    Description = "Necropolis - XP Egg 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13823,12 +13693,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - XP Egg 3",
+                "Necropolis - XP Egg 3",
                 new Location
                 {
                     ArchipelagoId = 962,
-                    LocationId = "Monument (Necropolis) - XP Egg 3",
-                    Description = "Monument (Necropolis) - XP Egg 3",
+                    LocationId = "Necropolis - XP Egg 3",
+                    Description = "Necropolis - XP Egg 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13837,12 +13707,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Nightmare Crystal 1",
+                "Necropolis - Nightmare Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 963,
-                    LocationId = "Monument (Necropolis) - Nightmare Crystal 1",
-                    Description = "Monument (Necropolis) - Nightmare Crystal 1",
+                    LocationId = "Necropolis - Nightmare Crystal 1",
+                    Description = "Necropolis - Nightmare Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13851,12 +13721,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Nightmare Crystal 2",
+                "Necropolis - Nightmare Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 964,
-                    LocationId = "Monument (Necropolis) - Nightmare Crystal 2",
-                    Description = "Monument (Necropolis) - Nightmare Crystal 2",
+                    LocationId = "Necropolis - Nightmare Crystal 2",
+                    Description = "Necropolis - Nightmare Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13865,12 +13735,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Nightmare Crystal 3",
+                "Necropolis - Nightmare Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 965,
-                    LocationId = "Monument (Necropolis) - Nightmare Crystal 3",
-                    Description = "Monument (Necropolis) - Nightmare Crystal 3",
+                    LocationId = "Necropolis - Nightmare Crystal 3",
+                    Description = "Necropolis - Nightmare Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13879,12 +13749,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Nightmare Crystal 4",
+                "Necropolis - Nightmare Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 966,
-                    LocationId = "Monument (Necropolis) - Nightmare Crystal 4",
-                    Description = "Monument (Necropolis) - Nightmare Crystal 4",
+                    LocationId = "Necropolis - Nightmare Crystal 4",
+                    Description = "Necropolis - Nightmare Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13893,12 +13763,12 @@ namespace Randomizer
                 }
             },
             {
-                "Monument (Necropolis) - Nightmare Crystal 5",
+                "Necropolis - Nightmare Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 967,
-                    LocationId = "Monument (Necropolis) - Nightmare Crystal 5",
-                    Description = "Monument (Necropolis) - Nightmare Crystal 5",
+                    LocationId = "Necropolis - Nightmare Crystal 5",
+                    Description = "Necropolis - Nightmare Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Monument,
@@ -13907,12 +13777,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Ammostash 1",
+                "Axiom - Ammostash 1",
                 new Location
                 {
                     ArchipelagoId = 968,
-                    LocationId = "Ziggurat (Axiom) - Ammostash 1",
-                    Description = "Ziggurat (Axiom) - Ammostash 1",
+                    LocationId = "Axiom - Ammostash 1",
+                    Description = "Axiom - Ammostash 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -13921,12 +13791,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Ammostash 2",
+                "Axiom - Ammostash 2",
                 new Location
                 {
                     ArchipelagoId = 969,
-                    LocationId = "Ziggurat (Axiom) - Ammostash 2",
-                    Description = "Ziggurat (Axiom) - Ammostash 2",
+                    LocationId = "Axiom - Ammostash 2",
+                    Description = "Axiom - Ammostash 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -13935,12 +13805,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Ammostash 3",
+                "Axiom - Ammostash 3",
                 new Location
                 {
                     ArchipelagoId = 970,
-                    LocationId = "Ziggurat (Axiom) - Ammostash 3",
-                    Description = "Ziggurat (Axiom) - Ammostash 3",
+                    LocationId = "Axiom - Ammostash 3",
+                    Description = "Axiom - Ammostash 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -13949,12 +13819,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Ammostash 4",
+                "Axiom - Ammostash 4",
                 new Location
                 {
                     ArchipelagoId = 971,
-                    LocationId = "Ziggurat (Axiom) - Ammostash 4",
-                    Description = "Ziggurat (Axiom) - Ammostash 4",
+                    LocationId = "Axiom - Ammostash 4",
+                    Description = "Axiom - Ammostash 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -13963,12 +13833,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Ammostash 5",
+                "Axiom - Ammostash 5",
                 new Location
                 {
                     ArchipelagoId = 972,
-                    LocationId = "Ziggurat (Axiom) - Ammostash 5",
-                    Description = "Ziggurat (Axiom) - Ammostash 5",
+                    LocationId = "Axiom - Ammostash 5",
+                    Description = "Axiom - Ammostash 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -13977,12 +13847,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Health Crystal 1",
+                "Axiom - Health Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 973,
-                    LocationId = "Ziggurat (Axiom) - Health Crystal 1",
-                    Description = "Ziggurat (Axiom) - Health Crystal 1",
+                    LocationId = "Axiom - Health Crystal 1",
+                    Description = "Axiom - Health Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -13991,12 +13861,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Health Crystal 2",
+                "Axiom - Health Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 974,
-                    LocationId = "Ziggurat (Axiom) - Health Crystal 2",
-                    Description = "Ziggurat (Axiom) - Health Crystal 2",
+                    LocationId = "Axiom - Health Crystal 2",
+                    Description = "Axiom - Health Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14005,12 +13875,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Health Crystal 3",
+                "Axiom - Health Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 975,
-                    LocationId = "Ziggurat (Axiom) - Health Crystal 3",
-                    Description = "Ziggurat (Axiom) - Health Crystal 3",
+                    LocationId = "Axiom - Health Crystal 3",
+                    Description = "Axiom - Health Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14019,12 +13889,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Health Crystal 4",
+                "Axiom - Health Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 976,
-                    LocationId = "Ziggurat (Axiom) - Health Crystal 4",
-                    Description = "Ziggurat (Axiom) - Health Crystal 4",
+                    LocationId = "Axiom - Health Crystal 4",
+                    Description = "Axiom - Health Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14033,12 +13903,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Health Crystal 5",
+                "Axiom - Health Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 977,
-                    LocationId = "Ziggurat (Axiom) - Health Crystal 5",
-                    Description = "Ziggurat (Axiom) - Health Crystal 5",
+                    LocationId = "Axiom - Health Crystal 5",
+                    Description = "Axiom - Health Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14047,12 +13917,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Health Crystal 6",
+                "Axiom - Health Crystal 6",
                 new Location
                 {
                     ArchipelagoId = 978,
-                    LocationId = "Ziggurat (Axiom) - Health Crystal 6",
-                    Description = "Ziggurat (Axiom) - Health Crystal 6",
+                    LocationId = "Axiom - Health Crystal 6",
+                    Description = "Axiom - Health Crystal 6",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14061,12 +13931,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Chaos Crystal 1",
+                "Axiom - Chaos Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 979,
-                    LocationId = "Ziggurat (Axiom) - Chaos Crystal 1",
-                    Description = "Ziggurat (Axiom) - Chaos Crystal 1",
+                    LocationId = "Axiom - Chaos Crystal 1",
+                    Description = "Axiom - Chaos Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14075,12 +13945,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Chaos Crystal 2",
+                "Axiom - Chaos Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 980,
-                    LocationId = "Ziggurat (Axiom) - Chaos Crystal 2",
-                    Description = "Ziggurat (Axiom) - Chaos Crystal 2",
+                    LocationId = "Axiom - Chaos Crystal 2",
+                    Description = "Axiom - Chaos Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14089,12 +13959,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Chaos Crystal 3",
+                "Axiom - Chaos Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 981,
-                    LocationId = "Ziggurat (Axiom) - Chaos Crystal 3",
-                    Description = "Ziggurat (Axiom) - Chaos Crystal 3",
+                    LocationId = "Axiom - Chaos Crystal 3",
+                    Description = "Axiom - Chaos Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14103,12 +13973,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Chaos Crystal 4",
+                "Axiom - Chaos Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 982,
-                    LocationId = "Ziggurat (Axiom) - Chaos Crystal 4",
-                    Description = "Ziggurat (Axiom) - Chaos Crystal 4",
+                    LocationId = "Axiom - Chaos Crystal 4",
+                    Description = "Axiom - Chaos Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14117,12 +13987,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Chaos Crystal 5",
+                "Axiom - Chaos Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 983,
-                    LocationId = "Ziggurat (Axiom) - Chaos Crystal 5",
-                    Description = "Ziggurat (Axiom) - Chaos Crystal 5",
+                    LocationId = "Axiom - Chaos Crystal 5",
+                    Description = "Axiom - Chaos Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14131,12 +14001,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - XP Egg 1",
+                "Axiom - XP Egg 1",
                 new Location
                 {
                     ArchipelagoId = 984,
-                    LocationId = "Ziggurat (Axiom) - XP Egg 1",
-                    Description = "Ziggurat (Axiom) - XP Egg 1",
+                    LocationId = "Axiom - XP Egg 1",
+                    Description = "Axiom - XP Egg 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14145,12 +14015,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - XP Egg 2",
+                "Axiom - XP Egg 2",
                 new Location
                 {
                     ArchipelagoId = 985,
-                    LocationId = "Ziggurat (Axiom) - XP Egg 2",
-                    Description = "Ziggurat (Axiom) - XP Egg 2",
+                    LocationId = "Axiom - XP Egg 2",
+                    Description = "Axiom - XP Egg 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14159,12 +14029,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - XP Egg 3",
+                "Axiom - XP Egg 3",
                 new Location
                 {
                     ArchipelagoId = 986,
-                    LocationId = "Ziggurat (Axiom) - XP Egg 3",
-                    Description = "Ziggurat (Axiom) - XP Egg 3",
+                    LocationId = "Axiom - XP Egg 3",
+                    Description = "Axiom - XP Egg 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14173,12 +14043,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Nightmare Crystal 1",
+                "Axiom - Nightmare Crystal 1",
                 new Location
                 {
                     ArchipelagoId = 987,
-                    LocationId = "Ziggurat (Axiom) - Nightmare Crystal 1",
-                    Description = "Ziggurat (Axiom) - Nightmare Crystal 1",
+                    LocationId = "Axiom - Nightmare Crystal 1",
+                    Description = "Axiom - Nightmare Crystal 1",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14187,12 +14057,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Nightmare Crystal 2",
+                "Axiom - Nightmare Crystal 2",
                 new Location
                 {
                     ArchipelagoId = 988,
-                    LocationId = "Ziggurat (Axiom) - Nightmare Crystal 2",
-                    Description = "Ziggurat (Axiom) - Nightmare Crystal 2",
+                    LocationId = "Axiom - Nightmare Crystal 2",
+                    Description = "Axiom - Nightmare Crystal 2",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14201,12 +14071,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Nightmare Crystal 3",
+                "Axiom - Nightmare Crystal 3",
                 new Location
                 {
                     ArchipelagoId = 989,
-                    LocationId = "Ziggurat (Axiom) - Nightmare Crystal 3",
-                    Description = "Ziggurat (Axiom) - Nightmare Crystal 3",
+                    LocationId = "Axiom - Nightmare Crystal 3",
+                    Description = "Axiom - Nightmare Crystal 3",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14215,12 +14085,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Nightmare Crystal 4",
+                "Axiom - Nightmare Crystal 4",
                 new Location
                 {
                     ArchipelagoId = 990,
-                    LocationId = "Ziggurat (Axiom) - Nightmare Crystal 4",
-                    Description = "Ziggurat (Axiom) - Nightmare Crystal 4",
+                    LocationId = "Axiom - Nightmare Crystal 4",
+                    Description = "Axiom - Nightmare Crystal 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14229,12 +14099,12 @@ namespace Randomizer
                 }
             },
             {
-                "Ziggurat (Axiom) - Nightmare Crystal 5",
+                "Axiom - Nightmare Crystal 5",
                 new Location
                 {
                     ArchipelagoId = 991,
-                    LocationId = "Ziggurat (Axiom) - Nightmare Crystal 5",
-                    Description = "Ziggurat (Axiom) - Nightmare Crystal 5",
+                    LocationId = "Axiom - Nightmare Crystal 5",
+                    Description = "Axiom - Nightmare Crystal 5",
                     OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.Ziggurat,
@@ -14937,7 +14807,7 @@ namespace Randomizer
                     Description = "Yhelm - Arena 1 Destructible Completion",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena1,
                     LocationType = ELocationType.ArenaDestructibleCompletion,
                     GameObjectName = null,
                 }
@@ -15217,7 +15087,7 @@ namespace Randomizer
                     Description = "Incaustis - Arena 1 Destructible Completion",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
-                    Arena = EArena.Arena2,
+                    Arena = EArena.Arena1,
                     LocationType = ELocationType.ArenaDestructibleCompletion,
                     GameObjectName = null,
                 }
@@ -16469,12 +16339,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Ammostash",
+                "First Miscellaneous - Ammostash",
                 new Location
                 {
                     ArchipelagoId = 1152,
-                    LocationId = "First Miscellaneous: Ammostash",
-                    Description = "Destroyed their first Ammostash",
+                    LocationId = "First Miscellaneous - Ammostash",
+                    Description = "First Miscellaneous - Ammostash",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -16483,12 +16353,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Health Crystal",
+                "First Miscellaneous - Health Crystal",
                 new Location
                 {
                     ArchipelagoId = 1153,
-                    LocationId = "First Miscellaneous: Health Crystal",
-                    Description = "Destroyed their first Health Crystal",
+                    LocationId = "First Miscellaneous - Health Crystal",
+                    Description = "First Miscellaneous - Health Crystal",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -16497,12 +16367,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Chaos Crystal",
+                "First Miscellaneous - Chaos Crystal",
                 new Location
                 {
                     ArchipelagoId = 1154,
-                    LocationId = "First Miscellaneous: Chaos Crystal",
-                    Description = "Destroyed destroyed first Chaos Crystal",
+                    LocationId = "First Miscellaneous - Chaos Crystal",
+                    Description = "First Miscellaneous - Chaos Crystal",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -16518,8 +16388,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Paz",
                     Description = "Section Cleared with: Paz",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16532,8 +16402,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Terminus",
                     Description = "Section Cleared with: Terminus",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16546,8 +16416,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Persephone",
                     Description = "Section Cleared with: Persephone",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16560,8 +16430,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: The Hounds",
                     Description = "Section Cleared with: The Hounds",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16574,8 +16444,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Vulcan",
                     Description = "Section Cleared with: Vulcan",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16588,8 +16458,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Hellcrow",
                     Description = "Section Cleared with: Hellcrow",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16602,8 +16472,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: The Red Right Hand",
                     Description = "Section Cleared with: The Red Right Hand",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.DreamOfTheBeast,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16616,8 +16486,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Telos",
                     Description = "Section Cleared with: Telos",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16630,8 +16500,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Lost Persephone",
                     Description = "Section Cleared with: Lost Persephone",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16644,8 +16514,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Manifested Persephone",
                     Description = "Section Cleared with: Manifested Persephone",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16658,8 +16528,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: The Lost Hounds",
                     Description = "Section Cleared with: The Lost Hounds",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16672,8 +16542,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Lost Vulcan",
                     Description = "Section Cleared with: Lost Vulcan",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Weapon,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearWeapon,
                     GameObjectName = null,
                 }
@@ -16686,8 +16556,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Unknown",
                     Description = "Section Cleared with: Outfit of the Unknown",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16700,8 +16570,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Leviathan",
                     Description = "Section Cleared with: Outfit of the Leviathan",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16714,8 +16584,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Dark Devotee",
                     Description = "Section Cleared with: Outfit of the Dark Devotee",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.DreamOfTheBeast,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16728,8 +16598,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Morning Star",
                     Description = "Section Cleared with: Outfit of the Morning Star",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.DreamOfTheBeast,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16742,8 +16612,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Angel Eyes",
                     Description = "Section Cleared with: Outfit of the Angel Eyes",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.DreamOfTheBeast,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16756,8 +16626,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Obsidian",
                     Description = "Section Cleared with: Outfit of the Obsidian",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16770,8 +16640,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Amethyst",
                     Description = "Section Cleared with: Outfit of the Amethyst",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16784,8 +16654,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Outfit of the Chromatica",
                     Description = "Section Cleared with: Outfit of the Chromatica",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Outfit,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearOutfit,
                     GameObjectName = null,
                 }
@@ -16798,8 +16668,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: This is the End",
                     Description = "Section Cleared with: This is the End",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16812,8 +16682,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Stygia (Song)",
                     Description = "Section Cleared with: Stygia (Song)",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16826,8 +16696,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Burial At Night",
                     Description = "Section Cleared with: Burial At Night",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16840,8 +16710,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: This Devastation",
                     Description = "Section Cleared with: This Devastation",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16854,8 +16724,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Poetry of Cinder",
                     Description = "Section Cleared with: Poetry of Cinder",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16868,8 +16738,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Dissolution",
                     Description = "Section Cleared with: Dissolution",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16882,8 +16752,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Acheron (Song)",
                     Description = "Section Cleared with: Acheron (Song)",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16896,8 +16766,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Silent No More",
                     Description = "Section Cleared with: Silent No More",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16910,8 +16780,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Blood and Law",
                     Description = "Section Cleared with: Blood and Law",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearBossSong,
                     GameObjectName = null,
                 }
@@ -16924,8 +16794,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Infernal Invocation I: Hopes and Fears",
                     Description = "Section Cleared with: Infernal Invocation I: Hopes and Fears",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearBossSong,
                     GameObjectName = null,
                 }
@@ -16938,8 +16808,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Infernal Invocation II: Defiance",
                     Description = "Section Cleared with: Infernal Invocation II: Defiance",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearBossSong,
                     GameObjectName = null,
                 }
@@ -16952,8 +16822,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Infernal Invocation III: Dreaming in Distortion",
                     Description = "Section Cleared with: Infernal Invocation III: Dreaming in Distortion",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearBossSong,
                     GameObjectName = null,
                 }
@@ -16966,8 +16836,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: No Tomorrow",
                     Description = "Section Cleared with: No Tomorrow",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Basegame,
                     LocationType = ELocationType.SectionClearBossSong,
                     GameObjectName = null,
                 }
@@ -16980,8 +16850,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Leviathan (Song)",
                     Description = "Section Cleared with: Leviathan (Song)",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DreamOfTheBeast,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -16994,8 +16864,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Dream of the Beast",
                     Description = "Section Cleared with: Dream of the Beast",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DreamOfTheBeast,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17008,8 +16878,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Swallow the Fire",
                     Description = "Section Cleared with: Swallow the Fire",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17022,8 +16892,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Mouth of Hell",
                     Description = "Section Cleared with: Mouth of Hell",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17036,8 +16906,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Goodbye, Morning Star",
                     Description = "Section Cleared with: Goodbye, Morning Star",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.Purgatory,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17050,8 +16920,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Departure to Destruction",
                     Description = "Section Cleared with: Departure to Destruction",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17064,8 +16934,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Hand Cannon",
                     Description = "Section Cleared with: Hand Cannon",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17078,8 +16948,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Burn in Hell",
                     Description = "Section Cleared with: Burn in Hell",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17092,8 +16962,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Murder Machine Inc",
                     Description = "Section Cleared with: Murder Machine Inc",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17106,8 +16976,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Endless",
                     Description = "Section Cleared with: Endless",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17120,8 +16990,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Mine Control",
                     Description = "Section Cleared with: Mine Control",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17134,8 +17004,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Sacrifice",
                     Description = "Section Cleared with: Sacrifice",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17148,8 +17018,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Erebus Reaction",
                     Description = "Section Cleared with: Erebus Reaction",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17162,8 +17032,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Bleeding Out",
                     Description = "Section Cleared with: Bleeding Out",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.DuskSoundtrack,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17176,8 +17046,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Down With the Sickness",
                     Description = "Section Cleared with: Down With the Sickness",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17190,8 +17060,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Uprising",
                     Description = "Section Cleared with: Uprising",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17204,8 +17074,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Misery Business",
                     Description = "Section Cleared with: Misery Business",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17218,8 +17088,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Tsunami (Original Mix)",
                     Description = "Section Cleared with: Tsunami (Original Mix)",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17232,8 +17102,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Runaway (U&I)",
                     Description = "Section Cleared with: Runaway (U&I)",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17246,8 +17116,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Feel Good Inc.",
                     Description = "Section Cleared with: Feel Good Inc.",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17260,8 +17130,8 @@ namespace Randomizer
                     LocationId = "Section Cleared with: I Love It feat. Charli XCX",
                     Description = "Section Cleared with: I Love It feat. Charli XCX",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
@@ -17274,19 +17144,19 @@ namespace Randomizer
                     LocationId = "Section Cleared with: Personal Jesus",
                     Description = "Section Cleared with: Personal Jesus",
                     OriginalItemName = "Filler",
-                    Zone = EZone.Global,
-                    Arena = EArena.Global,
+                    Zone = EZone.Song,
+                    Arena = EArena.EssentialHits,
                     LocationType = ELocationType.SectionClearMainSong,
                     GameObjectName = null,
                 }
             },
             {
-                "First Miscellaneous: Slaughter",
+                "First Miscellaneous - Slaughter",
                 new Location
                 {
                     ArchipelagoId = 1210,
-                    LocationId = "First Miscellaneous: Slaughter",
-                    Description = "Slaughtering their first victim",
+                    LocationId = "First Miscellaneous - Slaughter",
+                    Description = "First Miscellaneous - Slaughter",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17300,7 +17170,7 @@ namespace Randomizer
                 {
                     ArchipelagoId = 1211,
                     LocationId = "Styx Reload discovered",
-                    Description = "Styx Reload discovered",
+                    Description = "Fury Combo - Styx Reload discovered",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17309,12 +17179,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Jump",
+                "First Miscellaneous - Jump",
                 new Location
                 {
                     ArchipelagoId = 1212,
-                    LocationId = "First Miscellaneous: Jump",
-                    Description = "Jumping for the first time",
+                    LocationId = "First Miscellaneous - Jump",
+                    Description = "First Miscellaneous - Jump",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17323,12 +17193,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Double Jump",
+                "First Miscellaneous - Double Jump",
                 new Location
                 {
                     ArchipelagoId = 1213,
-                    LocationId = "First Miscellaneous: Double Jump",
-                    Description = "Double Jumping for the first time",
+                    LocationId = "First Miscellaneous - Double Jump",
+                    Description = "First Miscellaneous - Double Jump",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17337,12 +17207,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Infinite Jump",
+                "First Miscellaneous - Infinite Jump",
                 new Location
                 {
                     ArchipelagoId = 1214,
-                    LocationId = "First Miscellaneous: Infinite Jump",
-                    Description = "Found out they can infinitely jump now",
+                    LocationId = "First Miscellaneous - Infinite Jump",
+                    Description = "First Miscellaneous - Infinite Jump",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17351,12 +17221,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Quick Reload",
+                "First Miscellaneous - Quick Reload",
                 new Location
                 {
                     ArchipelagoId = 1215,
-                    LocationId = "First Miscellaneous: Quick Reload",
-                    Description = "Hitting their first quick reload",
+                    LocationId = "First Miscellaneous - Quick Reload",
+                    Description = "First Miscellaneous - Quick Reload",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17365,12 +17235,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Dash",
+                "First Miscellaneous - Dash",
                 new Location
                 {
                     ArchipelagoId = 1216,
-                    LocationId = "First Miscellaneous: Dash",
-                    Description = "Dashing for the first time",
+                    LocationId = "First Miscellaneous - Dash",
+                    Description = "First Miscellaneous - Dash",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17379,12 +17249,12 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Soar",
+                "First Miscellaneous - Soar",
                 new Location
                 {
                     ArchipelagoId = 1217,
-                    LocationId = "First Miscellaneous: Soar",
-                    Description = "Soaring for the first time",
+                    LocationId = "First Miscellaneous - Soar",
+                    Description = "First Miscellaneous - Soar",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -17393,67 +17263,67 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Enduring Fury",
+                "First Miscellaneous - Enduring Fury",
                 new Location
                 {
                     ArchipelagoId = 1218,
-                    LocationId = "First Miscellaneous: Enduring Fury",
+                    LocationId = "First Miscellaneous - Enduring Fury",
                     Description = "Activate Enduring Fury for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstMiscellaneous,
+                    LocationType = ELocationType.Boon,
                     GameObjectName = null,
                 }
             },
             {
-                "First Miscellaneous: Faster Ultimate Gain",
+                "First Miscellaneous - Faster Ultimate Gain",
                 new Location
                 {
                     ArchipelagoId = 1219,
-                    LocationId = "First Miscellaneous: Faster Ultimate Gain",
+                    LocationId = "First Miscellaneous - Faster Ultimate Gain",
                     Description = "Activate Faster Ultimate Gain for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstMiscellaneous,
+                    LocationType = ELocationType.Boon,
                     GameObjectName = null,
                 }
             },
             {
-                "First Miscellaneous: Deadlier Dash",
+                "First Miscellaneous - Deadlier Dash",
                 new Location
                 {
                     ArchipelagoId = 1220,
-                    LocationId = "First Miscellaneous: Deadlier Dash",
+                    LocationId = "First Miscellaneous - Deadlier Dash",
                     Description = "Activate Deadlier Dash for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstMiscellaneous,
+                    LocationType = ELocationType.Boon,
                     GameObjectName = null,
                 }
             },
             {
-                "First Miscellaneous: Explosive Slaughter",
+                "First Miscellaneous - Explosive Slaughter",
                 new Location
                 {
                     ArchipelagoId = 1221,
-                    LocationId = "First Miscellaneous: Explosive Slaughter",
+                    LocationId = "First Miscellaneous - Explosive Slaughter",
                     Description = "Activate Explosive Slaughter for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
-                    LocationType = ELocationType.FirstMiscellaneous,
+                    LocationType = ELocationType.Boon,
                     GameObjectName = null,
                 }
             },
             {
-                "First Miscellaneous: Paz Ultimate",
+                "First Miscellaneous - Paz Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1222,
-                    LocationId = "First Miscellaneous: Paz Ultimate",
+                    LocationId = "First Miscellaneous - Paz Ultimate",
                     Description = "Activate Paz' Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17463,11 +17333,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Terminus Ultimate",
+                "First Miscellaneous - Terminus Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1223,
-                    LocationId = "First Miscellaneous: Terminus Ultimate",
+                    LocationId = "First Miscellaneous - Terminus Ultimate",
                     Description = "Activate Terminus' Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17477,11 +17347,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Persephone Ultimate",
+                "First Miscellaneous - Persephone Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1224,
-                    LocationId = "First Miscellaneous: Persephone Ultimate",
+                    LocationId = "First Miscellaneous - Persephone Ultimate",
                     Description = "Activate Persephones Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17491,11 +17361,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: The Hounds Ultimate",
+                "First Miscellaneous - The Hounds Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1225,
-                    LocationId = "First Miscellaneous: The Hounds Ultimate",
+                    LocationId = "First Miscellaneous - The Hounds Ultimate",
                     Description = "Activate the Hounds Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17505,11 +17375,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Vulcan Ultimate",
+                "First Miscellaneous - Vulcan Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1226,
-                    LocationId = "First Miscellaneous: Vulcan Ultimate",
+                    LocationId = "First Miscellaneous - Vulcan Ultimate",
                     Description = "Activate Vulcans Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17519,11 +17389,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Hellcrow Ultimate",
+                "First Miscellaneous - Hellcrow Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1227,
-                    LocationId = "First Miscellaneous: Hellcrow Ultimate",
+                    LocationId = "First Miscellaneous - Hellcrow Ultimate",
                     Description = "Activate Hellcrows Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17533,11 +17403,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: The Red Right Hand Ultimate",
+                "First Miscellaneous - The Red Right Hand Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1228,
-                    LocationId = "First Miscellaneous: The Red Right Hand Ultimate",
+                    LocationId = "First Miscellaneous - The Red Right Hand Ultimate",
                     Description = "Activate the Red Right Hands Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
@@ -17547,11 +17417,11 @@ namespace Randomizer
                 }
             },
             {
-                "First Miscellaneous: Telos Ultimate",
+                "First Miscellaneous - Telos Ultimate",
                 new Location
                 {
                     ArchipelagoId = 1229,
-                    LocationId = "First Miscellaneous: Telos Ultimate",
+                    LocationId = "First Miscellaneous - Telos Ultimate",
                     Description = "Activate Telos' Ultimate for the first time",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,

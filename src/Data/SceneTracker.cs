@@ -9,6 +9,7 @@ namespace Randomizer
         public void Update()
         {
             Randomizer.SceneActiveTime += Time.unscaledDeltaTime;
+            Randomizer.TimeSinceLastDeathlink += Time.unscaledDeltaTime;
 
             if(!Randomizer.IsPaused)
                 Randomizer.LevelActiveTime += Time.unscaledDeltaTime;

@@ -541,7 +541,7 @@ namespace Randomizer
 
             if(Randomizer.Configuration.skinsRandomizeOutfits.Value){
                 var outfitType = Randomizer.ItemTracker.GetRandomizedOutfit();
-                SaveStateManager.SaveData.EquipSkin(SkinTargetType.Outfit, outfitType);
+                SaveDataManager.SaveData.EquipSkin(SkinTargetType.Outfit, outfitType);
                 Randomizer.CurrentOutfit = outfitType;
             }
 
@@ -714,7 +714,6 @@ namespace Randomizer
             Logger.LogInfo(
                 $"LevelLoader Level loads with level music {levelMusic.Name} (ID: {levelMusic.ID}), that has a bpm of {levelMusic.BPM}, whatever event is {levelMusic.Event}, bank is {levelMusic.Bank}"
             );
-            Randomizer.CurrentMainSong = Randomizer.ItemTracker.GetSongNameById(levelMusic.Name);
 
             SongInformation bossMusic = levelDefinition.AudioInfo.BossMusic;
             if (bossMusic != null)
@@ -722,7 +721,6 @@ namespace Randomizer
                 Logger.LogInfo(
                     $"LevelLoader Level loads with boss music {bossMusic.Name} (ID: {bossMusic.ID}), that has a bpm of {bossMusic.BPM}, whatever event is {bossMusic.Event}, bank is {bossMusic.Bank}"
                 );
-                Randomizer.CurrentBossSong = Randomizer.ItemTracker.GetSongNameById(bossMusic.Name);
             }
 
             foreach (LevelCollectiblePickupData pickup in levelDefinition.CollectiblePickups)
@@ -991,7 +989,12 @@ namespace Randomizer
             }
             else if(Lookup.BossEndScenarioNames.Contains(scenarioName)){
                 Randomizer.IsPaused = true;
+
+                // Apparently, when Sheol ends, it never sends with boss defeated as true lol
+                if(Randomizer.CurrentLevel == "Sheol")
+                    Randomizer.LocationTracker.CheckStageCompletion(null, true, Randomizer.CurrentLevel);
             }
+
         }
     }
 

@@ -28,27 +28,19 @@ namespace Randomizer
             { "Tutorial", 1 },
             { "Voke", 1 },
             { "Aspect of Anger", 1 },
-            { "Anger Aspect: Voke defeated", 1 },
             { "Stygia", 1 },
             { "Aspect of the Charged", 1 },
-            { "Charged Aspect: Stygia defeated", 1 },
             { "Yhelm", 1 },
             { "Aspect of the Fortress", 1 },
-            { "Fortress Aspect: Yhelm defeated", 1 },
             { "Incaustis", 1 },
             { "Aspect of Infernal Fury", 1 },
-            { "Infernal Fury Aspect: Incaustis defeated", 1 },
             { "Gehenna", 1 },
             { "Aspect of the Hellstorm", 1 },
-            { "Hellstorm Aspect: Gehenna defeated", 1 },
             { "Nihil", 1 },
             { "Aspect of the Doppelganger", 1 },
-            { "Doppelganger Aspect: Nihil defeated", 1 },
             { "Acheron", 1 },
             { "Aspect of the Wheel", 1 },
-            { "Wheel Aspect: Acheron defeated", 1 },
             { "Sheol", 1 },
-            { "Red Judge - Worldbreaker: Sheol defeated", 1 },
 
             { "Progressive Killing with Rhythm", 3 },
             { "Killing with Rhythm: 1", 1 },
@@ -191,50 +183,50 @@ namespace Randomizer
             { "I Love It feat. Charli XCX", 1 },
             { "Personal Jesus", 1 },
 
+            { "Progressive Voke Anguish Gate Skip", 0 },
+            { "Voke Anguish Gate 1 Skip", 0 },
+            { "Voke Anguish Gate 2 Skip", 0 },
+            { "Voke Anguish Gate 3 Skip", 0 },
+            { "Voke Anguish Gate 4 Skip", 0 },
+            { "Progressive Stygia Anguish Gate Skip", 0 },
+            { "Stygia Anguish Gate 1 Skip", 0 },
+            { "Stygia Anguish Gate 2 Skip", 0 },
+            { "Stygia Anguish Gate 3 Skip", 0 },
+            { "Stygia Anguish Gate 4 Skip", 0 },
+            { "Progressive Yhelm Anguish Gate Skip", 0 },
+            { "Yhelm Anguish Gate 1 Skip", 0 },
+            { "Yhelm Anguish Gate 2 Skip", 0 },
+            { "Yhelm Anguish Gate 3 Skip", 0 },
+            { "Yhelm Anguish Gate 4 Skip", 0 },
+            { "Progressive Incaustis Anguish Gate Skip", 0 },
+            { "Incaustis Anguish Gate 1 Skip", 0 },
+            { "Incaustis Anguish Gate 2 Skip", 0 },
+            { "Incaustis Anguish Gate 3 Skip", 0 },
+            { "Incaustis Anguish Gate 4 Skip", 0 },
+            { "Progressive Gehenna Anguish Gate Skip", 0 },
+            { "Gehenna Anguish Gate 1 Skip", 0 },
+            { "Gehenna Anguish Gate 2 Skip", 0 },
+            { "Gehenna Anguish Gate 3 Skip", 0 },
+            { "Gehenna Anguish Gate 4 Skip", 0 },
+            { "Progressive Nihil Anguish Gate Skip", 0 },
+            { "Nihil Anguish Gate 1 Skip", 0 },
+            { "Nihil Anguish Gate 2 Skip", 0 },
+            { "Nihil Anguish Gate 3 Skip", 0 },
+            { "Nihil Anguish Gate 4 Skip", 0 },
+            { "Progressive Acheron Anguish Gate Skip", 0 },
+            { "Acheron Anguish Gate 1 Skip", 0 },
+            { "Acheron Anguish Gate 2 Skip", 0 },
+            { "Acheron Anguish Gate 3 Skip", 0 },
+            { "Acheron Anguish Gate 4 Skip", 0 },
+            { "Progressive Sheol Anguish Gate Skip", 0 },
+            { "Sheol Anguish Gate 1 Skip", 0 },
+            { "Sheol Anguish Gate 2 Skip", 0 },
+            { "Sheol Anguish Gate 3 Skip", 0 },
+            { "Sheol Anguish Gate 4 Skip", 0 },
+
             // Not in use yet
-            // Anguish Gates
-            { "Progressive Tutorial Anguish Gate", 1 },
-            { "Tutorial Anguish Gate 1", 1 },
-            { "Progressive Voke Anguish Gate", 4 },
-            { "Voke Anguish Gate 1", 1 },
-            { "Voke Anguish Gate 2", 1 },
-            { "Voke Anguish Gate 3", 1 },
-            { "Voke Anguish Gate 4", 1 },
-            { "Progressive Stygia Anguish Gate", 4 },
-            { "Stygia Anguish Gate 1", 1 },
-            { "Stygia Anguish Gate 2", 1 },
-            { "Stygia Anguish Gate 3", 1 },
-            { "Stygia Anguish Gate 4", 1 },
-            { "Progressive Yhelm Anguish Gate", 4 },
-            { "Yhelm Anguish Gate 1", 1 },
-            { "Yhelm Anguish Gate 2", 1 },
-            { "Yhelm Anguish Gate 3", 1 },
-            { "Yhelm Anguish Gate 4", 1 },
-            { "Progressive Incaustis Anguish Gate", 4 },
-            { "Incaustis Anguish Gate 1", 1 },
-            { "Incaustis Anguish Gate 2", 1 },
-            { "Incaustis Anguish Gate 3", 1 },
-            { "Incaustis Anguish Gate 4", 1 },
-            { "Progressive Gehenna Anguish Gate", 4 },
-            { "Gehenna Anguish Gate 1", 1 },
-            { "Gehenna Anguish Gate 2", 1 },
-            { "Gehenna Anguish Gate 3", 1 },
-            { "Gehenna Anguish Gate 4", 1 },
-            { "Progressive Nihil Anguish Gate", 4 },
-            { "Nihil Anguish Gate 1", 1 },
-            { "Nihil Anguish Gate 2", 1 },
-            { "Nihil Anguish Gate 3", 1 },
-            { "Nihil Anguish Gate 4", 1 },
-            { "Progressive Acheron Anguish Gate", 4 },
-            { "Acheron Anguish Gate 1", 1 },
-            { "Acheron Anguish Gate 2", 1 },
-            { "Acheron Anguish Gate 3", 1 },
-            { "Acheron Anguish Gate 4", 1 },
-            { "Progressive Sheol Anguish Gate", 4 },
-            { "Sheol Anguish Gate 1", 1 },
-            { "Sheol Anguish Gate 2", 1 },
-            { "Sheol Anguish Gate 3", 1 },
-            { "Sheol Anguish Gate 4", 1 },
+            { "Progressive Tutorial Anguish Gate Skip", 1 },
+            { "Tutorial Anguish Gate 1 Skip", 1 },
 
             // Leviathan
             { "The Lost Unknown: Leviathan defeated", 1 },
@@ -379,8 +371,7 @@ namespace Randomizer
             { "Nihil", "Nihil" },
             { "Acheron", "Acheron" },
             { "Sheol", "Sheol" },
-            // { "CH_Amdusias1", "CH_Amdusias1" },
-            { "CH_Amdusias1", "CH_Amdusias3" },
+            { "CH_Amdusias1", "CH_Amdusias1" },
             { "CH_Marbas1", "CH_Marbas1" },
             { "CH_Halphas1", "CH_Halphas1" },
             { "CH_Bune1", "CH_Bune1" },
@@ -393,8 +384,7 @@ namespace Randomizer
             { "CH_Bune2", "CH_Bune2" },
             { "CH_Halphas3", "CH_Halphas3" },
             { "CH_Morax2", "CH_Morax2" },
-            // { "CH_Amdusias3", "CH_Amdusias3" },
-            { "CH_Amdusias3", "CH_Amdusias1" },
+            { "CH_Amdusias3", "CH_Amdusias3" },
             { "CH_Marbas3", "CH_Marbas3" },
             { "CH_Flauros2", "CH_Flauros2" },
             { "CH_Glasya2", "CH_Glasya2" },
@@ -406,10 +396,22 @@ namespace Randomizer
         public Dictionary<string, string> LoadedLevelToLevel =
             LevelToLoadedLevel.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
-        // TODO:
         public void Resync(ReadOnlyCollection<ItemInfo> allItemsReceived)
         {
-            throw new NotImplementedException();
+            Reset(Randomizer.Settings);
+            for (int i = 0; i < allItemsReceived.Count; i++)
+            {
+                var item = allItemsReceived[i];
+                var isNewItem = i > Randomizer.Archipelago.ItemIndex;
+                Randomizer.ItemTracker.SetCollectedItem(item.ItemId, i, isNewItem);
+
+                if(isNewItem)
+                {
+                    Randomizer.Archipelago.ItemIndex = i;
+                    var gameItem = Items.ItemDataById[item.ItemId];
+                    ArchipelagoConsole.Instance.LogMessage($"Received <b>{gameItem.Name}</b> while being disconnected.");
+                }
+            }
         }
 
         internal bool Has(string itemName)
@@ -444,14 +446,14 @@ namespace Randomizer
         public ItemTracker()
         {
             RequiredItemsForLevelUnlock.Clear();
-            var allLevelKeys = Lookup.RequiredLevelItems.Keys.Union(
+            var allLevelKeys = Lookup.RequiredLevelItemsBase.Keys.Union(
                 Lookup.RequiredWeaponsForLevel.Keys
             );
             foreach (var level in allLevelKeys)
             {
                 var combinedList = new List<string>();
 
-                if (Lookup.RequiredLevelItems.TryGetValue(level, out var items))
+                if (Lookup.RequiredLevelItemsBase.TryGetValue(level, out var items))
                     combinedList.AddRange(items);
 
                 if (Lookup.RequiredWeaponsForLevel.TryGetValue(level, out var weapons))
@@ -463,30 +465,111 @@ namespace Randomizer
             CollectedItemsByIndex = new Dictionary<int, ItemData>() { };
         }
 
-        public void Reset()
+        public void Reset(Settings settings)
         {
             foreach (string Key in CollectedImportantItemCountsByName.Keys.ToList())
                 CollectedImportantItemCountsByName[Key] = 0;
 
+            if(!settings.RandomizedHellsEnabled)
+                foreach(var hells in Lookup.HellsIDs)
+                    CollectedImportantItemCountsByName[hells] = 1;
+
             RequiredItemsForLevelUnlock.Clear();
-            var allLevelKeys = Lookup.RequiredLevelItems.Keys.Union(
+            var allLevelKeys = Lookup.RequiredLevelItemsBase.Keys.Union(
                 Lookup.RequiredWeaponsForLevel.Keys
             );
             foreach (var level in allLevelKeys)
             {
                 var combinedList = new List<string>();
 
-                if (Lookup.RequiredLevelItems.TryGetValue(level, out var items))
+                if (Lookup.RequiredLevelItemsBase.TryGetValue(level, out var items))
                     combinedList.AddRange(items);
 
-                if (Lookup.RequiredWeaponsForLevel.TryGetValue(level, out var weapons))
+                if (settings.RequireWeaponsForChallenges && Lookup.RequiredWeaponsForLevel.TryGetValue(level, out var weapons))
                     combinedList.AddRange(weapons);
+
+                if (settings.RequireStageForChallenges && Lookup.RequiredLevelItemsChallenges.TryGetValue(level, out var hells))
+                    combinedList.AddRange(hells);
 
                 RequiredItemsForLevelUnlock[level] = combinedList.Distinct().ToList();
             }
 
+            if(settings.RegressiveDifficultyEnabled)
+                SaveDataManager.SaveData.LastUsedDifficulty = EDifficulty.VeryHard;
+            else
+                SaveDataManager.SaveData.LastUsedDifficulty = (EDifficulty)settings.StartingDifficulty;
+            Randomizer.SelectedDifficulty = SaveDataManager.SaveData.LastUsedDifficulty;
+            Randomizer.CurrentDifficulty = SaveDataManager.SaveData.LastUsedDifficulty;
+
+            SaveDataManager.SaveData.LastPlayedLevelID = Lookup.HellsIDs[settings.StartingHells+1];
+
+            if (!settings.RandomizedBoonsEnabled)
+            {
+                foreach(var boon in Lookup.BoonNameToType.Keys)
+                    CollectedImportantItemCountsByName[boon] = 1;
+            }
+
+            if (!settings.RandomizedDashEnabled)
+            {
+                CollectedImportantItemCountsByName["Dash"] = 1;
+                CollectedImportantItemCountsByName["Soar"] = 1;
+            }
+
+            if (!settings.RandomizedJumpEnabled)
+            {
+                CollectedImportantItemCountsByName["Jump"] = 1;
+                CollectedImportantItemCountsByName["Double Jump"] = 1;
+            }
+
+            if (!settings.RandomizedReloadEnabled)
+            {
+                CollectedImportantItemCountsByName["Quick Reload"] = 1;
+                CollectedImportantItemCountsByName["Manual Reload"] = 1;
+            }
+
+            if (!settings.RandomizedSlaughterEnabled)
+            {
+                CollectedImportantItemCountsByName["Slaughter"] = 1;
+            }
+
+            if (!settings.RandomizedOutfitsEnabled)
+            {
+                foreach(var outfit in Lookup.OutfitNameToEnum.Keys)
+                    CollectedImportantItemCountsByName[outfit] = 1;
+            }
+
+            if (!settings.RandomizedSongsEnabled)
+            {
+                foreach(var song in Lookup.SongNameToEnum.Keys)
+                    CollectedImportantItemCountsByName[song] = 1;
+            }
+
+            if (settings.WeaponUnlockMode == Settings.WeaponMode.WeaponAsOnePackage)
+            {
+                foreach(var weaponName in Lookup.WeaponNameToType.Keys)
+                    CollectedImportantItemCountsByName[$"{weaponName} Ultimate"] = 1;
+            }
+
+            if (!settings.DestructibleAsUnlocks)
+            {
+                CollectedImportantItemCountsByName["Destructible Ammostashes"] = 1;
+                CollectedImportantItemCountsByName["Destructible Health Crystals"] = 1;
+                CollectedImportantItemCountsByName["Destructible Chaos Crystals"] = 1;
+            }
+
+            if (!settings.IncludeRandomizedWeaponSkinsChecks)
+            {
+                foreach(var skin in Lookup.WeaponSkinNameToType.Keys)
+                    CollectedImportantItemCountsByName[skin] = 1;
+            }
+
+            if (!settings.RequireAspectForBossArena)
+            {
+                foreach(var aspect in Lookup.HellsNameToAspect.Values)
+                    CollectedImportantItemCountsByName[aspect] = 1;
+            }
+
             CollectedItemsByIndex = new Dictionary<int, ItemData>() { };
-            Items.ItemList.Clear();
         }
 
         private readonly List<long> ProgressiveIds =
@@ -497,30 +580,32 @@ namespace Randomizer
             163, 167,
         ];
 
+        private readonly List<long> BoonIds =
+        [
+            3, 4, 5, 6,
+        ];
+
         private readonly List<long> WeaponIdsWithUltimates =
         [
             130, 132, 134, 138, 141, 144, 146, 148,
         ];
 
-        private readonly List<long> DispensibleProgressiveItems =
-        [
-            130, 132, 134, 136, 137, 138,
-            140, 141, 143, 144, 146, 148,
-        ];
-
-        // TODO:
-        public void SetCollectedItem(long itemId, int? itemIndex, bool rewardFiller, bool isResync, string sender = "")
+        public void SetCollectedItem(long itemId, int? itemIndex, bool rewardFiller, string sender = "")
         {
             ItemData item = Items.ItemDataById[itemId];
-            Logger.LogInfo("Granting item " + item.Name);
+            Logger.LogInfo($"Granting item {item.Name}, rewarding filler: {rewardFiller}");
 
             if (itemIndex.HasValue)
+            {
                 CollectedItemsByIndex.Add(itemIndex.Value, item);
+                Logger.LogInfo($"Item {item.Name} has index {itemIndex.Value}");
+            }
 
             if (item.Name == "Filler")
                 return;
 
-            IngameMessagesPatches.DisplayItemReceived(item, sender);
+            if(!itemIndex.HasValue)
+                IngameMessagesPatches.DisplayItemReceived(item, sender);
 
             if (CollectedImportantItemCountsByName.ContainsKey(item.Name))
             {
@@ -533,47 +618,32 @@ namespace Randomizer
                     CollectedImportantItemCountsByName[newHell.Name]++;
                 }
 
+                // Any anguish gate unlock
                 if (
-                    Randomizer.Settings.WeaponUnlockMode == Settings.WeaponMode.WeaponAsOnePackage
-                    && WeaponIdsWithUltimates.Contains(item.ArchipelagoId)
+                    Randomizer.CurrentGameMode == EGameMode.Stage
+                    && item.ArchipelagoId >= 70
+                    && item.ArchipelagoId <= 111
                 )
-                {
-                    var weaponUltimateUnlock = Items.ItemDataById[itemId + 1];
-                    CollectedImportantItemCountsByName[weaponUltimateUnlock.Name]++;
-                    Logger.LogInfo(
-                        $"Weapons are unlocked as one package, also granting {weaponUltimateUnlock.Name}"
-                    );
-                }
+                    Randomizer.LocationTracker.UpdateAnguishGates();
+
+                if(BoonIds.Contains(item.ArchipelagoId))
+                    AudioGameplayControllerPatches.UpdateUnlockedBeatstreaks();
             }
 
-            // the filler Coat of Arm item
-            if (item.Name == "Coat of Arms Fill")
-            {
-                var progressiveCoatOfArm = Items.ItemDataByName["Coat of Arms"];
-                CollectedImportantItemCountsByName[progressiveCoatOfArm.Name]++;
-                Logger.LogInfo($"Adding a Coat of Arm filler, item: {progressiveCoatOfArm.Name}");
-            }
-
-            if (item.Name.StartsWith("Coat of Arms Fill"))
+            if (item.Name.Equals("Coat of Arms"))
             {
                 Randomizer.LocationTracker.CheckSkinUnlocks(
                     CollectedImportantItemCountsByName["Coat of Arms"]
                 );
             }
+
             if (
                 rewardFiller
-                && !isResync
                 && (
                     item.Classification == ItemClassification.filler
                     || item.Classification == ItemClassification.trap
                 )
             )
-            {
-                Logger.LogInfo("Queueing item " + item.Name + " for ingame dispension");
-                Randomizer.IngameDispenser.QueueItem(item, sender);
-            }
-
-            if (!isResync && DispensibleProgressiveItems.Contains(itemId))
             {
                 Logger.LogInfo("Queueing item " + item.Name + " for ingame dispension");
                 Randomizer.IngameDispenser.QueueItem(item, sender);
@@ -600,7 +670,9 @@ namespace Randomizer
         internal bool HasDifficultyUnlocked(EDifficulty difficulty)
         {
             var difficultyItemName = Lookup.DifficultyTypeToName[difficulty];
-            return Has(difficultyItemName);
+            bool v = Has(difficultyItemName);
+            Logger.LogDebug($"Has selected difficulty {difficulty}: {v}");
+            return v;
         }
 
         public int GetProgressiveStagesUntilUnlock(string LevelID)
@@ -632,8 +704,14 @@ namespace Randomizer
             List<string> missingItems = new List<string>();
             foreach (string item in RequiredItemsForLevelUnlock[LevelID])
             {
-                if (!Has(item))
-                    missingItems.Add(item);
+                if(Lookup.ExtendedWeaponNameToType.TryGetValue(item, out var type))
+                {
+                    if(!IsWeaponUnlocked(type))
+                        missingItems.Add(item);
+                }
+                else
+                    if (!Has(item))
+                        missingItems.Add(item);
             }
             Logger.LogInfo($"Items missing for {LevelID} are: {string.Join(", ", missingItems)}");
             return missingItems;
@@ -642,26 +720,6 @@ namespace Randomizer
         public bool HasHellOfChallenge(string levelID)
         {
             return Has(Lookup.ChallengeToHellDictionary[levelID]);
-        }
-
-        public bool HasWeaponsForLevel(string levelID)
-        {
-            return GetMissingWeaponsForLevel(levelID).Count == 0;
-        }
-
-        public List<string> GetMissingWeaponsForLevel(string levelID)
-        {
-            List<string> missingWeapons = new List<string>();
-            var requiredWeapons = Lookup.RequiredWeaponsForLevel[levelID];
-            foreach (string weapon in requiredWeapons)
-            {
-                if (!Has(weapon))
-                    missingWeapons.Add(weapon);
-            }
-            Logger.LogDebug(
-                $"Weapons missing for {levelID} are: {string.Join(", ", missingWeapons)}"
-            );
-            return missingWeapons;
         }
 
         public List<PlayerWeaponType> GetAvailableWeaponTypes()
@@ -723,6 +781,11 @@ namespace Randomizer
             return Lookup.WeaponTypeToName[weaponType];
         }
 
+        public int GetSigilLevelByName(string name)
+        {
+            return Math.Min(CollectedImportantItemCountsByName.GetValueOrDefault(name, 0), 3);
+        }
+
         public int GetSigilLevelByType(ESigilType sigilType)
         {
             if (Lookup.SigilTypeToName.TryGetValue(sigilType, out string sigilName))
@@ -747,7 +810,7 @@ namespace Randomizer
             bool isAvailable = Has(boonName);
             Logger.LogInfo($"Boon {effect} is available: {isAvailable}");
 
-            if (isAvailable)
+            if (isAvailable && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc(boonName);
 
             return isAvailable;
@@ -756,38 +819,6 @@ namespace Randomizer
         public int GetCollectedCoatOfArms()
         {
             return Math.Min(CollectedImportantItemCountsByName["Coat of Arms"], 32);
-        }
-
-        private readonly List<string> HellsBosses =
-        [
-            "Anger Aspect: Voke defeated",
-            "Charged Aspect: Stygia defeated",
-            "Fortress Aspect: Yhelm defeated",
-            "Infernal Fury Aspect: Incaustis defeated",
-            "Hellstorm Aspect: Gehenna defeated",
-            "Doppelganger Aspect: Nihil defeated",
-            "Wheel Aspect: Acheron defeated",
-            "Red Judge - Worldbreaker: Sheol defeated",
-        ];
-
-        private readonly List<string> LeviathanBosses = ["The Lost Unknown: Leviathan defeated"];
-
-        public List<string> GetBossesDefeated(ItemGamemode gamemode)
-        {
-            List<string> DefeatedBosses = new List<string>() { };
-            if (gamemode == ItemGamemode.HELL)
-                foreach (string boss in HellsBosses)
-                {
-                    if (Has(boss))
-                        DefeatedBosses.Add(boss);
-                }
-            else if (gamemode == ItemGamemode.LEVIATHAN)
-                foreach (string boss in LeviathanBosses)
-                {
-                    if (Has(boss))
-                        DefeatedBosses.Add(boss);
-                }
-            return DefeatedBosses;
         }
 
         public bool IsChallenge(string levelId)
@@ -801,7 +832,7 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedDashEnabled)
                 canPerform = Has("Dash");
 
-            if(canPerform)
+            if(canPerform && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc("Dash");
             Logger.LogDebug($"Can perform Dash: {canPerform}");
             return canPerform;
@@ -810,10 +841,10 @@ namespace Randomizer
         internal bool CanSoar()
         {
             bool canPerform = true;
-            if (Randomizer.Settings.RandomizedDashEnabled && CanDash())
+            if (Randomizer.Settings.RandomizedDashEnabled)
                 canPerform = Has("Soar");
 
-            if(canPerform)
+            if(canPerform && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc("Soar");
             Logger.LogDebug($"Can perform Soar: {canPerform}");
             return canPerform;
@@ -825,7 +856,7 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedJumpEnabled)
                 canPerform = Has("Jump");
 
-            if(canPerform)
+            if(canPerform && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc("Jump");
             Logger.LogDebug($"Can perform Jump: {canPerform}");
             return canPerform;
@@ -834,10 +865,10 @@ namespace Randomizer
         internal bool CanDoubleJump()
         {
             bool canPerform = true;
-            if (Randomizer.Settings.RandomizedJumpEnabled && CanJump())
+            if (Randomizer.Settings.RandomizedJumpEnabled)
                 canPerform = Has("Double Jump");
 
-            if(canPerform)
+            if(canPerform && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc("Double Jump");
             Logger.LogDebug($"Can perform Double Jump: {canPerform}");
             return canPerform;
@@ -846,10 +877,10 @@ namespace Randomizer
         internal bool CanInfiniteJump()
         {
             bool canPerform = false;
-            if (Randomizer.Settings.RandomizedJumpEnabled && CanJump() && CanDoubleJump())
+            if (Randomizer.Settings.RandomizedJumpEnabled)
                 canPerform = Has("Infinite Jump");
 
-            if(canPerform)
+            if(canPerform && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc("Infinite Jump");
             Logger.LogDebug($"Can perform Infinite Jump: {canPerform}");
             return canPerform;
@@ -871,7 +902,7 @@ namespace Randomizer
             if (Randomizer.Settings.RandomizedReloadEnabled)
                 canPerform = Has("Quick Reload");
 
-            if(canPerform)
+            if(canPerform && !Randomizer.IsPaused)
                 Randomizer.LocationTracker.CheckMisc("Quick Reload");
             Logger.LogDebug($"Can perform Quick Reload: {canPerform}");
             return canPerform;
@@ -885,9 +916,13 @@ namespace Randomizer
 
         internal bool CanWeaponUltimate(string weaponName)
         {
-            bool canPerform = Has(weaponName) && Has($"{weaponName} Ultimate");
+            if(!Lookup.WeaponNameToType.ContainsKey(weaponName))
+                return false;
+
+            var weaponType  = Lookup.WeaponNameToType[weaponName];
+            bool canPerform = IsWeaponUnlocked(weaponType) && Has($"{weaponName} Ultimate");
             Logger.LogDebug($"Can perform {weaponName}'s ultimate: {canPerform}");
-            return true;
+            return canPerform;
         }
 
         internal bool CanSlaughter()
@@ -903,27 +938,34 @@ namespace Randomizer
         {
             if (destructibleName.Contains("Ammostash"))
             {
-                bool v = Has("Destructible Ammostashes");
-                if (v)
+                bool isDestructible = Has("Destructible Ammostashes");
+                if (isDestructible && !Randomizer.IsPaused)
                     Randomizer.LocationTracker.CheckMisc("Ammostash");
-                return v;
+                return isDestructible;
             }
             else if (destructibleName.Contains("Health"))
             {
-                bool v = Has("Destructible Health Crystals");
-                if (v)
+                bool isDestructible = Has("Destructible Health Crystals");
+                if (isDestructible && !Randomizer.IsPaused)
                     Randomizer.LocationTracker.CheckMisc("Health Crystal");
-                return v;
+                return isDestructible;
             }
             else if (destructibleName.Contains("Chaos"))
             {
-                bool v = Has("Destructible Chaos Crystals");
-                if (v)
+                bool isDestructible = Has("Destructible Chaos Crystals");
+                if (isDestructible && !Randomizer.IsPaused)
                     Randomizer.LocationTracker.CheckMisc("Chaos Crystal");
-                return v;
+                return isDestructible;
             }
 
             return true;
+        }
+
+        internal bool HasAnguishGateSkip(string destructibleName)
+        {
+            bool hasAlreadyCompleted = !Randomizer.LocationTracker.IsLocationUnchecked(destructibleName);
+            bool hasSkip = Has($"{destructibleName} Skip");
+            return Randomizer.Settings.IncludeProgressiveAnguishGateSkips && hasAlreadyCompleted && hasSkip;
         }
 
         internal string GetRandomizedLevel(string levelID)
@@ -1056,13 +1098,13 @@ namespace Randomizer
             return Lookup.SongIdToName.GetValueOrDefault(songId, "");
         }
 
-        internal string GetRandomizedBossSong()
+        internal string GetRandomizedBossSong(string levelId = null)
         {
             string randomizedSong = null;
             List<string> unlockedSongs = GetUnlockedBossSongs();
 
             if (
-                !Randomizer.IsFinalLevel
+                levelId != "Sheol"
                 && Randomizer
                     .Configuration
                     .songsRestrictAndEnforceNoTomorrowToOnlyTheFinalBoss
@@ -1102,7 +1144,7 @@ namespace Randomizer
             }
 
             if (
-                Randomizer.IsFinalLevel
+                levelId == "Sheol"
                 && Randomizer
                     .Configuration
                     .songsRestrictAndEnforceNoTomorrowToOnlyTheFinalBoss
@@ -1110,7 +1152,7 @@ namespace Randomizer
                 && unlockedSongs.Contains("No Tomorrow")
             )
                 randomizedSong = "No Tomorrow";
-            Logger.LogInfo($"Randomizing Main Song to {randomizedSong}");
+            Logger.LogInfo($"Randomizing Boss Song to {randomizedSong}");
             return Lookup.SongNameToId[randomizedSong];
         }
 
@@ -1141,24 +1183,40 @@ namespace Randomizer
 
                 if (
                     !Randomizer.Settings.RandomizedOutfitDLCs.HasFlag(origin)
-                    || (
-                        origin == DreamOfTheBeast
-                        && !DLCPatches.Instance.HasDLC(EDLC.DreamOfTheBeast)
-                    )
+                    || (origin == DreamOfTheBeast && !DLCPatches.Instance.HasDLC(EDLC.DreamOfTheBeast))
                     || (origin == Purgatory && !DLCPatches.Instance.HasDLC(EDLC.Purgatory))
                 )
+                {
+                    Logger.LogDebug(
+                        $"Skipping outfit origin '{origin}': Setting disabled or DLC not owned."
+                    );
                     continue;
+                }
 
                 foreach (string outfitName in kvp.Value)
                 {
                     if (Has(outfitName))
+                    {
+                        Logger.LogDebug(
+                            $"Found unlocked outfit: '{outfitName}' (Origin: {origin})"
+                        );
                         unlockedOutfits.Add(outfitName);
+                    }
+                    else
+                    {
+                        Logger.LogDebug($"Outfit '{outfitName}' is not unlocked/owned.");
+                    }
                 }
             }
 
             // Default if player messes up yaml by including non-available DLCs
             if (unlockedOutfits.Count == 0)
+            {
+                Logger.LogDebug(
+                    "No outfits were unlocked from active settings. Falling back to default 'Outfit of the Unknown'."
+                );
                 unlockedOutfits.Add("Outfit of the Unknown");
+            }
 
             Logger.LogDebug($"Returning unlocked outfits: {string.Join(", ", unlockedOutfits)}");
             return unlockedOutfits;
@@ -1306,18 +1364,63 @@ namespace Randomizer
         {
             List<string> missingItems = new List<string>();
 
-            int missingCoatOfArms = Math.Max(Randomizer.Settings.RequiredCoatOfArmsForSheol - CollectedImportantItemCountsByName["Coat of Arms"], 0);
-            if(Randomizer.Settings.RequireCoatOfArmsForSheol && missingCoatOfArms > 0)
-                missingItems.Add($"{missingCoatOfArms} more Coat of Arms");
+            int currentCoatOfArms = CollectedImportantItemCountsByName["Coat of Arms"];
+            int requiredCoatOfArms = Randomizer.Settings.RequiredCoatOfArmsForSheol;
+            int missingCoatOfArms = Math.Max(requiredCoatOfArms - currentCoatOfArms, 0);
+            if (Randomizer.Settings.RequireCoatOfArmsForSheol)
+            {
+                if (missingCoatOfArms > 0)
+                {
+                    Logger.LogDebug(
+                        $"Coat of Arms requirement active: Missing {missingCoatOfArms} ({currentCoatOfArms}/{requiredCoatOfArms})."
+                    );
+                    missingItems.Add($"{missingCoatOfArms} more Coat of Arms");
+                }
+                else
+                    Logger.LogDebug(
+                        $"Coat of Arms requirement met ({currentCoatOfArms}/{requiredCoatOfArms})."
+                    );
+            }
+            else
+                Logger.LogDebug("Coat of Arms requirement disabled.");
 
-            int missingDefeatedAspects = Math.Max(Randomizer.Settings.RequiredAspectDefeatedForSheol - Randomizer.ItemTracker.GetBossesDefeated(ItemGamemode.HELL).Count, 0);
-            if(Randomizer.Settings.RequireNumberOfAspectDefeatedForSheol && missingDefeatedAspects > 0)
-                missingItems.Add($"{missingDefeatedAspects} more defeated Aspects");
+            if (Randomizer.Settings.RequireNoTomorrowForSheol)
+            {
+                bool hasNoTomorrow = Randomizer.ItemTracker.Has("No Tomorrow");
+                if (!hasNoTomorrow)
+                {
+                    Logger.LogDebug(
+                        "'No Tomorrow' requirement active: Item is missing."
+                    );
+                    missingItems.Add("No Tomorrow");
+                }
+                else
+                    Logger.LogDebug("'No Tomorrow' requirement met.");
+            }
+            else
+                Logger.LogDebug("'No Tomorrow' requirement disabled.");
 
-            if(Randomizer.Settings.RequireNoTomorrowForSheol && !Randomizer.ItemTracker.Has("No Tomorrow"))
-                missingItems.Add("No Tomorrow");
+            if (missingItems.Count > 0)
+                Logger.LogDebug(
+                    $" Requirements not met. Total missing: {missingItems.Count} -> ({string.Join(", ", missingItems)})"
+                );
+            else
+                Logger.LogDebug("All Sheol access requirements are met");
 
             return missingItems;
+        }
+
+        internal int GetSkipsAmount(string levelId)
+        {
+            int count = 0;
+            for (int i = 1; i < 5; i++)
+            {
+                string skipName = $"{levelId} Anguish Gate {i} Skip";
+                if(Has(skipName))
+                    count++;
+            }
+            return count;
+
         }
     }
 }

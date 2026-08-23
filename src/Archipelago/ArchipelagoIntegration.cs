@@ -29,7 +29,10 @@ namespace Randomizer
             get { return session != null ? session.Socket.Connected : false; }
         }
 
-        private const string DataStorageKeyNotLocalLocations = "NotRandomizedLocations";
+        private const string DataStorageKeyRandomizedLocations = "NotRandomizedLocations";
+        private const string DataStorageKeyDefeatedBosses = "DefeatedBosses";
+        private const string DataStorageKeyItemIndex = "ItemIndex";
+        private string LastConnectionString = "";
         public ArchipelagoSession session;
         private IEnumerator incomingItemHandler;
         private IEnumerator outgoingItemHandler;
@@ -37,10 +40,23 @@ namespace Randomizer
         private ConcurrentQueue<(ItemInfo ItemInfo, int index)> incomingItems;
         private ConcurrentQueue<Location> locationsToSend = new ConcurrentQueue<Location>();
         private DeathLinkService deathLinkService;
-        private readonly float delay = 0.25f;
+        private readonly float delay = 0.1f;
         public Dictionary<string, object> slotData;
         public bool sentCompletion = false;
-        public int ItemIndex = 0;
+        public int ItemIndex
+        {
+            get;
+            set
+            {
+                Logger.LogInfo($"ItemIndex - Current: {field} | Incoming: {value}");
+                if (field < value)
+                {
+                    SetItemIndex(value);
+                    field = value;
+                }
+            }
+        } = 0;
+
         private Version archipelagoVersion = new Version("0.6.7");
 
         public void Update()
@@ -109,7 +125,8 @@ namespace Randomizer
             locationsToSend = new ConcurrentQueue<Location>();
 
             session.MessageLog.OnMessageReceived += ArchipelagoConsole.Instance.LogApMessage;
-            session.Locations.CheckedLocationsUpdated += Randomizer.LocationTracker.Resync;
+            session.Socket.ErrorReceived += Session_ErrorReceived;
+            session.Socket.SocketClosed += Session_SocketClosed;
 
             try
             {
@@ -129,13 +146,36 @@ namespace Randomizer
 
             if (LoginResult is LoginSuccessful LoginSuccess)
             {
+                string CurrentConnectionString = Randomizer.Configuration.archipelagoUri.Value + Randomizer.Configuration.archipelagoUsername.Value;
                 Logger.LogInfo("Successfully connected to Archipelago Multiworld server!");
 
                 Randomizer.Settings = new Settings(LoginSuccess.SlotData);
 
                 deathLinkService = session.CreateDeathLinkService();
-                deathLinkService.OnDeathLinkReceived += HandleDeathlink();
+                deathLinkService.OnDeathLinkReceived += HandleDeathlink;
+
                 CheckDeathlink();
+                SetupDataStorage();
+
+                if (LastConnectionString != CurrentConnectionString)
+                {
+                    LastConnectionString = CurrentConnectionString;
+                    SaveDataManager.ResetState();
+                    Randomizer.LocationTracker.Reset();
+                    Randomizer.ItemTracker.Reset(Randomizer.Settings);
+                    Randomizer.IngameDispenser.Reset();
+
+                    Items.ItemList.Clear();
+                    session.Locations.ScoutLocationsAsync(session.Locations.AllLocations.ToArray()).ContinueWith(locationInfoPacket => {
+                    foreach (ItemInfo ItemInfo in locationInfoPacket.Result.Values) {
+                        Items.ItemList.Add(ItemInfo.LocationId, ItemInfo);
+                        Logger.LogDebug($"Adding Item '{ItemInfo.ItemName}' to Location '{ItemInfo.LocationDisplayName}' with Location ID {ItemInfo.LocationId}");
+                    }
+                    }).Wait(TimeSpan.FromSeconds(10.0f));
+                    Logger.LogInfo("Successfully scouted locations for item placements");
+                }
+
+                session.Locations.CheckedLocationsUpdated += Randomizer.LocationTracker.Resync;
                 Resync();
             }
             else
@@ -159,13 +199,25 @@ namespace Randomizer
             return "";
         }
 
-        private static DeathLinkService.DeathLinkReceivedHandler HandleDeathlink()
+        void Session_SocketClosed(string reason)
         {
-            return (deathLinkObject) =>
-            {
-                ArchipelagoConsole.Instance.LogDeathlink(deathLinkObject);
-                Randomizer.IngameDispenser.QueueDeathLink(deathLinkObject.Source);
-            };
+            Logger.LogError("Connection to Archipelago lost: " + reason);
+            ArchipelagoConsole.Instance.LogMessage($"<color=orange>Connection to Archipelago lost.</color>");
+            TryDisconnect();
+        }
+
+         void Session_ErrorReceived(Exception e, string message)
+        {
+            ArchipelagoConsole.Instance.LogMessage($"<color=orange>Received an error from APSession.Socket. This means you may have lost connection to the AP server.</color>");
+            Logger.LogError($"Received error from APSession.Socket: '{message}'\n");
+            if (e != null) Logger.LogError(e.ToString());
+            TryDisconnect();
+        }
+
+        private static void HandleDeathlink(DeathLink deathLinkObject)
+        {
+            ArchipelagoConsole.Instance.LogDeathlink(deathLinkObject);
+            Randomizer.IngameDispenser.QueueDeathLink(deathLinkObject.Source);
         }
 
         public void CheckDeathlink()
@@ -211,9 +263,21 @@ namespace Randomizer
                 {
                     ArchipelagoConsole.Instance.LogMessage("Disconnecting from Archipelago");
                 }
+
+                if (deathLinkService != null)
+                {
+                    deathLinkService.OnDeathLinkReceived -= HandleDeathlink;
+                    deathLinkService = null;
+                }
+
                 if (session != null)
                 {
-                    session.Socket.DisconnectAsync();
+                    session.MessageLog.OnMessageReceived -= ArchipelagoConsole.Instance.LogApMessage;
+                    session.Locations.CheckedLocationsUpdated -= Randomizer.LocationTracker.Resync;
+                    session.Socket.ErrorReceived -= Session_ErrorReceived;
+                    session.Socket.SocketClosed -= Session_SocketClosed;
+
+                    _ = session.Socket.DisconnectAsync();
                     session = null;
                 }
 
@@ -222,12 +286,7 @@ namespace Randomizer
                 checkItemsReceived = null;
                 incomingItems = new ConcurrentQueue<(ItemInfo ItemInfo, int ItemIndex)>();
                 locationsToSend = new ConcurrentQueue<Location>();
-                deathLinkService = null;
-                slotData = null;
                 ItemIndex = 0;
-                Randomizer.LocationTracker.Reset();
-                Randomizer.ItemTracker.Reset();
-                Randomizer.IngameDispenser.Reset();
 
                 ArchipelagoConsole.Instance.LogMessage("Disconnected from Archipelago");
             }
@@ -245,20 +304,33 @@ namespace Randomizer
             Logger.LogInfo(
                 "Running Location resync with "
                     + Randomizer.LocationTracker.LocationsCollected.Count
-                    + " locations."
+                    + " locally checked locations."
+            );
+            Randomizer.LocationTracker.Resync(Randomizer.LocationTracker.LocationsCollected.Select(loc => loc.ArchipelagoId).ToList().AsReadOnly());
+
+            Logger.LogInfo(
+                "Running Location resync with "
+                    + session.Locations.AllLocationsChecked.Count
+                    + " officially checked locations."
             );
             Randomizer.LocationTracker.Resync(session.Locations.AllLocationsChecked);
-            Randomizer.LocationTracker.Resync(
-                session
-                    .DataStorage[DataStorageKeyNotLocalLocations]
-                    .To<long[]>()
-                    .ToList()
-                    .AsReadOnly()
-            );
+
+            long[] ids = session.DataStorage[Scope.Slot, DataStorageKeyRandomizedLocations].To<long[]>();
+            if(ids != null)
+            {
+                Logger.LogInfo(
+                    "Running Location resync with "
+                        + ids.Length + " hidden checked locations."
+                );
+                Randomizer.LocationTracker.Resync(
+                    (ids ?? System.Array.Empty<long>()).ToList().AsReadOnly()
+                );
+            }
 
             Logger.LogInfo(
                 "Running Item resync with " + session.Items.AllItemsReceived.Count + " items."
             );
+
             Randomizer.ItemTracker.Resync(session.Items.AllItemsReceived);
         }
 
@@ -298,7 +370,6 @@ namespace Randomizer
                     itemId,
                     pendingItem.index,
                     true,
-                    false,
                     itemSender
                 );
                 incomingItems.TryDequeue(out _);
@@ -403,6 +474,10 @@ namespace Randomizer
 
         public void SendDeathLink(string levelId, AttackID attackID = AttackID.None)
         {
+            if (Randomizer.TimeSinceLastDeathlink < 10f)
+                return;
+            Randomizer.TimeSinceLastDeathlink = 0f;
+
             string Player = Randomizer.Configuration.archipelagoUsername.Value;
 
             HashSet<string> MessageOptions = new HashSet<string>();
@@ -426,12 +501,16 @@ namespace Randomizer
 
 
             if(connected)
+            {
+                string cause = $"{Player}{MessageOptions.ToList()[new System.Random().Next(MessageOptions.Count)]}";
+                ArchipelagoConsole.Instance.LogMessage($"Sending deathlink: {cause}");
                 deathLinkService.SendDeathLink(
                     new DeathLink(
                         Player,
-                        $"{Player}{MessageOptions.ToList()[new System.Random().Next(MessageOptions.Count)]}"
+                        cause
                     )
                 );
+            }
         }
 
         public void SendArchipelagoMessage(string message)
@@ -449,66 +528,70 @@ namespace Randomizer
             );
         }
 
-        public int GetPlayerSlot()
-        {
-            return session.ConnectionInfo.Slot;
-        }
-
-        public string GetPlayerName(int Slot)
-        {
-            return session.Players.GetPlayerName(Slot).Replace("{", "").Replace("}", "");
-        }
-
-        public string GetPlayerGame(int Slot)
-        {
-            return session.Players.Players[0][Slot].Game;
-        }
-
-        public bool IsHellsingerPlayer(int Slot)
-        {
-            return GetPlayerGame(Slot) == Randomizer.Game
-                && session.Players.GetPlayerInfo(Slot).GetGroupMembers(session.Players) == null;
-        }
-
         private void SetupDataStorage()
         {
             if (session != null)
             {
                 Logger.LogInfo("Initializing DataStorage values");
                 session
-                    .DataStorage[Scope.Slot, DataStorageKeyNotLocalLocations]
+                    .DataStorage[Scope.Slot, DataStorageKeyRandomizedLocations]
                     .Initialize(new long[] { });
+
+                Logger.LogInfo(
+                    $"DataStorage {DataStorageKeyRandomizedLocations} is at: {string.Join(", ", session
+                    .DataStorage[Scope.Slot, DataStorageKeyRandomizedLocations]
+                    .To<long[]>())}"
+                );
+
+                session
+                    .DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses]
+                    .Initialize(new string[] { });
+
+                Logger.LogInfo(
+                    $"DataStorage {DataStorageKeyDefeatedBosses} is at: {string.Join(", ", session
+                    .DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses]
+                    .To<string[]>())}"
+                );
+
+                session
+                    .DataStorage[Scope.Slot, DataStorageKeyItemIndex]
+                    .Initialize(0);
+
+                ItemIndex = session.DataStorage[Scope.Slot, DataStorageKeyItemIndex].To<int>();
+                Logger.LogInfo(
+                    $"DataStorage {DataStorageKeyItemIndex} is at: {session.DataStorage[Scope.Slot, DataStorageKeyItemIndex]
+                    .To<int>()}"
+                );
             }
         }
 
         public void SynchronizeNotRandomizedLocation(Location[] locationsCollected)
         {
-            if (session != null)
+            if (session == null) return;
+
+            var localLocations = locationsCollected.Select(loc => loc.ArchipelagoId).ToList();
+            Logger.LogDebug($"Checking if locations {string.Join(", ", localLocations)} are to be added");
+
+            session.DataStorage[Scope.Slot, DataStorageKeyRandomizedLocations].GetAsync<long[]>().ContinueWith(task =>
             {
-                var localLocations = locationsCollected.Select(loc => loc.ArchipelagoId).ToList();
-                Logger.LogDebug($"Checking if location {localLocations} are to be added");
-                var externalLocations = session
-                    .DataStorage[Scope.Slot, DataStorageKeyNotLocalLocations]
-                    .To<long[]>()
-                    .ToList();
-                Logger.LogDebug($"Retrieved locations {externalLocations}");
+                var externalLocations = (task.Result ?? Array.Empty<long>()).ToList();
+                Logger.LogDebug($"Retrieved locations {string.Join(", ", externalLocations)}");
 
                 List<long> missingLocally = externalLocations.Except(localLocations).ToList();
                 long[] missingExternally = localLocations.Except(externalLocations).ToArray();
 
-                if (missingExternally.Count() > 0)
+                if (missingExternally.Length > 0)
                 {
-                    Logger.LogInfo($"Adding locations {missingExternally} to DataStorage");
-                    session.DataStorage[Scope.Slot, DataStorageKeyNotLocalLocations] +=
-                        missingExternally;
+                    Logger.LogInfo($"Adding locations {string.Join(", ", missingExternally)} to DataStorage");
+                    session.DataStorage[Scope.Slot, DataStorageKeyRandomizedLocations] += missingExternally;
                 }
 
-                if (missingLocally.Count() > 0)
+                if (missingLocally.Count > 0)
                 {
-                    Logger.LogInfo($"Adding locations {missingLocally} to local tracker");
+                    Logger.LogInfo($"Adding locations {string.Join(", ", missingLocally)} to local tracker");
                     Randomizer.LocationTracker.Resync(missingLocally.AsReadOnly());
                 }
-            }
+            });
         }
 
         internal long[] GetOpenLocations()
@@ -518,5 +601,67 @@ namespace Randomizer
             return session.Locations.AllMissingLocations.ToArray();
 
         }
+
+        internal void CheckGoalCompletion()
+        {
+            if (session == null) return;
+
+            session
+                .DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses]
+                .GetAsync<string[]>()
+                .ContinueWith(task =>
+                {
+                    var slainBosses = (task.Result ?? Array.Empty<string>()).ToList();
+                    Logger.LogDebug($"Retrieved slain bosses:  {string.Join(", ", slainBosses)}");
+
+                    int aspectSlain = 0;
+                    if (slainBosses.Contains("The Lost Unknown: Leviathan defeated"))
+                        aspectSlain--;
+
+                    foreach (var bossSlain in Lookup.LevelToDefeatedBossLocationName.Values)
+                        if (slainBosses.Contains(bossSlain))
+                            aspectSlain++;
+
+                    Logger.LogDebug($"Has slain {aspectSlain} aspects");
+
+                    bool IsHellsRelevant =
+                        Randomizer.Settings.RequireHellsCompletion
+                        || Randomizer.Settings.RequireSheolCompletion;
+                    bool IsLeviathanRelevant = Randomizer.Settings.RequireLeviathanCompletion;
+                    bool IsAspectsDone = aspectSlain >= Randomizer.Settings.RequiredHellsCompletion;
+                    bool IsRedJudgeDefeated = slainBosses.Contains(
+                        "Red Judge - Worldbreaker: Sheol defeated"
+                    );
+                    bool IsHellsDone =
+                        (!Randomizer.Settings.RequireHellsCompletion || IsAspectsDone)
+                        && (!Randomizer.Settings.RequireSheolCompletion || IsRedJudgeDefeated);
+                    bool IsLeviathanDone = slainBosses.Contains(
+                        "The Lost Unknown: Leviathan defeated"
+                    );
+
+                    Logger.LogDebug(
+                        $"Completion evaluation: HellsDone: {IsHellsDone} (Relevant: {IsHellsRelevant}), LeviathanDone: {IsLeviathanDone} (Relevant: {IsLeviathanRelevant}), CompletionSent: {Randomizer.Archipelago.sentCompletion}"
+                    );
+
+                    if (
+                        !Randomizer.Archipelago.sentCompletion
+                        && (!IsHellsRelevant || IsHellsDone)
+                        && (!IsLeviathanRelevant || IsLeviathanDone)
+                    )
+                        Randomizer.Archipelago.SendCompletion();
+                });
+        }
+
+        internal void AddSlainBoss(string slainBoss)
+        {
+            Logger.LogInfo($"Adding slain Boss '{slainBoss}'");
+            session.DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses] += new[] { slainBoss };
+        }
+
+        private void SetItemIndex(int itemIndex)
+        {
+            session.DataStorage[Scope.Slot, DataStorageKeyItemIndex] = itemIndex;
+        }
+
     }
 }

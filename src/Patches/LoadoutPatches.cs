@@ -108,7 +108,7 @@ namespace Randomizer
 
             if (!HasSkinEquipped && data.IsUnlocked)
             {
-                SaveStateManager.SaveData.EquipSkin(SkinTargetType.Outfit, data.OutfitType);
+                SaveDataManager.SaveData.EquipSkin(SkinTargetType.Outfit, data.OutfitType);
                 HasSkinEquipped = true;
             }
             return true;
@@ -263,7 +263,7 @@ namespace Randomizer
                 if (Randomizer.Configuration.skinsAutoSetWeaponSkin.Value)
                 {
                     skinData.Equipped = true;
-                    SaveStateManager.SaveData.EquipSkin(
+                    SaveDataManager.SaveData.EquipSkin(
                         Randomizer.ItemTracker.WeaponToSkin(data.WeaponType),
                         skinData.SkinType
                     );
@@ -492,10 +492,10 @@ namespace Randomizer
                 $"SongSelectionController GetSongLoadoutForLevel Postfix for {levelID}"
             );
             if (Randomizer.IsLoadingHellsSelection && __result.Item1 != null)
-                SaveStateManager.SaveData.SetMainSongForLevel(levelID, __result.Item1);
+                SaveDataManager.SaveData.SetMainSongForLevel(levelID, __result.Item1);
 
             if (Randomizer.IsLoadingHellsSelection && __result.Item2 != null)
-                SaveStateManager.SaveData.SetBossSongForLevel(levelID, __result.Item2);
+                SaveDataManager.SaveData.SetBossSongForLevel(levelID, __result.Item2);
         }
     }
 

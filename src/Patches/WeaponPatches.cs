@@ -36,7 +36,7 @@ namespace Randomizer
         static bool TriggerUltimatePrefix(WeaponAbilityBase __instance)
         {
             bool canUlt = Randomizer.ItemTracker.CanWeaponUltimate(__instance.GetWeaponType());
-            if(canUlt)
+            if(canUlt && Randomizer.CurrentGameState == GameStateController.GameStateName.InGame)
             {
                 var weaponName = Randomizer.ItemTracker.GetWeaponNameByType(__instance.GetWeaponType());
                 Randomizer.LocationTracker.CheckMisc($"{weaponName} Ultimate");
@@ -105,6 +105,7 @@ namespace Randomizer
         public static void ToggleWeaponInvisibility(bool turnInvisible)
         {
             weaponInvisibleTrapActive = turnInvisible;
+            RefreshWeaponVisibility();
         }
 
         private static bool weaponTrickeryTrapActive = false;
@@ -128,7 +129,7 @@ namespace Randomizer
             )
             {
                 Instance.PickUpWeapon(type, true, true, false);
-                IngameMessagesPatches.DisplayItemActivated($"Death");
+                IngameMessagesPatches.DisplayItemActivated($"{weaponName} granted!");
             }
         }
 
@@ -184,7 +185,7 @@ namespace Randomizer
         private static bool IsWeaponTrickeryActive()
         {
             Logger.LogDebug(
-                $"WeaponAbilityController weapon trickery trap active: {Randomizer.IngameDispenser.WeaponTrickeryTrapActive}, config active: {Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value}"
+                $"WeaponAbilityController weapon trickery trap active: {weaponTrickeryTrapActive}, config active: {Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value}"
             );
             return weaponTrickeryTrapActive
                 || Randomizer.Configuration.gameplayWeaponTrickeryModeActive.Value;
@@ -497,9 +498,9 @@ namespace Randomizer
             ref PlayerWeaponType weaponType
         )
         {
-            Logger.LogDebug(
-                $"WeaponAbilityController GetWeaponConfig Prefix called for {weaponType}"
-            );
+            // Logger.LogDebug(
+            //     $"WeaponAbilityController GetWeaponConfig Prefix called for {weaponType}"
+            // );
             if(Instance == null)
                 Instance = null;
             return true;
@@ -514,9 +515,9 @@ namespace Randomizer
             WeaponDataConfiguration __result
         )
         {
-            Logger.LogDebug(
-                $"WeaponAbilityController GetWeaponConfig Postfix called for {weaponType}"
-            );
+            // Logger.LogDebug(
+            //     $"WeaponAbilityController GetWeaponConfig Postfix called for {weaponType}"
+            // );
         }
 
         [HarmonyPrefix]
@@ -556,9 +557,9 @@ namespace Randomizer
         )
         {
             Logger.LogInfo(
-                $"WeaponAbilityController PickUpWeapon Prefix for {weapon} called and charges Ultimate: {chargePickedUpWeaponUltimate}, is Pickup: {isPickup}, show HUD Message: {showHUDMessage}"
+                $"WeaponAbilityController PickUpWeapon Prefix for {weapon} called and has Ultimate unlocked: {ultimateUnlocked}, charges Ultimate: {chargePickedUpWeaponUltimate}, is Pickup: {isPickup}, show HUD Message: {showHUDMessage}"
             );
-            if (Randomizer.CurrentGameMode == EGameMode.Stage)
+            if (Randomizer.CurrentGameMode == EGameMode.Stage || Randomizer.CurrentGameMode == EGameMode.Challenge)
                 ultimateUnlocked = Randomizer.ItemTracker.CanWeaponUltimate(weapon);
             return true;
         }
@@ -575,7 +576,7 @@ namespace Randomizer
         )
         {
             Logger.LogInfo(
-                $"WeaponAbilityController PickUpWeapon Postfix for {weapon} called and charges Ultimate: {chargePickedUpWeaponUltimate}, is Pickup: {isPickup}, show HUD Message: {showHUDMessage}"
+                $"WeaponAbilityController PickUpWeapon Postfix for {weapon} called and has Ultimate unlocked: {ultimateUnlocked}, charges Ultimate: {chargePickedUpWeaponUltimate}, is Pickup: {isPickup}, show HUD Message: {showHUDMessage}"
             );
             if (
                 Randomizer.CurrentGameMode == EGameMode.Stage

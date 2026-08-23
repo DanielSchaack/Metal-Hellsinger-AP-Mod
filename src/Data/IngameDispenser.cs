@@ -20,15 +20,19 @@ namespace Randomizer
         private bool IsDeathlinkQueued = false;
         private string DeathlinkSender = "";
 
-        public bool WeaponTrickeryTrapActive { get; private set; } = false;
-
         public void Reset()
         {
             ItemsToDispense.Clear();
             ItemActiveTime = 0f;
             IsItemActive = false;
+            ActiveItem = null;
             IsDeathlinkQueued = false;
+            WeaponAbilityControllerPatches.ToggleWeaponInvisibility(false);
+            WeaponAbilityControllerPatches.ToggleWeaponTrickery(false);
+            EnemyPatches.ToggleWeaponTrickery(false);
+            PlayerPatches.ToggleAssistMode(false);
         }
+
 
         internal void QueueItem(ItemData item, string sender)
         {
@@ -100,11 +104,16 @@ namespace Randomizer
                 if (IsItemActive)
                     DisableActiveItem();
 
-                if (
-                    UnityEngine.Random.Range(0f, 100f)
-                    > Randomizer.Configuration.trapChanceToTrigger.Value
-                )
+                float roll = UnityEngine.Random.Range(0f, 100f);
+                float chanceThreshold = Randomizer.Configuration.trapChanceToTrigger.Value;
+
+                if (roll > chanceThreshold)
+                {
+                    Logger.LogDebug(
+                        $"Skipped trap (Rolled {roll:F2}% > Threshold {chanceThreshold:F2}%, requires less than threshold)."
+                    );
                     return;
+                }
 
                 if (!TryDispenseItem())
                     return;
@@ -123,8 +132,12 @@ namespace Randomizer
 
         private bool TryDispenseItem()
         {
+            Logger.LogDebug($"Trying to activate Item");
             if (!ItemsToDispense.TryPeek(out var pendingItem))
+            {
+                Logger.LogDebug($"No Item to activate");
                 return false;
+            }
 
             ActivateItem(pendingItem.Item1, pendingItem.Item2);
 
@@ -154,7 +167,8 @@ namespace Randomizer
                     Logger.LogInfo($"Disabling {ActiveItem.Name}");
                     break;
                 case "Weapon Trickery":
-                    WeaponTrickeryTrapActive = false;
+                    WeaponAbilityControllerPatches.ToggleWeaponTrickery(false);
+                    EnemyPatches.ToggleWeaponTrickery(false);
                     Logger.LogInfo($"Disabling {ActiveItem.Name}");
                     break;
                 case "Always on Beat":
@@ -235,8 +249,8 @@ namespace Randomizer
                     WeaponAbilityControllerPatches.TriggerUltimate();
                     break;
 
-                case "Complement":
-                    SoundEmitterSystemPatches.PlayComplement();
+                case "Compliment":
+                    SoundEmitterSystemPatches.PlayCompliment();
                     break;
 
                 case "Encouragement":
@@ -329,7 +343,6 @@ namespace Randomizer
                 case "Weapon Trickery":
                     WeaponAbilityControllerPatches.ToggleWeaponTrickery(true);
                     EnemyPatches.ToggleWeaponTrickery(true);
-                    WeaponTrickeryTrapActive = true;
                     break;
                 case "Always on Beat":
                     PlayerPatches.ToggleAssistMode(true);

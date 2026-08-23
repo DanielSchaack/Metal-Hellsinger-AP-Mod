@@ -147,7 +147,7 @@ namespace Randomizer
             {
                 EArena.Global => true,
                 EArena.Arena1 => true,
-                EArena.Arena2 => HasBaseMovement() && HasGenericArena2Requirements(),
+                EArena.Arena2 => HasGenericArena2Requirements(),
                 EArena.Arena3 => HasGenericArena3Requirements(),
                 EArena.Arena4 => HasGenericArena4Requirements(),
                 EArena.Boss => HasGenericBossRequirements()
@@ -162,7 +162,7 @@ namespace Randomizer
             {
                 EArena.Global => true,
                 EArena.Arena1 => true,
-                EArena.Arena2 => HasBaseMovement() && HasGenericArena2Requirements(),
+                EArena.Arena2 => HasGenericArena2Requirements(),
                 EArena.Arena3 => HasGenericArena3Requirements(),
                 EArena.Arena4 => HasGenericArena4Requirements(),
                 EArena.Boss => HasGenericBossRequirements()
@@ -225,8 +225,7 @@ namespace Randomizer
                 EArena.Arena2 => HasGenericArena2Requirements(),
                 EArena.Arena3 => HasGenericArena3Requirements(),
                 EArena.Arena4 => HasGenericArena4Requirements(),
-                EArena.Boss => HasCompleteReloading()
-                    && HasCloseAndLongRangeWeapon()
+                EArena.Boss => HasCloseAndLongRangeWeapon()
                     && HasGenericBossRequirements(),
                 _ => false,
             };
@@ -245,22 +244,34 @@ namespace Randomizer
 
         private static bool HasGenericArena2Requirements()
         {
-            return HasBaseMovement() && HasNonPazWeapon();
+            return HasBaseMovement() && HasNonPazRangedWeapon() && HasAnyHeal();
         }
 
         private static bool HasGenericArena3Requirements()
         {
-            return HasNonPazWeapon() && HasBaseMovement() && IsNotArchdevilOrCanHeal();
+            return HasGenericArena2Requirements() && (
+                        (HasAllHeal() && Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
+                        || (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
+                        || IsNotBeast()
+                    ) 
+                && (HasRangedWeaponWithUltimate() || Randomizer.ItemTracker.CanQuickReload());
         }
 
         private static bool HasGenericArena4Requirements()
         {
-            return HasNonPazWeapon() && HasBaseMovement() && IsNotBeastOrCanHeal();
+            return HasGenericArena3Requirements() && (
+                        (HasAllHeal() && Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement()) 
+                        || (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
+                        || IsNotBeast()
+                    ) 
+                && (HasRangedWeaponWithUltimate() || Randomizer.ItemTracker.CanQuickReload());
         }
 
         private static bool HasGenericBossRequirements()
         {
-            return HasRangedWeaponWithUltimate() && HasAdvancedMovement() && IsNotBeastOrCanHeal();
+            return HasGenericArena4Requirements() && HasAdvancedMovement()
+                && HasRangedWeaponWithUltimate() && Randomizer.ItemTracker.CanQuickReload()
+                && (IsNotBeast() || HasAllHeal());
         }
 
         private static bool HasCloseRangeWeapon()
@@ -282,6 +293,16 @@ namespace Randomizer
         {
             return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Falx)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
+                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Pistols)
+                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Vulcan)
+                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Boomerang)
+                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.AssaultRifle)
+                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Bow);
+        }
+
+        private static bool HasNonPazRangedWeapon()
+        {
+            return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Pistols)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Vulcan)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Boomerang)
@@ -335,28 +356,34 @@ namespace Randomizer
 
         private static bool HasAdvancedMovement()
         {
-            return Randomizer.ItemTracker.CanJump() && Randomizer.ItemTracker.CanDash();
+            return (Randomizer.ItemTracker.CanJump() && Randomizer.ItemTracker.CanDash()) | Randomizer.ItemTracker.CanSoar() | Randomizer.ItemTracker.CanDoubleJump();
         }
 
-        private static bool IsNotGoatOrCanHeal()
+        private static bool IsNotGoatOrCanFullyHeal()
         {
             bool isNotGoat =
                 Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Easy);
-            bool canHeal =
-                Randomizer.ItemTracker.IsDestructible("Health")
-                || Randomizer.ItemTracker.CanSlaughter();
+            bool canHeal = HasAllHeal();
             return isNotGoat || canHeal;
         }
 
-        private static bool IsNotBeastOrCanHeal()
+        private static bool HasAllHeal()
         {
-            bool isNotBeast =
+            return Randomizer.ItemTracker.IsDestructible("Health")
+                && Randomizer.ItemTracker.CanSlaughter();
+        }
+
+        private static bool IsNotBeast()
+        {
+            return 
                 Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Easy)
                 || Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Medium);
-            bool canHeal =
-                Randomizer.ItemTracker.IsDestructible("Health")
+        }
+
+        private static bool HasAnyHeal()
+        {
+            return Randomizer.ItemTracker.IsDestructible("Health")
                 || Randomizer.ItemTracker.CanSlaughter();
-            return isNotBeast || canHeal;
         }
 
         private static bool IsNotArchdevilOrCanHeal()
@@ -412,7 +439,8 @@ namespace Randomizer
                     && Randomizer.ItemTracker.CanQuickReload()
                     && IsNotArchdevil(),
                 ELocationType.TormentGold => Randomizer.ItemTracker.CanQuickReload()
-                    && Randomizer.ItemTracker.CanDash(),
+                    && HasAdvancedMovement()
+                    && HasAnyHeal(),
                 _ => true,
             };
         }
@@ -474,11 +502,11 @@ namespace Randomizer
             return type switch {
                 ELocationType.Bestiary => BestiaryRequirementsMet(id),
                 ELocationType.Codex => CodexRequirementsMet(id),
-                ELocationType.SectionClearOutfit => Randomizer.ItemTracker.HasOutfitByLocation(id) && CanReachAnyArena4OrLeviathanArenaEnd(),
-                ELocationType.SectionClearMainSong => Randomizer.ItemTracker.HasSongByLocation(id) && CanReachAnyArena4OrLeviathanArenaEnd(),
+                ELocationType.SectionClearOutfit => Randomizer.ItemTracker.HasOutfitByLocation(id) && CanAccessAnyBoss(),
+                ELocationType.SectionClearMainSong => Randomizer.ItemTracker.HasSongByLocation(id) && CanAccessAnyBoss(),
                 ELocationType.SectionClearBossSong => Randomizer.ItemTracker.HasSongByLocation(id) && CanAccessAnyBoss()
                     || (id.Equals("Section Cleared with: No Tomorrow") && CanAccessArena(EZone.Leviathan, EArena.FinalDestination)),
-                ELocationType.SectionClearWeapon => Randomizer.ItemTracker.HasWeaponByLocation(id) && CanReachAnyArena4OrLeviathanArenaEnd(),
+                ELocationType.SectionClearWeapon => Randomizer.ItemTracker.HasWeaponByLocation(id) && CanAccessAnyBoss(),
                 ELocationType.FirstMiscellaneous => LocationSpecificMet(id),
                 ELocationType.WeaponSkin => CanCollectCoatOfArms() && HasAccessToEnoughCoatOfArms(id),
                 _ => true,
@@ -551,6 +579,7 @@ namespace Randomizer
             return id switch {
                 "Acheron Secret Max Multiplier" => HasBaseMovement(),
                 "Acheron Coat of Arms Archdevil" => HasBaseMovement(),
+                "Acheron Coat of Arms Beast" => Randomizer.ItemTracker.CanDash(),
                 _ => true
             };
         }
@@ -572,30 +601,26 @@ namespace Randomizer
         private static bool BestiaryRequirementsMet(string id)
         {
             return id switch {
-                "Marionette discovered" => CanAccessArena(EZone.Tutorial, EArena.Tutorial),
-                "Cambion discovered" => CanAccessArena(EZone.Voke, EArena.Arena1),
-                "Behemoth discovered" => CanAccessArena(EZone.Voke, EArena.Arena3),
-                "Stalker discovered" => CanAccessArena(EZone.Stygia, EArena.Arena3),
-                "Eyeless discovered" => CanAccessArena(EZone.Yhelm, EArena.Arena2),
-                "Hierophant discovered" => CanAccessArena(EZone.Incaustis, EArena.Arena2),
-                "Lesser Seraph discovered" => CanAccessArena(EZone.Gehenna, EArena.Arena2),
-                "Shield Cambion discovered" => CanAccessArena(EZone.Yhelm, EArena.Arena1),
-                "Siege Behemoth discovered" => CanAccessArena(EZone.Incaustis, EArena.Arena4),
-                "Void Stalker discovered" => CanAccessArena(EZone.Nihil, EArena.Arena3),
+                "Marionette discovered" => CanAccessZone(EZone.Tutorial, EArena.Tutorial) && CanAccessArena(EZone.Tutorial, EArena.Tutorial),
+                "Cambion discovered" => CanAccessZone(EZone.Voke, EArena.Arena1) && CanAccessArena(EZone.Voke, EArena.Arena1),
+                "Behemoth discovered" => CanAccessZone(EZone.Voke, EArena.Arena3) && CanAccessArena(EZone.Voke, EArena.Arena3),
+                "Stalker discovered" => CanAccessZone(EZone.Stygia, EArena.Arena3) && CanAccessArena(EZone.Stygia, EArena.Arena3),
+                "Eyeless discovered" => CanAccessZone(EZone.Yhelm, EArena.Arena2) && CanAccessArena(EZone.Yhelm, EArena.Arena2),
+                "Hierophant discovered" => CanAccessZone(EZone.Incaustis, EArena.Arena2) && CanAccessArena(EZone.Incaustis, EArena.Arena2),
+                "Lesser Seraph discovered" => CanAccessZone(EZone.Gehenna, EArena.Arena2) && CanAccessArena(EZone.Gehenna, EArena.Arena2),
+                "Shield Cambion discovered" => CanAccessZone(EZone.Yhelm, EArena.Arena1) && CanAccessArena(EZone.Yhelm, EArena.Arena1),
+                "Siege Behemoth discovered" => CanAccessZone(EZone.Incaustis, EArena.Arena4) && CanAccessArena(EZone.Incaustis, EArena.Arena4),
+                "Void Stalker discovered" => CanAccessZone(EZone.Nihil, EArena.Arena3) && CanAccessArena(EZone.Nihil, EArena.Arena3),
                 "Annihilator Seraph discovered" => Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) 
+                    && CanAccessZone(EZone.Voke, EArena.Arena4)
                     && CanAccessArena(EZone.Voke, EArena.Arena4),
                 _ => true,
             };
         }
 
-        private static bool CanReachAnyArena4OrLeviathanArenaEnd()
-        {
-            return CanAccessAnyArena4() || CanAccessEndOfLeviathanStage();
-        }
-
         private static bool CanCollectCoatOfArms()
         {
-            return !Randomizer.Settings.HellsCoatOfArmsEnabled && Randomizer.Settings.RequireCoatOfArmsForSheol;
+            return !Randomizer.Settings.IncludeCoatOfArmsChecks && Randomizer.Settings.RequireCoatOfArmsForSheol;
         }
 
         private static bool HasAccessToEnoughCoatOfArms(string id)
@@ -631,28 +656,28 @@ namespace Randomizer
         private static bool LocationSpecificMet(string id)
         {
             return id switch {
-                "First Miscellaneous: Slaughter" => Randomizer.ItemTracker.CanSlaughter(),
-                "First Miscellaneous: Jump" => Randomizer.ItemTracker.CanJump(),
-                "First Miscellaneous: Double Jump" => Randomizer.ItemTracker.CanDoubleJump(),
-                "First Miscellaneous: Infinite Jump" => Randomizer.ItemTracker.CanInfiniteJump(),
-                "First Miscellaneous: Quick Reload" => Randomizer.ItemTracker.CanQuickReload(),
-                "First Miscellaneous: Dash" => Randomizer.ItemTracker.CanDash(),
-                "First Miscellaneous: Soar" => Randomizer.ItemTracker.CanSoar(),
-                "First Miscellaneous: Ammostash" => Randomizer.ItemTracker.IsDestructible("Health") && (CanAccessAnyHellsOrLeviathan() || CanAccessArena(EZone.Voke, EArena.Arena2) || CanAccessArena(EZone.Yhelm, EArena.Arena2)),
-                "First Miscellaneous: Health Crystal" => Randomizer.ItemTracker.IsDestructible("Health") && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Chaos Crystal" => Randomizer.ItemTracker.IsDestructible("Chaos") && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Enduring Fury" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.SlowerFuryDecay) && CanReachAnyArena4OrLeviathanArenaEnd(),
-                "First Miscellaneous: Faster Ultimate Gain" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.IncreasedUltimateBuildSpeed) && CanReachAnyArena4OrLeviathanArenaEnd(),
-                "First Miscellaneous: Deadlier Dash" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.IncreasedDashDamage) && CanReachAnyArena4OrLeviathanArenaEnd(),
-                "First Miscellaneous: Explosive Slaughter" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.ExplosiveSlaughters) && CanReachAnyArena4OrLeviathanArenaEnd(),
-                "First Miscellaneous: Paz Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.RhythmWeapon) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Terminus Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Falx) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Persephone Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Shotgun) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: The Hounds Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Pistols) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Vulcan Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Vulcan) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Hellcrow Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Boomerang) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: The Red Right Hand Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.AssaultRifle) && CanAccessAnyHellsOrLeviathan(),
-                "First Miscellaneous: Telos Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Bow) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Slaughter" => Randomizer.ItemTracker.CanSlaughter(),
+                "First Miscellaneous - Jump" => Randomizer.ItemTracker.CanJump(),
+                "First Miscellaneous - Double Jump" => Randomizer.ItemTracker.CanDoubleJump(),
+                "First Miscellaneous - Infinite Jump" => Randomizer.ItemTracker.CanInfiniteJump(),
+                "First Miscellaneous - Quick Reload" => Randomizer.ItemTracker.CanQuickReload(),
+                "First Miscellaneous - Dash" => Randomizer.ItemTracker.CanDash(),
+                "First Miscellaneous - Soar" => Randomizer.ItemTracker.CanSoar(),
+                "First Miscellaneous - Ammostash" => Randomizer.ItemTracker.IsDestructible("Ammostash") && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Health Crystal" => Randomizer.ItemTracker.IsDestructible("Health") && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Chaos Crystal" => Randomizer.ItemTracker.IsDestructible("Chaos") && (HasChaosAccess || CanAccessAnyLeviathan()),
+                "First Miscellaneous - Enduring Fury" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.SlowerFuryDecay),
+                "First Miscellaneous - Faster Ultimate Gain" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.IncreasedUltimateBuildSpeed),
+                "First Miscellaneous - Deadlier Dash" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.IncreasedDashDamage),
+                "First Miscellaneous - Explosive Slaughter" => Randomizer.ItemTracker.HasBoonByBeatSreakEffect(EBeatStreakEffect.ExplosiveSlaughters),
+                "First Miscellaneous - Paz Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.RhythmWeapon) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Terminus Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Falx) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Persephone Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Shotgun) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - The Hounds Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Pistols) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Vulcan Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Vulcan) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Hellcrow Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Boomerang) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - The Red Right Hand Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.AssaultRifle) && CanAccessAnyHellsOrLeviathan(),
+                "First Miscellaneous - Telos Ultimate" => Randomizer.ItemTracker.CanWeaponUltimate(PlayerWeaponType.Bow) && CanAccessAnyHellsOrLeviathan(),
                 _ => true,
             };
         }
@@ -665,30 +690,42 @@ namespace Randomizer
                     && Randomizer.ItemTracker.IsDestructible("Health"),
                 "Hells's Heartbeat discovered" => Randomizer.ItemTracker.CanQuickReload(),
                 "Basilisk Mode discovered" => Randomizer.ItemTracker.CanSoar(),
-                "Double Hit and Run discovered" => CanDestroyAny()
+                "Double Hit and Run discovered" => (Randomizer.ItemTracker.IsDestructible("Ammostash") || Randomizer.ItemTracker.IsDestructible("Health"))
                     && Randomizer.ItemTracker.CanDash(),
-                "Shatter Two discovered" => CanDestroyAny(),
+                "Shatter Two discovered" => Randomizer.ItemTracker.IsDestructible("Ammostash") || Randomizer.ItemTracker.IsDestructible("Health"),
                 "Devil's Flight discovered" => Randomizer.ItemTracker.CanDash()
                     && Randomizer.ItemTracker.CanSoar()
                     && Randomizer.ItemTracker.CanJump(),
                 "Double Slaughter discovered" => Randomizer.ItemTracker.CanSlaughter(),
-                "Chaos and Slaughter discovered" => Randomizer.ItemTracker.IsDestructible("Chaos")
+                "Chaos and Slaughter discovered" => Randomizer.ItemTracker.IsDestructible("Chaos") 
+                    && HasChaosAccess
                     && Randomizer.ItemTracker.CanSlaughter(),
                 "Unholy Mess discovered" => Randomizer.ItemTracker.CanSlaughter(),
-                "Five Endings discovered" => Randomizer.ItemTracker.IsDestructible("Chaos")
-                    || (CanAccessAnyHells() && Randomizer.ItemTracker.Has("Paz")),
+                "Five Endings discovered" => ((Randomizer.ItemTracker.IsDestructible("Chaos") && HasChaosAccess)
+                    || (CanAccessAnyHells() && Randomizer.ItemTracker.Has("Paz")) && HasAmountOfWeapons(3)),
                 "Slaughter and Kill discovered" => Randomizer.ItemTracker.CanSlaughter(),
                 "Chaos Flight discovered" => Randomizer.ItemTracker.CanSoar()
                     && Randomizer.ItemTracker.CanJump()
-                    && Randomizer.ItemTracker.IsDestructible("Chaos"),
+                    && Randomizer.ItemTracker.IsDestructible("Chaos")
+                    && HasChaosAccess,
                 "Death from Above discovered" => Randomizer.ItemTracker.CanSoar()
                     && Randomizer.ItemTracker.CanSlaughter(),
-                "Lethal Cycle discovered" => HasAmountOfWeapons(2),
+                "Lethal Cycle discovered" => HasAmountOfWeapons(3),
                 "Kill Trio discovered" => true,
                 "Triple Dash discovered" => Randomizer.ItemTracker.CanDash(),
                 _ => false,
             };
         }
+
+        private static bool HasChaosAccess =>
+            (CanAccessZone(EZone.Voke, EArena.Arena2) && CanAccessArena(EZone.Voke, EArena.Arena2))
+            || ( CanAccessZone(EZone.Stygia, EArena.Arena2) && CanAccessArena(EZone.Stygia, EArena.Arena2))
+            || ( CanAccessZone(EZone.Yhelm, EArena.Arena2) && CanAccessArena(EZone.Yhelm, EArena.Arena2))
+            || ( CanAccessZone(EZone.Incaustis, EArena.Arena1) && CanAccessArena(EZone.Incaustis, EArena.Arena1))
+            || ( CanAccessZone(EZone.Gehenna, EArena.Arena1) && CanAccessArena(EZone.Gehenna, EArena.Arena1))
+            || ( CanAccessZone(EZone.Nihil, EArena.Arena1) && CanAccessArena(EZone.Nihil, EArena.Arena1))
+            || ( CanAccessZone(EZone.Acheron, EArena.Arena1) && CanAccessArena(EZone.Acheron, EArena.Arena1))
+            || ( CanAccessZone(EZone.Sheol, EArena.Arena1) && CanAccessArena(EZone.Sheol, EArena.Arena1));
 
         private static bool CanAccessAnyHellsOrLeviathan()
         {
@@ -727,25 +764,33 @@ namespace Randomizer
 
         private static bool CanAccessAnyBoss()
         {
-            return CanAccessZone(EZone.Voke, EArena.Boss)
-                || CanAccessZone(EZone.Stygia, EArena.Boss)
-                || CanAccessZone(EZone.Yhelm, EArena.Boss)
-                || CanAccessZone(EZone.Incaustis, EArena.Boss)
-                || CanAccessZone(EZone.Gehenna, EArena.Boss)
-                || CanAccessZone(EZone.Nihil, EArena.Boss)
-                || CanAccessZone(EZone.Acheron, EArena.Boss)
-                || CanAccessZone(EZone.Sheol, EArena.Boss);
+            return (CanAccessZone(EZone.Voke, EArena.Boss) && CanAccessArena(EZone.Voke, EArena.Boss))
+                || (CanAccessZone(EZone.Stygia, EArena.Boss) && CanAccessArena(EZone.Stygia, EArena.Boss))
+                || (CanAccessZone(EZone.Yhelm, EArena.Boss) && CanAccessArena(EZone.Yhelm, EArena.Boss))
+                || (CanAccessZone(EZone.Incaustis, EArena.Boss) && CanAccessArena(EZone.Incaustis, EArena.Boss))
+                || (CanAccessZone(EZone.Gehenna, EArena.Boss) && CanAccessArena(EZone.Gehenna, EArena.Boss))
+                || (CanAccessZone(EZone.Nihil, EArena.Boss) && CanAccessArena(EZone.Nihil, EArena.Boss))
+                || (CanAccessZone(EZone.Acheron, EArena.Boss) && CanAccessArena(EZone.Acheron, EArena.Boss))
+                || (CanAccessZone(EZone.Sheol, EArena.Boss) && CanAccessArena(EZone.Sheol, EArena.Boss));
         }
 
         private static bool HasAmountOfWeapons(int amount)
         {
-            return Randomizer.ItemTracker.GetAvailableWeaponTypes().Count >= amount;
+            int count = 0;
+            foreach (var weapon in Lookup.ExtendedWeaponNameToType.Keys)
+            {
+                if (Randomizer.ItemTracker.Has(weapon))
+                    count++;
+                if(count == amount)
+                    return true;
+            }
+            return false;
         }
 
         private static bool HasRequiredChallengeWeapons(EZone zone, EArena arena)
         {
             string levelId = getChallengeFromZoneAndArena(zone, arena);
-            return Randomizer.ItemTracker.HasWeaponsForLevel(levelId);
+            return Randomizer.ItemTracker.HasLevelUnlocked(levelId);
         }
 
         private static bool HasUltimatesForChallenge(EZone zone, EArena arena)

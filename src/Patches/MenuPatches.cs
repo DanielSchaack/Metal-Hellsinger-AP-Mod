@@ -138,8 +138,8 @@ namespace Randomizer
             ref bool __result
         )
         {
-            Logger.LogInfo($"CompanionController IsAnyCompanionItemUnviewed Postfix called");
             __result = Randomizer.LocationTracker.HasUncheckedCompanion();
+            Logger.LogInfo($"CompanionController IsAnyCompanionItemUnviewed Postfix called and is unviewed: {__result}");
         }
     }
 
@@ -181,6 +181,12 @@ namespace Randomizer
             if(hells != EZone.Global)
             {
                 isLocked = !LocationAccessibility.CanAccessRegion(hells);
+                if(!isLocked)
+                {
+                    int amountSkips = Randomizer.ItemTracker.GetSkipsAmount(hells.ToString());
+                    string Ultimate = amountSkips > 0 ? $" + {amountSkips} SKIPS" : "";
+                    __instance.m_label.text += Ultimate;
+                }
                 return true;
             }
 
@@ -241,6 +247,12 @@ namespace Randomizer
             if(weapons != PlayerWeaponType.None)
             {
                 isLocked = !Randomizer.ItemTracker.IsWeaponUnlocked(weapons);
+                if(!isLocked)
+                {
+                    string Ultimate = Randomizer.ItemTracker.CanWeaponUltimate(weapons) ? " + ULTIMATE" : "";
+                    __instance.m_label.text += Ultimate;
+                }
+
                 return true;
             }
 
@@ -258,20 +270,22 @@ namespace Randomizer
             if(!string.IsNullOrEmpty(sigils))
             {
                 isLocked = !Randomizer.ItemTracker.Has(sigils);
+                if(!isLocked)
+                    __instance.m_label.text += $" {Randomizer.ItemTracker.GetSigilLevelByName(sigils)}";
                 return true;
             }
 
             string hitStreakBoons = __instance.m_label.text switch
             {
-                "ENDURING FURY" => "Enduring Fury Unlock",
-                "FASTER ULTIMATE GAIN" => "Faster Ultimate Gain Unlock",
-                "DEADLIER DASH" => "Deadlier Dash Unlock",
-                "EXPLOSIVE SLAUGHTERS" => "Explosive Slaughter Unlock",
+                "ENDURING FURY" => "Enduring Fury",
+                "FASTER ULTIMATE GAIN" => "Faster Ultimate Gain",
+                "DEADLIER DASH" => "Deadlier Dash",
+                "EXPLOSIVE SLAUGHTERS" => "Explosive Slaughter",
                 _ => "",
             };
             if(!string.IsNullOrEmpty(hitStreakBoons))
             {
-                isLocked = !LocationAccessibility.CanReach(hitStreakBoons);
+                isLocked = !Randomizer.ItemTracker.Has(hitStreakBoons);
                 return true;
             }
 
@@ -438,9 +452,14 @@ namespace Randomizer
             };
             if(!string.IsNullOrEmpty(hitStreakBoons))
             {
+                var firstActivation = Lookup.BoonUnlockToFirstActivation[hitStreakBoons];
                 unViewed =
-                    LocationAccessibility.CanReach(hitStreakBoons)
-                    && !Randomizer.LocationTracker.CheckedLocations.ContainsKey(hitStreakBoons);
+                    (LocationAccessibility.CanReach(hitStreakBoons)
+                    && Randomizer.LocationTracker.IsLocationUnchecked(hitStreakBoons))
+                    ||
+                    (LocationAccessibility.CanReach(firstActivation)
+                    && Randomizer.LocationTracker.IsLocationUnchecked(firstActivation))
+                    ;
                 return true;
             }
 
@@ -468,7 +487,7 @@ namespace Randomizer
             {
 
                 unViewed = LocationAccessibility.CanReach(combos)
-                    && !Randomizer.LocationTracker.CheckedLocations.ContainsKey(combos);
+                    && Randomizer.LocationTracker.IsLocationUnchecked(combos);
                 return true;
             }
 

@@ -310,9 +310,11 @@ namespace Randomizer
                 }
                 : null;
 
+            if(!string.IsNullOrWhiteSpace(item) && item.EndsWith("<b></b>"))
+                item = null;
             item = AlbumChallengeRowPatches.GetSheolLockMessage(LevelID, item);
 
-            return item != null ? $"Requires {item} to unlock" : null;
+            return !string.IsNullOrWhiteSpace(item) ? $"Requires {item} to unlock" : null;
         }
 
         [HarmonyPrefix]
@@ -434,7 +436,7 @@ namespace Randomizer
                 {
                     string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(data.LevelID);
                     string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
-                    __instance.m_label.text = showcaseName;
+                    __instance.m_label.text = showcaseName.ToUpper();
                 }
                 __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
                 __instance.SetViewedIconVisible(false);
@@ -713,6 +715,8 @@ namespace Randomizer
                 }
                 : null;
 
+            if(!string.IsNullOrWhiteSpace(item) && item.EndsWith("<b></b>"))
+                item = null;
             item = GetSheolLockMessage(LevelID, item);
 
             return item;
@@ -730,15 +734,12 @@ namespace Randomizer
                 msg += $"<b>{Lookup.ChallengeToHellDictionary[LevelID]}</b>";
             }
 
-            if (
-                Randomizer.Settings.RequireWeaponsForChallenges
-                && !Randomizer.ItemTracker.HasWeaponsForLevel(LevelID)
-            )
+            if (!Randomizer.ItemTracker.HasLevelUnlocked(LevelID))
             {
                 if (msg.Length > 0)
                     msg += " and ";
                 msg +=
-                    $"<b>{string.Join(", ", Randomizer.ItemTracker.GetMissingWeaponsForLevel(LevelID))}</b>";
+                    $"<b>{string.Join(", ", Randomizer.ItemTracker.GetMissingItemsUntilLevelUnlocked(LevelID))}</b>";
             }
 
             int progressiveUnlockCount = Randomizer.ItemTracker.GetProgressiveChallengesUntilUnlock(
@@ -806,7 +807,7 @@ namespace Randomizer
             {
                 var lockedLabel = Randomizer.Configuration.archipelagoSpoilLevelNames.Value? showcaseName : "LOCKED";
                 __instance.m_nameLabel.text = Randomizer.Settings.RandomizedChallengesEnabled
-                    ? lockedLabel
+                    ? lockedLabel.ToUpper()
                     : "NOT INCLUDED";
                 __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
                 __instance.m_tormentConqueredHighlight.gameObject.SetActive(false);
@@ -883,15 +884,25 @@ namespace Randomizer
 
         internal static string GetSheolLockMessage(string levelID, string item)
         {
-            if(!IsChallengeUnlocked(levelID, Randomizer.SelectedDifficulty))
+            if (!IsChallengeUnlocked(levelID, Randomizer.SelectedDifficulty))
                 return item;
+
+            Logger.LogDebug($"Level {levelID} is unlocked");
 
             string actualLevelID = Randomizer.ItemTracker.GetRandomizedLevel(levelID);
             string showcaseName = Lookup.LevelIdToActualName[actualLevelID];
-            if (showcaseName == "Sheol" && !Randomizer.LocationTracker.IsSheolUnlocked() && item == null)
-                item = $"<b>{string.Join(", ", Randomizer.ItemTracker.GetMissingSheolItems())}</b>";
-            else if (showcaseName == "Sheol" && !Randomizer.LocationTracker.IsSheolUnlocked() && item != null)
-                item += $" and <b>{string.Join(", ", Randomizer.ItemTracker.GetMissingSheolItems())}</b>";
+
+            Logger.LogDebug($"Checking if level is actually Sheol: {showcaseName}");
+
+            if (showcaseName == "Sheol" && !Randomizer.LocationTracker.IsSheolUnlocked())
+            {
+                string missingText = $"<b>{string.Join(" & ", Randomizer.ItemTracker.GetMissingSheolItems())}</b>";
+
+                item = string.IsNullOrWhiteSpace(item) 
+                    ? missingText 
+                    : $"{item} and {missingText}";
+            }
+
             return item;
         }
 
@@ -1434,6 +1445,12 @@ namespace Randomizer
     public class DifficultySelectorPatches
     {
         public static DifficultySelector Instance;
+
+        public static void UpdateSelection()
+        {
+            if(Instance != null && !Instance.WasCollected)
+                Instance.SetDifficulty(Randomizer.SelectedDifficulty, true);
+        }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(DifficultySelector.SetIsDifficultyLocked))]

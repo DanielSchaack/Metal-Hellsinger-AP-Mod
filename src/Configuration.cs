@@ -16,9 +16,15 @@ namespace Randomizer
         internal ConfigEntry<string> archipelagoUri;
         internal ConfigEntry<string> archipelagoUsername;
         internal ConfigEntry<string> archipelagoPassword;
+        internal ConfigEntry<bool> archipelagoShowLocationCollection;
+        internal ConfigEntry<bool> archipelagoShowItemNamesInsteadOfLocationNames;
+        internal ConfigEntry<bool> archipelagoGrantMultiplierPickups;
         internal ConfigEntry<bool> archipelagoConsoleEnabled;
+        internal ConfigEntry<int> archipelagoConsoleMessageDuration;
+        internal ConfigEntry<int> archipelagoConsoleMessageCount;
         internal ConfigEntry<DeathLinkType> archipelagoDeathlinkType;
         internal ConfigEntry<ItemClassification> archipelagoPopupForClassification;
+        internal ConfigEntry<bool> archipelagoConsoleFilterToPlayer;
         internal ConfigEntry<bool> archipelagoSpoilLevelNames;
 
         internal ConfigEntry<bool> fillerRandomizedFillerDispensionActive;
@@ -126,6 +132,30 @@ namespace Randomizer
                 ArchipelagoConnectorGui.archipelagoPassword = archipelagoPassword.Value;
             };
 
+            archipelagoShowLocationCollection = config.Bind(
+                "Archipelago",
+                "ShowLocationCollection",
+                true,
+                "If set to true, the game displays the collected Location at the top of the screen."
+            );
+            archipelagoShowLocationCollection.SettingChanged += addOnChangeSave(config);
+
+            archipelagoShowItemNamesInsteadOfLocationNames = config.Bind(
+                "Archipelago",
+                "ShowItemNamesInsteadOfLocationNames",
+                false,
+                "Ingame, when collecting checks, show the items name and its owner instead of showing the location name you just collected."
+            );
+            archipelagoShowItemNamesInsteadOfLocationNames.SettingChanged += addOnChangeSave(config);
+
+            archipelagoGrantMultiplierPickups = config.Bind(
+                "Archipelago",
+                "GrantMultiplierPickups",
+                true,
+                "If enabled, always grants the multiplier pickup's fury boost while connected.\nDisable for higher difficulty."
+            );
+            archipelagoGrantMultiplierPickups.SettingChanged += addOnChangeSave(config);
+
             archipelagoConsoleEnabled = config.Bind(
                 "Archipelago",
                 "ArchipelagoConsoleEnabled",
@@ -133,6 +163,25 @@ namespace Randomizer
                 "En/Disable the archipelago itemfeed."
             );
             archipelagoConsoleEnabled.SettingChanged += addOnChangeSave(config);
+
+            archipelagoConsoleMessageDuration = config.Bind(
+                "Archipelago",
+                "ConsoleMessageDuration",
+                7,
+                "While the Archipelago console is collapsed, determines how long messages should be visible."
+            );
+            archipelagoConsoleMessageDuration.SettingChanged += addOnChangeSave(config);
+
+            archipelagoConsoleMessageCount = config.Bind(
+                "Archipelago",
+                "ConsoleMessageCount",
+                10,
+                new ConfigDescription(
+                    "While the Archipelago console is collapsed, determines how many messages should be visible once at a time.",
+                    new AcceptableValueRange<int>(1, 20)
+                )
+            );
+            archipelagoConsoleMessageCount.SettingChanged += addOnChangeSave(config);
 
             archipelagoPopupForClassification = config.Bind(
                 "Archipelago",
@@ -153,6 +202,14 @@ namespace Randomizer
                 addOnChangeSave(config);
                 Randomizer.Archipelago.CheckDeathlink();
             };
+
+            archipelagoConsoleFilterToPlayer = config.Bind(
+                "Archipelago",
+                "SpoilLevelNames",
+                false,
+                "Filters any item send/received that don't contain the current players name.\nNote: Any filtered messages are discarded and won't be shown when turning this option back off."
+            );
+            archipelagoConsoleFilterToPlayer.SettingChanged += addOnChangeSave(config);
 
             archipelagoSpoilLevelNames = config.Bind(
                 "Archipelago",
@@ -193,9 +250,9 @@ namespace Randomizer
                     | FillerId.NextMultiplier
                     | FillerId.MaxMultiplier
                     | FillerId.ResetMultiplier
-                    | FillerId.UltimateTrigger
+                    | FillerId.TriggerUltimate
                     | FillerId.InvisibleWeapons
-                    | FillerId.Complement
+                    | FillerId.Compliment
                     | FillerId.Failure
                     | FillerId.Encouragement,
                 "The included items to randomly dispense."
@@ -208,7 +265,7 @@ namespace Randomizer
                 "Hellsinger.Traps",
                 "ShowActiveItemBox",
                 true,
-                new ConfigDescription("En/Disables the textbox that pops up when an item with duration is active.\nNote: The box doesn't show up for the gameplay toggles, see above.")
+                new ConfigDescription("En/Disables the textbox that pops up when an item with duration is active.\nNote: The box doesn't show up for the gameplay toggles, Hellsinger.Gameplay.")
             );
             trapShowActiveItemBox.SettingChanged += addOnChangeSave(config);
 
@@ -299,7 +356,7 @@ namespace Randomizer
                 )
             );
             trapInvisibleWeaponActiveTime.SettingChanged += addOnChangeSave(config);
-            trapInvisibleWeaponActiveTime.SettingChanged += (_,_) => WeaponAbilityControllerPatches.RefreshWeaponVisibility(); 
+            trapInvisibleWeaponActiveTime.SettingChanged += (_,_) => WeaponAbilityControllerPatches.RefreshWeaponVisibility();
 
             trapWeaponTrickeryActiveTime = config.Bind(
                 "Hellsinger.Traps",
@@ -417,7 +474,7 @@ namespace Randomizer
 
             weaponRandomizeVulcanType = config.Bind(
                 "Hellsinger.Weapons",
-                "RandomizeHoundType",
+                "RandomizeVulcanType",
                 false,
                 "Randomizes Vulcans equipped type, chosen from the unlocked types.\nThis takes precedence over the chosen type.\nThe randomization prioritizes missing locations."
             );

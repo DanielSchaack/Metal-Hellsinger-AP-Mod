@@ -176,7 +176,7 @@ namespace Randomizer
         static bool OnTriggerEnterPrefix(MultiplierBoostPickup __instance)
         {
             Logger.LogDebug(
-                $"MultiplierBoostPickup OnTriggerEnter Prefix for {__instance.BoostType}"
+                $"MultiplierBoostPickup OnTriggerEnter Prefix for {__instance.BoostType}, from gameObject: {__instance.gameObject.name}"
             );
             return true;
         }
@@ -185,9 +185,9 @@ namespace Randomizer
         [HarmonyPatch(nameof(MultiplierBoostPickup.OnTriggerEnter))]
         static void OnTriggerEnterPostfix(MultiplierBoostPickup __instance)
         {
-            Logger.LogDebug(
-                $"MultiplierBoostPickup OnTriggerEnter Postfix for {__instance.BoostType}"
-            );
+            // Logger.LogDebug(
+            //     $"MultiplierBoostPickup OnTriggerEnter Postfix for {__instance.BoostType}"
+            // );
         }
     }
 

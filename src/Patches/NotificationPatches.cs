@@ -89,9 +89,20 @@ namespace Randomizer
             BonusScoreContainerPatches.DisplayCheckCollected("Check");
         }
 
-        public static void DisplayCheckCollected(string checkName)
+        public static void DisplayCheckCollected(string checkName, long locationId)
         {
-            BonusScoreContainerPatches.DisplayCheckCollected(checkName);
+            if(!Randomizer.Configuration.archipelagoShowLocationCollection.Value)
+                return;
+
+            if(Randomizer.Configuration.archipelagoShowItemNamesInsteadOfLocationNames.Value
+                    && Items.ItemList.TryGetValue(locationId, out var itemInfo))
+            {
+                BonusScoreContainerPatches.DisplayCheckCollected(itemInfo.ItemDisplayName, itemInfo.Player.Alias, itemInfo.ItemGame);
+            }
+            else
+                BonusScoreContainerPatches.DisplayCheckCollected(checkName);
+
+            PlayerSoundSystemPatches.PlayPickupSound();
         }
 
         public static void DisplayWeaponGiven(string itemName)
@@ -234,32 +245,49 @@ namespace Randomizer
     {
         public static BonusScoreContainer Instance;
 
-        private static bool isManualCall = true;
+        private static bool isManualCall = false;
         private static string customMessage = "";
 
         public static void DisplayCheckCollected(string checkName)
         {
             if (Instance != null)
             {
-                customMessage = $"'{checkName}' collected!".ToUpper();
+                customMessage = $"{checkName.ToUpper()}!";
                 Logger.LogInfo($"Showing location pickup: {customMessage}");
 
-                isManualCall = true;
-                if(Lookup.IsChallengeLevelId(Randomizer.CurrentLevel))
-                {
-                    Instance.gameObject.SetActive(true);
-                    Instance.SetVisible(true, false);
-                    Instance.m_canvasGroup.alpha = 1;
-                    Instance.m_tierFill.gameObject.SetActive(false);
-                    Instance.m_tierLabel.gameObject.SetActive(false);
-                    Instance.transform.Find("MultiplierBarBkg")?.gameObject.SetActive(false);
-                    Instance.m_pickupMessage.gameObject.SetActive(true);
-                }
-                Instance.PlayTierGainedSequence();
-                Instance.ShowPickupMessage(MultiplierBoostEventType.AdvancedToNextTier);
-                isManualCall = false;
+                ShowDisplayMessage();
             }
         }
+
+        internal static void DisplayCheckCollected(string itemName, string alias, string itemGame)
+        {
+            if (Instance != null)
+            {
+                customMessage = $"'{itemName.ToUpper()}' for {alias.ToUpper()}!";
+                Logger.LogInfo($"Showing location pickup: {customMessage}");
+
+                ShowDisplayMessage();
+            }
+        }
+
+        private static void ShowDisplayMessage()
+        {
+            isManualCall = true;
+            if (Lookup.IsChallengeLevelId(Randomizer.CurrentLevel))
+            {
+                Instance.gameObject.SetActive(true);
+                Instance.SetVisible(true, false);
+                Instance.m_canvasGroup.alpha = 1;
+                Instance.m_tierFill.gameObject.SetActive(false);
+                Instance.m_tierLabel.gameObject.SetActive(false);
+                Instance.transform.Find("MultiplierBarBkg")?.gameObject.SetActive(false);
+                Instance.m_pickupMessage.gameObject.SetActive(true);
+            }
+            Instance.PlayTierGainedSequence();
+            Instance.ShowPickupMessage(MultiplierBoostEventType.AdvancedToNextTier);
+            isManualCall = false;
+        }
+
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(BonusScoreContainer.Awake))]
@@ -308,6 +336,7 @@ namespace Randomizer
             Logger.LogDebug($"BonusScoreContainer ShowPickupMessage Postfix called");
             __instance.m_pickupMessage.m_label.text = customMessage;
         }
+
     }
 
     [HarmonyPatch(typeof(BeatChainContainer))]
@@ -551,4 +580,67 @@ namespace Randomizer
             Logger.LogDebug($"BeatStreakMessageContainer Show Postfix called");
         }
     }
+
+    [HarmonyPatch(typeof(HudInWorldDirectionArrow))]
+    public class HudInWorldDirectionArrowPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(HudInWorldDirectionArrow.IsOutsideOfView))]
+        static bool IsOutsideOfViewPrefix(
+            HudInWorldDirectionArrow __instance,
+            ref bool __result
+        )
+        {
+            Logger.LogInfo(
+                $"HudInWorldDirectionArrow IsOutsideOfView Prefix called and is outside of view: {__result}"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(HudInWorldDirectionArrow.IsOutsideOfView))]
+        static void IsOutsideOfViewPostfix(HudInWorldDirectionArrow __instance)
+        {
+            Logger.LogDebug($"HudInWorldDirectionArrow IsOutsideOfView Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(HudInWorldDirectionArrow.Start))]
+        static bool StartPrefix(
+            HudInWorldDirectionArrow __instance
+        )
+        {
+            Logger.LogDebug(
+                $"HudInWorldDirectionArrow Start Prefix called"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(HudInWorldDirectionArrow.Start))]
+        static void StartPostfix(HudInWorldDirectionArrow __instance)
+        {
+            Logger.LogDebug($"HudInWorldDirectionArrow Start Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(HudInWorldDirectionArrow.SetTarget))]
+        static bool SetTargetPrefix(
+            HudInWorldDirectionArrow __instance
+        )
+        {
+            Logger.LogInfo(
+                $"HudInWorldDirectionArrow SetTarget Prefix called"
+            );
+            return false;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(HudInWorldDirectionArrow.SetTarget))]
+        static void SetTargetPostfix(HudInWorldDirectionArrow __instance)
+        {
+            Logger.LogDebug($"HudInWorldDirectionArrow SetTarget Postfix called");
+        }
+    }
+
 }

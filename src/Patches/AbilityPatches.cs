@@ -197,6 +197,8 @@ namespace Randomizer
             Logger.LogDebug(
                 $"JumpMovementState TriggerJump Prefix called and is air jump: {isAirJump} and is double jump: {isDoubleJump}"
             );
+            if(isAirJump && isDoubleJump && !Randomizer.ItemTracker.CanDoubleJump())
+                return false;
             return true;
         }
     }
@@ -261,6 +263,7 @@ namespace Randomizer
         public static int MaxTiersToApply = 0;
         public static int ResetTiersToApply = 0;
 
+        private static bool isManual = false;
         public static float TierApplyCooldown = 2.5f; // Target cooldown duration in seconds
         public static float CurrentCooldownTimer = 0f;
 
@@ -294,7 +297,9 @@ namespace Randomizer
                 Logger.LogInfo(
                     $"ScoreController Next multiplier tier to apply is at {NextTiersToApply}, increasing by one"
                 );
+                isManual = true;
                 __instance.AdvanceToNextTier();
+                isManual = false;
                 IngameMessagesPatches.DisplayItemActivated($"Next Multiplier");
 
                 NextTiersToApply--;
@@ -307,7 +312,9 @@ namespace Randomizer
                 Logger.LogInfo(
                     $"ScoreController Max multiplier tier to apply is at {MaxTiersToApply}, increasing by one"
                 );
+                isManual = true;
                 __instance.AdvanceToMaxTier();
+                isManual = false;
                 IngameMessagesPatches.DisplayItemActivated($"Max Multiplier");
                 MaxTiersToApply--;
                 CurrentCooldownTimer = 0f;
@@ -320,8 +327,74 @@ namespace Randomizer
         [HarmonyPatch(nameof(ScoreController.SetMinTier))]
         static bool SetMinTierPrefix(ref ScoreController __instance)
         {
+            Logger.LogInfo($"ScoreController SetMinTier Prefix called");
             Instance = __instance;
             return true;
+        }
+
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ScoreController.AdvanceToNextTier))]
+        static bool AdvanceToNextTierPrefix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController AdvanceToNextTier Prefix called");
+            return (Randomizer.Archipelago.connected && isManual) // Skip if from pickup during randomizer
+                || !Randomizer.Archipelago.connected
+                || Randomizer.Configuration.archipelagoGrantMultiplierPickups.Value;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ScoreController.AdvanceToNextTier))]
+        static void AdvanceToNextTierPostfix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController AdvanceToNextTier Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ScoreController.AdvanceToMaxTier))]
+        static bool AdvanceToMaxTierPrefix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController AdvanceToMaxTier Prefix called");
+            return (Randomizer.Archipelago.connected && isManual) // Skip if from pickup during randomizer
+                || !Randomizer.Archipelago.connected
+                || Randomizer.Configuration.archipelagoGrantMultiplierPickups.Value;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ScoreController.AdvanceToMaxTier))]
+        static void AdvanceToMaxTierPostfix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController AdvanceToMaxTier Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ScoreController.DecreaseOneTier))]
+        static bool DecreaseOneTierPrefix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController DecreaseOneTier Prefix called");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ScoreController.DecreaseOneTier))]
+        static void DecreaseOneTierPostfix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController DecreaseOneTier Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ScoreController.SetTier))]
+        static bool SetTierPrefix(ScoreController __instance, int tier, bool playStingerSound)
+        {
+            Logger.LogDebug($"ScoreController SetTier Prefix called for tier {tier} and should play stinger sound: {playStingerSound}");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ScoreController.SetTier))]
+        static void SetTierPostfix(ScoreController __instance)
+        {
+            Logger.LogDebug($"ScoreController SetTier Postfix called");
         }
     }
 }

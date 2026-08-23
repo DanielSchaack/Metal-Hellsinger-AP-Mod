@@ -98,7 +98,7 @@ namespace Randomizer
             }
         }
 
-        private static readonly System.Collections.Generic.List<string> ComplementingVoDataId =
+        private static readonly System.Collections.Generic.List<string> ComplimentingVoDataId =
         [
             "EndlessArenaCompleteVO",
         ];
@@ -111,13 +111,13 @@ namespace Randomizer
             "TormentDeathCutsceneVOData",
         ];
 
-        public static void PlayComplement()
+        public static void PlayCompliment()
         {
-            Logger.LogInfo($"Added a Complement quip to the queue");
-            var data1 = GetRandomVoTuple(ComplementingVoDataId);
+            Logger.LogInfo($"Added a Compliment quip to the queue");
+            var data1 = GetRandomVoTuple(ComplimentingVoDataId);
             var data2 = GetChallengeVoTuple("ChallengeVoData", "Gold");
             var data = new System.Random().Next(2) > 0 ? data1 : data2;
-            VoQueue.Enqueue(new VoRequest(data, "Complement"));
+            VoQueue.Enqueue(new VoRequest(data, "Compliment"));
         }
 
 
@@ -258,6 +258,132 @@ namespace Randomizer
         static void TearDownPostfix(ref SoundEmitterSystem __instance)
         {
             Logger.LogInfo($"SoundEmitterSystem TearDown Postfix called");
+            Instance = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerSoundSystem))]
+    public class PlayerSoundSystemPatches
+    {
+        public static PlayerSoundSystem Instance;
+
+        public static void PlayPickupSound()
+        {
+            if (Instance != null)
+            {
+                Logger.LogInfo($"Playing pickup sound");
+                Instance.TriggerChallengePickupSound();
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(PlayerSoundSystem.CreateGlobalFMODInstances))]
+        private static bool CreateGlobalFMODInstancesPrefix(ref PlayerSoundSystem __instance)
+        {
+            Logger.LogDebug($"PlayerSoundSystem CreateGlobalFMODInstances Prefix");
+            Instance = __instance;
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(PlayerSoundSystem.CreateGlobalFMODInstances))]
+        private static void CreateGlobalFMODInstancesPostfix(PlayerSoundSystem __instance)
+        {
+            Logger.LogDebug($"PlayerSoundSystem CreateGlobalFMODInstances Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(PlayerSoundSystem.StartBeatTrack))]
+        private static bool StartBeatTrackPrefix(ref PlayerSoundSystem __instance)
+        {
+            Logger.LogDebug($"PlayerSoundSystem StartBeatTrack Prefix");
+            Instance = __instance;
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(PlayerSoundSystem.StartBeatTrack))]
+        private static void StartBeatTrackPostfix(PlayerSoundSystem __instance)
+        {
+            Logger.LogDebug($"PlayerSoundSystem StartBeatTrack Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(PlayerSoundSystem.TearDown))]
+        private static bool TearDownPrefix(ref PlayerSoundSystem __instance)
+        {
+            Logger.LogDebug($"PlayerSoundSystem TearDown Prefix");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(PlayerSoundSystem.TearDown))]
+        private static void TearDownPostfix(PlayerSoundSystem __instance)
+        {
+            Logger.LogDebug($"PlayerSoundSystem TearDown Postfix called");
+            Instance = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(AudioGameplayController))]
+    public class AudioGameplayControllerPatches
+    {
+        public static AudioGameplayController Instance;
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(AudioGameplayController.Update))]
+        private static bool UpdatePrefix(ref AudioGameplayController __instance)
+        {
+            // Logger.LogDebug($"AudioGameplayController Update Prefix");
+            if(Instance == null)
+            {
+                Instance = __instance;
+                UpdateUnlockedBeatstreaks();
+            }
+            return true;
+        }
+
+        internal static void UpdateUnlockedBeatstreaks()
+        {
+            if(Instance == null)
+                return;
+
+            Il2CppSystem.Collections.Generic.Dictionary<EBeatStreakEffect, bool> beatstreakMap =
+                Instance.m_beatStreakController.m_beatStreakUnlockMap;
+
+            var keys = new System.Collections.Generic.List<EBeatStreakEffect>();
+            foreach (var key in beatstreakMap.Keys)
+            {
+                keys.Add(key);
+            }
+
+            foreach (var key in keys)
+            {
+                beatstreakMap[key] = Randomizer.ItemTracker.HasBoonByBeatSreakEffect(key);
+                Logger.LogDebug($"Beatstreak {key} is unlocked: {beatstreakMap[key]}");
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(AudioGameplayController.Update))]
+        private static void UpdatePostfix(AudioGameplayController __instance)
+        {
+            // Logger.LogDebug($"AudioGameplayController Update Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(AudioGameplayController.TearDown))]
+        private static bool TearDownPrefix(ref AudioGameplayController __instance)
+        {
+            Logger.LogDebug($"AudioGameplayController TearDown Prefix");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(AudioGameplayController.TearDown))]
+        private static void TearDownPostfix(AudioGameplayController __instance)
+        {
+            Logger.LogDebug($"AudioGameplayController TearDown Postfix called");
             Instance = null;
         }
     }

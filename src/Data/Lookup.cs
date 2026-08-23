@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using static Randomizer.ItemOrigin;
 using static Randomizer.Locations.EZone;
 using static Randomizer.Locations.EArena;
 using static Randomizer.Locations;
@@ -272,7 +271,7 @@ namespace Randomizer
         public static readonly Dictionary<LevelCode, string> LevelCodeToLevelId =
             LevelIdToLevelCode.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
-        public static readonly Dictionary<string, List<string>> RequiredLevelItems = new Dictionary<
+        public static readonly Dictionary<string, List<string>> RequiredLevelItemsBase = new Dictionary<
             string,
             List<string>
         >()
@@ -287,27 +286,55 @@ namespace Randomizer
             { "Nihil", new List<string> { "Hells", "Nihil" } },
             { "Acheron", new List<string> { "Hells", "Acheron" } },
             { "Sheol", new List<string> { "Hells", "Sheol" } },
-            { "CH_Amdusias1", new List<string> { "Hells", "Voke", "Killing with Rhythm: 1" } },
-            { "CH_Marbas1", new List<string> { "Hells", "Voke", "Weapon Trickery: 1" } },
-            { "CH_Halphas1", new List<string> { "Hells", "Voke", "Relic Thief: 1" } },
-            { "CH_Bune1", new List<string> { "Hells", "Stygia", "Giantslayer: 1" } },
-            { "CH_Morax1", new List<string> { "Hells", "Stygia", "Death's Edge: 1" } },
-            { "CH_Halphas2", new List<string> { "Hells", "Stygia", "Relic Thief: 2" } },
-            { "CH_Flauros1", new List<string> { "Hells", "Yhelm", "Ultimate Mastery: 1" } },
-            { "CH_Amdusias2", new List<string> { "Hells", "Yhelm", "Killing with Rhythm: 2" } },
-            { "CH_Marbas2", new List<string> { "Hells", "Yhelm", "Weapon Trickery: 2" } },
-            { "CH_Glasya1", new List<string> { "Hells", "Incaustis", "Slaughter Mastery: 1" } },
-            { "CH_Bune2", new List<string> { "Hells", "Incaustis", "Giantslayer: 2" } },
-            { "CH_Halphas3", new List<string> { "Hells", "Incaustis", "Relic Thief: 3" } },
-            { "CH_Morax2", new List<string> { "Hells", "Gehenna", "Death's Edge: 2" } },
-            { "CH_Amdusias3", new List<string> { "Hells", "Gehenna", "Killing with Rhythm: 3" } },
-            { "CH_Marbas3", new List<string> { "Hells", "Gehenna", "Weapon Trickery: 3" } },
-            { "CH_Flauros2", new List<string> { "Hells", "Nihil", "Ultimate Mastery: 2" } },
-            { "CH_Glasya2", new List<string> { "Hells", "Nihil", "Slaughter Mastery: 2" } },
-            { "CH_Bune3", new List<string> { "Hells", "Nihil", "Giantslayer: 3" } },
-            { "CH_Morax3", new List<string> { "Hells", "Acheron", "Death's Edge: 3" } },
-            { "CH_Flauros3", new List<string> { "Hells", "Acheron", "Ultimate Mastery: 3" } },
-            { "CH_Glasya3", new List<string> { "Hells", "Acheron", "Slaughter Mastery: 3" } },
+            { "CH_Amdusias1", new List<string> { "Hells", "Killing with Rhythm: 1" } },
+            { "CH_Marbas1", new List<string> { "Hells", "Weapon Trickery: 1" } },
+            { "CH_Halphas1", new List<string> { "Hells", "Relic Thief: 1" } },
+            { "CH_Bune1", new List<string> { "Hells", "Giantslayer: 1" } },
+            { "CH_Morax1", new List<string> { "Hells", "Death's Edge: 1" } },
+            { "CH_Halphas2", new List<string> { "Hells", "Relic Thief: 2" } },
+            { "CH_Flauros1", new List<string> { "Hells", "Ultimate Mastery: 1" } },
+            { "CH_Amdusias2", new List<string> { "Hells", "Killing with Rhythm: 2" } },
+            { "CH_Marbas2", new List<string> { "Hells", "Weapon Trickery: 2" } },
+            { "CH_Glasya1", new List<string> { "Hells", "Slaughter", "Slaughter Mastery: 1" } },
+            { "CH_Bune2", new List<string> { "Hells", "Giantslayer: 2" } },
+            { "CH_Halphas3", new List<string> { "Hells", "Relic Thief: 3" } },
+            { "CH_Morax2", new List<string> { "Hells", "Death's Edge: 2" } },
+            { "CH_Amdusias3", new List<string> { "Hells", "Killing with Rhythm: 3" } },
+            { "CH_Marbas3", new List<string> { "Hells", "Weapon Trickery: 3" } },
+            { "CH_Flauros2", new List<string> { "Hells", "Ultimate Mastery: 2" } },
+            { "CH_Glasya2", new List<string> { "Hells", "Slaughter", "Slaughter Mastery: 2" } },
+            { "CH_Bune3", new List<string> { "Hells", "Giantslayer: 3" } },
+            { "CH_Morax3", new List<string> { "Hells", "Death's Edge: 3" } },
+            { "CH_Flauros3", new List<string> { "Hells", "Ultimate Mastery: 3" } },
+            { "CH_Glasya3", new List<string> { "Hells", "Slaughter", "Slaughter Mastery: 3" } },
+        };
+
+        public static readonly Dictionary<string, List<string>> RequiredLevelItemsChallenges = new Dictionary<
+            string,
+            List<string>
+        >()
+        {
+            { "CH_Amdusias1", new List<string> { "Voke",  } },
+            { "CH_Marbas1", new List<string> { "Voke",  } },
+            { "CH_Halphas1", new List<string> { "Voke",  } },
+            { "CH_Bune1", new List<string> { "Stygia",  } },
+            { "CH_Morax1", new List<string> { "Stygia",  } },
+            { "CH_Halphas2", new List<string> { "Stygia",  } },
+            { "CH_Flauros1", new List<string> { "Yhelm",  } },
+            { "CH_Amdusias2", new List<string> { "Yhelm",  } },
+            { "CH_Marbas2", new List<string> { "Yhelm",  } },
+            { "CH_Glasya1", new List<string> { "Incaustis",  } },
+            { "CH_Bune2", new List<string> { "Incaustis",  } },
+            { "CH_Halphas3", new List<string> { "Incaustis",  } },
+            { "CH_Morax2", new List<string> { "Gehenna",  } },
+            { "CH_Amdusias3", new List<string> { "Gehenna",  } },
+            { "CH_Marbas3", new List<string> { "Gehenna",  } },
+            { "CH_Flauros2", new List<string> { "Nihil",  } },
+            { "CH_Glasya2", new List<string> { "Nihil",  } },
+            { "CH_Bune3", new List<string> { "Nihil",  } },
+            { "CH_Morax3", new List<string> { "Acheron",  } },
+            { "CH_Flauros3", new List<string> { "Acheron",  } },
+            { "CH_Glasya3", new List<string> { "Acheron",  } },
         };
 
         public static readonly Dictionary<string, List<string>> RequiredWeaponsForLevel = new Dictionary<
@@ -330,7 +357,7 @@ namespace Randomizer
             { "CH_Bune1", new List<string> { "Terminus", "Persephone", "The Hounds" } },
             { "CH_Morax1", new List<string> { "Paz", "Terminus", "Persephone", "The Hounds" } },
             { "CH_Halphas2", new List<string> { "Terminus", "Persephone", "The Hounds" } },
-            { "CH_Flauros1", new List<string> { "Terminus", "Persephone" } },
+            { "CH_Flauros1", new List<string> { "Terminus", "Terminus Ultimate", "Persephone", "Persephone Ultimate" } },
             { "CH_Amdusias2", new List<string> { "Paz", "Terminus", "The Hounds" } },
             { "CH_Marbas2", new List<string> { "Terminus", "Persephone", "The Hounds", "Vulcan" } },
             { "CH_Glasya1", new List<string> { "Paz", "Terminus", "The Hounds" } },
@@ -339,11 +366,11 @@ namespace Randomizer
             { "CH_Morax2", new List<string> { "Paz", "Terminus", "Persephone", "The Hounds" } },
             { "CH_Amdusias3", new List<string> { "Paz", "Terminus", "Hellcrow" } },
             { "CH_Marbas3", new List<string> { "Terminus", "Persephone", "The Hounds", "Vulcan", "Hellcrow" } },
-            { "CH_Flauros2", new List<string> { "Terminus", "Persephone", "Hellcrow" } },
+            { "CH_Flauros2", new List<string> { "Terminus", "Terminus Ultimate", "Persephone", "Persephone Ultimate", "Hellcrow", "Hellcrow Ultimate" } },
             { "CH_Glasya2", new List<string> { "Paz", "Terminus", "The Hounds" } },
             { "CH_Bune3", new List<string> { "Terminus", "Persephone", "The Hounds" } },
             { "CH_Morax3", new List<string> { "Paz", "Terminus", "Vulcan", "Hellcrow" } },
-            { "CH_Flauros3", new List<string> { "Terminus", "Persephone", "The Hounds" } },
+            { "CH_Flauros3", new List<string> { "Terminus", "Terminus Ultimate", "Persephone", "Persephone Ultimate", "The Hounds", "The Hounds Ultimate" } },
             { "CH_Glasya3", new List<string> { "Paz", "Terminus", "The Hounds" } },
         };
 
@@ -686,9 +713,9 @@ namespace Randomizer
 
         public static readonly Dictionary<ItemOrigin, List<string>> OutfitNames = new()
         {
-            { Base, new() { "Outfit of the Unknown", "Outfit of the Leviathan" } },
-            { DreamOfTheBeast, new() { "Outfit of the Dark Devotee", "Outfit of the Morning Star", "Outfit of the Angel Eyes" } },
-            { Purgatory, new() { "Outfit of the Obsidian", "Outfit of the Amethyst", "Outfit of the Chromatica" } },
+            { ItemOrigin.Base, new() { "Outfit of the Unknown", "Outfit of the Leviathan" } },
+            { ItemOrigin.DreamOfTheBeast, new() { "Outfit of the Dark Devotee", "Outfit of the Morning Star", "Outfit of the Angel Eyes" } },
+            { ItemOrigin.Purgatory, new() { "Outfit of the Obsidian", "Outfit of the Amethyst", "Outfit of the Chromatica" } },
         };
         public static readonly Dictionary<string, SkinType> OutfitNameToType = new()
         {
@@ -707,7 +734,7 @@ namespace Randomizer
         public static readonly Dictionary<ItemOrigin, List<string>> SongNames = new()
         {
             {
-                Base,
+                ItemOrigin.Base,
                 new()
                 {
                     "This is the End",
@@ -726,7 +753,7 @@ namespace Randomizer
                 }
             },
             {
-                Dusk,
+                ItemOrigin.Dusk,
                 new()
                 {
                     "Departure to Destruction",
@@ -741,7 +768,7 @@ namespace Randomizer
                 }
             },
             {
-                EssentialHits,
+                ItemOrigin.EssentialHits,
                 new()
                 {
                     "Down With the Sickness",
@@ -755,7 +782,7 @@ namespace Randomizer
                 }
             },
             {
-                DreamOfTheBeast,
+                ItemOrigin.DreamOfTheBeast,
                 new()
                 {
                     "Leviathan (Song)",
@@ -763,7 +790,7 @@ namespace Randomizer
                 }
             },
             {
-                Purgatory,
+                ItemOrigin.Purgatory,
                 new()
                 {
                     "Swallow the Fire",
@@ -775,7 +802,7 @@ namespace Randomizer
         public static readonly Dictionary<ItemOrigin, List<string>> MainSongNames = new()
         {
             {
-                Base,
+                ItemOrigin.Base,
                 new()
                 {
                     "This is the End",
@@ -789,7 +816,7 @@ namespace Randomizer
                 }
             },
             {
-                Dusk,
+                ItemOrigin.Dusk,
                 new()
                 {
                     "Departure to Destruction",
@@ -804,7 +831,7 @@ namespace Randomizer
                 }
             },
             {
-                EssentialHits,
+                ItemOrigin.EssentialHits,
                 new()
                 {
                     "Down With the Sickness",
@@ -818,7 +845,7 @@ namespace Randomizer
                 }
             },
             {
-                DreamOfTheBeast,
+                ItemOrigin.DreamOfTheBeast,
                 new()
                 {
                     "Leviathan (Song)",
@@ -826,7 +853,7 @@ namespace Randomizer
                 }
             },
             {
-                Purgatory,
+                ItemOrigin.Purgatory,
                 new()
                 {
                     "Swallow the Fire",
@@ -839,7 +866,7 @@ namespace Randomizer
         public static readonly Dictionary<ItemOrigin, List<string>> BossSongNames = new()
         {
             {
-                Base,
+                ItemOrigin.Base,
                 new()
                 {
                     "Blood and Law",
@@ -850,7 +877,7 @@ namespace Randomizer
                 }
             },
             {
-                Dusk,
+                ItemOrigin.Dusk,
                 new()
                 {
                     "Departure to Destruction",
@@ -865,7 +892,7 @@ namespace Randomizer
                 }
             },
             {
-                EssentialHits,
+                ItemOrigin.EssentialHits,
                 new()
                 {
                     "Down With the Sickness",
@@ -1086,6 +1113,7 @@ namespace Randomizer
         public static readonly Dictionary<string, string> LevelToDefeatedBossLocationName =
         new Dictionary<string, string>()
             {
+                { "EndlessModeBase", "The Lost Unknown: Leviathan defeated" },
                 { "Voke", "Anger Aspect: Voke defeated" },
                 { "Stygia", "Charged Aspect: Stygia defeated" },
                 { "Yhelm", "Fortress Aspect: Yhelm defeated" },
@@ -1779,9 +1807,9 @@ namespace Randomizer
             NextMultiplier = 1 << 0,
             MaxMultiplier = 1 << 1,
             ResetMultiplier = 1 << 2,
-            UltimateTrigger = 1 << 3,
+            TriggerUltimate = 1 << 3,
             AlwaysOnBeat = 1 << 4,
-            Complement = 1 << 5,
+            Compliment = 1 << 5,
             Encouragement = 1 << 6,
             Failure = 1 << 7,
             DoubleTime = 1 << 8,
@@ -1796,9 +1824,9 @@ namespace Randomizer
             { "Next Multiplier", FillerId.NextMultiplier },
             { "Max Multiplier", FillerId.MaxMultiplier },
             { "Reset Multiplier", FillerId.ResetMultiplier },
-            { "Trigger Ultimate", FillerId.UltimateTrigger },
+            { "Trigger Ultimate", FillerId.TriggerUltimate },
             { "Always on Beat", FillerId.AlwaysOnBeat },
-            { "Complement", FillerId.Complement },
+            { "Compliment", FillerId.Compliment },
             { "Encouragement", FillerId.Encouragement },
             { "Failure", FillerId.Failure },
             { "Double Time", FillerId.DoubleTime },
@@ -1817,13 +1845,13 @@ namespace Randomizer
                 | FillerId.InvisibleWeapons
                 | FillerId.HalfTime
                 | FillerId.DoubleTime
-                | FillerId.UltimateTrigger
+                | FillerId.TriggerUltimate
                 | FillerId.Death;
         }
 
         internal static FillerId GetFillerItems()
         {
-            return FillerId.Complement
+            return FillerId.Compliment
                 | FillerId.Encouragement
                 | FillerId.Failure
                 | FillerId.NextMultiplier
@@ -1902,5 +1930,22 @@ namespace Randomizer
             "Sheol Coat of Arms Beast",
             "Sheol Coat of Arms Archdevil",
         ];
+
+        public static Dictionary<string, string> BoonUnlockToFirstActivation = new()
+        {
+            { "Enduring Fury Unlock", "First Miscellaneous - Enduring Fury" },
+            { "Faster Ultimate Gain Unlock", "First Miscellaneous - Faster Ultimate Gain" },
+            { "Deadlier Dash Unlock", "First Miscellaneous - Deadlier Dash" },
+            { "Explosive Slaughter Unlock", "First Miscellaneous - Explosive Slaughter" },
+        };
+
+        public static Dictionary<string, string> LevelToBoonUnlock = new()
+        {
+            { "Voke", "Enduring Fury Unlock" },
+            { "Stygia", "Faster Ultimate Gain Unlock" },
+            { "Incaustis", "Deadlier Dash Unlock" },
+            { "Nihil", "Explosive Slaughter Unlock" },
+        };
+
     }
 }
