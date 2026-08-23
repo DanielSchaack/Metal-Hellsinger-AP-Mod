@@ -4,8 +4,8 @@
         <TargetFramework>net60</TargetFramework>
         <AssemblyName>MetalHellsingerApMod</AssemblyName>
         <GamePath>/home/daniel/.local/share/Steam/steamapps/common/Metal Hellsinger/</GamePath>
-        <Description>Example Archipelago Plugin</Description>
-        <Version>1.0.0</Version>
+        <Description>Archipelago Plugin</Description>
+        <Version>1.0.0</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>

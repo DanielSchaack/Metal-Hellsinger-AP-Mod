@@ -10,10 +10,6 @@ Feel free to take a look at [the setup guide](./SETUP.md) or to ask questions in
 
 In the Metal: Hellsinger Randomizer, every item in the game can be randomized. All Hells, Torments, Weapons, Songs, Outfits, Coat of Arms and Multiplier Pickups can be randomized, as well as player abilities like Jumping, Reloading, Dashing and destroying in-game destructibles.<br>
 
-Ability shuffling is an option available from the options page to shuffle certain abilities
-(Jumping, Reloading, Ultimates, Dashing, Slaughter and destroying in-game destructibles),
-preventing them from being used until they are unlocked.<br>
-
 ## What does this mod offer outside of the Archipelago Randomizer integration?
 
 This mod also includes customization in configuration, such as:

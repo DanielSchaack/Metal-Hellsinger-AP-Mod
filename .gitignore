@@ -1,3 +1,4 @@
 cpp2il_out/
 obj/
+bin/
 *.dll
