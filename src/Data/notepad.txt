@@ -1,0 +1,240 @@
+----------------------------
+Voke - Ammo - Arena 1 - 3
+Voke - Ammo - Arena 2 - 3
+Voke - Ammo - Arena 3 - 5
+Voke - Ammo - Arena 4 - 2
+Voke - Ammo - Boss - 4
+Voke - Ammo - Total - 17
+
+Voke - Health - Arena 1 - 4
+Voke - Health - Arena 2 - 2
+Voke - Health - Arena 3 - 3
+Voke - Health - Arena 4 - 3
+Voke - Health - Boss - 4
+Voke - Health - Total - 17
+
+Voke - Chaos - Arena 1 - 0
+Voke - Chaos - Arena 2 - 2
+Voke - Chaos - Arena 3 - 2
+Voke - Chaos - Arena 4 - 2
+Voke - Chaos - Boss - 4
+Voke - Chaos - Total - 10
+----------------------------
+Stygia - Ammo - Arena 1 - 2
+Stygia - Ammo - Arena 2 - 6
+Stygia - Ammo - Arena 3 - 4
+Stygia - Ammo - Arena 4 - 7
+Stygia - Ammo - Boss - 4
+Stygia - Ammo - Total - 23
+
+Stygia - Health - Arena 1 - 2
+Stygia - Health - Arena 2 - 4
+Stygia - Health - Arena 3 - 3
+Stygia - Health - Arena 4 - 5
+Stygia - Health - Boss - 5
+Stygia - Health - Total - 19
+
+Stygia - Chaos - Arena 1 - 0
+Stygia - Chaos - Arena 2 - 5
+Stygia - Chaos - Arena 3 - 2
+Stygia - Chaos - Arena 4 - 4
+Stygia - Chaos - Boss - 0
+Stygia - Chaos - Total - 11
+----------------------------
+Yhelm - Ammo - Arena 1 - 8
+Yhelm - Ammo - Arena 2 - 4
+Yhelm - Ammo - Arena 3 - 1
+Yhelm - Ammo - Arena 4 - 7
+Yhelm - Ammo - Boss - 4
+Yhelm - Ammo - Total - 24
+
+Yhelm - Health - Arena 1 - 3
+Yhelm - Health - Arena 2 - 4
+Yhelm - Health - Arena 3 - 3
+Yhelm - Health - Arena 4 - 6
+Yhelm - Health - Boss - 5
+Yhelm - Health - Total - 21
+
+Yhelm - Chaos - Arena 1 - 0
+Yhelm - Chaos - Arena 2 - 1
+Yhelm - Chaos - Arena 3 - 2
+Yhelm - Chaos - Arena 4 - 4
+Yhelm - Chaos - Boss - 6
+Yhelm - Chaos - Total - 13
+----------------------------
+Incaustis - Ammo - Arena 1 - 5
+Incaustis - Ammo - Arena 2 - 7
+Incaustis - Ammo - Arena 3 - 4
+Incaustis - Ammo - Arena 4 - 6
+Incaustis - Ammo - Boss - 4
+Incaustis - Ammo - Total - 26
+
+Incaustis - Health - Arena 1 - 3
+Incaustis - Health - Arena 2 - 5
+Incaustis - Health - Arena 3 - 4
+Incaustis - Health - Arena 4 - 6
+Incaustis - Health - Boss - 5
+Incaustis - Health - Total - 23
+
+Incaustis - Chaos - Arena 1 - 5
+Incaustis - Chaos - Arena 2 - 2
+Incaustis - Chaos - Arena 3 - 3
+Incaustis - Chaos - Arena 4 - 3
+Incaustis - Chaos - Boss - 0
+Incaustis - Chaos - Total - 13
+----------------------------
+Gehenna - Ammo - Arena 1 - 4
+Gehenna - Ammo - Arena 2 - 4
+Gehenna - Ammo - Arena 3 - 4
+Gehenna - Ammo - Arena 4 - 3
+Gehenna - Ammo - Boss - 4
+Gehenna - Ammo - Total - 19
+
+Gehenna - Health - Arena 1 - 2
+Gehenna - Health - Arena 2 - 4
+Gehenna - Health - Arena 3 - 4
+Gehenna - Health - Arena 4 - 4
+Gehenna - Health - Boss - 4
+Gehenna - Health - Total - 18
+
+Gehenna - Chaos - Arena 1 - 1
+Gehenna - Chaos - Arena 2 - 1
+Gehenna - Chaos - Arena 3 - 6
+Gehenna - Chaos - Arena 4 - 2
+Gehenna - Chaos - Boss - 0
+Gehenna - Chaos - Total - 10
+----------------------------
+Nihil - Ammo - Arena 1 - 3
+Nihil - Ammo - Arena 2 - 4
+Nihil - Ammo - Arena 3 - 6
+Nihil - Ammo - Arena 4 - 4
+Nihil - Ammo - Boss - 4
+Nihil - Ammo - Total - 21
+
+Nihil - Health - Arena 1 - 3
+Nihil - Health - Arena 2 - 3
+Nihil - Health - Arena 3 - 4
+Nihil - Health - Arena 4 - 5
+Nihil - Health - Boss - 5
+Nihil - Health - Total - 20
+
+Nihil - Chaos - Arena 1 - 1
+Nihil - Chaos - Arena 2 - 0
+Nihil - Chaos - Arena 3 - 2
+Nihil - Chaos - Arena 4 - 0
+Nihil - Chaos - Boss - 2
+Nihil - Chaos - Total - 5
+----------------------------
+Acheron - Ammo - Arena 1 - 5
+Acheron - Ammo - Arena 2 - 3
+Acheron - Ammo - Arena 3 - 7
+Acheron - Ammo - Arena 4 - 6
+Acheron - Ammo - Boss - 0
+Acheron - Ammo - Total - 21
+
+Acheron - Health - Arena 1 - 4
+Acheron - Health - Arena 2 - 3
+Acheron - Health - Arena 3 - 6
+Acheron - Health - Arena 4 - 4
+Acheron - Health - Boss - 5
+Acheron - Health - Total - 22
+
+Acheron - Chaos - Arena 1 - 2
+Acheron - Chaos - Arena 2 - 1
+Acheron - Chaos - Arena 3 - 5
+Acheron - Chaos - Arena 4 - 4
+Acheron - Chaos - Boss - 0
+Acheron - Chaos - Total - 12
+----------------------------
+Sheol - Ammo - Arena 1 - 6
+Sheol - Ammo - Arena 2 - 5
+Sheol - Ammo - Arena 3 - 5
+Sheol - Ammo - Arena 4 - 5
+Sheol - Ammo - Boss - 7
+Sheol - Ammo - Total - 28
+
+Sheol - Health - Arena 1 - 5
+Sheol - Health - Arena 2 - 4
+Sheol - Health - Arena 3 - 5
+Sheol - Health - Arena 4 - 5
+Sheol - Health - Boss - 7
+Sheol - Health - Total - 26
+
+Sheol - Chaos - Arena 1 - 2
+Sheol - Chaos - Arena 2 - 3
+Sheol - Chaos - Arena 3 - 3
+Sheol - Chaos - Arena 4 - 4
+Sheol - Chaos - Boss - 0
+Sheol - Chaos - Total - 12
+----------------------------
+Killing with Rhythm 1 - Health - 2
+Killing with Rhythm 1 - Total - 2
+----------------------------
+Killing with Rhythm 2 - Health - 2
+Killing with Rhythm 2 - Total - 2
+----------------------------
+Killing with Rhythm 3 - Health - 2
+Killing with Rhythm 3 - Total - 2
+----------------------------
+Weapon Trickery 1 - Health - 2
+Weapon Trickery 1 - Chaos - 1
+Weapon Trickery 1 - Total - 3
+----------------------------
+Weapon Trickery 2 - Health - 2
+Weapon Trickery 2 - Chaos - 1
+Weapon Trickery 2 - Total - 3
+----------------------------
+Weapon Trickery 3 - Health - 2
+Weapon Trickery 3 - Chaos - 1
+Weapon Trickery 3 - Total - 3
+----------------------------
+Relic Thief 1 - Health - 2
+Relic Thief 1 - Challenge - 3
+Relic Thief 1 - Total - 5
+----------------------------
+Relic Thief 2 - Health - 2
+Relic Thief 2 - Challenge - 3
+Relic Thief 2 - Total - 5
+----------------------------
+Relic Thief 3 - Health - 2
+Relic Thief 3 - Challenge - 3
+Relic Thief 3 - Total - 5
+----------------------------
+Giantslayer 1 - Health - 4
+Giantslayer 1 - Chaos - 4
+Giantslayer 1 - Total - 8
+----------------------------
+Giantslayer 2 - Health - 4
+Giantslayer 2 - Chaos - 4
+Giantslayer 2 - Total - 8
+----------------------------
+Giantslayer 3 - Health - 4
+Giantslayer 3 - Chaos - 4
+Giantslayer 3 - Total - 8
+----------------------------
+Deaths's Edge 1 - Chaos - 8
+Deaths's Edge 1 - Total - 8
+----------------------------
+Deaths's Edge 2 - Chaos - 8
+Deaths's Edge 2 - Total - 8
+----------------------------
+Deaths's Edge 3 - Chaos - 8
+Deaths's Edge 3 - Total - 8
+----------------------------
+Ultimate Mastery 1 - Health - 3
+Ultimate Mastery 1 - Total - 3
+----------------------------
+Ultimate Mastery 2 - Health - 3
+Ultimate Mastery 2 - Total - 3
+----------------------------
+Ultimate Mastery 3 - Health - 3
+Ultimate Mastery 3 - Total - 3
+----------------------------
+Slaughter Mastery 1 - Health - 3
+Slaughter Mastery 1 - Total - 3
+----------------------------
+Slaughter Mastery 2 - Health - 3
+Slaughter Mastery 2 - Total - 3
+----------------------------
+Slaughter Mastery 3 - Health - 3
+Slaughter Mastery 3 - Total - 3
