@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Outsiders.GUI;
@@ -11,6 +12,7 @@ namespace Randomizer
         public static ProgressionSaveData SaveData;
         public static CampaignManager CampaignManager;
         public static GameDataConfigurationProvider GameData;
+        private static List<EndlessModeBoughtRewardData> rewardCache = [];
 
         public static void DebugLogState()
         {
@@ -75,9 +77,23 @@ namespace Randomizer
             for (int i = 0; i < SaveData.EndlessModeSaveData.BoughtRewards.Count; i++)
             {
                 var reward = SaveData.EndlessModeSaveData.BoughtRewards[i];
-                Logger.LogDebug($"Reward {i} - reward type: {reward.RewardType}, weapon type: {reward.WeaponType}, amount: {reward.Amount}");
+                Logger.LogDebug(
+                    $"Reward {i} - reward type: {reward.RewardType}, weapon type: {reward.WeaponType}, amount: {reward.Amount}"
+                );
+                if (
+                    reward.RewardType
+                    is EndlessReward.UnlockDash
+                        or EndlessReward.EnablePazCharge
+                        or EndlessReward.UltimatePots
+                        or EndlessReward.EnemiesOverkillable
+                        or EndlessReward.MultiplierDropRate
+                )
+                {
+                    rewardCache.Add(SaveData.EndlessModeSaveData.BoughtRewards[i]);
+                }
             }
         }
+
 
         public static void ResetState()
         {
@@ -141,8 +157,12 @@ namespace Randomizer
             EndlessSaveData.HaveInteractedWithActiveMemories = true;
             EndlessSaveData.HavePlayedEndless = true;
             EndlessSaveData.Orbs = 4000;
-            EndlessSaveData.HighestLevel = 0;
+            EndlessSaveData.HighestLevel = 30;
             EndlessSaveData.RespecCount = 0;
+            EndlessSaveData.DidDefeatEndlessBoss = true;
+            foreach (var item in rewardCache)
+                EndlessSaveData.BoughtRewards.System_Collections_IList_Add(item.BoxIl2CppObject());
+
             SaveDataManager.SaveData.EndlessModeSaveData = EndlessSaveData;
 
             // SaveStateManager.EndlessSaveData.LevelsPerArena = 5;

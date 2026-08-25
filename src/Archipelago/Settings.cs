@@ -99,10 +99,10 @@ namespace Randomizer
                         switch (GetInt(kvp.Value))
                         {
                             case 0:
-                                RequireSheolCompletion = true;
+                                RequireHellsCompletion = true;
                                 break;
                             case 1:
-                                RequireHellsCompletion = true;
+                                RequireSheolCompletion = true;
                                 break;
                             default:
                                 break;

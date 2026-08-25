@@ -2470,7 +2470,7 @@ namespace Randomizer
                     Arena = EArena.Boss,
                     LocationType = ELocationType.MaxMultiplier,
                     GameObjectName =
-                        "MultiplierBoostPickup_Groups/MultiplierBoostMaxTier/MultiplierBoostMaxTier/",
+                        "Resources/MultiplierBoostPickup_Groups/MultiplierBoostMax/MultiplierBoostMaxTier/",
                 }
             },
             {

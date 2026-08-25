@@ -42,6 +42,7 @@ namespace Randomizer
         private DeathLinkService deathLinkService;
         private readonly float delay = 0.1f;
         public Dictionary<string, object> slotData;
+        private List<string> SlainBosses = [];
         public bool sentCompletion = false;
         public int ItemIndex
         {
@@ -547,10 +548,12 @@ namespace Randomizer
                     .DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses]
                     .Initialize(new string[] { });
 
-                Logger.LogInfo(
-                    $"DataStorage {DataStorageKeyDefeatedBosses} is at: {string.Join(", ", session
+                SlainBosses = session
                     .DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses]
-                    .To<string[]>())}"
+                    .To<string[]>().ToList();
+
+                Logger.LogInfo(
+                    $"DataStorage {DataStorageKeyDefeatedBosses} is at: {string.Join(", ", SlainBosses)}"
                 );
 
                 session
@@ -604,58 +607,49 @@ namespace Randomizer
 
         internal void CheckGoalCompletion()
         {
-            if (session == null) return;
+            Logger.LogDebug($"Retrieved slain bosses:  {string.Join(", ", SlainBosses)}");
 
-            session
-                .DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses]
-                .GetAsync<string[]>()
-                .ContinueWith(task =>
-                {
-                    var slainBosses = (task.Result ?? Array.Empty<string>()).ToList();
-                    Logger.LogDebug($"Retrieved slain bosses:  {string.Join(", ", slainBosses)}");
+            int aspectSlain = 0;
+            if (SlainBosses.Contains("The Lost Unknown: Leviathan defeated"))
+                aspectSlain--;
 
-                    int aspectSlain = 0;
-                    if (slainBosses.Contains("The Lost Unknown: Leviathan defeated"))
-                        aspectSlain--;
+            foreach (var bossSlain in Lookup.LevelToDefeatedBossLocationName.Values)
+                if (SlainBosses.Contains(bossSlain))
+                    aspectSlain++;
 
-                    foreach (var bossSlain in Lookup.LevelToDefeatedBossLocationName.Values)
-                        if (slainBosses.Contains(bossSlain))
-                            aspectSlain++;
+            Logger.LogDebug($"Has slain {aspectSlain} aspects");
 
-                    Logger.LogDebug($"Has slain {aspectSlain} aspects");
+            bool IsHellsRelevant =
+                Randomizer.Settings.RequireHellsCompletion
+                || Randomizer.Settings.RequireSheolCompletion;
+            bool IsLeviathanRelevant = Randomizer.Settings.RequireLeviathanCompletion;
+            bool IsAspectsDone = aspectSlain >= Randomizer.Settings.RequiredHellsCompletion;
+            bool IsRedJudgeDefeated = SlainBosses.Contains(
+                "Red Judge - Worldbreaker: Sheol defeated"
+            );
+            bool IsHellsDone =
+                (!Randomizer.Settings.RequireHellsCompletion || IsAspectsDone)
+                && (!Randomizer.Settings.RequireSheolCompletion || IsRedJudgeDefeated);
 
-                    bool IsHellsRelevant =
-                        Randomizer.Settings.RequireHellsCompletion
-                        || Randomizer.Settings.RequireSheolCompletion;
-                    bool IsLeviathanRelevant = Randomizer.Settings.RequireLeviathanCompletion;
-                    bool IsAspectsDone = aspectSlain >= Randomizer.Settings.RequiredHellsCompletion;
-                    bool IsRedJudgeDefeated = slainBosses.Contains(
-                        "Red Judge - Worldbreaker: Sheol defeated"
-                    );
-                    bool IsHellsDone =
-                        (!Randomizer.Settings.RequireHellsCompletion || IsAspectsDone)
-                        && (!Randomizer.Settings.RequireSheolCompletion || IsRedJudgeDefeated);
-                    bool IsLeviathanDone = slainBosses.Contains(
-                        "The Lost Unknown: Leviathan defeated"
-                    );
+            bool IsLeviathanDone = SlainBosses.Contains("The Lost Unknown: Leviathan defeated");
 
-                    Logger.LogDebug(
-                        $"Completion evaluation: HellsDone: {IsHellsDone} (Relevant: {IsHellsRelevant}), LeviathanDone: {IsLeviathanDone} (Relevant: {IsLeviathanRelevant}), CompletionSent: {Randomizer.Archipelago.sentCompletion}"
-                    );
+            Logger.LogInfo(
+                $"Completion evaluation: HellsDone: {IsHellsDone} (Relevant: {IsHellsRelevant}), LeviathanDone: {IsLeviathanDone} (Relevant: {IsLeviathanRelevant}), CompletionSent: {Randomizer.Archipelago.sentCompletion}"
+            );
 
-                    if (
-                        !Randomizer.Archipelago.sentCompletion
-                        && (!IsHellsRelevant || IsHellsDone)
-                        && (!IsLeviathanRelevant || IsLeviathanDone)
-                    )
-                        Randomizer.Archipelago.SendCompletion();
-                });
+            if (
+                !Randomizer.Archipelago.sentCompletion
+                && (!IsHellsRelevant || IsHellsDone)
+                && (!IsLeviathanRelevant || IsLeviathanDone)
+            )
+                Randomizer.Archipelago.SendCompletion();
         }
 
         internal void AddSlainBoss(string slainBoss)
         {
             Logger.LogInfo($"Adding slain Boss '{slainBoss}'");
             session.DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses] += new[] { slainBoss };
+            SlainBosses.Add(slainBoss);
         }
 
         private void SetItemIndex(int itemIndex)
