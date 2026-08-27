@@ -194,7 +194,7 @@ namespace Randomizer
             archipelagoDeathlinkType = config.Bind(
                 "Archipelago",
                 "ArchipelagoDeathlinkType",
-                DeathLinkType.Death,
+                DeathLinkType.Off,
                 "Overrides the slot's deathlink settings for deathlink type.\n'Death' applies immediately.\n'DeathTrap' queues the death as a trap.\n'RandomTrap' queues any of the available trap items, including the Death item."
             );
             archipelagoDeathlinkType.SettingChanged += (sender, args) =>
