@@ -1067,10 +1067,10 @@ namespace Randomizer
                 {
                     ArchipelagoId = 59,
                     LocationId = "Yhelm Max Multiplier 1",
-                    Description = "Yhelm - Max Multiplier in Arena 3",
+                    Description = "Yhelm - Max Multiplier in Arena 4",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
-                    Arena = EArena.Arena3,
+                    Arena = EArena.Arena4,
                     LocationType = ELocationType.MaxMultiplier,
                     GameObjectName =
                         "MultiplierBoostPickup_Groups/MultiplierBoostMaxTier/MultiplierBoostMaxTier/",

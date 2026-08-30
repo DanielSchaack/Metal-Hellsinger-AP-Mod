@@ -311,7 +311,7 @@ namespace Randomizer
         static bool KillWithAttackPrefix(Enemy __instance, AttackInfo attack)
         {
             Logger.LogInfo(
-                $"Enemy KillWithAttack Prefix called for {__instance.Config.ID} for {attack.Attack.AttackID}"
+                $"Enemy KillWithAttack Prefix called for {__instance.Config.ClassType} for {attack.Attack.AttackID}"
             );
             if (IsWeaponTrickeryActive() && !Randomizer.CurrentLevel.StartsWith("CH_Marbas"))
             {
@@ -325,7 +325,11 @@ namespace Randomizer
                 (
                     Randomizer.CurrentGameMode == EGameMode.Stage
                     || Randomizer.CurrentGameMode == EGameMode.Tutorial
-                ) && attack.Attack.AttackID.ToString().Contains("Player")
+                )
+                && (
+                    attack.Attack.AttackID.ToString().Contains("Player")
+                    || attack.Attack.AttackID.ToString().Contains("Vulcan")
+                )
             )
                 Randomizer.LocationTracker.CheckEnemyKilled(__instance.Config.ClassType);
 

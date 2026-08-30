@@ -1409,7 +1409,7 @@ namespace Randomizer
             "Phase_0_Intro", // Voke
             "12-Phase0_Intro", // Stygia
             "Phase0_Intro", // Yhelm, Incaustis, Gehenna, Nihil, Acheron
-            "Setup Boss", // Sheol
+            "DeactiveTitanAvatar", // Sheol
         };
 
         public static readonly List<string> BossEndScenarioNames = new () {
