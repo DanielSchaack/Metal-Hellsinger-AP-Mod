@@ -274,6 +274,7 @@ namespace Randomizer
 
                 if(actualLevelID == "Sheol")
                     __instance.m_unlocked = Randomizer.LocationTracker.IsSheolUnlocked();
+                __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
 
                 bool hasClearedLevel = Randomizer.LocationTracker.HasClearedLevel(actualLevelID);
                 __instance.m_cleared = hasClearedLevel;
@@ -297,18 +298,16 @@ namespace Randomizer
 
         private static string GetStageLockMessage(string LevelID)
         {
-            string item = Randomizer.Settings.RandomizedHellsEnabled
-                ? Randomizer.Settings.HellsUnlockMode switch
-                {
-                    Settings.HellsMode.Progressive =>
-                        $"<b>{Randomizer.ItemTracker.GetProgressiveStagesUntilUnlock(LevelID)}</b> more Progressive Stage(s)",
+            string item = Randomizer.Settings.HellsUnlockMode switch
+            {
+                Settings.HellsMode.Progressive =>
+                    $"<b>{Randomizer.ItemTracker.GetProgressiveStagesUntilUnlock(LevelID)}</b> more Progressive Stage(s)",
 
-                    Settings.HellsMode.UnlockAsCollectible =>
-                        $"the item(s) <b>{string.Join(", ", Randomizer.ItemTracker.GetMissingItemsUntilLevelUnlocked(LevelID))}</b>",
+                Settings.HellsMode.UnlockAsCollectible =>
+                    $"the item(s) <b>{string.Join(", ", Randomizer.ItemTracker.GetMissingItemsUntilLevelUnlocked(LevelID))}</b>",
 
-                    _ => null,
-                }
-                : null;
+                _ => null,
+            };
 
             if(!string.IsNullOrWhiteSpace(item) && item.EndsWith("<b></b>"))
                 item = null;
@@ -818,6 +817,7 @@ namespace Randomizer
 
                 if(showcaseName == "Sheol")
                     __instance.m_unlocked = Randomizer.LocationTracker.IsSheolUnlocked();
+                __instance.m_lockIconContainer.SetActive(!__instance.m_unlocked);
 
                 __instance.m_tormentConqueredHighlight.gameObject.SetActive(
                     Randomizer.LocationTracker.HasClearedLevel(actualLevelID)

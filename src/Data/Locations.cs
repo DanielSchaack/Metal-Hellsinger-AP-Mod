@@ -135,8 +135,9 @@ namespace Randomizer
             TormentCompletion,
             Codex,
             Bestiary,
-            BossAchievement,
-            FirstMiscellaneous
+            FirstMiscellaneous,
+            FirstKill,
+            FirstSlaughter
         }
 
         public static readonly List<ELocationType> GameObjectTypes = new List<ELocationType>
@@ -4425,12 +4426,12 @@ namespace Randomizer
                 }
             },
             {
-                "Marionette discovered",
+                "Bestiary Entry - Marionette",
                 new Location
                 {
                     ArchipelagoId = 291,
-                    LocationId = "Marionette discovered",
-                    Description = "Tutorial - Marionette discovered",
+                    LocationId = "Bestiary Entry - Marionette",
+                    Description = "Bestiary Entry - Marionette",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4439,12 +4440,12 @@ namespace Randomizer
                 }
             },
             {
-                "Cambion discovered",
+                "Bestiary Entry - Cambion",
                 new Location
                 {
                     ArchipelagoId = 292,
-                    LocationId = "Cambion discovered",
-                    Description = "Voke/Stygia - Cambion discovered",
+                    LocationId = "Bestiary Entry - Cambion",
+                    Description = "Bestiary Entry - Cambion",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4453,12 +4454,12 @@ namespace Randomizer
                 }
             },
             {
-                "Behemoth discovered",
+                "Bestiary Entry - Behemoth",
                 new Location
                 {
                     ArchipelagoId = 293,
-                    LocationId = "Behemoth discovered",
-                    Description = "Voke - Behemoth discovered",
+                    LocationId = "Bestiary Entry - Behemoth",
+                    Description = "Bestiary Entry - Behemoth",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4467,12 +4468,12 @@ namespace Randomizer
                 }
             },
             {
-                "Stalker discovered",
+                "Bestiary Entry - Stalker",
                 new Location
                 {
                     ArchipelagoId = 294,
-                    LocationId = "Stalker discovered",
-                    Description = "Stygia - Stalker discovered",
+                    LocationId = "Bestiary Entry - Stalker",
+                    Description = "Bestiary Entry - Stalker",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4481,12 +4482,12 @@ namespace Randomizer
                 }
             },
             {
-                "Eyeless discovered",
+                "Bestiary Entry - Eyeless",
                 new Location
                 {
                     ArchipelagoId = 295,
-                    LocationId = "Eyeless discovered",
-                    Description = "Yhelm - Eyeless discovered",
+                    LocationId = "Bestiary Entry - Eyeless",
+                    Description = "Bestiary Entry - Eyeless",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4495,12 +4496,12 @@ namespace Randomizer
                 }
             },
             {
-                "Hierophant discovered",
+                "Bestiary Entry - Hierophant",
                 new Location
                 {
                     ArchipelagoId = 296,
-                    LocationId = "Hierophant discovered",
-                    Description = "Incaustis - Hierophant discovered",
+                    LocationId = "Bestiary Entry - Hierophant",
+                    Description = "Bestiary Entry - Hierophant",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4509,12 +4510,12 @@ namespace Randomizer
                 }
             },
             {
-                "Lesser Seraph discovered",
+                "Bestiary Entry - Lesser Seraph",
                 new Location
                 {
                     ArchipelagoId = 297,
-                    LocationId = "Lesser Seraph discovered",
-                    Description = "Gehenna - Lesser Seraph discovered",
+                    LocationId = "Bestiary Entry - Lesser Seraph",
+                    Description = "Bestiary Entry - Lesser Seraph",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4523,12 +4524,12 @@ namespace Randomizer
                 }
             },
             {
-                "Shield Cambion discovered",
+                "Bestiary Entry - Shield Cambion",
                 new Location
                 {
                     ArchipelagoId = 298,
-                    LocationId = "Shield Cambion discovered",
-                    Description = "Yhelm - Shield Cambion discovered",
+                    LocationId = "Bestiary Entry - Shield Cambion",
+                    Description = "Bestiary Entry - Shield Cambion",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4537,12 +4538,12 @@ namespace Randomizer
                 }
             },
             {
-                "Siege Behemoth discovered",
+                "Bestiary Entry - Siege Behemoth",
                 new Location
                 {
                     ArchipelagoId = 299,
-                    LocationId = "Siege Behemoth discovered",
-                    Description = "Incaustis - Siege Behemoth discovered",
+                    LocationId = "Bestiary Entry - Siege Behemoth",
+                    Description = "Bestiary Entry - Siege Behemoth",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4551,12 +4552,12 @@ namespace Randomizer
                 }
             },
             {
-                "Void Stalker discovered",
+                "Bestiary Entry - Void Stalker",
                 new Location
                 {
                     ArchipelagoId = 300,
-                    LocationId = "Void Stalker discovered",
-                    Description = "Nihil - Void Stalker discovered",
+                    LocationId = "Bestiary Entry - Void Stalker",
+                    Description = "Bestiary Entry - Void Stalker",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4565,12 +4566,12 @@ namespace Randomizer
                 }
             },
             {
-                "Annihilator Seraph discovered",
+                "Bestiary Entry - Annihilator Seraph",
                 new Location
                 {
                     ArchipelagoId = 301,
-                    LocationId = "Annihilator Seraph discovered",
-                    Description = "Voke (Archdevil) - Annihilator Seraph discovered",
+                    LocationId = "Bestiary Entry - Annihilator Seraph",
+                    Description = "Bestiary Entry - Annihilator Seraph",
                     OriginalItemName = "Filler",
                     Zone = EZone.Global,
                     Arena = EArena.Global,
@@ -4579,12 +4580,12 @@ namespace Randomizer
                 }
             },
             {
-                "Anger Aspect: Voke discovered",
+                "Bestiary Entry - Anger Aspect: Voke",
                 new Location
                 {
                     ArchipelagoId = 302,
-                    LocationId = "Anger Aspect: Voke discovered",
-                    Description = "Anger Aspect: Voke discovered",
+                    LocationId = "Bestiary Entry - Anger Aspect: Voke",
+                    Description = "Bestiary Entry - Anger Aspect: Voke",
                     OriginalItemName = "Filler",
                     Zone = EZone.Voke,
                     Arena = EArena.Boss,
@@ -4593,12 +4594,12 @@ namespace Randomizer
                 }
             },
             {
-                "Charged Aspect: Stygia discovered",
+                "Bestiary Entry - Charged Aspect: Stygia",
                 new Location
                 {
                     ArchipelagoId = 303,
-                    LocationId = "Charged Aspect: Stygia discovered",
-                    Description = "Charged Aspect: Stygia discovered",
+                    LocationId = "Bestiary Entry - Charged Aspect: Stygia",
+                    Description = "Bestiary Entry - Charged Aspect: Stygia",
                     OriginalItemName = "Filler",
                     Zone = EZone.Stygia,
                     Arena = EArena.Boss,
@@ -4607,12 +4608,12 @@ namespace Randomizer
                 }
             },
             {
-                "Fortress Aspect: Yhelm discovered",
+                "Bestiary Entry - Fortress Aspect: Yhelm",
                 new Location
                 {
                     ArchipelagoId = 304,
-                    LocationId = "Fortress Aspect: Yhelm discovered",
-                    Description = "Fortress Aspect: Yhelm discovered",
+                    LocationId = "Bestiary Entry - Fortress Aspect: Yhelm",
+                    Description = "Bestiary Entry - Fortress Aspect: Yhelm",
                     OriginalItemName = "Filler",
                     Zone = EZone.Yhelm,
                     Arena = EArena.Boss,
@@ -4621,12 +4622,12 @@ namespace Randomizer
                 }
             },
             {
-                "Infernal Fury Aspect: Incaustis discovered",
+                "Bestiary Entry - Infernal Fury Aspect: Incaustis",
                 new Location
                 {
                     ArchipelagoId = 305,
-                    LocationId = "Infernal Fury Aspect: Incaustis discovered",
-                    Description = "Infernal Fury Aspect: Incaustis discovered",
+                    LocationId = "Bestiary Entry - Infernal Fury Aspect: Incaustis",
+                    Description = "Bestiary Entry - Infernal Fury Aspect: Incaustis",
                     OriginalItemName = "Filler",
                     Zone = EZone.Incaustis,
                     Arena = EArena.Boss,
@@ -4635,12 +4636,12 @@ namespace Randomizer
                 }
             },
             {
-                "Hellstorm Aspect: Gehenna discovered",
+                "Bestiary Entry - Hellstorm Aspect: Gehenna",
                 new Location
                 {
                     ArchipelagoId = 306,
-                    LocationId = "Hellstorm Aspect: Gehenna discovered",
-                    Description = "Hellstorm Aspect: Gehenna discovered",
+                    LocationId = "Bestiary Entry - Hellstorm Aspect: Gehenna",
+                    Description = "Bestiary Entry - Hellstorm Aspect: Gehenna",
                     OriginalItemName = "Filler",
                     Zone = EZone.Gehenna,
                     Arena = EArena.Boss,
@@ -4649,12 +4650,12 @@ namespace Randomizer
                 }
             },
             {
-                "Doppelganger Aspect: Nihil discovered",
+                "Bestiary Entry - Doppelganger Aspect: Nihil",
                 new Location
                 {
                     ArchipelagoId = 307,
-                    LocationId = "Doppelganger Aspect: Nihil discovered",
-                    Description = "Doppelganger Aspect: Nihil discovered",
+                    LocationId = "Bestiary Entry - Doppelganger Aspect: Nihil",
+                    Description = "Bestiary Entry - Doppelganger Aspect: Nihil",
                     OriginalItemName = "Filler",
                     Zone = EZone.Nihil,
                     Arena = EArena.Boss,
@@ -4663,12 +4664,12 @@ namespace Randomizer
                 }
             },
             {
-                "Wheel Aspect: Acheron discovered",
+                "Bestiary Entry - Wheel Aspect: Acheron",
                 new Location
                 {
                     ArchipelagoId = 308,
-                    LocationId = "Wheel Aspect: Acheron discovered",
-                    Description = "Wheel Aspect: Acheron discovered",
+                    LocationId = "Bestiary Entry - Wheel Aspect: Acheron",
+                    Description = "Bestiary Entry - Wheel Aspect: Acheron",
                     OriginalItemName = "Filler",
                     Zone = EZone.Acheron,
                     Arena = EArena.Boss,
@@ -4677,12 +4678,12 @@ namespace Randomizer
                 }
             },
             {
-                "Red Judge - Worldbreaker: Sheol discovered",
+                "Bestiary Entry - Red Judge - Worldbreaker: Sheol",
                 new Location
                 {
                     ArchipelagoId = 309,
-                    LocationId = "Red Judge - Worldbreaker: Sheol discovered",
-                    Description = "Red Judge - Worldbreaker: Sheol discovered",
+                    LocationId = "Bestiary Entry - Red Judge - Worldbreaker: Sheol",
+                    Description = "Bestiary Entry - Red Judge - Worldbreaker: Sheol",
                     OriginalItemName = "Filler",
                     Zone = EZone.Sheol,
                     Arena = EArena.Boss,
@@ -4691,13 +4692,13 @@ namespace Randomizer
                 }
             },
             {
-                "The Lost Unknown: Leviathan discovered",
+                "Bestiary Entry - The Lost Unknown: Leviathan",
                 new Location
                 {
                     ArchipelagoId = 310,
-                    LocationId = "The Lost Unknown: Leviathan discovered",
-                    Description = "The Lost Unknown: Leviathan discovered",
-                    OriginalItemName = "The Lost Unknown: Leviathan discovered",
+                    LocationId = "Bestiary Entry - The Lost Unknown: Leviathan",
+                    Description = "Bestiary Entry - The Lost Unknown: Leviathan",
+                    OriginalItemName = "Filler",
                     Zone = EZone.Leviathan,
                     Arena = EArena.FinalDestination,
                     LocationType = ELocationType.Bestiary,
@@ -17427,6 +17428,440 @@ namespace Randomizer
                     Zone = EZone.Global,
                     Arena = EArena.Global,
                     LocationType = ELocationType.FirstMiscellaneous,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Marionette",
+                new Location
+                {
+                    ArchipelagoId = 1230,
+                    LocationId = "Hells First Kill - Marionette",
+                    Description = "Hells First Kill - Marionette",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Cambion",
+                new Location
+                {
+                    ArchipelagoId = 1231,
+                    LocationId = "Hells First Kill - Cambion",
+                    Description = "Hells First Kill - Cambion",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Behemoth",
+                new Location
+                {
+                    ArchipelagoId = 1232,
+                    LocationId = "Hells First Kill - Behemoth",
+                    Description = "Hells First Kill - Behemoth",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Stalker",
+                new Location
+                {
+                    ArchipelagoId = 1233,
+                    LocationId = "Hells First Kill - Stalker",
+                    Description = "Hells First Kill - Stalker",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Eyeless",
+                new Location
+                {
+                    ArchipelagoId = 1234,
+                    LocationId = "Hells First Kill - Eyeless",
+                    Description = "Hells First Kill - Eyeless",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Hierophant",
+                new Location
+                {
+                    ArchipelagoId = 1235,
+                    LocationId = "Hells First Kill - Hierophant",
+                    Description = "Hells First Kill - Hierophant",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Lesser Seraph",
+                new Location
+                {
+                    ArchipelagoId = 1236,
+                    LocationId = "Hells First Kill - Lesser Seraph",
+                    Description = "Hells First Kill - Lesser Seraph",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Shield Cambion",
+                new Location
+                {
+                    ArchipelagoId = 1237,
+                    LocationId = "Hells First Kill - Shield Cambion",
+                    Description = "Hells First Kill - Shield Cambion",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Siege Behemoth",
+                new Location
+                {
+                    ArchipelagoId = 1238,
+                    LocationId = "Hells First Kill - Siege Behemoth",
+                    Description = "Hells First Kill - Siege Behemoth",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Void Stalker",
+                new Location
+                {
+                    ArchipelagoId = 1239,
+                    LocationId = "Hells First Kill - Void Stalker",
+                    Description = "Hells First Kill - Void Stalker",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Annihilator Seraph",
+                new Location
+                {
+                    ArchipelagoId = 1240,
+                    LocationId = "Hells First Kill - Annihilator Seraph",
+                    Description = "Hells First Kill - Annihilator Seraph",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Anger Aspect: Voke",
+                new Location
+                {
+                    ArchipelagoId = 1241,
+                    LocationId = "Hells First Kill - Anger Aspect: Voke",
+                    Description = "Hells First Kill - Anger Aspect: Voke",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Voke,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Charged Aspect: Stygia",
+                new Location
+                {
+                    ArchipelagoId = 1242,
+                    LocationId = "Hells First Kill - Charged Aspect: Stygia",
+                    Description = "Hells First Kill - Charged Aspect: Stygia",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Stygia,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Fortress Aspect: Yhelm",
+                new Location
+                {
+                    ArchipelagoId = 1243,
+                    LocationId = "Hells First Kill - Fortress Aspect: Yhelm",
+                    Description = "Hells First Kill - Fortress Aspect: Yhelm",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Yhelm,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Infernal Fury Aspect: Incaustis",
+                new Location
+                {
+                    ArchipelagoId = 1244,
+                    LocationId = "Hells First Kill - Infernal Fury Aspect: Incaustis",
+                    Description = "Hells First Kill - Infernal Fury Aspect: Incaustis",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Incaustis,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Hellstorm Aspect: Gehenna",
+                new Location
+                {
+                    ArchipelagoId = 1245,
+                    LocationId = "Hells First Kill - Hellstorm Aspect: Gehenna",
+                    Description = "Hells First Kill - Hellstorm Aspect: Gehenna",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Gehenna,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Doppelganger Aspect: Nihil",
+                new Location
+                {
+                    ArchipelagoId = 1246,
+                    LocationId = "Hells First Kill - Doppelganger Aspect: Nihil",
+                    Description = "Hells First Kill - Doppelganger Aspect: Nihil",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Nihil,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Wheel Aspect: Acheron",
+                new Location
+                {
+                    ArchipelagoId = 1247,
+                    LocationId = "Hells First Kill - Wheel Aspect: Acheron",
+                    Description = "Hells First Kill - Wheel Aspect: Acheron",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Acheron,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - Red Judge - Worldbreaker: Sheol",
+                new Location
+                {
+                    ArchipelagoId = 1248,
+                    LocationId = "Hells First Kill - Red Judge - Worldbreaker: Sheol",
+                    Description = "Hells First Kill - Red Judge - Worldbreaker: Sheol",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Sheol,
+                    Arena = EArena.Boss,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Kill - The Lost Unknown: Leviathan",
+                new Location
+                {
+                    ArchipelagoId = 1249,
+                    LocationId = "Hells First Kill - The Lost Unknown: Leviathan",
+                    Description = "Hells First Kill - The Lost Unknown: Leviathan",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Leviathan,
+                    Arena = EArena.FinalDestination,
+                    LocationType = ELocationType.FirstKill,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Marionette",
+                new Location
+                {
+                    ArchipelagoId = 1250,
+                    LocationId = "Hells First Slaughter - Marionette",
+                    Description = "Hells First Slaughter - Marionette",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Cambion",
+                new Location
+                {
+                    ArchipelagoId = 1251,
+                    LocationId = "Hells First Slaughter - Cambion",
+                    Description = "Hells First Slaughter - Cambion",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Behemoth",
+                new Location
+                {
+                    ArchipelagoId = 1252,
+                    LocationId = "Hells First Slaughter - Behemoth",
+                    Description = "Hells First Slaughter - Behemoth",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Stalker",
+                new Location
+                {
+                    ArchipelagoId = 1253,
+                    LocationId = "Hells First Slaughter - Stalker",
+                    Description = "Hells First Slaughter - Stalker",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Eyeless",
+                new Location
+                {
+                    ArchipelagoId = 1254,
+                    LocationId = "Hells First Slaughter - Eyeless",
+                    Description = "Hells First Slaughter - Eyeless",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Hierophant",
+                new Location
+                {
+                    ArchipelagoId = 1255,
+                    LocationId = "Hells First Slaughter - Hierophant",
+                    Description = "Hells First Slaughter - Hierophant",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Lesser Seraph",
+                new Location
+                {
+                    ArchipelagoId = 1256,
+                    LocationId = "Hells First Slaughter - Lesser Seraph",
+                    Description = "Hells First Slaughter - Lesser Seraph",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Shield Cambion",
+                new Location
+                {
+                    ArchipelagoId = 1257,
+                    LocationId = "Hells First Slaughter - Shield Cambion",
+                    Description = "Hells First Slaughter - Shield Cambion",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Siege Behemoth",
+                new Location
+                {
+                    ArchipelagoId = 1258,
+                    LocationId = "Hells First Slaughter - Siege Behemoth",
+                    Description = "Hells First Slaughter - Siege Behemoth",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Void Stalker",
+                new Location
+                {
+                    ArchipelagoId = 1259,
+                    LocationId = "Hells First Slaughter - Void Stalker",
+                    Description = "Hells First Slaughter - Void Stalker",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
+                    GameObjectName = null,
+                }
+            },
+            {
+                "Hells First Slaughter - Annihilator Seraph",
+                new Location
+                {
+                    ArchipelagoId = 1260,
+                    LocationId = "Hells First Slaughter - Annihilator Seraph",
+                    Description = "Hells First Slaughter - Annihilator Seraph",
+                    OriginalItemName = "Filler",
+                    Zone = EZone.Global,
+                    Arena = EArena.Global,
+                    LocationType = ELocationType.FirstSlaughter,
                     GameObjectName = null,
                 }
             },

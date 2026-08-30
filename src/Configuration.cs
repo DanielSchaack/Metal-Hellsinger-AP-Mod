@@ -47,6 +47,7 @@ namespace Randomizer
         internal ConfigEntry<bool> gameplayWeaponTrickeryModeActive;
         internal ConfigEntry<bool> gameplayDoubletimeActive;
         internal ConfigEntry<bool> gameplayHalftimeActive;
+        internal ConfigEntry<bool> gameplayArchdevilEnemiesEnabled;
 
         internal ConfigEntry<bool> weaponLoadAllAvailableWeapons;
         internal ConfigEntry<bool> weaponExcludePazFromLoadout;
@@ -413,6 +414,14 @@ namespace Randomizer
                 "Decreases gamespeed without decreasing the speed of the music.\nSee the trap settings to adjust the speed.\nThis is ignored while Doubletime is active."
             );
             gameplayHalftimeActive.SettingChanged += addOnChangeSave(config);
+
+            gameplayArchdevilEnemiesEnabled = config.Bind(
+                "Hellsinger.Gameplay",
+                "ArchdevilEnemiesEnabled",
+                false,
+                "If enabled, adds all Archdevil enemy spawn on top of the regular enemy spawns, resulting in more difficult encounters."
+            );
+            gameplayArchdevilEnemiesEnabled.SettingChanged += addOnChangeSave(config);
 
             // ---
 

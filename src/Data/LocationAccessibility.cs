@@ -251,7 +251,7 @@ namespace Randomizer
         {
             return HasGenericArena2Requirements() && (
                         (HasAllHeal() && Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
-                        || (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
+                        || ((Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Hard) || Randomizer.Settings.ArchdevilEnemiesEnabled) && HasAdvancedMovement())
                         || IsNotBeast()
                     ) 
                 && (HasRangedWeaponWithUltimate() || Randomizer.ItemTracker.CanQuickReload());
@@ -261,7 +261,7 @@ namespace Randomizer
         {
             return HasGenericArena3Requirements() && (
                         (HasAllHeal() && Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement()) 
-                        || (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
+                        || ((Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Hard) || Randomizer.Settings.ArchdevilEnemiesEnabled) && HasAdvancedMovement())
                         || IsNotBeast()
                     ) 
                 && (HasRangedWeaponWithUltimate() || Randomizer.ItemTracker.CanQuickReload());
@@ -271,7 +271,7 @@ namespace Randomizer
         {
             return HasGenericArena4Requirements() && HasAdvancedMovement()
                 && HasRangedWeaponWithUltimate() && Randomizer.ItemTracker.CanQuickReload()
-                && (IsNotBeast() || HasAllHeal());
+                && HasAllHeal();
         }
 
         private static bool HasCloseRangeWeapon()
@@ -384,15 +384,6 @@ namespace Randomizer
         {
             return Randomizer.ItemTracker.IsDestructible("Health")
                 || Randomizer.ItemTracker.CanSlaughter();
-        }
-
-        private static bool IsNotArchdevilOrCanHeal()
-        {
-            bool isNotArchdevil = IsNotArchdevil();
-            bool canHeal =
-                Randomizer.ItemTracker.IsDestructible("Health")
-                || Randomizer.ItemTracker.CanSlaughter();
-            return isNotArchdevil || canHeal;
         }
 
         private static bool IsNotArchdevil()
@@ -601,17 +592,17 @@ namespace Randomizer
         private static bool BestiaryRequirementsMet(string id)
         {
             return id switch {
-                "Marionette discovered" => CanAccessZone(EZone.Tutorial, EArena.Tutorial) && CanAccessArena(EZone.Tutorial, EArena.Tutorial),
-                "Cambion discovered" => CanAccessZone(EZone.Voke, EArena.Arena1) && CanAccessArena(EZone.Voke, EArena.Arena1),
-                "Behemoth discovered" => CanAccessZone(EZone.Voke, EArena.Arena3) && CanAccessArena(EZone.Voke, EArena.Arena3),
-                "Stalker discovered" => CanAccessZone(EZone.Stygia, EArena.Arena3) && CanAccessArena(EZone.Stygia, EArena.Arena3),
-                "Eyeless discovered" => CanAccessZone(EZone.Yhelm, EArena.Arena2) && CanAccessArena(EZone.Yhelm, EArena.Arena2),
-                "Hierophant discovered" => CanAccessZone(EZone.Incaustis, EArena.Arena2) && CanAccessArena(EZone.Incaustis, EArena.Arena2),
-                "Lesser Seraph discovered" => CanAccessZone(EZone.Gehenna, EArena.Arena2) && CanAccessArena(EZone.Gehenna, EArena.Arena2),
-                "Shield Cambion discovered" => CanAccessZone(EZone.Yhelm, EArena.Arena1) && CanAccessArena(EZone.Yhelm, EArena.Arena1),
-                "Siege Behemoth discovered" => CanAccessZone(EZone.Incaustis, EArena.Arena4) && CanAccessArena(EZone.Incaustis, EArena.Arena4),
-                "Void Stalker discovered" => CanAccessZone(EZone.Nihil, EArena.Arena3) && CanAccessArena(EZone.Nihil, EArena.Arena3),
-                "Annihilator Seraph discovered" => Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) 
+                "Bestiary Entry - Marionette" => CanAccessZone(EZone.Tutorial, EArena.Tutorial) && CanAccessArena(EZone.Tutorial, EArena.Tutorial),
+                "Bestiary Entry - Cambion" => CanAccessZone(EZone.Voke, EArena.Arena1) && CanAccessArena(EZone.Voke, EArena.Arena1),
+                "Bestiary Entry - Behemoth" => CanAccessZone(EZone.Voke, EArena.Arena3) && CanAccessArena(EZone.Voke, EArena.Arena3),
+                "Bestiary Entry - Stalker" => CanAccessZone(EZone.Stygia, EArena.Arena3) && CanAccessArena(EZone.Stygia, EArena.Arena3),
+                "Bestiary Entry - Eyeless" => CanAccessZone(EZone.Yhelm, EArena.Arena2) && CanAccessArena(EZone.Yhelm, EArena.Arena2),
+                "Bestiary Entry - Hierophant" => CanAccessZone(EZone.Incaustis, EArena.Arena2) && CanAccessArena(EZone.Incaustis, EArena.Arena2),
+                "Bestiary Entry - Lesser Seraph" => CanAccessZone(EZone.Gehenna, EArena.Arena2) && CanAccessArena(EZone.Gehenna, EArena.Arena2),
+                "Bestiary Entry - Shield Cambion" => CanAccessZone(EZone.Yhelm, EArena.Arena1) && CanAccessArena(EZone.Yhelm, EArena.Arena1),
+                "Bestiary Entry - Siege Behemoth" => CanAccessZone(EZone.Incaustis, EArena.Arena4) && CanAccessArena(EZone.Incaustis, EArena.Arena4),
+                "Bestiary Entry - Void Stalker" => CanAccessZone(EZone.Nihil, EArena.Arena3) && CanAccessArena(EZone.Nihil, EArena.Arena3),
+                "Bestiary Entry - Annihilator Seraph" => Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) 
                     && CanAccessZone(EZone.Voke, EArena.Arena4)
                     && CanAccessArena(EZone.Voke, EArena.Arena4),
                 _ => true,
@@ -711,7 +702,7 @@ namespace Randomizer
                 "Death from Above discovered" => Randomizer.ItemTracker.CanSoar()
                     && Randomizer.ItemTracker.CanSlaughter(),
                 "Lethal Cycle discovered" => HasAmountOfWeapons(3),
-                "Kill Trio discovered" => true,
+                "Kill Trio discovered" => HasAmountOfWeapons(2),
                 "Triple Dash discovered" => Randomizer.ItemTracker.CanDash(),
                 _ => false,
             };
@@ -836,6 +827,274 @@ namespace Randomizer
                     return true;
             }
             return false;
+        }
+
+        public static bool CanReachEnemy(EnemyClassType enemyClass)
+        {
+            return enemyClass switch
+            {
+                EnemyClassType.Marionette => CanAccessArena(EZone.Tutorial, EArena.Tutorial)
+                    || CanAccessArena(EZone.Voke, EArena.Arena1)
+                    || CanAccessArena(EZone.Stygia, EArena.Arena1)
+                    || CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                    || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                    || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                    || CanAccessArena(EZone.Nihil, EArena.Arena1)
+                    || CanAccessArena(EZone.Acheron, EArena.Arena1)
+                    || CanAccessArena(EZone.Sheol, EArena.Arena1),
+
+                EnemyClassType.Cambion => CanAccessArena(EZone.Voke, EArena.Arena1)
+                    || CanAccessArena(EZone.Stygia, EArena.Arena1)
+                    || CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                    || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                    || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                    || CanAccessArena(EZone.Nihil, EArena.Arena1)
+                    || CanAccessArena(EZone.Acheron, EArena.Arena1)
+                    || CanAccessArena(EZone.Sheol, EArena.Arena1),
+
+                EnemyClassType.Reaver => // Behemoth
+                (
+                    IsNotArchdevil()
+                    && (
+                        CanAccessArena(EZone.Voke, EArena.Arena3)
+                        || CanAccessArena(EZone.Stygia, EArena.Arena2)
+                        || CanAccessArena(EZone.Yhelm, EArena.Arena3)
+                        || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                        || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                        || CanAccessArena(EZone.Nihil, EArena.Arena3)
+                        || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                        || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                    )
+                )
+                    || (
+                        (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) || Randomizer.Settings.ArchdevilEnemiesEnabled)
+                        && (
+                            CanAccessArena(EZone.Voke, EArena.Arena3)
+                            || CanAccessArena(EZone.Stygia, EArena.Arena2)
+                            || CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                            || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                            || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                            || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                            || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                            || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                        )
+                    ),
+
+                EnemyClassType.Stalker => HasBaseMovement()
+                    && (
+                        (
+                            IsNotArchdevil()
+                            && (
+                                CanAccessArena(EZone.Stygia, EArena.Arena3)
+                                || CanAccessArena(EZone.Yhelm, EArena.Arena2)
+                                || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                            )
+                        )
+                        || (
+                            (
+                                Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard)
+                                || Randomizer.Settings.ArchdevilEnemiesEnabled
+                            )
+                            && (
+                                CanAccessArena(EZone.Stygia, EArena.Arena1)
+                                || CanAccessArena(EZone.Yhelm, EArena.Arena2)
+                                || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                            )
+                        )
+                    ),
+
+                EnemyClassType.Eyeless => (
+                    IsNotArchdevil()
+                    && (
+                        CanAccessArena(EZone.Yhelm, EArena.Arena2)
+                        || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                        || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                        || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                        || CanAccessArena(EZone.Acheron, EArena.Arena1)
+                        || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                    )
+                )
+                    || (
+                        (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) || Randomizer.Settings.ArchdevilEnemiesEnabled)
+                        && (
+                            CanAccessArena(EZone.Voke, EArena.Arena2)
+                            || CanAccessArena(EZone.Stygia, EArena.Arena3)
+                            || CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                            || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                            || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                            || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                            || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                            || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                        )
+                    ),
+
+                EnemyClassType.Hierophant => (
+                    IsNotArchdevil()
+                    && (
+                        CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                        || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                        || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                        || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                        || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                    )
+                )
+                    || (
+                        (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) || Randomizer.Settings.ArchdevilEnemiesEnabled)
+                        && (
+                            CanAccessArena(EZone.Voke, EArena.Arena3)
+                            || CanAccessArena(EZone.Yhelm, EArena.Arena2)
+                            || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                            || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                            || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                            || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                            || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                        )
+                    ),
+
+                EnemyClassType.LesserSeraph => HasLongRangeWeapon()
+                    && (
+                        (
+                            IsNotArchdevil()
+                            && (
+                                CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena1)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                            )
+                        )
+                        || (
+                            (
+                                Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard)
+                                || Randomizer.Settings.ArchdevilEnemiesEnabled
+                            )
+                            && (
+                                CanAccessArena(EZone.Voke, EArena.Arena1)
+                                || CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                                || CanAccessArena(EZone.Incaustis, EArena.Arena1)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena1)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                            )
+                        )
+                    ),
+
+                EnemyClassType.Elite_Cambion => HasBaseMovement()
+                    && (
+                        (
+                            IsNotArchdevil()
+                            && (
+                                CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                                || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                            )
+                        )
+                        || (
+                            (
+                                Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard)
+                                || Randomizer.Settings.ArchdevilEnemiesEnabled
+                            )
+                            && (
+                                CanAccessArena(EZone.Stygia, EArena.Arena1)
+                                || CanAccessArena(EZone.Yhelm, EArena.Arena1)
+                                || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                            )
+                        )
+                    ),
+
+                EnemyClassType.Elite_Reaver => HasAnyHeal()
+                    && HasBaseMovement()
+                    && (
+                        (
+                            IsNotArchdevil()
+                            && (
+                                CanAccessArena(EZone.Incaustis, EArena.Arena4)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena3)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                            )
+                        )
+                        || (
+                            (
+                                Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard)
+                                || Randomizer.Settings.ArchdevilEnemiesEnabled
+                            )
+                            && (
+                                CanAccessArena(EZone.Voke, EArena.Arena3)
+                                || CanAccessArena(EZone.Yhelm, EArena.Arena3)
+                                || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena1)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena1)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena1)
+                            )
+                        )
+                    ),
+
+                EnemyClassType.Elite_Stalker => HasAnyHeal()
+                    && HasBaseMovement()
+                    && (
+                        (
+                            IsNotArchdevil()
+                            && (
+                                CanAccessArena(EZone.Nihil, EArena.Arena3)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena2)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                            )
+                        )
+                        || (
+                            (
+                                Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard)
+                                || Randomizer.Settings.ArchdevilEnemiesEnabled
+                            )
+                            && (
+                                CanAccessArena(EZone.Stygia, EArena.Arena3)
+                                || CanAccessArena(EZone.Yhelm, EArena.Arena2)
+                                || CanAccessArena(EZone.Gehenna, EArena.Arena2)
+                                || CanAccessArena(EZone.Nihil, EArena.Arena3)
+                                || CanAccessArena(EZone.Acheron, EArena.Arena1)
+                                || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                            )
+                        )
+                    ),
+
+                EnemyClassType.Elite_Seraph => HasAnyHeal()
+                    && HasBaseMovement()
+                    && HasLongRangeWeapon()
+                    && (
+                        (
+                            Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard)
+                            || Randomizer.Settings.ArchdevilEnemiesEnabled
+                        )
+                        && (
+                            CanAccessArena(EZone.Voke, EArena.Arena4)
+                            || CanAccessArena(EZone.Stygia, EArena.Arena2)
+                            || CanAccessArena(EZone.Incaustis, EArena.Arena2)
+                            || CanAccessArena(EZone.Gehenna, EArena.Arena3)
+                            || CanAccessArena(EZone.Nihil, EArena.Arena2)
+                            || CanAccessArena(EZone.Acheron, EArena.Arena1)
+                            || CanAccessArena(EZone.Sheol, EArena.Arena2)
+                        )
+                    ),
+
+                _ => false,
+            };
         }
     }
 }
