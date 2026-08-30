@@ -955,7 +955,7 @@ namespace Randomizer
 
             Logger.LogDebug($"ProgressionSaveData GetBossSongIDForLevel Postfix called for {levelId}, returning {__result}");
 
-            if(Randomizer.IsLoadingSongs)
+            if(Randomizer.IsLoadingSongs && !string.IsNullOrEmpty(__result))
                 Randomizer.CurrentBossSong = Lookup.SongIdToName[__result];
         }
 

@@ -310,7 +310,7 @@ namespace Randomizer
         [HarmonyPatch(nameof(Enemy.KillWithAttack))]
         static bool KillWithAttackPrefix(Enemy __instance, AttackInfo attack)
         {
-            Logger.LogDebug(
+            Logger.LogInfo(
                 $"Enemy KillWithAttack Prefix called for {__instance.Config.ID} for {attack.Attack.AttackID}"
             );
             if (IsWeaponTrickeryActive() && !Randomizer.CurrentLevel.StartsWith("CH_Marbas"))
@@ -320,6 +320,22 @@ namespace Randomizer
                 );
                 WeaponAbilityControllerPatches.Instance.SwitchToNextWeapon();
             }
+
+            if (
+                (
+                    Randomizer.CurrentGameMode == EGameMode.Stage
+                    || Randomizer.CurrentGameMode == EGameMode.Tutorial
+                ) && attack.Attack.AttackID.ToString().Contains("Player")
+            )
+                Randomizer.LocationTracker.CheckEnemyKilled(__instance.Config.ClassType);
+
+            if (
+                (
+                    Randomizer.CurrentGameMode == EGameMode.Stage
+                    || Randomizer.CurrentGameMode == EGameMode.Tutorial
+                ) && attack.Attack.AttackID.ToString().Contains("Overkill")
+            )
+                Randomizer.LocationTracker.CheckEnemySlaughtered(__instance.Config.ClassType);
             return true;
         }
 
@@ -339,6 +355,31 @@ namespace Randomizer
             Logger.LogDebug(
                 $"Enemy KillWithAttack Postfix called for {__instance.Config.ID} for {attack.Attack.AttackID}"
             );
+        }
+    }
+
+    [HarmonyPatch(typeof(BossAvatarBehaviourBase))]
+    public class BossAvatarBehaviourBasePatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(BossAvatarBehaviourBase.SwitchState))]
+        static bool SwitchStatePrefix(BossAvatarBehaviourBase __instance, BossStateType newState)
+        {
+            Logger.LogDebug(
+                $"BossAvatarBehaviourBase SwitchState Prefix called for {__instance.BossAvatar.CurrentType} in new state {newState}"
+            );
+
+            if (newState == BossStateType.Death)
+                Randomizer.LocationTracker.CheckBossKilled(__instance.BossAvatar.CurrentType);
+
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(BossAvatarBehaviourBase.SwitchState))]
+        static void SwitchStatePostfix(BossAvatarBehaviourBase __instance)
+        {
+            Logger.LogDebug($"BossAvatarBehaviourBase SwitchState Postfix");
         }
     }
 }

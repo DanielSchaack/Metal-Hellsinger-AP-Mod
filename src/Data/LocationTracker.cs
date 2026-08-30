@@ -236,14 +236,16 @@ namespace Randomizer
                 ELocationType.ChallengePickup => false, // only for tracking
                 ELocationType.WeaponPickup => true, // required for check count
                 ELocationType.CoatOfArms => Randomizer.Settings.IncludeCoatOfArmsChecks || Randomizer.Settings.RequireCoatOfArmsForSheol,
-                ELocationType.AnguishGate => true, // maybe in the future adjustable, for now for check count
+                ELocationType.AnguishGate => true,
                 ELocationType.Ammostash => false, // only for tracking destructibles
                 ELocationType.HealthCrystal => false, // only for tracking destructibles
                 ELocationType.ChaosCrystal => false, // only for tracking destructibles
                 ELocationType.FirstMiscellaneous => Randomizer.Settings.IncludeMiscellaneousChecks, // collection of individual locations
+                ELocationType.FirstKill => true, // for check count and always being available
+                ELocationType.FirstSlaughter => Randomizer.Settings.IncludeFirstSlaughterChecks, // for check count and always being available
                 ELocationType.Boon => Randomizer.Settings.RandomizedBoonsEnabled,
                 ELocationType.Bestiary => true, // required for check count
-                ELocationType.Codex => true, // required for check count
+                ELocationType.Codex => Randomizer.Settings.IncludeFuryComboChecks,
                 ELocationType.LevelCompletion => true,
                 ELocationType.LevelAmmostashCompletion => Randomizer.Settings.LevelDestructibleLocationsEnabled,
                 ELocationType.LevelHealthCrystalCompletion => Randomizer.Settings.LevelDestructibleLocationsEnabled,
@@ -262,7 +264,6 @@ namespace Randomizer
                 ELocationType.TormentSilver => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentGold => Randomizer.Settings.ChallengeMedaillonsEnabled,
                 ELocationType.TormentCompletion => Randomizer.Settings.RandomizedChallengesEnabled,
-                ELocationType.BossAchievement => true,
                 ELocationType.XpEgg => false, // TODO: Leviathan integration
                 ELocationType.NightmareCrystal => false, // TODO: Leviathan integration
                 _ => false,
@@ -290,8 +291,8 @@ namespace Randomizer
 
                 if (location.IsSetupForCollection && location.OriginalItemName.Equals(weaponName))
                 {
-                    location.IsCollected = true;
-                    CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+                    if(CollectLocation(location, IsLocationTypeRandomized(location.LocationType)))
+                        location.IsCollected = true;
                 }
                 WeaponPickups[i] = location;
             }
@@ -309,14 +310,14 @@ namespace Randomizer
                 // if no longer active then it is collected
                 if (location.IsSetupForCollection && !location.LoadedGameObject.activeSelf)
                 {
-                    location.IsCollected = true;
-                    CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+                    if(CollectLocation(location, IsLocationTypeRandomized(location.LocationType)))
+                        location.IsCollected = true;
                 }
                 locations[i] = location;
             }
         }
 
-        private void CollectLocation(
+        private bool CollectLocation(
             Location location,
             bool isRandomized = false,
             bool isResync = false
@@ -325,6 +326,14 @@ namespace Randomizer
             Logger.LogInfo(
                 $"Checking location {location.LocationId}, which is randomized: {isRandomized} and is in a resync: {isResync}"
             );
+
+            if ((int)Randomizer.CurrentDifficulty < Randomizer.Settings.MinimalDifficulty)
+            {
+                Logger.LogInfo(
+                    $"Current Difficulty {Randomizer.CurrentDifficulty} is below required Difficulty {(EDifficulty)Randomizer.Settings.MinimalDifficulty}, skipping location check"
+                );
+                return false;
+            }
 
             if (!CheckedLocations.ContainsKey(location.LocationId))
             {
@@ -368,6 +377,7 @@ namespace Randomizer
 
                 Randomizer.Archipelago.CheckGoalCompletion();
             }
+            return true;
         }
 
         public void CheckAnguishGates(string anguishGateName)
@@ -393,8 +403,8 @@ namespace Randomizer
                     continue;
                 }
 
-                location.IsCollected = true;
-                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+                if(CollectLocation(location, IsLocationTypeRandomized(location.LocationType)))
+                    location.IsCollected = true;
 
                 AnguishGates[i] = location;
             }
@@ -515,8 +525,8 @@ namespace Randomizer
 
                 CheckFirstDestructions(location.LocationType);
 
-                location.IsCollected = true;
-                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+                if(CollectLocation(location, IsLocationTypeRandomized(location.LocationType)))
+                    location.IsCollected = true;
                 locations[i] = location;
             }
 
@@ -852,6 +862,44 @@ namespace Randomizer
                 CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
         }
 
+        internal void CheckEnemyKilled(EnemyClassType enemyType)
+        {
+            var enemyName = Lookup.EnemyClassToEnemyName(enemyType);
+            if(string.IsNullOrEmpty(enemyName))
+                return;
+
+            var locationId = $"Hells First Kill - {enemyName}";
+            if (Locations.LocationDataByName.TryGetValue(locationId, out var location))
+                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+        }
+
+        internal void CheckEnemySlaughtered(EnemyClassType enemyType)
+        {
+            var enemyName = Lookup.EnemyClassToEnemyName(enemyType);
+            if (
+                string.IsNullOrEmpty(enemyName)
+                || enemyName.Contains("Aspect")
+                || enemyName.Contains("Red Judge")
+                || enemyName.Contains("Lost Unknown")
+            )
+                return;
+
+            var locationId = $"Hells First Slaughter - {enemyName}";
+            if (Locations.LocationDataByName.TryGetValue(locationId, out var location))
+                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+        }
+
+        internal void CheckBossKilled(BossType bossType)
+        {
+            var enemyName = Lookup.BossTypeToEnemyName(bossType);
+            if(string.IsNullOrEmpty(enemyName))
+                return;
+
+            var locationId = $"Hells First Kill - {enemyName}";
+            if (Locations.LocationDataByName.TryGetValue(locationId, out var location))
+                CollectLocation(location, IsLocationTypeRandomized(location.LocationType));
+        }
+
         internal List<string> GetItemsWithMissingChecks(List<string> unlockedItems)
         {
             List<string> missingItems = new List<string>();
@@ -1158,15 +1206,24 @@ namespace Randomizer
         internal bool IsBestiaryReachable(EnemyClassType classType)
         {
             Logger.LogDebug($"Checking if Bestiary is reachable: {classType}");
-            var locationName = Lookup.EnemyClassToLocationName(classType);
+            var locationName = $"Bestiary Entry - {Lookup.EnemyClassToEnemyName(classType)}";
             return LocationAccessibility.CanReach(locationName);
         }
 
         internal bool IsBestiaryUnchecked(EnemyClassType classType)
         {
             Logger.LogDebug($"Checking if Bestiary is checked: {classType}");
-            var locationName = EnemyClassToLocationName(classType);
-            return IsLocationUnchecked(locationName) && IsBestiaryReachable(classType);
+            var bestiaryLocationName = $"Bestiary Entry - {Lookup.EnemyClassToEnemyName(classType)}";
+            var firstKillLocationName = $"Hells First Kill - {Lookup.EnemyClassToEnemyName(classType)}";
+            var firstSlaughterLocationName = $"Hells First Slaughter - {Lookup.EnemyClassToEnemyName(classType)}";
+            return (IsLocationTypeRandomized(ELocationType.Bestiary) && IsLocationUnchecked(bestiaryLocationName) && IsBestiaryReachable(classType))
+                || (IsLocationTypeRandomized(ELocationType.FirstKill) && IsLocationUnchecked(firstKillLocationName) && IsEnemyReachable(classType))
+                || (IsLocationTypeRandomized(ELocationType.FirstSlaughter) && IsLocationUnchecked(firstSlaughterLocationName) && IsEnemyReachable(classType));
+        }
+
+        private bool IsEnemyReachable(EnemyClassType classType)
+        {
+            return LocationAccessibility.CanReachEnemy(classType);
         }
 
         internal bool IsRegionUnchecked(EZone hells)

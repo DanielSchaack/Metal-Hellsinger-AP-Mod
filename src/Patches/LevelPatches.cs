@@ -141,6 +141,14 @@ namespace Randomizer
     [HarmonyPatch(typeof(InGameState))]
     public class InGameStatePatches
     {
+        public static InGameState Instance = null;
+
+        public static void SetDifficulty(EDifficulty difficulty)
+        {
+            if ( Instance != null)
+                Instance.m_difficulty = difficulty;
+        }
+
         [HarmonyPrefix]
         [HarmonyPatch(nameof(InGameState.CreateChallengeUnlocksData))]
         static bool CreateChallengeUnlocksDataPrefix(
@@ -375,9 +383,26 @@ namespace Randomizer
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(InGameState.CreateSystems))]
-        static void CreateSystemsPostfix(InGameState __instance)
+        static void CreateSystemsPostfix(ref InGameState __instance)
         {
+            if(Instance == null)
+                Instance = __instance;
             Logger.LogDebug($"InGameState CreateSystems Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(InGameState.IGameState_Exit))]
+        static void IGameState_ExitPrefix(InGameState __instance)
+        {
+            Logger.LogDebug($"InGameState IGameState_Exit Prefix called");
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(InGameState.IGameState_Exit))]
+        static void IGameState_ExitPostfix(ref InGameState __instance)
+        {
+            Instance = null;
+            Logger.LogDebug($"InGameState IGameState_Exit Postfix called");
         }
 
         [HarmonyPrefix]
@@ -482,6 +507,7 @@ namespace Randomizer
         static bool IGameState_LoadingCompletedPrefix(InGameState __instance)
         {
             Logger.LogDebug($"InGameState IGameState_LoadingCompleted Prefix called");
+            Randomizer.IsPaused = false;
             return true;
         }
 
@@ -492,7 +518,6 @@ namespace Randomizer
             Logger.LogDebug($"InGameState IGameState_LoadingCompleted Postfix called");
             __instance.m_hasUsedAssistMode = true;
             Randomizer.SceneTracker.ResetLevelActiveTime();
-            Randomizer.IsPaused = false;
         }
     }
 
@@ -1008,8 +1033,8 @@ namespace Randomizer
             Logger.LogInfo(
                 $"ChallengeController ShowChallengePreEOR Prefix called for {challengeResult}"
             );
-            if(challengeResult == ChallengeTracker.ChallengeResult.Fail)
-                Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
+            // if(challengeResult == ChallengeTracker.ChallengeResult.Fail)
+            //     Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
             return true;
         }
 
@@ -1062,9 +1087,165 @@ namespace Randomizer
                 ChallengeTracker __instance
         )
         {
-            Logger.LogInfo($"ChallengeTracker TearDown Postfix called for {__instance.m_challengeResult}");
-            if ( __instance.m_challengeResult == ChallengeTracker.ChallengeResult.Fail)
-                Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
+            Logger.LogDebug($"ChallengeTracker TearDown Postfix called for {__instance.m_challengeResult}");
+            // if ( __instance.m_challengeResult == ChallengeTracker.ChallengeResult.Fail)
+            //     Randomizer.Archipelago.SendDeathLink(Randomizer.CurrentLevel);
+        }
+    }
+
+    [HarmonyPatch(typeof(ConditionalWaveSpawnerSystem))]
+    public class ConditionalWaveSpawnerSystemPatches
+    {
+        public static ConditionalWaveSpawnerSystem Instance = null;
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ConditionalWaveSpawnerSystem.Update))]
+        static void UpdatePostfix(ref ConditionalWaveSpawnerSystem __instance)
+        {
+            if(Instance == null)
+            {
+                Instance = __instance;
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ConditionalWaveSpawnerSystem.TearDown))]
+        static bool TearDownPrefix()
+        {
+            Logger.LogDebug(
+                $"ConditionalWaveSpawnerSystem TearDown Prefix called"
+            );
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ConditionalWaveSpawnerSystem.TearDown))]
+        static void TearDownPostfix()
+        {
+            Instance = null;
+            Logger.LogDebug($"ConditionalWaveSpawnerSystem TearDown Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(ConditionalWaveSpawnerSystem.Register))]
+        static bool RegisterPrefix(ConditionalWaveSpawner waveSpawner)
+        {
+            Logger.LogInfo(
+                $"ConditionalWaveSpawnerSystem Register Prefix called for {waveSpawner.gameObject.name}"
+            );
+            foreach (var wave in waveSpawner.waves)
+            {
+                if (wave == null)
+                    continue;
+
+                Transform waveTransform = wave.transform;
+                for (int i = 0; i < waveTransform.childCount; i++)
+                {
+                    Transform category = waveTransform.GetChild(i);
+                    Logger.LogDebug($"Category Name: {category.name}");
+
+                    for (int j = 0; j < category.childCount; j++)
+                    {
+                        Transform child = category.GetChild(j);
+
+                        Logger.LogDebug($"Spawn point Name: {child.gameObject.name}");
+                        WaveSpawnPoint spawnPoint = child.GetComponent<WaveSpawnPoint>();
+                        if (spawnPoint == null)
+                            continue;
+
+                        if ((int)Randomizer.CurrentDifficulty <= 1 && category.name == "Hard")
+                        {
+                            Logger.LogInfo(
+                                $"Enabling Hard enemy wavepoint for all difficulties"
+                            );
+                            spawnPoint.UseOnEasy = true;
+                            spawnPoint.UseOnMedium = true;
+                        }
+
+                        if (
+                            (int)Randomizer.CurrentDifficulty <= 2
+                            && category.name == "VeryHard"
+                            && (
+                                Randomizer.Settings.ArchdevilEnemiesEnabled
+                                || Randomizer.Configuration.gameplayArchdevilEnemiesEnabled.Value
+                            )
+                        )
+                        {
+                            Logger.LogInfo(
+                                $"Enabling Archdevil enemy wavepoint for all difficulties"
+                            );
+                            spawnPoint.UseOnEasy = true;
+                            spawnPoint.UseOnMedium = true;
+                            spawnPoint.UseOnHard = true;
+                            spawnPoint.UseOnVeryHard = true;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ConditionalWaveSpawnerSystem.Register))]
+        static void RegisterPostfix(
+        )
+        {
+            Logger.LogDebug($"ConditionalWaveSpawnerSystem Register Postfix called");
+        }
+    }
+
+    [HarmonyPatch(typeof(CutscenePlayer))]
+    public class CutscenePlayerPatches
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(CutscenePlayer.Play))]
+        static bool PlayPrefix()
+        {
+            Logger.LogInfo($"CutscenePlayer Play Prefix");
+            Randomizer.IsPaused = true;
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(CutscenePlayer.Play))]
+        static void PlayPostfix(
+        )
+        {
+            Logger.LogInfo($"CutscenePlayer Play Postfix called");
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(CutscenePlayer.Finished))]
+        static bool FinishedPrefix()
+        {
+            Logger.LogInfo($"CutscenePlayer Finished Prefix");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(CutscenePlayer.Finished))]
+        static void FinishedPostfix(
+        )
+        {
+            Logger.LogInfo($"CutscenePlayer Finished Postfix called");
+            Randomizer.IsPaused = false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(CutscenePlayer.SkipCurrentCutscene))]
+        static bool SkipCurrentCutscenePrefix()
+        {
+            Logger.LogInfo($"CutscenePlayer SkipCurrentCutscene Prefix");
+            return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(CutscenePlayer.SkipCurrentCutscene))]
+        static void SkipCurrentCutscenePostfix(
+        )
+        {
+            Logger.LogInfo($"CutscenePlayer SkipCurrentCutscene Postfix called");
+            Randomizer.IsPaused = false;
         }
     }
 }

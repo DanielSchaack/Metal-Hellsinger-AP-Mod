@@ -37,13 +37,14 @@ namespace Randomizer
         public int RequiredHellsCompletion { get; set; } = 5;
         public bool RequireLeviathanCompletion { get; set; } = false;
 
-        public bool RandomizedHellsEnabled { get; set; } = true;
         public bool RequireAspectForBossArena { get; set; } = false;
         public int StartingHells { get; set; } = 0;
         public HellsMode HellsUnlockMode { get; set; } = HellsMode.UnlockAsCollectible;
 
         public bool RegressiveDifficultyEnabled { get; set; } = false;
         public int StartingDifficulty { get; set; } = 0;
+        public int MinimalDifficulty { get; set; } = 0;
+        public bool ArchdevilEnemiesEnabled { get; set; } = false;
 
         public bool RequireNoTomorrowForSheol { get; set; } = false;
         public bool RequireCoatOfArmsForSheol { get; set; } = false;
@@ -57,17 +58,16 @@ namespace Randomizer
 
         public WeaponMode WeaponUnlockMode { get; set; } = WeaponMode.WeaponAsOnePackage;
 
-        public bool RandomizedOutfitsEnabled { get; set; } = false;
-        public ItemOrigin RandomizedOutfitDLCs { get; set; } = Base;
+        public bool RandomizedOutfitsEnabled { get; set; } = true;
+        public ItemOrigin RandomizedOutfitDLCs { get; set; } = Base | DreamOfTheBeast | Purgatory;
 
-        public bool RandomizedSongsEnabled { get; set; } = false;
-        public ItemOrigin RandomizedSongDLCs { get; set; } = Base;
+        public bool RandomizedSongsEnabled { get; set; } = true;
+        public ItemOrigin RandomizedSongDLCs { get; set; } = Base | DreamOfTheBeast | Purgatory | Dusk | EssentialHits;
 
         public bool DestructibleLocationsEnabled { get; set; } = false;
         public bool DestructibleAsUnlocks { get; set; } = false;
         public DestructibleMode DestructibleLocationsMode { get; set; } = DestructibleMode.PerEntireArena;
         public bool LevelDestructibleLocationsEnabled { get; set; } = false;
-
 
         public bool RandomizedBoonsEnabled { get; set; } = false;
         public bool RandomizedDashEnabled { get; set; } = false;
@@ -82,12 +82,17 @@ namespace Randomizer
         public bool IncludeSectionOutfitCheck { get; set; } = false;
         public bool IncludeSectionSongCheck { get; set; } = false;
         public bool IncludeMiscellaneousChecks { get; set; } = false;
+        public bool IncludeFirstSlaughterChecks { get; set; } = false;
         public bool IncludeProgressiveAnguishGateSkips { get; set; } = false;
+        public bool IncludeFuryComboChecks { get; set; } = false;
 
         public bool RandomizedLevelsEnabled { get; set; } = false;
 
         public Settings(Dictionary<string, object> slotData)
         {
+            RandomizedOutfitDLCs = Base;
+            RandomizedSongDLCs = Base;
+
             var options = ((JToken)slotData["options"]).ToObject<Dictionary<string, object>>();
             foreach (var kvp in options)
             {
@@ -111,9 +116,6 @@ namespace Randomizer
                     case "required_hells_completion":
                         RequiredHellsCompletion = GetInt(kvp.Value);
                         break;
-                    case "randomized_hells_enabled":
-                        RandomizedHellsEnabled = GetBool(kvp.Value);
-                        break;
                     case "require_aspect_for_boss_arena":
                         RequireAspectForBossArena = GetBool(kvp.Value);
                         break;
@@ -125,6 +127,9 @@ namespace Randomizer
                         break;
                     case "starting_difficulty":
                         StartingDifficulty = GetInt(kvp.Value);
+                        break;
+                    case "minimal_difficulty":
+                        MinimalDifficulty = GetInt(kvp.Value);
                         break;
                     case "require_no_tomorrow_for_sheol":
                         RequireNoTomorrowForSheol = GetBool(kvp.Value);
@@ -243,6 +248,15 @@ namespace Randomizer
                         break;
                     case "include_miscellaneous_checks":
                         IncludeMiscellaneousChecks = GetBool(kvp.Value);
+                        break;
+                    case "include_first_slaughter_checks":
+                        IncludeFirstSlaughterChecks = GetBool(kvp.Value);
+                        break;
+                    case "include_fury_combo_checks":
+                        IncludeFuryComboChecks = GetBool(kvp.Value);
+                        break;
+                    case "archdevil_enemies_enabled":
+                        ArchdevilEnemiesEnabled = GetBool(kvp.Value);
                         break;
                     case "include_progressive_anguish_gate_skips":
                         IncludeProgressiveAnguishGateSkips = GetInt(kvp.Value) > 0;

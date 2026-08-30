@@ -54,7 +54,8 @@ namespace Randomizer
                 {
                     SetItemIndex(value);
                     field = value;
-                }
+                } else if (value == 0)
+                    field = value;
             }
         } = 0;
 
@@ -166,6 +167,7 @@ namespace Randomizer
                     Randomizer.ItemTracker.Reset(Randomizer.Settings);
                     Randomizer.IngameDispenser.Reset();
 
+                    ItemIndex = 0;
                     Items.ItemList.Clear();
                     session.Locations.ScoutLocationsAsync(session.Locations.AllLocations.ToArray()).ContinueWith(locationInfoPacket => {
                     foreach (ItemInfo ItemInfo in locationInfoPacket.Result.Values) {
@@ -648,8 +650,9 @@ namespace Randomizer
         internal void AddSlainBoss(string slainBoss)
         {
             Logger.LogInfo($"Adding slain Boss '{slainBoss}'");
-            session.DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses] += new[] { slainBoss };
             SlainBosses.Add(slainBoss);
+            if(connected)
+                session.DataStorage[Scope.Slot, DataStorageKeyDefeatedBosses] = SlainBosses.ToArray();
         }
 
         private void SetItemIndex(int itemIndex)

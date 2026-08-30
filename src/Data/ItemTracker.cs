@@ -470,10 +470,6 @@ namespace Randomizer
             foreach (string Key in CollectedImportantItemCountsByName.Keys.ToList())
                 CollectedImportantItemCountsByName[Key] = 0;
 
-            if(!settings.RandomizedHellsEnabled)
-                foreach(var hells in Lookup.HellsIDs)
-                    CollectedImportantItemCountsByName[hells] = 1;
-
             RequiredItemsForLevelUnlock.Clear();
             var allLevelKeys = Lookup.RequiredLevelItemsBase.Keys.Union(
                 Lookup.RequiredWeaponsForLevel.Keys
@@ -670,7 +666,7 @@ namespace Randomizer
         internal bool HasDifficultyUnlocked(EDifficulty difficulty)
         {
             var difficultyItemName = Lookup.DifficultyTypeToName[difficulty];
-            bool v = Has(difficultyItemName);
+            bool v = Has(difficultyItemName) && (int)difficulty >= Randomizer.Settings.MinimalDifficulty;
             Logger.LogDebug($"Has selected difficulty {difficulty}: {v}");
             return v;
         }

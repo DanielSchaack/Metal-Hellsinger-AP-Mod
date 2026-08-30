@@ -47,6 +47,7 @@ namespace Randomizer
         internal ConfigEntry<bool> gameplayWeaponTrickeryModeActive;
         internal ConfigEntry<bool> gameplayDoubletimeActive;
         internal ConfigEntry<bool> gameplayHalftimeActive;
+        internal ConfigEntry<bool> gameplayArchdevilEnemiesEnabled;
 
         internal ConfigEntry<bool> weaponLoadAllAvailableWeapons;
         internal ConfigEntry<bool> weaponExcludePazFromLoadout;
@@ -194,7 +195,7 @@ namespace Randomizer
             archipelagoDeathlinkType = config.Bind(
                 "Archipelago",
                 "ArchipelagoDeathlinkType",
-                DeathLinkType.Death,
+                DeathLinkType.Off,
                 "Overrides the slot's deathlink settings for deathlink type.\n'Death' applies immediately.\n'DeathTrap' queues the death as a trap.\n'RandomTrap' queues any of the available trap items, including the Death item."
             );
             archipelagoDeathlinkType.SettingChanged += (sender, args) =>
@@ -413,6 +414,14 @@ namespace Randomizer
                 "Decreases gamespeed without decreasing the speed of the music.\nSee the trap settings to adjust the speed.\nThis is ignored while Doubletime is active."
             );
             gameplayHalftimeActive.SettingChanged += addOnChangeSave(config);
+
+            gameplayArchdevilEnemiesEnabled = config.Bind(
+                "Hellsinger.Gameplay",
+                "ArchdevilEnemiesEnabled",
+                false,
+                "If enabled, adds all Archdevil enemy spawn on top of the regular enemy spawns, resulting in more difficult encounters."
+            );
+            gameplayArchdevilEnemiesEnabled.SettingChanged += addOnChangeSave(config);
 
             // ---
 
