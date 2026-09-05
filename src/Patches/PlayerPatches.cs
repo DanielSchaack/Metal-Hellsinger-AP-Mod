@@ -373,7 +373,16 @@ namespace Randomizer
                 $"BossAvatarBehaviourBase SwitchState Prefix called for {__instance.BossAvatar.CurrentType} in new state {newState}"
             );
 
-            if (newState == BossStateType.Death)
+            if (
+                newState == BossStateType.Death
+                && ( // Red Judge spawns killable BossAvatars that would trigger each frame after death
+                    __instance.BossAvatar.CurrentType.ToString() == Randomizer.CurrentLevel
+                    || (
+                        Randomizer.CurrentLevel == "Sheol"
+                        && __instance.BossAvatar.CurrentType == BossType.Titan
+                    )
+                )
+            )
                 Randomizer.LocationTracker.CheckBossKilled(__instance.BossAvatar.CurrentType);
 
             return true;

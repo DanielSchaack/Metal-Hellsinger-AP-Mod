@@ -244,26 +244,26 @@ namespace Randomizer
 
         private static bool HasGenericArena2Requirements()
         {
-            return HasBaseMovement() && HasNonPazRangedWeapon() && HasAnyHeal();
+            return HasBaseMovement() && HasAnyHeal();
         }
 
         private static bool HasGenericArena3Requirements()
         {
             return HasGenericArena2Requirements() && (
-                        (HasAllHeal() && Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement())
-                        || ((Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Hard) || Randomizer.Settings.ArchdevilEnemiesEnabled) && HasAdvancedMovement())
+                        (HasAllHeal() && (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) || Randomizer.Settings.ArchdevilEnemiesEnabled)&& HasAdvancedMovement())
+                        || (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Hard) && HasAdvancedMovement())
                         || IsNotBeast()
-                    ) 
+                    )
                 && (HasRangedWeaponWithUltimate() || Randomizer.ItemTracker.CanQuickReload());
         }
 
         private static bool HasGenericArena4Requirements()
         {
             return HasGenericArena3Requirements() && (
-                        (HasAllHeal() && Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) && HasAdvancedMovement()) 
-                        || ((Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Hard) || Randomizer.Settings.ArchdevilEnemiesEnabled) && HasAdvancedMovement())
+                        (HasAllHeal() && (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.VeryHard) || Randomizer.Settings.ArchdevilEnemiesEnabled)&& HasAdvancedMovement())
+                        || (Randomizer.ItemTracker.HasDifficultyUnlocked(EDifficulty.Hard) && HasAdvancedMovement())
                         || IsNotBeast()
-                    ) 
+                    )
                 && (HasRangedWeaponWithUltimate() || Randomizer.ItemTracker.CanQuickReload());
         }
 
@@ -276,8 +276,8 @@ namespace Randomizer
 
         private static bool HasCloseRangeWeapon()
         {
-            return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Falx)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
+            return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
+                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.AssaultRifle)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Boomerang);
         }
 
@@ -285,18 +285,6 @@ namespace Randomizer
         {
             return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Pistols)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Vulcan)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.AssaultRifle)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Bow);
-        }
-
-        private static bool HasNonPazWeapon()
-        {
-            return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Falx)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Pistols)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Vulcan)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Boomerang)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.AssaultRifle)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Bow);
         }
 
@@ -310,13 +298,11 @@ namespace Randomizer
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Bow);
         }
 
-        private static bool HasRangedWeapon()
+        private static bool HasReloadableWeapon()
         {
-            return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.RhythmWeapon)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
+            return Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Shotgun)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Pistols)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Vulcan)
-                || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Boomerang)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.AssaultRifle)
                 || Randomizer.ItemTracker.IsWeaponUnlocked(PlayerWeaponType.Bow);
         }
@@ -518,8 +504,6 @@ namespace Randomizer
                 "Stygia Next Multiplier 2" => HasBaseMovement(),
                 "Stygia Secret Max Multiplier" => Randomizer.ItemTracker.CanDash(),
                 "Stygia Coat of Arms Beast" => Randomizer.ItemTracker.CanDash(),
-                "Stygia Arena 2 Ammostash Destruction" => HasBaseMovement() || HasRangedWeapon(),
-                "Stygia Arena 2 Destructible Completion" => HasBaseMovement() || HasRangedWeapon(),
                 _ => true
             };
         }
@@ -538,8 +522,6 @@ namespace Randomizer
         private static bool IncaustisExceptions(string id)
         {
             return id switch {
-                "Incaustis Arena 1 Health Crystal Destruction" => HasBaseMovement() || HasRangedWeapon(),
-                "Incaustis Arena 1 Destructible Completion" => HasBaseMovement() || HasRangedWeapon(),
                 _ => true
             };
         }
@@ -549,8 +531,6 @@ namespace Randomizer
             return id switch {
                 "Gehenna Secret Max Multiplier" => Randomizer.ItemTracker.CanDash() || Randomizer.ItemTracker.CanDoubleJump(),
                 "Gehenna Coat of Arms Goat" => HasBaseMovement(),
-                "Gehenna Arena 2 Ammostash Destruction" => HasBaseMovement() || HasRangedWeapon(),
-                "Gehenna Arena 2 Destructible Completion" => HasBaseMovement() || HasRangedWeapon(),
                 _ => true
             };
         }
@@ -678,8 +658,9 @@ namespace Randomizer
             return CanAccessAnyHellsOrLeviathan() && id switch
             {
                 "Styx Reload discovered" => Randomizer.ItemTracker.CanQuickReload()
+                    && HasReloadableWeapon()
                     && Randomizer.ItemTracker.IsDestructible("Health"),
-                "Hells's Heartbeat discovered" => Randomizer.ItemTracker.CanQuickReload(),
+                "Hells's Heartbeat discovered" => Randomizer.ItemTracker.CanQuickReload() && HasReloadableWeapon(),
                 "Basilisk Mode discovered" => Randomizer.ItemTracker.CanSoar(),
                 "Double Hit and Run discovered" => (Randomizer.ItemTracker.IsDestructible("Ammostash") || Randomizer.ItemTracker.IsDestructible("Health"))
                     && Randomizer.ItemTracker.CanDash(),
@@ -692,8 +673,10 @@ namespace Randomizer
                     && HasChaosAccess
                     && Randomizer.ItemTracker.CanSlaughter(),
                 "Unholy Mess discovered" => Randomizer.ItemTracker.CanSlaughter(),
-                "Five Endings discovered" => ((Randomizer.ItemTracker.IsDestructible("Chaos") && HasChaosAccess)
-                    || (CanAccessAnyHells() && Randomizer.ItemTracker.Has("Paz")) && HasAmountOfWeapons(3)),
+                "Five Endings discovered" => (
+                        (Randomizer.ItemTracker.IsDestructible("Chaos") && HasChaosAccess)
+                        || (CanAccessAnyHells() && Randomizer.ItemTracker.Has("Paz"))
+                    ) && HasAmountOfWeapons(3),
                 "Slaughter and Kill discovered" => Randomizer.ItemTracker.CanSlaughter(),
                 "Chaos Flight discovered" => Randomizer.ItemTracker.CanSoar()
                     && Randomizer.ItemTracker.CanJump()
