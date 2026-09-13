@@ -777,7 +777,8 @@ namespace Randomizer
                 if(Randomizer.ItemTracker.CanWeaponUltimate(weapon))
                     count++;
             }
-            return count >= requiredWeapons.Count;
+            var requiredCount = Randomizer.Settings.RequireWeaponsForChallenges ? requiredWeapons.Count: 2;
+            return count >= requiredCount;
         }
 
         // TODO: Leviathan integration

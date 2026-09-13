@@ -167,7 +167,6 @@ namespace Randomizer
                     Randomizer.ItemTracker.Reset(Randomizer.Settings);
                     Randomizer.IngameDispenser.Reset();
 
-                    ItemIndex = 0;
                     Items.ItemList.Clear();
                     session.Locations.ScoutLocationsAsync(session.Locations.AllLocations.ToArray()).ContinueWith(locationInfoPacket => {
                     foreach (ItemInfo ItemInfo in locationInfoPacket.Result.Values) {
