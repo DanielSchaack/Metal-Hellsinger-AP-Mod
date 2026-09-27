@@ -502,7 +502,7 @@ namespace Randomizer
             // }
 
 
-            if(connected)
+            if(connected && Randomizer.Configuration.archipelagoDeathlinkType.Value != DeathLinkType.Off)
             {
                 string cause = $"{Player}{MessageOptions.ToList()[new System.Random().Next(MessageOptions.Count)]}";
                 ArchipelagoConsole.Instance.LogMessage($"Sending deathlink: {cause}");
